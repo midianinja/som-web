@@ -8,11 +8,11 @@ const history = createBrowserHistory();
 
 history.listen(() => {});
 const AppRouter = () => (
-    <Router history={history}>
-        <Switch>
-            <Route exact path='/' component={Home} />
-        </Switch>
-    </Router>
+  <Router history={history}>
+    <Switch>
+      <Route exact path="/" component={Home} />
+    </Switch>
+  </Router>
 );
 
 export default AppRouter;
