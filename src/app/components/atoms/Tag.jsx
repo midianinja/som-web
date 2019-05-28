@@ -28,14 +28,14 @@ const TagWrapper = styled.label`
   border-radius: 8px;
   display: flex;
   align-items: center;
-  font-size: 0.8571428571em;
+  font-size: 1em;
   margin-right: 10px;
   cursor: pointer;
 `;
 
 const CloseIcon = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   margin-right: 5px;
 `;
 

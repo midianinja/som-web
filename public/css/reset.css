@@ -26,6 +26,7 @@ input:focus, select:focus, textarea:focus{
 body {
 	font-size: 14px;
 	line-height: 1em;
+	font-family: CircularStd;
 }
 
 ol, ul {

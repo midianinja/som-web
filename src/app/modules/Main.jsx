@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 1em;
+  letter-space
 `;
 
 const Space = styled.div`
@@ -29,7 +30,7 @@ const Main = () => (
       handleClose={() => console.log('here')}
       data={[
         { text: 'forrô', id: 'cib1', color: 'purple' },
-        { text: 'funck', id: 'cib2', color: 'yellow' },
+        { text: 'funk', id: 'cib2', color: 'yellow' },
         { text: 'axé', id: 'cib3', color: 'green' },
         { text: 'samba', id: 'cib4', color: 'orange' },
       ]}
