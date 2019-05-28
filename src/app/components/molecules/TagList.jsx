@@ -15,7 +15,6 @@ const List = styled.div`
  * @returns React Component array
  */
 function getItems(data, handleClose) {
-  console.log(data);
   return data.map(({ color, text, id }) => (
     <Tag
       text={text}

@@ -15,7 +15,6 @@ const colors = {
  * @returns contains color in hexa or rgba
  */
 function getColor(key) {
-  console.log(colors[key]);
   return colors[key] ? colors[key] : colors.purple;
 }
 
