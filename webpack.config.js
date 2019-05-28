@@ -20,7 +20,7 @@ if(env != "local") {
 module.exports = {
 	entry: {
 		app: [
-			path.resolve(__dirname, "src/app/index.js")
+			path.resolve(__dirname, "src/app/index.jsx")
 		]
 	},
 	mode: env == "local" ? "development" : "production",

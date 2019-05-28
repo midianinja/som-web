@@ -10,7 +10,7 @@ history.listen(() => {});
 const AppRouter = () => (
   <Router history={history}>
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact path='/' component={Home} />
     </Switch>
   </Router>
 );

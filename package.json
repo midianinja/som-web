@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "babel-node index.js",
-    "dev": "nodemon index.js --exec eslint src && babel-node",
-    "build": "webpack",
+    "dev": "eslint src && nodemon index.js --exec babel-node",
+    "build": "webpack --progress --watch",
     "prettier": "prettier --config ./.prettierrc --write \"./**/*.jsx\""
   },
   "dependencies": {
