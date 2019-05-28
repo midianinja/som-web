@@ -21,7 +21,6 @@ const colors = {
   purple, green, orange, magenta, gray,
 };
 
-
 /**
  * function that getting color based on props
  * @param {string} key it is color key
@@ -53,7 +52,7 @@ const PrimaryButton = styled.button`
   color: ${white}
   cursor: pointer;
   transition-duration: 0.3s;
-  font-size: 0.8571428571em
+  font-size: 0.8571428571em;
   
   :hover {
     background-color: ${props => getHoverColor(props.color)};
