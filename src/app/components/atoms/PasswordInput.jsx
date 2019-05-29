@@ -44,7 +44,7 @@ function PasswordInput(props) {
   const {
     onChange, placeholder, value, width,
   } = props;
-  const src = visibility ? '/icons/visibility_off_outlined.svg' : '/icons/visibility_off_outlined.svg';
+  const src = visibility ? '/icons/visibility_outlined.svg' : '/icons/visibility_off_outlined.svg';
 
   return (
     <PasswordInputWrapper width={width}>
