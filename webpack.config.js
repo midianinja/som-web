@@ -18,6 +18,7 @@ if(env != "local") {
 // 404, 237, 83
 // 396, 312
 module.exports = {
+	devtool: 'eval-source-map',
 	entry: {
 		app: [
 			path.resolve(__dirname, "src/app/index.jsx")

@@ -54,7 +54,7 @@ const PrimaryButton = styled.button`
   transition-duration: 0.3s;
   font-size: 0.8571428571em;
   
-  :hover {
+  :active {
     background-color: ${props => getHoverColor(props.color)};
   }
 

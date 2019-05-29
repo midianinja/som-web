@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import PrimaryButton from '../components/atoms/PrimaryButton';
 import TagList from '../components/molecules/TagList';
 import Input from '../components/atoms/Input';
+import DialogModal from '../components/modals/Dialog.modal';
 
-import { black } from '../settings/colors';
+import { black, purple, wrapperModal } from '../settings/colors';
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 90vh;
   padding: 45px;
   background-color: ${black};
   display: flex;
@@ -25,7 +26,15 @@ const Space = styled.div`
 
 const Main = () => (
   <Wrapper>
-    <PrimaryButton disabled>CLIQUE-ME</PrimaryButton>
+    <DialogModal
+      title='Cadastro imcompleto :('
+      description='Pra se inscrever em eventos você precisa preencher os dados obrigatórios.'
+      agreeText='cadastrar'
+      disagreeText='voltar'
+      confirmAction={() => console.log('confirmAction')}
+      disagreeAction={() => console.log('disagreeAction')}
+    />
+    <PrimaryButton>CLIQUE-ME</PrimaryButton>
     <Space />
     <TagList
       text="samba"
