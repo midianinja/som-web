@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { white, purple, green, orange, magenta, gray } from '../../settings/colors';
+import { white, purple, green, orange, magenta, gray, secondaryPurple } from '../../settings/colors';
 
 const sizes = {
     medium: '38px',
@@ -16,6 +16,7 @@ function getSize(key) {
 }
 
 const colors = {
+    secondaryPurple,
     purple,
     green,
     orange,
@@ -29,6 +30,8 @@ const colors = {
  * @returns contains color in hexa or rgba
  */
 function getColor(key) {
+    console.log('entro aqui no get color', key);
+    console.log(colors[key]);
     return colors[key] ? colors[key] : colors.purple;
 }
 
