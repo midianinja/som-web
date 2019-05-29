@@ -2,6 +2,7 @@ export const black = '#000000';
 export const secondaryBlack = '#121212';
 export const purple = '#7735E5';
 export const white = '#FFFFFF';
+export const white10 = 'rgba(255, 255, 255, 0.1)';
 export const magenta = '#FF2D76';
 export const green = '#51DBA9';
 export const secondaryGreen = '#46BC91';

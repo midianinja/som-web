@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PrimaryButton from '../components/atoms/PrimaryButton';
 import TagList from '../components/molecules/TagList';
+import Input from '../components/atoms/Input';
+
 import { black } from '../settings/colors';
 
 const Wrapper = styled.div`
@@ -14,11 +16,11 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 1em;
-  letter-space
 `;
 
 const Space = styled.div`
   height: 60px;
+  font-size: 1em;
 `;
 
 const Main = () => (
@@ -36,6 +38,7 @@ const Main = () => (
       ]}
     />
     <Space />
+    <Input placeholder="Digite aqui" />
   </Wrapper>
 );
 

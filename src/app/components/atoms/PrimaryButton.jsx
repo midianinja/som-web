@@ -52,7 +52,7 @@ const PrimaryButton = styled.button`
   color: ${white}
   cursor: pointer;
   transition-duration: 0.3s;
-  font-size: 1em;
+  font-size: 0.8571428571em;
   
   :hover {
     background-color: ${props => getHoverColor(props.color)};

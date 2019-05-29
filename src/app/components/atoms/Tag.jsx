@@ -20,7 +20,7 @@ function getColor(key) {
 
 const TagWrapper = styled.label`
   display: inline-block;
-  padding: 3px 5px;
+  padding: 2px 5px;
   padding-right: 12px;
   background-color: ${props => getColor(props.color)};
   color: ${white};
@@ -28,7 +28,7 @@ const TagWrapper = styled.label`
   border-radius: 8px;
   display: flex;
   align-items: center;
-  font-size: 1em;
+  font-size: 0.8571428571em;
   margin-right: 10px;
   cursor: pointer;
 `;
