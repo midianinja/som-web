@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PrimaryButton from '../components/atoms/PrimaryButton';
 import LinkButton from '../components/atoms/LinkButton';
 import TagList from '../components/molecules/TagList';
+import InputGroup from '../components/molecules/InputGroup';
 import Input from '../components/atoms/Input';
 import PasswordInput from '../components/atoms/PasswordInput';
 import InfoButton from '../components/atoms/InfoButton.atom';
@@ -43,7 +44,13 @@ const Main = () => (
       ]}
     />
     <Space />
-    <Input placeholder="Digite aqui" />
+    <InputGroup
+      label="Nome"
+      error="Nome inválido"
+      info="Apenas letras"
+    >
+      <Input placeholder="Digite aqui" />
+    </InputGroup>
     <Space />
     <PasswordInput placeholder="Digite sua senha aqui" />
     <Space />

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const IconContainer = styled.button`
   width: 52px;
   height: 52px;
+  padding: 5px;
   border-radius: 50px;
   background-color:  #FFF
 `;

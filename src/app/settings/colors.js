@@ -10,3 +10,4 @@ export const orange = '#FF4B4B';
 export const yellow = '#C9C228';
 export const gray = '#5A5A5A';
 export const wrapperModal = 'rgba(0, 0, 0, 0.8)';
+export const red = '#EB5858';
