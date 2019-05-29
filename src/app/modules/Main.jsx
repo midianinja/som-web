@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PrimaryButton from '../components/atoms/PrimaryButton';
+import LinkButton from '../components/atoms/LinkButton';
 import TagList from '../components/molecules/TagList';
 import Input from '../components/atoms/Input';
 import PasswordInput from '../components/atoms/PasswordInput';
@@ -27,6 +28,8 @@ const Space = styled.div`
 const Main = () => (
   <Wrapper>
     <PrimaryButton disabled>CLIQUE-ME</PrimaryButton>
+    <Space />
+    <LinkButton>Link button</LinkButton>
     <Space />
     <TagList
       text="samba"
