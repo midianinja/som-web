@@ -5,7 +5,7 @@ import TagList from '../components/molecules/TagList';
 import Input from '../components/atoms/Input';
 import DialogModal from '../components/modals/Dialog.modal';
 
-import { black, purple, wrapperModal } from '../settings/colors';
+import { black } from '../settings/colors';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -27,10 +27,10 @@ const Space = styled.div`
 const Main = () => (
   <Wrapper>
     <DialogModal
-      title='Cadastro imcompleto :('
-      description='Pra se inscrever em eventos você precisa preencher os dados obrigatórios.'
-      agreeText='cadastrar'
-      disagreeText='voltar'
+      title="Cadastro imcompleto :("
+      description="Pra se inscrever em eventos você precisa preencher os dados obrigatórios."
+      agreeText="cadastrar"
+      disagreeText="voltar"
       confirmAction={() => console.log('confirmAction')}
       disagreeAction={() => console.log('disagreeAction')}
     />

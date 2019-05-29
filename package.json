@@ -7,6 +7,7 @@
     "start": "babel-node index.js",
     "dev": "eslint src && nodemon index.js --exec babel-node",
     "build": "webpack --progress --watch",
+    "lint": "eslint .",
     "prettier": "prettier --config ./.prettierrc --write \"./**/*.jsx\""
   },
   "dependencies": {
