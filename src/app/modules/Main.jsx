@@ -4,7 +4,6 @@ import PrimaryButton from '../components/atoms/PrimaryButton';
 import LinkButton from '../components/atoms/LinkButton';
 import TagList from '../components/molecules/TagList';
 import Input from '../components/atoms/Input';
-import DialogModal from '../components/modals/Dialog.modal';
 import PasswordInput from '../components/atoms/PasswordInput';
 import InfoButton from '../components/atoms/InfoButton.atom';
 
