@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import PrimaryButton from '../components/atoms/PrimaryButton';
+import LinkButton from '../components/atoms/LinkButton';
 import TagList from '../components/molecules/TagList';
 import Input from '../components/atoms/Input';
 import DialogModal from '../components/modals/Dialog.modal';
+import PasswordInput from '../components/atoms/PasswordInput';
+import InfoButton from '../components/atoms/InfoButton.atom';
 
 import { black } from '../settings/colors';
 
@@ -23,18 +26,12 @@ const Space = styled.div`
   height: 60px;
   font-size: 1em;
 `;
-
 const Main = () => (
   <Wrapper>
-    <DialogModal
-      title="Cadastro imcompleto :("
-      description="Pra se inscrever em eventos você precisa preencher os dados obrigatórios."
-      agreeText="cadastrar"
-      disagreeText="voltar"
-      confirmAction={() => console.log('confirmAction')}
-      disagreeAction={() => console.log('disagreeAction')}
-    />
+    <InfoButton onClick={() => console.log('informação')} />
     <PrimaryButton>CLIQUE-ME</PrimaryButton>
+    <Space />
+    <LinkButton>Link button</LinkButton>
     <Space />
     <TagList
       text="samba"
@@ -48,6 +45,9 @@ const Main = () => (
     />
     <Space />
     <Input placeholder="Digite aqui" />
+    <Space />
+    <PasswordInput placeholder="Digite sua senha aqui" />
+    <Space />
   </Wrapper>
 );
 

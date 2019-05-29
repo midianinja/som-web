@@ -30,6 +30,7 @@ const TagWrapper = styled.label`
   align-items: center;
   font-size: 0.8571428571em;
   margin-right: 10px;
+  margin-bottom: 10px;
   cursor: pointer;
 `;
 
