@@ -34,6 +34,11 @@ const PasswordInputWrapper = styled.div`
   padding-right: 15px;
 `;
 
+/**
+ * function that render react component
+ * @param {object} props component props
+ * @returns contains PasswordInput Component
+ */
 function PasswordInput(props) {
   const [visibility, setvisibility] = useState(false);
   const {

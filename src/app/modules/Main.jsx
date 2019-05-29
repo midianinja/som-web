@@ -42,6 +42,7 @@ const Main = () => (
     <Input placeholder="Digite aqui" />
     <Space />
     <PasswordInput placeholder="Digite sua senha aqui" />
+    <Space />
   </Wrapper>
 );
 
