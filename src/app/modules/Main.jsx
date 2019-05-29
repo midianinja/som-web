@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PrimaryButton from '../components/atoms/PrimaryButton';
 import TagList from '../components/molecules/TagList';
 import Input from '../components/atoms/Input';
+import PasswordInput from '../components/atoms/PasswordInput';
 
 import { black } from '../settings/colors';
 
@@ -39,6 +40,8 @@ const Main = () => (
     />
     <Space />
     <Input placeholder="Digite aqui" />
+    <Space />
+    <PasswordInput placeholder="Digite sua senha aqui" />
   </Wrapper>
 );
 
