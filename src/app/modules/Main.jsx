@@ -7,7 +7,6 @@ import InputGroup from '../components/molecules/InputGroup';
 import Input from '../components/atoms/Input';
 import PasswordInput from '../components/atoms/PasswordInput';
 import InfoButton from '../components/atoms/InfoButton.atom';
-import UploadButton from '../components/atoms/UploaderButton';
 
 import { black } from '../settings/colors';
 
@@ -32,8 +31,7 @@ const Main = () => (
         <InfoButton onClick={() => console.log('informação')} />
         <PrimaryButton>CLIQUE-ME</PrimaryButton>
         <Space />
-        <UploadButton text='rider' handleClick={() => console.log('é nois')} />
-        <Space />
+
         <LinkButton>Link button</LinkButton>
         <Space />
         <TagList
