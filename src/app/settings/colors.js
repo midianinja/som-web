@@ -1,5 +1,6 @@
 export const black = '#000000';
 export const secondaryBlack = '#121212';
+export const tertiaryBlack = '#191919';
 export const purple = '#7735E5';
 export const white = '#FFFFFF';
 export const white10 = 'rgba(255, 255, 255, 0.1)';

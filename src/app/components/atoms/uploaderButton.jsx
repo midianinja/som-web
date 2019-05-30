@@ -6,7 +6,8 @@ import { white, purple, green, gray } from '../../settings/colors';
 const Button = styled.div`
     background-color: ${purple};
     color: ${white};
-    font-size: 0.8571428571em;
+    font-size: 13px;
+    line-height: 26px;
     text-align: center;
     width: 142px;
     height: 30px;
