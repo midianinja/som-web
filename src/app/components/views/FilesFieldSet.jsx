@@ -12,12 +12,13 @@ const View = styled.div`
     background-color: ${tertiaryBlack};
     color: ${white};
     padding-top: 22px;
+    padding-left: 20px;
+    padding-right: 20px;
 `;
 
 const ContentWrapper = styled.div`
-    width: 312px;
+    width: 100%;
     height: 521px;
-    margin-left: 29px;
 `;
 
 const Title = styled.div`

@@ -6,7 +6,7 @@ import UploaderButton from '../atoms/uploaderButton';
 import LinkButton from '../atoms/LinkButton';
 
 const ContentWrapper = styled.div`
-	width: 292px;
+	width: 100%;
 	height: 110px;
 	margin: 40px auto;
 `;
