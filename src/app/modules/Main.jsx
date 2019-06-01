@@ -26,7 +26,7 @@ const Space = styled.div`
 `;
 const Main = () => (
   <Wrapper>
-    <UploadPhotoButton onClick={() => console.log('informação')} />
+    <UploadPhotoButton type="big" onClick={() => console.log('informação')} />
     <Space />
     <LinkButton>Link button</LinkButton>
     <Space />

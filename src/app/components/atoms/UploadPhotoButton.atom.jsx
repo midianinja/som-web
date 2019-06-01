@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { black03, white                    } from '../../settings/colors';
+import { black03, white } from '../../settings/colors';
 
 const IconBigContainer = styled.button`
   width: 150px;
@@ -11,9 +11,9 @@ const IconBigContainer = styled.button`
 `;
 
 const IconSmallContainer = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
+  width: 32px;
+  height: 32px;
+  border-radius: 32px;
   background-color:  ${white};
 `;
 
@@ -33,19 +33,19 @@ const UploadPhotoButton = (props) => {
   const { type } = props;
   if (type === 'small') {
     return (
-      <IconBigContainer {...props}>
-        <Icon
-          src="/icons/photo_plus.svg"
+      <IconSmallContainer {...props}>
+        <SmallIcon
+          src="/icons/photo.svg"
         />
-      </IconBigContainer>
+      </IconSmallContainer>
     );
   }
   return (
-    <IconSmallContainer {...props}>
-      <SmallIcon
+    <IconBigContainer {...props}>
+      <Icon
         src="/icons/photo_plus.svg"
       />
-    </IconSmallContainer>
+    </IconBigContainer>
   );
 };
 
