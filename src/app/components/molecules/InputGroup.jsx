@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { red, white } from '../../settings/colors';
+import {
+  magenta, white,
+} from '../../settings/colors';
 
 const InptGroupContainer = styled.div`
     display: flex;
@@ -14,8 +16,8 @@ const Label = styled.label`
 `;
 
 const ErrorText = styled.span`
-    font-size: 0.7em;
-    color: ${red};
+  font-size: 0.7em;
+  color: ${magenta};
 `;
 
 const InfoText = styled.span`
@@ -24,20 +26,22 @@ const InfoText = styled.span`
     color: ${white};
 `;
 
-const InputGroup = ({ children, label, info, error }) => (
-    <InptGroupContainer>
-        {label ? <Label>{label}</Label> : null}
-        {children}
-        {info ? <InfoText>{info}</InfoText> : null}
-        {error ? <ErrorText>{error}</ErrorText> : null}
-    </InptGroupContainer>
+const InputGroup = ({
+  children, label, info, error,
+}) => (
+  <InptGroupContainer>
+    {label ? <Label>{label}</Label> : null}
+    {children}
+    {info ? <InfoText>{info}</InfoText> : null}
+    {error ? <ErrorText>{error}</ErrorText> : null}
+  </InptGroupContainer>
 );
 
 InputGroup.propTypes = {
-    children: PropTypes.node.isRequired,
-    label: PropTypes.string.isRequired,
-    info: PropTypes.string.isRequired,
-    error: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  label: PropTypes.string.isRequired,
+  info: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 export default InputGroup;

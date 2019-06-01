@@ -1,13 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import PrimaryButton from '../components/atoms/PrimaryButton';
 import LinkButton from '../components/atoms/LinkButton';
+import PrimaryButton from '../components/atoms/PrimaryButton';
+import Input from '../components/atoms/Input';
 import TagList from '../components/molecules/TagList';
 import InputGroup from '../components/molecules/InputGroup';
-import Input from '../components/atoms/Input';
 import PasswordInput from '../components/atoms/PasswordInput';
 import InfoButton from '../components/atoms/InfoButton.atom';
 import Avatar from '../components/atoms/Avatar.atom';
+import ProgressiveImage from '../components/atoms/ProgressiveImage.atom';
+import UploadPhotoButton from '../components/atoms/UploadPhotoButton.atom';
+import StepFormHeader from '../components/organisms/StepFormHeader.organism';
 
 import { black } from '../settings/colors';
 
@@ -30,9 +33,39 @@ const Main = () => (
   <Wrapper>
     <Avatar src="https://api.adorable.io/avatars/285/abott@adorable.png" />
     <Space />
+    <ProgressiveImage
+      width="120px"
+      height="120px"
+      src="https://api.adorable.io/avatars/270/abott@adorable.png"
+    />
+    <Space />
     <InfoButton onClick={() => console.log('informação')} />
     <Space />
     <PrimaryButton>CLIQUE-ME</PrimaryButton>
+    <Space />
+    <StepFormHeader
+      items={[
+        {
+          title: 'Crie sua página de artista',
+          description: 'Salvamos seus dados automaticamente. Se quiser, termine seu cadastro depois.',
+        },
+        {
+          title: 'Pagina 2 do caralho',
+          description: 'salvando um banza depois do outro.',
+        },
+        {
+          title: 'Maconheiro sem limites',
+          description: 'Chega em casa e fala que está com conjutivite.',
+        },
+        {
+          title: 'Nois fuma fuma',
+          description: 'Nunca para, maconheiro, sem limites.',
+        },
+      ]}
+      index={1}
+    />
+    <Space />
+    <UploadPhotoButton type="big" onClick={() => console.log('informação')} />
     <Space />
     <LinkButton>Link button</LinkButton>
     <Space />
