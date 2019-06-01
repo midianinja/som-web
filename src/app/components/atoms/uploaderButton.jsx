@@ -18,31 +18,31 @@ const Button = styled.div`
   cursor: pointer;
 
   :active {
-      background-color: ${green};
+    background-color: ${green};
   }
 
   :focus {
-      outline: none;
+    outline: none;
   }
 
   :disabled {
-      background-color: ${gray};
-      cursor: not-allowed;
+    background-color: ${gray};
+    cursor: not-allowed;
   }
 
   ${props => props.customStyle}
 `;
 
 const Title = styled.div`
-    vertical-align: middle;
-    display: inline-block;
-    margin-right: 15px;
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 15px;
 `;
 
 const Icon = styled.img`
-    width: 24px;
-    height: 24px;
-    vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
 `;
 
 const UploaderButton = ({ customStyle, text, handleClick }) => (

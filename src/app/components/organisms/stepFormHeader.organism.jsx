@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
-  magenta, white, black03,
+  magenta, white, white30,
 } from '../../settings/colors';
 
 const Header = styled.div`
@@ -14,7 +14,7 @@ const Header = styled.div`
 `;
 
 const Logo = styled.label`
-  color: ${black03};
+  color: ${white30};
 `;
 
 const IndexContainer = styled.div`
@@ -22,7 +22,7 @@ const IndexContainer = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-  color: ${black03};
+  color: ${white30};
 `;
 
 const BigBall = styled.div`

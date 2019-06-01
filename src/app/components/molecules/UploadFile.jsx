@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import UploaderButton from '../atoms/uploaderButton';
+import UploaderButton from '../atoms/UploaderButton';
 import LinkButton from '../atoms/LinkButton';
 
 const ContentWrapper = styled.div`

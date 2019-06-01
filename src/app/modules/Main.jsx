@@ -9,28 +9,39 @@ import PasswordInput from '../components/atoms/PasswordInput';
 import InfoButton from '../components/atoms/InfoButton.atom';
 import Avatar from '../components/atoms/Avatar.atom';
 import ProgressiveImage from '../components/atoms/ProgressiveImage.atom';
+import Select from '../components/atoms/Select.atom';
 import UploadPhotoButton from '../components/atoms/UploadPhotoButton.atom';
 import StepFormHeader from '../components/organisms/StepFormHeader.organism';
 
 import { black } from '../settings/colors';
 
 const Wrapper = styled.div`
-    width: 100%;
-    height: 100vh;
-    padding: 45px;
-    background-color: ${black};
-    align-items: center;
-    font-size: 1em;
-    overflow-y: auto;
+  width: 100%;
+  height: 100vh;
+  padding: 45px;
+  background-color: ${black};
+  align-items: center;
+  font-size: 1em;
+  overflow-y: auto;
 `;
 
 const Space = styled.div`
-height: 60px;
-font-size: 1em;
+  height: 60px;
+  font-size: 1em;
 `;
 
 const Main = () => (
   <Wrapper>
+    <Select
+      placeholder="Estado"
+      options={[
+        { id: 'ba', label: 'Bahia' },
+        { id: 'sp', label: 'São Paulo' },
+        { id: 'rj', label: 'Rio de Janeiro' },
+      ]}
+      onClick={() => console.log('onClick')}
+    />
+    <Space />
     <Avatar src="https://api.adorable.io/avatars/285/abott@adorable.png" />
     <Space />
     <ProgressiveImage
