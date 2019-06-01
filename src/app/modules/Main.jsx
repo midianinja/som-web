@@ -5,13 +5,16 @@ import TagList from '../components/molecules/TagList';
 import InputGroup from '../components/molecules/InputGroup';
 import PasswordInput from '../components/atoms/PasswordInput';
 import UploadPhotoButton from '../components/atoms/UploadPhotoButton.atom';
-import StepFormHeader from '../components/organisms/stepFormHeader.organism';
+//import StepFormHeader from '../components/organisms/stepFormHeader.organism';
+import ProductorCard from '../components/molecules/ProductorCard';
+import UploaderButton from '../components/atoms/uploaderButton';
+import UploadFile from '../components/molecules/uploadFile';
 
 import { black } from '../settings/colors';
 
 const Wrapper = styled.div`
     width: 100%;
-    height: 90vh;
+    height: 100%;
     padding: 45px;
     background-color: ${black};
     display: flex;
@@ -27,30 +30,12 @@ const Space = styled.div`
 `;
 const Main = () => (
   <Wrapper>
-    <StepFormHeader
-      items={[
-        {
-          title: 'Crie sua página de artista',
-          description: 'Salvamos seus dados automaticamente. Se quiser, termine seu cadastro depois.',
-        }, 
-        {
-          title: 'Pagina 2 do caralho',
-          description: 'salvando um banza depois do outro.',
-        }, 
-        {
-          title: 'Maconheiro sem limites',
-          description: 'Chega em casa e fala que está com conjutivite.',
-        },
-        {
-          title: 'Nois fuma fuma',
-          description: 'Nunca para, maconheiro, sem limites.',
-        }
-      ]}
-      index={1}
-    />
+ 
     <UploadPhotoButton type="big" onClick={() => console.log('informação')} />
     <Space />
     <LinkButton>Link button</LinkButton>
+    <Space />
+    <UploaderButton text='Arquivo'/>
     <Space />
     <TagList
       text="samba"
@@ -67,6 +52,9 @@ const Main = () => (
     <Space />
     <PasswordInput placeholder="Digite sua senha aqui" />
     <Space />
+    <UploadFile title="Mapa de palco" subtitle="Com esse desenho fica mais fácil saber a posição de todos equipamentos no palco" type="Mapa"  />
+    <Space />
+    <ProductorCard />
   </Wrapper>
 );
 
