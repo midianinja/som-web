@@ -21,6 +21,7 @@ const Title = styled.div`
     font-size: 16px;
     line-height: 20px;
     color: ${white};
+`;
 
 const Subtitle = styled.div`
   width: 100%;
