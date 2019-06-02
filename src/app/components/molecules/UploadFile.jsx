@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import UploaderButton from '../atoms/UploaderButton';
 import LinkButton from '../atoms/LinkButton';
+import { white } from '../../settings/colors';
+
 
 const ContentWrapper = styled.div`
   width: 100%;
@@ -12,11 +14,11 @@ const ContentWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  width: 100%;
-  height: 20px;
-  font-size: 16px;
-  line-height: 20px;
-`;
+    width: 100%;
+    height: 20px;
+    font-size: 16px;
+    line-height: 20px;
+    color: ${white};
 
 const Subtitle = styled.div`
   width: 100%;

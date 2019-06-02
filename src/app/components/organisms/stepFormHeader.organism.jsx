@@ -1,8 +1,9 @@
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
-  magenta, white, white30,
+  magenta, white, white30, black03,
 } from '../../settings/colors';
 
 const Header = styled.div`
@@ -11,6 +12,19 @@ const Header = styled.div`
     flex-direction: column;
     padding: 20px;
     background-color: ${magenta};
+`;
+
+
+const Logo = styled.label`
+  color: ${black03};
+`;
+
+const IndexContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color: ${black03};
 `;
 
 const Logo = styled.label`
@@ -24,6 +38,7 @@ const IndexContainer = styled.div`
   align-items: center;
   color: ${white30};
 `;
+
 
 const BigBall = styled.div`
   width: 12px;
@@ -97,6 +112,7 @@ const StepFormHeader = (props) => {
     </Header>
   );
 };
+
 
 const itemShape = {
   title: PropTypes.string.isRequired,
