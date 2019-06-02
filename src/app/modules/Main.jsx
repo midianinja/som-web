@@ -11,6 +11,11 @@ import Avatar from '../components/atoms/Avatar.atom';
 import ProgressiveImage from '../components/atoms/ProgressiveImage.atom';
 import Select from '../components/atoms/Select.atom';
 import UploadPhotoButton from '../components/atoms/UploadPhotoButton.atom';
+//import StepFormHeader from '../components/organisms/stepFormHeader.organism';
+import ProductorCard from '../components/molecules/ProductorCard';
+import UploaderButton from '../components/atoms/uploaderButton';
+import UploadFile from '../components/molecules/uploadFile';
+import FollowersAndFollowing from '../components/atoms/FollowersAndFollowing';
 import StepFormHeader from '../components/organisms/StepFormHeader.organism';
 
 import { black } from '../settings/colors';
@@ -32,6 +37,7 @@ const Space = styled.div`
 
 const Main = () => (
   <Wrapper>
+
     <Select
       placeholder="Estado"
       options={[
@@ -80,6 +86,10 @@ const Main = () => (
     <Space />
     <LinkButton>Link button</LinkButton>
     <Space />
+    <UploaderButton text='Arquivo'/>
+    <Space />
+    <FollowersAndFollowing />
+    <Space />
     <TagList
       text="samba"
       handleClose={() => console.log('here')}
@@ -97,6 +107,9 @@ const Main = () => (
     <Space />
     <PasswordInput placeholder="Digite sua senha aqui" />
     <Space />
+    <UploadFile title="Mapa de palco" subtitle="Com esse desenho fica mais fácil saber a posição de todos equipamentos no palco" type="Mapa"  />
+    <Space />
+    <ProductorCard />
   </Wrapper>
 );
 
