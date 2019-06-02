@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { black03, white } from '../../settings/colors';
+import { white30, white } from '../../settings/colors';
 
 const IconBigContainer = styled.button`
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-color:  ${black03};
+  background-color:  ${white30};
 `;
 
 const IconSmallContainer = styled.button`

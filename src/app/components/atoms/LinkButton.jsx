@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { white, purple, green, orange, magenta, gray } from '../../settings/colors';
+import {
+  purple, green, orange, magenta, gray,
+} from '../../settings/colors';
 
 const sizes = {
-    medium: '38px',
+  medium: '38px',
 };
 
 /**
@@ -12,15 +14,11 @@ const sizes = {
  * @returns contains size in pixel
  */
 function getSize(key) {
-    return sizes[key] ? sizes[key] : sizes.medium;
+  return sizes[key] ? sizes[key] : sizes.medium;
 }
 
 const colors = {
-    purple,
-    green,
-    orange,
-    magenta,
-    gray,
+  purple, green, orange, magenta, gray,
 };
 
 /**
@@ -29,35 +27,39 @@ const colors = {
  * @returns contains color in hexa or rgba
  */
 function getColor(key) {
-    return colors[key] ? colors[key] : colors.purple;
+  return colors[key] ? colors[key] : colors.purple;
 }
 
 const LinkButton = styled.button`
-    height: ${(props) => getSize(props.size)};
-    background-color: transparent;
-    color: ${(props) => getColor(props.color)};
-    cursor: pointer;
-    transition-duration: 0.3s;
-    font-size: 0.8571428571em;
+  height: ${props => getSize(props.size)};
+  background-color: transparent;
+  color: ${props => getColor(props.color)};
+  cursor: pointer;
+  transition-duration: 0.3s;
+  font-size: 0.8571428571em;
+  
+  :focus {
+    outline: none;
+  }
 
-    :focus {
-        outline: none;
-    }
+  :disabled {
+    background-color: ${gray};
+    cursor: not-allowed;
+  }
 
-    :disabled {
-        background-color: ${gray};
-        cursor: not-allowed;
-    }
+  ${props => props.customStyle}
 `;
 
 LinkButton.propTypes = {
-    size: PropTypes.string,
-    color: PropTypes.string,
+  size: PropTypes.string,
+  color: PropTypes.string,
+  customStyle: PropTypes.string,
 };
 
 LinkButton.defualtProps = {
-    size: 'medium',
-    color: 'purple',
+  size: 'medium',
+  color: 'purple',
+  customStyle: '',
 };
 
 export default LinkButton;
