@@ -1,34 +1,21 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
-  magenta, white, white30, black03,
+  magenta, white, white30,
 } from '../../settings/colors';
 
 const Header = styled.div`
     display: flex;
     width: 100%;
     flex-direction: column;
-    padding: 20px;
+    padding: 30px;
     background-color: ${magenta};
 `;
 
-
-const Logo = styled.label`
-  color: ${black03};
-`;
-
-const IndexContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  color: ${black03};
-`;
-
 const Logo = styled.label`
   color: ${white30};
+  margin-bottom: 30px;
 `;
 
 const IndexContainer = styled.div`
@@ -38,7 +25,6 @@ const IndexContainer = styled.div`
   align-items: center;
   color: ${white30};
 `;
-
 
 const BigBall = styled.div`
   width: 12px;
@@ -64,27 +50,27 @@ const SmallBall = styled.div`
   border-radius: 50%;
 `;
 
-const Title = styled.h2`
-  font-size: 1.4em;
-  padding: 20px 0;
+const Title = styled.h1`
+  font-size: 1.5714285714em;
+  margin-top: 22px;
+  font-weight: 400;
   color: ${white};
-
+  letter-spacing: 0.16px;
 `;
 
 const Body = styled.div`
-  display: flex;
   width: 100%;
   color: ${white};
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
-const Text = styled.p`
+const Text = styled.h3`
   width: 100%;
   color: ${white};
-  justify-content: center;
-  align-items: center;
+  font-size: 0.8571428571rem;
+  letter-spacing: 0.16px;
+  line-height: 1.5384615385em;
+  font-weight: 300;
+  margin-top: 22px;
 `;
 
 const renderBall = ({ items, index }) => items.map((e, i) => {
