@@ -87,7 +87,7 @@ const renderOptions = (options, onClick) => options.map(({ id, image, label }) =
 function Select(props) {
   const [focus, setFocus] = useState(false);
   const {
-    placeholder, options, selected, tabIndex, onClick,
+    placeholder, options, selected, tabIndex, onSelect,
   } = props;
   return (
     <SelectWrapper
@@ -103,7 +103,7 @@ function Select(props) {
         />
       </Label>
       <Options focus={focus}>
-        {renderOptions(options, onClick)}
+        {renderOptions(options, onSelect)}
       </Options>
     </SelectWrapper>
   );
@@ -119,7 +119,7 @@ Select.propTypes = {
   placeholder: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.shape(optionShape)),
   selected: PropTypes.shape(optionShape),
-  onClick: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
   tabIndex: PropTypes.number,
 };
 

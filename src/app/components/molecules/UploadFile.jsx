@@ -8,7 +8,9 @@ import LinkButton from '../atoms/LinkButton';
 const ContentWrapper = styled.div`
   width: 100%;
   height: 110px;
-  margin: 40px auto;
+  margin-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px; 
 `;
 
 const Title = styled.div`
@@ -24,23 +26,20 @@ const Subtitle = styled.div`
   font-size: 13px;
   line-height: 20px;
   margin-top: 5px;
+  font-weight: 300;
 `;
 
 const ButtonsWrapper = styled.div`
   width: 100%;
   heigth: 30px;
   display: flex;
-
+  align-items: center;
   margin-top: 20px;
 `;
 
 const Space = styled.div`
   width: 15px;
   heigth: 100%;
-`;
-
-const customStyle = `
-  color: red;
 `;
 
 const UploadFile = ({ title, subtitle, type }) => (
@@ -50,7 +49,10 @@ const UploadFile = ({ title, subtitle, type }) => (
     <ButtonsWrapper>
       <LinkButton color="green"> ver exemplo</LinkButton>
       <Space />
-      <UploaderButton customStyle={customStyle}text={type} handleClick={() => console.log('clicou')} />
+      <UploaderButton
+        text={type}
+        handleClick={() => console.log('clicou')}
+      />
     </ButtonsWrapper>
   </ContentWrapper>
 

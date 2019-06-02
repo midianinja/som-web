@@ -6,8 +6,9 @@ import {
 } from '../../settings/colors';
 
 const InptGroupContainer = styled.div`
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
 `;
 const Label = styled.label`
   font-size: 0.8em;

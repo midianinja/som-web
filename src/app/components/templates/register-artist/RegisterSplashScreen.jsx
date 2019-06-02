@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { white, purple, secondaryPurple } from '../../settings/colors';
-import PrimaryButton from '../atoms/PrimaryButton';
+import { white, purple } from '../../../settings/colors';
+import PrimaryButton from '../../atoms/PrimaryButton';
 
 const View = styled.div`
     width: 100vw;
@@ -43,14 +43,22 @@ const SpaceTwo = styled.div`
 `;
 
 const ConfirmationPage = ({ name }) => (
-    <View>
-        <Space />
-        <Welcome> Seja bem vinda ao Som, </Welcome>
-        <Name> {name} :)</Name>
-        <SpaceTwo />
-        <Description> Agora é só se inscrever nos eventos que quiser tocar</Description>
-        <PrimaryButton color='secondaryPurple'> INSCREVER AGORA </PrimaryButton>
-    </View>
+  <View>
+    <Space />
+    <Welcome> Seja bem vinda ao Som, </Welcome>
+    <Name>{`${name} :)`}</Name>
+    <SpaceTwo />
+    <Description> Agora é só se inscrever nos eventos que quiser tocar</Description>
+    <PrimaryButton color="secondaryPurple"> INSCREVER AGORA </PrimaryButton>
+  </View>
 );
+
+ConfirmationPage.propTypes = {
+  name: PropTypes.string,
+};
+
+ConfirmationPage.defaultProps = {
+  name: '',
+};
 
 export default ConfirmationPage;

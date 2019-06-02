@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import { white, purple, green, orange, magenta, yellow } from '../../settings/colors';
 
 const colors = {
-    purple,
-    green,
-    orange,
-    magenta,
-    yellow,
+  purple,
+  green,
+  orange,
+  magenta,
+  yellow,
 };
 
 /**
@@ -17,14 +17,14 @@ const colors = {
  * @returns contains color in hexa or rgba
  */
 function getColor(key) {
-    return colors[key] ? colors[key] : colors.purple;
+  return colors[key] ? colors[key] : colors.purple;
 }
 
 const TagWrapper = styled.label`
     display: inline-block;
     padding: 2px 5px;
     padding-right: 12px;
-    background-color: ${(props) => getColor(props.color)};
+    background-color: ${props => getColor(props.color)};
     color: ${white};
     text-transform: lowercase;
     border-radius: 8px;
@@ -34,6 +34,8 @@ const TagWrapper = styled.label`
     margin-right: 10px;
     margin-bottom: 10px;
     cursor: pointer;
+
+    ${props => props.customStyle}
 `;
 
 const CloseIcon = styled.img`
@@ -48,24 +50,35 @@ const CloseIcon = styled.img`
  * @returns contains Tag Component
  */
 function Tag(props) {
-    const { color, handleClose, text } = props;
-    return (
-        <TagWrapper color={color}>
-            <CloseIcon color={color} src='/icons/cancel_outlined.svg' alt='botão de cancelar' onClick={handleClose} />
-            {text}
-        </TagWrapper>
-    );
+  const {
+    color, id, handleClose, text, customStyle,
+  } = props;
+  return (
+    <TagWrapper customStyle={customStyle} color={color}>
+      <CloseIcon
+        color={color}
+        src="/icons/cancel_outlined.svg"
+        alt="botão de cancelar"
+        onClick={() => handleClose(id)}
+      />
+      {text}
+    </TagWrapper>
+  );
 }
 
 Tag.propTypes = {
-    color: PropTypes.string,
-    handleClose: PropTypes.func.isRequired,
-    text: PropTypes.string,
+  color: PropTypes.string,
+  handleClose: PropTypes.func.isRequired,
+  id: PropTypes.string,
+  text: PropTypes.string,
+  customStyle: PropTypes.string,
 };
 
 Tag.defaultProps = {
-    color: 'purple',
-    text: 'Label',
+  color: 'purple',
+  id: '',
+  text: 'Label',
+  customStyle: '',
 };
 
 export default Tag;
