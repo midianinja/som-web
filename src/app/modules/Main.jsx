@@ -9,6 +9,7 @@ import UploadPhotoButton from '../components/atoms/UploadPhotoButton.atom';
 import ProductorCard from '../components/molecules/ProductorCard';
 import UploaderButton from '../components/atoms/uploaderButton';
 import UploadFile from '../components/molecules/uploadFile';
+import FollowersAndFollowing from '../components/atoms/FollowersAndFollowing';
 
 import { black } from '../settings/colors';
 
@@ -36,6 +37,8 @@ const Main = () => (
     <LinkButton>Link button</LinkButton>
     <Space />
     <UploaderButton text='Arquivo'/>
+    <Space />
+    <FollowersAndFollowing />
     <Space />
     <TagList
       text="samba"
