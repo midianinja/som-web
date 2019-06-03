@@ -16,13 +16,14 @@ import ProductorCard from '../components/molecules/ProductorCard';
 import EventInfo from '../components/molecules/EventInfo';
 import FollowersAndFollowing from '../components/atoms/FollowersAndFollowing';
 //import StepFormHeader from '../components/organisms/StepFormHeader.organism';
+import EventCard from '../components/molecules/EventCard';
 
 import { black } from '../settings/colors';
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
-  padding: 45px;
+  padding: 30px;
   background-color: ${black};
   align-items: center;
   font-size: 1em;
@@ -36,15 +37,17 @@ const Space = styled.div`
 
 const Main = () => (
   <Wrapper>
-    <InputGroup label="Nome" error="Nome inválido" info="Apenas letras">
-      <Input placeholder="Digite aqui" />
+    <InputGroup label='Nome' error='Nome inválido' info='Apenas letras'>
+      <Input placeholder='Digite aqui' />
     </InputGroup>
     <Space />
-    <PasswordInput placeholder="Digite sua senha aqui" />
+    <PasswordInput placeholder='Digite sua senha aqui' />
     <Space />
     <ProductorCard />
     <Space />
     <EventInfo />
+    <Space />
+    <EventCard />
   </Wrapper>
 );
 

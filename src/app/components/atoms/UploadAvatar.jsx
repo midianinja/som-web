@@ -9,7 +9,7 @@ const PreLoaderImage = styled.img`
   border-radius: 50%;
   opacity: ${(props) => {
     console.log(props);
-    return (!props.src ? 0 : 1);
+    return !props.src ? 0 : 1;
   }}
   transition-property: opacity;
   transition-duration: 1s;
@@ -68,10 +68,10 @@ function UploadAvatar(props) {
   if (!src) {
     return (
       <Fragment>
-        <Uploader htmlFor="uploader-input">
-          <Icon src="/icons/add_a_photo.png" />
+        <Uploader htmlFor='uploader-input'>
+          <Icon src='/icons/add_a_photo.png' />
         </Uploader>
-        <Input type="file" id="uploader-input" />
+        <Input type='file' id='uploader-input' />
       </Fragment>
     );
   }

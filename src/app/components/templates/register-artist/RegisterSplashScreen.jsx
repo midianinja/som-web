@@ -5,41 +5,41 @@ import { white, purple } from '../../../settings/colors';
 import PrimaryButton from '../../atoms/PrimaryButton';
 
 const View = styled.div`
-    width: 100vw;
-    height: 100vh;
-    background-color: ${purple};
-    color: ${white};
-    text-align: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: ${purple};
+  color: ${white};
+  text-align: center;
 `;
 
 const Space = styled.div`
-    height: 43%;
-    width: 100%;
+  height: 43%;
+  width: 100%;
 `;
 
 const Welcome = styled.div`
-    width: 100%;
-    height: 40px;
-    font-size: 24px;
-    line-height: 26px;
+  width: 100%;
+  height: 40px;
+  font-size: 24px;
+  line-height: 26px;
 `;
 
 const Name = styled.div`
-    width: 100%;
-    height: 60px;
-    font-size: 48px;
-    line-height: 48px;
+  width: 100%;
+  height: 60px;
+  font-size: 48px;
+  line-height: 48px;
 `;
 
 const Description = styled.div`
-    width: 100%;
-    height: 60px;
-    font-size: 16px;
+  width: 100%;
+  height: 60px;
+  font-size: 16px;
 `;
 
 const SpaceTwo = styled.div`
-    width: 100%;
-    height: calc(57% - 240px);
+  width: 100%;
+  height: calc(57% - 240px);
 `;
 
 const ConfirmationPage = ({ name }) => (
@@ -49,7 +49,7 @@ const ConfirmationPage = ({ name }) => (
     <Name>{`${name} :)`}</Name>
     <SpaceTwo />
     <Description> Agora é só se inscrever nos eventos que quiser tocar</Description>
-    <PrimaryButton color="secondaryPurple"> INSCREVER AGORA </PrimaryButton>
+    <PrimaryButton color='secondaryPurple'> INSCREVER AGORA </PrimaryButton>
   </View>
 );
 

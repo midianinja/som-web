@@ -41,10 +41,7 @@ function RegisterArtist() {
 
   return (
     <Form>
-      <StepFormHeader
-        items={steps}
-        index={step}
-      />
+      <StepFormHeader items={steps} index={step} />
       <BasicInformationFieldset
         values={{
           name,
@@ -59,9 +56,9 @@ function RegisterArtist() {
         handleCityChange={({ target }) => setCity(target.value)}
         handleIntegrantsChange={({ target }) => setIntegrants(target.value)}
         handleNameChange={({ target }) => setName(target.value)}
-        handleCountryChange={option => setCountry(option)}
-        handleStateChange={option => setState(option)}
-        handleMusicalGenresChange={data => setMusicalGenres(data)}
+        handleCountryChange={(option) => setCountry(option)}
+        handleStateChange={(option) => setState(option)}
+        handleMusicalGenresChange={(data) => setMusicalGenres(data)}
       />
       <FilesFieldset />
     </Form>

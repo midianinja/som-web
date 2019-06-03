@@ -8,7 +8,7 @@ const PreLoaderImage = styled.img`
   border-radius: 50%;
   opacity: ${(props) => {
     console.log(props);
-    return (!props.src ? 0 : 1);
+    return !props.src ? 0 : 1;
   }}
   transition-property: opacity;
   transition-duration: 1s;

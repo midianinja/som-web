@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import Tag from '../atoms/Tag';
 
 const List = styled.div`
-    display: inline-flex;
-    overflow-y: auto;
-    flex-wrap: wrap;
-    
-    ${props => props.customStyle}
+  display: inline-flex;
+  overflow-y: auto;
+  flex-wrap: wrap;
+
+  ${(props) => props.customStyle}
 `;
 
 /**
