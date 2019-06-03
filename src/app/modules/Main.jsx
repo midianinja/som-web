@@ -13,10 +13,9 @@ import Select from '../components/atoms/Select.atom';
 import UploadPhotoButton from '../components/atoms/UploadPhotoButton.atom';
 //import StepFormHeader from '../components/organisms/stepFormHeader.organism';
 import ProductorCard from '../components/molecules/ProductorCard';
-import UploaderButton from '../components/atoms/uploaderButton';
-import UploadFile from '../components/molecules/uploadFile';
+import EventInfo from '../components/molecules/EventInfo';
 import FollowersAndFollowing from '../components/atoms/FollowersAndFollowing';
-import StepFormHeader from '../components/organisms/StepFormHeader.organism';
+//import StepFormHeader from '../components/organisms/StepFormHeader.organism';
 
 import { black } from '../settings/colors';
 
@@ -37,79 +36,15 @@ const Space = styled.div`
 
 const Main = () => (
   <Wrapper>
-
-    <Select
-      placeholder="Estado"
-      options={[
-        { id: 'ba', label: 'Bahia' },
-        { id: 'sp', label: 'São Paulo' },
-        { id: 'rj', label: 'Rio de Janeiro' },
-      ]}
-      onClick={() => console.log('onClick')}
-    />
-    <Space />
-    <Avatar src="https://api.adorable.io/avatars/285/abott@adorable.png" />
-    <Space />
-    <ProgressiveImage
-      width="120px"
-      height="120px"
-      src="https://api.adorable.io/avatars/270/abott@adorable.png"
-    />
-    <Space />
-    <InfoButton onClick={() => console.log('informação')} />
-    <Space />
-    <PrimaryButton>CLIQUE-ME</PrimaryButton>
-    <Space />
-    <StepFormHeader
-      items={[
-        {
-          title: 'Crie sua página de artista',
-          description: 'Salvamos seus dados automaticamente. Se quiser, termine seu cadastro depois.',
-        },
-        {
-          title: 'Pagina 2 do caralho',
-          description: 'salvando um banza depois do outro.',
-        },
-        {
-          title: 'Maconheiro sem limites',
-          description: 'Chega em casa e fala que está com conjutivite.',
-        },
-        {
-          title: 'Nois fuma fuma',
-          description: 'Nunca para, maconheiro, sem limites.',
-        },
-      ]}
-      index={1}
-    />
-    <Space />
-    <UploadPhotoButton type="big" onClick={() => console.log('informação')} />
-    <Space />
-    <LinkButton>Link button</LinkButton>
-    <Space />
-    <UploaderButton text='Arquivo'/>
-    <Space />
-    <FollowersAndFollowing />
-    <Space />
-    <TagList
-      text="samba"
-      handleClose={() => console.log('here')}
-      data={[
-        { text: 'forrô', id: 'cib1', color: 'purple' },
-        { text: 'funk', id: 'cib2', color: 'yellow' },
-        { text: 'axé', id: 'cib3', color: 'green' },
-        { text: 'samba', id: 'cib4', color: 'orange' },
-      ]}
-    />
-    <Space />
     <InputGroup label="Nome" error="Nome inválido" info="Apenas letras">
       <Input placeholder="Digite aqui" />
     </InputGroup>
     <Space />
     <PasswordInput placeholder="Digite sua senha aqui" />
     <Space />
-    <UploadFile title="Mapa de palco" subtitle="Com esse desenho fica mais fácil saber a posição de todos equipamentos no palco" type="Mapa"  />
-    <Space />
     <ProductorCard />
+    <Space />
+    <EventInfo />
   </Wrapper>
 );
 

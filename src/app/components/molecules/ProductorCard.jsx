@@ -8,7 +8,6 @@ import LinkButton from '../atoms/LinkButton';
 
 const Container = styled.div`
 	width: 100%;
-	height: 100%;
 	border-radius: 20px;
 	background: #FFFFFF;
 	border: 1px solid #F2F2F2;
