@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  green, white10, white30, white,
-} from '../../settings/colors';
+import { green, white10, white30, white } from '../../settings/colors';
 
 const SelectWrapper = styled.div`
   color: ${(props) => {
@@ -41,7 +39,7 @@ const Option = styled.li`
   border-radius: 25px;
 
   :hover {
-    background-color: ${green}
+    background-color: ${green};
   }
 `;
 
@@ -77,34 +75,24 @@ const Label = styled.label`
  * @param {function} onClick it is the function that select the option
  * @returns contains Option Component array
  */
-const renderOptions = (options, onClick) => options.map(({ id, image, label }) => (
-  <Option key={id} id={id} onClick={() => onClick({ id, label, image })}>
-    <Image src={image} visible={!!image} />
-    {label}
-  </Option>
-));
+const renderOptions = (options, onClick) =>
+  options.map(({ id, image, label }) => (
+    <Option key={id} id={id} onClick={() => onClick({ id, label, image })}>
+      <Image src={image} visible={!!image} />
+      {label}
+    </Option>
+  ));
 
 function Select(props) {
   const [focus, setFocus] = useState(false);
-  const {
-    placeholder, options, selected, tabIndex, onSelect,
-  } = props;
+  const { placeholder, options, selected, tabIndex, onSelect } = props;
   return (
-    <SelectWrapper
-      focus={focus}
-      onBlur={() => setFocus(false)}
-      tabIndex={tabIndex}
-    >
+    <SelectWrapper focus={focus} onBlur={() => setFocus(false)} tabIndex={tabIndex}>
       <Label onClick={() => setFocus(!focus)}>
         {selected.label || placeholder}
-        <Arrow
-          src={!focus ? '/icons/down-arrow.svg' : '/icons/up-arrow.svg'}
-          alt={focus ? '' : ''}
-        />
+        <Arrow src={!focus ? '/icons/down-arrow.svg' : '/icons/up-arrow.svg'} alt={focus ? '' : ''} />
       </Label>
-      <Options focus={focus}>
-        {renderOptions(options, onSelect)}
-      </Options>
+      <Options focus={focus}>{renderOptions(options, onSelect)}</Options>
     </SelectWrapper>
   );
 }

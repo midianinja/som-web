@@ -7,13 +7,13 @@ import EventPage from './modules/EventPage';
 
 const history = createBrowserHistory();
 
-history.listen(() => { });
+history.listen(() => {});
 const AppRouter = () => (
   <Router history={history}>
     <Switch>
-      <Route exact path="/test" component={() => <Home />} />
-      <Route exact path="/evento/:eventId" component={() => <EventPage /> } />
-      <Route exact path="/" component={() => <RegisterArtist />} />
+      <Route exact path='/test' component={() => <Home />} />
+      <Route exact path='/evento/:eventId' component={() => <EventPage />} />
+      <Route exact path='/' component={() => <RegisterArtist />} />
     </Switch>
   </Router>
 );

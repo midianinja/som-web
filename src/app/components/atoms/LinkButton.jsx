@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  purple, green, orange, magenta, gray, black,
-} from '../../settings/colors';
+import { purple, green, orange, magenta, gray, black } from '../../settings/colors';
 
 const sizes = {
+  small: '30px',
   medium: '38px',
-  default: 'none'
+  default: 'none',
 };
 
 /**
@@ -19,7 +18,12 @@ function getSize(key) {
 }
 
 const colors = {
-  purple, green, orange, magenta, gray, black,
+  purple,
+  green,
+  orange,
+  magenta,
+  gray,
+  black,
 };
 
 /**
@@ -34,18 +38,18 @@ function getColor(key) {
 const fontSizes = {
   medium: '0.8571428571em',
   large: '1em',
-
+  xlarge: '1.3em',
 };
 
-const getFontSize = (key) => fontSizes[key] ? fontSizes[key] : fontSizes.medium;
+const getFontSize = (key) => (fontSizes[key] ? fontSizes[key] : fontSizes.medium);
 
 const LinkButton = styled.button`
-  height: ${props => getSize(props.size)};
+  height: ${(props) => getSize(props.size)};
   background-color: transparent;
-  color: ${props => getColor(props.color)};
+  color: ${(props) => getColor(props.color)};
   cursor: pointer;
   transition-duration: 0.3s;
-  font-size: ${props => getFontSize(props.fontSize)}
+  font-size: ${(props) => getFontSize(props.fontSize)}
   line-height: 1em;
   
   :focus {
@@ -57,7 +61,7 @@ const LinkButton = styled.button`
     cursor: not-allowed;
   }
 
-  ${props => props.customStyle}
+  ${(props) => props.customStyle}
 `;
 
 LinkButton.propTypes = {

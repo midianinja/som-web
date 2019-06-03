@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  magenta, white,
-} from '../../settings/colors';
+import { magenta, white } from '../../settings/colors';
 
 const InptGroupContainer = styled.div`
   display: flex;
@@ -22,14 +20,12 @@ const ErrorText = styled.span`
 `;
 
 const InfoText = styled.span`
-    font-size: 0.6em;
-    margin-top: 5px;
-    color: ${white};
+  font-size: 0.6em;
+  margin-top: 5px;
+  color: ${white};
 `;
 
-const InputGroup = ({
-  children, label, info, error,
-}) => (
+const InputGroup = ({ children, label, info, error }) => (
   <InptGroupContainer>
     {label ? <Label>{label}</Label> : null}
     {children}

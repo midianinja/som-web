@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { white, purple, green, orange, magenta, gray, secondaryPurple } from '../../settings/colors';
 
 const sizes = {
-    medium: '38px',
+  medium: '38px',
 };
 
 /**
@@ -12,16 +12,16 @@ const sizes = {
  * @returns contains size in pixel
  */
 function getSize(key) {
-    return sizes[key] ? sizes[key] : sizes.medium;
+  return sizes[key] ? sizes[key] : sizes.medium;
 }
 
 const colors = {
-    secondaryPurple,
-    purple,
-    green,
-    orange,
-    magenta,
-    gray,
+  secondaryPurple,
+  purple,
+  green,
+  orange,
+  magenta,
+  gray,
 };
 
 /**
@@ -30,13 +30,13 @@ const colors = {
  * @returns contains color in hexa or rgba
  */
 function getColor(key) {
-    console.log('entro aqui no get color', key);
-    console.log(colors[key]);
-    return colors[key] ? colors[key] : colors.purple;
+  console.log('entro aqui no get color', key);
+  console.log(colors[key]);
+  return colors[key] ? colors[key] : colors.purple;
 }
 
 const hoverColors = {
-    purple: green,
+  purple: green,
 };
 
 /**
@@ -45,7 +45,7 @@ const hoverColors = {
  * @returns contains hover color in hexa or rgba
  */
 function getHoverColor(key) {
-    return hoverColors[key] ? colors[key] : hoverColors.purple;
+  return hoverColors[key] ? colors[key] : hoverColors.purple;
 }
 
 const PrimaryButton = styled.button`
@@ -74,13 +74,13 @@ const PrimaryButton = styled.button`
 `;
 
 PrimaryButton.propTypes = {
-    size: PropTypes.string,
-    color: PropTypes.string,
+  size: PropTypes.string,
+  color: PropTypes.string,
 };
 
 PrimaryButton.defualtProps = {
-    size: 'medium',
-    color: 'purple',
+  size: 'medium',
+  color: 'purple',
 };
 
 export default PrimaryButton;

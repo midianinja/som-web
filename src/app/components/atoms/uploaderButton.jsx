@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import {
-  white, purple, green, gray,
-} from '../../settings/colors';
+import { white, purple, green, gray } from '../../settings/colors';
 
 const Button = styled.div`
   background-color: ${purple};
@@ -30,7 +28,7 @@ const Button = styled.div`
     cursor: not-allowed;
   }
 
-  ${props => props.customStyle}
+  ${(props) => props.customStyle}
 `;
 
 const Title = styled.div`
@@ -48,7 +46,7 @@ const Icon = styled.img`
 const UploaderButton = ({ customStyle, text, handleClick }) => (
   <Button customStyle={customStyle} onClick={handleClick}>
     <Title>{`Subir ${text}`}</Title>
-    <Icon src="/icons/upload.svg" />
+    <Icon src='/icons/upload.svg' />
   </Button>
 );
 

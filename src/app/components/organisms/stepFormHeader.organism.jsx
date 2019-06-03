@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  magenta, white, white30,
-} from '../../settings/colors';
+import { magenta, white, white30 } from '../../settings/colors';
 
 const Header = styled.div`
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    padding: 30px;
-    background-color: ${magenta};
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 30px;
+  background-color: ${magenta};
 `;
 
 const Logo = styled.label`
@@ -73,32 +71,26 @@ const Text = styled.h3`
   margin-top: 22px;
 `;
 
-const renderBall = ({ items, index }) => items.map((e, i) => {
-  if (index === i) return (<BigBall />);
-  if (index + 1 === i || index - 1 === i) return (<MidBall />);
-  return (<SmallBall />);
-});
+const renderBall = ({ items, index }) =>
+  items.map((e, i) => {
+    if (index === i) return <BigBall />;
+    if (index + 1 === i || index - 1 === i) return <MidBall />;
+    return <SmallBall />;
+  });
 
 const StepFormHeader = (props) => {
   const { items, index } = props;
   return (
     <Header {...props}>
       <Logo>LOGO</Logo>
-      <IndexContainer>
-        {renderBall(props)}
-      </IndexContainer>
+      <IndexContainer>{renderBall(props)}</IndexContainer>
       <Body>
-        <Title>
-          {items[index].title}
-        </Title>
-        <Text>
-          {items[index].description}
-        </Text>
+        <Title>{items[index].title}</Title>
+        <Text>{items[index].description}</Text>
       </Body>
     </Header>
   );
 };
-
 
 const itemShape = {
   title: PropTypes.string.isRequired,
