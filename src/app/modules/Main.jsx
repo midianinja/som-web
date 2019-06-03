@@ -16,7 +16,8 @@ import ProductorCard from '../components/molecules/ProductorCard';
 import EventInfo from '../components/molecules/EventInfo';
 import FollowersAndFollowing from '../components/atoms/FollowersAndFollowing';
 //import StepFormHeader from '../components/organisms/StepFormHeader.organism';
-import EventCard from '../components/molecules/EventCard';
+// import EventCard from '../components/molecules/EventCard';
+import OtherEvents from '../components/molecules/OtherEvents';
 
 import { black } from '../settings/colors';
 
@@ -47,7 +48,7 @@ const Main = () => (
     <Space />
     <EventInfo />
     <Space />
-    <EventCard />
+    <OtherEvents />
   </Wrapper>
 );
 
