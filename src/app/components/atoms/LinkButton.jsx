@@ -70,7 +70,7 @@ LinkButton.propTypes = {
   customStyle: PropTypes.string,
 };
 
-LinkButton.defualtProps = {
+LinkButton.defaultProps = {
   size: 'medium',
   color: 'purple',
   customStyle: '',

@@ -17,13 +17,13 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 2em;
-  line-height: 2em;
+  font-size: 1.8em;
+  line-height: 1.2em;
   color: white;
 `;
 
 const Space = styled.div`
-  height: 30px;
+  height: 15px;
   width: 100%;
 `;
 

@@ -12,7 +12,7 @@ const AppRouter = () => (
   <Router history={history}>
     <Switch>
       <Route exact path='/test' component={() => <Home />} />
-      <Route exact path='/evento/:eventId' component={() => <EventPage />} />
+      <Route exact path='/event' component={() => <EventPage />} />
       <Route exact path='/' component={() => <RegisterArtist />} />
     </Switch>
   </Router>

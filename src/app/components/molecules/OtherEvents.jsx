@@ -31,12 +31,12 @@ const Title = styled.div`
   color: white;
 `;
 
-const OtherEvents = () => (
+const OtherEvents = ({ name, at }) => (
 <Container>
 	<Header>
-		<Title>Outros Eventos de </Title> <HSpace />
+		<Title>Outros Eventos { at } </Title> <HSpace />
 		<LinkButton color="green" fontSize="xlarge" size="default">
-			Carlos Eduardo
+			{ name }
 		</LinkButton> 
 	</Header>
 	<Space />
