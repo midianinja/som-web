@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { white30 } from '../../settings/colors';
 
-const PreLoaderImage = styled.img`
+const Wrapper = styled.div`
+  display: inline-block;
   width: 120px;
   height: 120px;
   border-radius: 50%;
+  overflow: hidden;
+  background-color: ${white30};
+  ${props => props.customStyle}
+`;
+
+const PreLoaderImage = styled.img`
+  width: 100%;
+  height: 100%;
   opacity: ${(props) => {
-    console.log(props);
-    return (!props.src ? 0 : 1);
+    console.log('');
+    return !props.src ? 0 : 1;
   }}
   transition-property: opacity;
   transition-duration: 1s;
@@ -37,23 +47,31 @@ function load(src, callback) {
  */
 function Avatar(props) {
   const [loaddedSrc, setLoaddedSrc] = useState(null);
-  const { src, alt, title } = props;
+  const {
+    src, alt, title, customStyle,
+  } = props;
 
   useEffect(() => {
     load(src, setLoaddedSrc);
   });
 
-  return <PreLoaderImage src={loaddedSrc} alt={alt} title={title} />;
+  return (
+    <Wrapper customStyle={customStyle}>
+      <PreLoaderImage src={loaddedSrc} alt={alt} title={title} />
+    </Wrapper>
+  );
 }
 
 Avatar.propTypes = {
   alt: PropTypes.string,
-  title: PropTypes.string,
+  customStyle: PropTypes.string,
   src: PropTypes.string,
+  title: PropTypes.string,
 };
 
 Avatar.defaultProps = {
   alt: '',
+  customStyle: '',
   title: '',
   src: '',
 };

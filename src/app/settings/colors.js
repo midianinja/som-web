@@ -15,3 +15,4 @@ export const gray = '#5A5A5A';
 export const gray02 = '#B3B3B3';
 export const wrapperModal = 'rgba(0, 0, 0, 0.8)';
 export const red = '#EB5858';
+export const transparent = 'rgba(0, 0, 0, 0)';

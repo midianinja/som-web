@@ -13,7 +13,7 @@ const PreLoaderImage = styled.img`
   }}
   opacity: ${(props) => {
     const { src } = props;
-    return (!src ? 0 : 1);
+    return !src ? 0 : 1;
   }}
   transition-property: opacity;
   transition-duration: 1s;
@@ -42,23 +42,13 @@ function load(src, callback) {
  */
 function ProgressiveImage(props) {
   const [loaddedSrc, setLoaddedSrc] = useState(null);
-  const {
-    src, alt, title, width, height,
-  } = props;
+  const { src, alt, title, width, height } = props;
 
   useEffect(() => {
     load(src, setLoaddedSrc);
   });
 
-  return (
-    <PreLoaderImage
-      width={width}
-      height={height}
-      src={loaddedSrc}
-      alt={alt}
-      title={title}
-    />
-  );
+  return <PreLoaderImage width={width} height={height} src={loaddedSrc} alt={alt} title={title} />;
 }
 
 ProgressiveImage.propTypes = {

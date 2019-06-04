@@ -7,14 +7,14 @@ const IconBigContainer = styled.button`
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-color:  ${white30};
+  background-color: ${white30};
 `;
 
 const IconSmallContainer = styled.button`
   width: 32px;
   height: 32px;
   border-radius: 32px;
-  background-color:  ${white};
+  background-color: ${white};
 `;
 
 const Icon = styled.img`
@@ -34,17 +34,13 @@ const UploadPhotoButton = (props) => {
   if (type === 'small') {
     return (
       <IconSmallContainer {...props}>
-        <SmallIcon
-          src="/icons/photo.svg"
-        />
+        <SmallIcon src='/icons/photo.svg' />
       </IconSmallContainer>
     );
   }
   return (
     <IconBigContainer {...props}>
-      <Icon
-        src="/icons/photo_plus.svg"
-      />
+      <Icon src='/icons/photo_plus.svg' />
     </IconBigContainer>
   );
 };

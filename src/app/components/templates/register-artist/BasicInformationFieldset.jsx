@@ -26,8 +26,12 @@ const musicalGenresCustomStyle = `
 
 function BasicInformationFieldset(props) {
   const {
-    handleNameChange, handleIntegrantsChange, handleCountrySelect,
-    handleStateSelect, handleCityChange, handleAboutChange,
+    handleNameChange,
+    handleIntegrantsChange,
+    handleCountrySelect,
+    handleStateSelect,
+    handleCityChange,
+    handleAboutChange,
     values,
   } = props;
 
@@ -38,64 +42,26 @@ function BasicInformationFieldset(props) {
         <UploadAvatar />
       </InputGroup>
       <InputGroup>
-        <Input
-          id="name"
-          placeholder="Nome da banda"
-          value={values.name}
-          onChange={handleNameChange}
-        />
+        <Input id='name' placeholder='Nome da banda' value={values.name} onChange={handleNameChange} />
       </InputGroup>
       <InputGroup>
-        <Input
-          id="integrants"
-          placeholder="Integrantes"
-          value={values.integrants}
-          onChange={handleIntegrantsChange}
-        />
+        <Input id='integrants' placeholder='Integrantes' value={values.integrants} onChange={handleIntegrantsChange} />
       </InputGroup>
-      <InputGroup label="Estilo de música">
-        <Input
-          id="musical_genres"
-          placeholder=""
-          value=""
-          onChange={() => null}
-        />
-        <TagList
-          data={values.musicalGenres}
-          customStyle={musicalGenresCustomStyle}
-        />
+      <InputGroup label='Estilo de música'>
+        <Input id='musical_genres' placeholder='' value='' onChange={() => null} />
+        <TagList data={values.musicalGenres} customStyle={musicalGenresCustomStyle} />
       </InputGroup>
       <InputGroup>
-        <Select
-          id="country"
-          placeholder="País"
-          value={values.country}
-          onSelect={handleCountrySelect}
-        />
+        <Select id='country' placeholder='País' value={values.country} onSelect={handleCountrySelect} />
       </InputGroup>
       <InputGroup>
-        <Select
-          id="state"
-          placeholder="Estado"
-          value={values.state}
-          onSelect={handleStateSelect}
-        />
+        <Select id='state' placeholder='Estado' value={values.state} onSelect={handleStateSelect} />
       </InputGroup>
       <InputGroup>
-        <Input
-          id="city"
-          placeholder="Cidade"
-          value={values.city}
-          onChange={handleCityChange}
-        />
+        <Input id='city' placeholder='Cidade' value={values.city} onChange={handleCityChange} />
       </InputGroup>
       <InputGroup>
-        <TextArea
-          id="about"
-          placeholder="Conte sobre sua banda :)"
-          value={values.about}
-          onChange={handleAboutChange}
-        />
+        <TextArea id='about' placeholder='Conte sobre sua banda :)' value={values.about} onChange={handleAboutChange} />
       </InputGroup>
     </Fieldset>
   );
