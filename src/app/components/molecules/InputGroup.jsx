@@ -12,6 +12,7 @@ const Label = styled.label`
   font-size: 0.8em;
   color: ${white}
   margin-bottom: 5px;
+  margin-left: 5px
 `;
 
 const ErrorText = styled.span`
@@ -20,9 +21,11 @@ const ErrorText = styled.span`
 `;
 
 const InfoText = styled.span`
-  font-size: 0.6em;
-  margin-top: 5px;
-  color: ${white};
+    font-size: 0.6em;
+    margin-top: 5px;
+    margin-left: 5px
+    color: ${white};
+    font-weight: 300;
 `;
 
 const InputGroup = ({ children, label, info, error }) => (

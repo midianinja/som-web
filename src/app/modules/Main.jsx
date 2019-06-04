@@ -11,12 +11,9 @@ import Avatar from '../components/atoms/Avatar.atom';
 import ProgressiveImage from '../components/atoms/ProgressiveImage.atom';
 import Select from '../components/atoms/Select.atom';
 import UploadPhotoButton from '../components/atoms/UploadPhotoButton.atom';
-//import StepFormHeader from '../components/organisms/stepFormHeader.organism';
 import ProductorCard from '../components/molecules/ProductorCard';
 import EventInfo from '../components/molecules/EventInfo';
 import FollowersAndFollowing from '../components/atoms/FollowersAndFollowing';
-//import StepFormHeader from '../components/organisms/StepFormHeader.organism';
-// import EventCard from '../components/molecules/EventCard';
 import OtherEvents from '../components/molecules/OtherEvents';
 
 import { black } from '../settings/colors';
