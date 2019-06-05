@@ -9,6 +9,9 @@ const Container = styled.div`
 	height: auto;
 	background-color: ${gray03};
 	color: ${white};
+	font-size: 1.1em;
+	line-height: 1.2em;
+
 `;
 
 const EventText = ({ text }) => <Container>{ text }</Container>;
