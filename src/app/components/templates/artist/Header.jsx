@@ -45,8 +45,8 @@ const Cover = styled.div`
 `;
 
 const Title = styled.h1`
-  margin-bottom: 25px;
-  margin-top: 25px;
+  margin-bottom: 20px;
+  margin-top: 20px;
   padding-left: 40px;
   padding-right: 40px;
   font-size: 2.1428571429em;
@@ -82,8 +82,8 @@ const FollowNumber = styled.span`
 `;
 
 const About = styled.p`
-  margin-bottom: 30px;
-  margin-top: 30px;
+  margin-bottom: 45px;
+  margin-top: 45px;
   line-height: 2em;
   font-weight: 300;
   padding-left: 40px;
