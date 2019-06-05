@@ -42,19 +42,19 @@ const Files = () => (
       <Title> Arquivos </Title>
       <Subtitle> Documentos básicos para inscrição em qualquer evento do SOM</Subtitle>
       <UploadFile
-        title='Mapa de palco'
-        subtitle='Com esse desenho fica mais fácil saber a posição de todos equipamentos no palco'
-        type='Mapa'
+        title="Mapa de palco"
+        subtitle="Com esse desenho fica mais fácil saber a posição de todos equipamentos no palco"
+        type="Mapa"
       />
       <UploadFile
-        title='Rider técnico'
-        subtitle='Essa é a lista técnica de todos os equipamentos necessários para o show'
-        type='Rider'
+        title="Rider técnico"
+        subtitle="Essa é a lista técnica de todos os equipamentos necessários para o show"
+        type="Rider"
       />
       <UploadFile
-        title='Press Kit'
-        subtitle='Esse é seu kit para a mídia: conte sua história, mostre quem você é e o que falam de você'
-        type='Kit'
+        title="Press Kit"
+        subtitle="Esse é seu kit para a mídia: conte sua história, mostre quem você é e o que falam de você"
+        type="Kit"
       />
     </ContentWrapper>
   </View>

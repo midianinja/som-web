@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import StepFormHeader from '../components/organisms/StepFormHeader.organism';
+import StepFormHeader from '../components/organisms/stepFormHeader.organism';
 import BasicInformationFieldset from '../components/templates/register-artist/BasicInformationFieldset';
 import ContactAndSongsFieldset from '../components/templates/register-artist/ContactAndSongsFieldset';
-import FilesFieldset from '../components/templates/register-artist/FilesFieldset';
+import FilesFieldset from '../components/templates/register-artist/FilesFieldSet';
 import SocialsFieldset from '../components/templates/register-artist/SocialsFieldset';
 import { black } from '../settings/colors';
 
@@ -59,9 +59,9 @@ function RegisterArtist() {
         handleCityChange={({ target }) => setCity(target.value)}
         handleIntegrantsChange={({ target }) => setIntegrants(target.value)}
         handleNameChange={({ target }) => setName(target.value)}
-        handleCountryChange={(option) => setCountry(option)}
-        handleStateChange={(option) => setState(option)}
-        handleMusicalGenresChange={(data) => setMusicalGenres(data)}
+        handleCountryChange={option => setCountry(option)}
+        handleStateChange={option => setState(option)}
+        handleMusicalGenresChange={data => setMusicalGenres(data)}
       />
       <ContactAndSongsFieldset
         values={{
