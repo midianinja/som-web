@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Input from '../../atoms/Input';
-import UploaderButton from '../../atoms/UploaderButton';
+import UploaderButton from '../../atoms/uploaderButton';
 import InputGroup from '../../molecules/InputGroup';
-import { white, white30 } from '../../../settings/colors';
+import { white/* , white30 */ } from '../../../settings/colors';
 
 const Fieldset = styled.fieldset`
   padding: 30px;
@@ -34,20 +34,19 @@ const UploadSongsLabel = styled.label`
   font-weight: 300;
 `;
 
-const SongText = styled.p`
-  width: 100%;
-  color ${white30};
-  font-size: 0.85714285716em;
-  margin-top: 15px;
-  text-align: right;
-  white-space: nowrap; 
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-function renderSongs(songs = []) {
-  return songs.map(song => <SongText>{song}</SongText>);
-}
+// const SongText = styled.p`
+//   width: 100%;
+//   color ${white30};
+//   font-size: 0.85714285716em;
+//   margin-top: 15px;
+//   text-align: right;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+// `;
+// function renderSongs(songs = []) {
+//   return songs.map(song => <SongText>{song}</SongText>);
+// }
 
 function ContactAndSongs(props) {
   const {

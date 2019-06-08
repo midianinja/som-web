@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import UploaderButton from '../atoms/UploaderButton';
+import UploaderButton from '../atoms/uploaderButton';
 import LinkButton from '../atoms/LinkButton';
 import { white } from '../../settings/colors';
 
@@ -49,7 +49,7 @@ const UploadFile = ({ title, subtitle, type }) => (
     <Title>{title}</Title>
     <Subtitle>{subtitle}</Subtitle>
     <ButtonsWrapper>
-      <LinkButton color='green'> ver exemplo</LinkButton>
+      <LinkButton color="green"> ver exemplo</LinkButton>
       <Space />
       <UploaderButton text={type} handleClick={() => console.log('clicou')} />
     </ButtonsWrapper>
@@ -62,7 +62,7 @@ UploadFile.propTypes = {
   type: PropTypes.string,
 };
 
-UploadFile.defualtProps = {
+UploadFile.defaultProps = {
   title: 'Tipo de Arquivo',
   subtitle: 'Descrição',
   type: 'Arquivo',
