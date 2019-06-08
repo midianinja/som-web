@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { black } from '../settings/colors';
 import Header from '../components/templates/artist/Header';
+import AudioPlayer from '../components/organisms/AudioPlayer';
 
 const ArtistWrapper = styled.div`
   width: 100%;
-  background-color: ${black};
   min-height: 100vh;
+  padding-bottom: 30px;
+  background-color: ${black};
   color: white;
   text-align: center;
 `;
@@ -23,6 +25,7 @@ function ArtistPage() {
         cover="/images/temp-cover.png"
         isFollowing={false}
       />
+      <AudioPlayer />
     </ArtistWrapper>
   );
 }
