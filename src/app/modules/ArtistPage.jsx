@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { black } from '../settings/colors';
 import Header from '../components/templates/artist/Header';
 import AudioPlayer from '../components/organisms/AudioPlayer';
+import InstagramMedia from '../components/molecules/InstagramMedias';
 
 const ArtistWrapper = styled.div`
   width: 100%;
-  min-height: 100vh;
+  min-height: 150vh;
   padding-bottom: 30px;
   background-color: ${black};
   color: white;
@@ -26,6 +27,7 @@ function ArtistPage() {
         isFollowing={false}
       />
       <AudioPlayer />
+      <InstagramMedia />
     </ArtistWrapper>
   );
 }
