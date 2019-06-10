@@ -4,9 +4,34 @@ import { white, orange } from '../../settings/colors';
 const AudioSlider = styled.input.attrs({ type: 'range' })`
   -webkit-appearance: none;
   width: 100%;
+  margin-top: 20px;
+  position: relative;
 
-  ::-webkit-slider-thumb {
-    -webkit-appearance: none;
+  :before {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    bottom: -2.5px;
+    border-radius: 50%;
+    background: ${white};
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  :after {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    bottom: -2.5px;
+    right: 0px;
+    border-radius: 50%;
+    background: ${white};
+    cursor: pointer;
+    z-index: 1;
   }
 
   :focus {
@@ -23,39 +48,36 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
 
   ::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 10px;
+    height: 15px;
     border-radius: 50%;
-    width: 10px;
-    margin-left: -2;
+    width: 15px;
     background: ${orange};
-    background: url('/icons/group-balls.svg');
     cursor: pointer;
-    margin-top: -4px;
+    margin-top: -7.5px;
     position: relative;
+    z-index: 2;
   }
-  
-
 
   ::-moz-range-thumb {
-    height: 10px;
+    height: 15px;
     border-radius: 50%;
-    width: 10px;
+    width: 15px;
     margin-left: -2;
     border-radius: 50%;
     background: ${orange};
-    background: url('/icons/group-balls.svg');
     cursor: pointer;
+    z-index: 2;
   }
 
   ::-ms-thumb {
-    height: 10px;
+    height: 15px;
     border-radius: 50%;
-    width: 10px;
+    width: 15px;
     margin-left: -2;
     border-radius: 50%;
     background: ${orange};
-    background: url('/icons/group-balls.svg');
     cursor: pointer;
+    z-index: 2;
   }
 
   ::-webkit-slider-runnable-track {

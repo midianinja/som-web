@@ -24,7 +24,7 @@ const Icon = styled.img`
 `;
 
 const PasswordInputWrapper = styled.div`
-  width: ${(props) => props.width}
+  width: ${props => props.width}
   height: 38px;
   background-color: ${white10};
   border-radius: 38px;
