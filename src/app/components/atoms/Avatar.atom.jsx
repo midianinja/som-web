@@ -20,6 +20,7 @@ const PreLoaderImage = styled.img`
     console.log('');
     return !props.src ? 0 : 1;
   }}
+  object-fit: cover;
   transition-property: opacity;
   transition-duration: 1s;
   transition-delay: 0.5s; 

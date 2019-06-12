@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { white, black } from '../../settings/colors';
-
-import EventCard from "./EventCard";
-import LinkButton from "../atoms/LinkButton";
+import { green, white } from '../../settings/colors';
+import EventCard from './EventCard';
+import LinkButton from '../atoms/LinkButton';
 
 const Container = styled.div`
-	width: 100%;
-	height: auto;
+  width: 100%;
+  height: auto;
 `;
 
 const Space = styled.div`
@@ -16,34 +15,38 @@ const Space = styled.div`
   width: 100%;
 `;
 
-const HSpace = styled.div`
-  width: 5px;
-`;
-
 const Header = styled.div`
-	width: 100%;
-	display: flex;
+  width: 100%;
+  display: flex;
 `;
 
-const Title = styled.div`
-  font-size: 1.3em;
-  line-height: 1.3em;
-  color: white;
+const Title = styled.h2`
+  margin-top: 20px;
+  font-size: 1.2857142857em;
+  font-weight: 400;
+  line-height: 1.1em;
+  text-align: left;
+  color: ${white};
+`;
+
+const Link = styled.a`
+  color: ${green};
+  margin-left: 5px;
 `;
 
 const OtherEvents = ({ name, at }) => (
-<Container>
-	<Header>
-		<Title>Outros Eventos { at } </Title> <HSpace />
-		<LinkButton color="green" fontSize="xlarge" size="default">
-			{ name }
-		</LinkButton> 
-	</Header>
-	<Space />
-	<EventCard />
-	<Space />
-	<EventCard />	
-</Container>
+  <Container>
+    <Header>
+      <Title>
+        {`Outros Eventos ${at}`}
+        <Link href="link">{name}</Link>
+      </Title>
+    </Header>
+    <Space />
+    <EventCard />
+    <Space />
+    <EventCard />
+  </Container>
 );
 
 export default OtherEvents;

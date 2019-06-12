@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { white, black } from '../../settings/colors';
-
-import LinkButton from '../atoms/LinkButton';
+import { green } from '../../settings/colors';
 import EventDate from '../atoms/EventDate';
 import EventPlace from '../atoms/EventPlace';
 
@@ -11,25 +9,21 @@ import PrimaryButton from '../atoms/PrimaryButton';
 
 
 const Container = styled.div`
-	width: 100%;
-	height: auto;
-	display: flex;
+  width: 100%;
+  display: flex;
 `;
 
 const EventImage = styled.img`
-	width: 120px;
-	height: 120px;
-	background-color: yellow;
+  width: 100px;
+  height: 100px;
 `;
 
 const EventInfoWrapper = styled.div`
-	height: 100%;
-	padding-left: 15px;
-`;
-
-const Space = styled.div`
-  height: 5px;
-  width: 100%;
+  display: flex;
+  height: 100px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 15px;
 `;
 
 const ButtonWrapper = styled.div`
@@ -37,24 +31,37 @@ const ButtonWrapper = styled.div`
   text-align: center;
 `;
 
+const buttonCustomStyle = `
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: 300;
+`;
+
+const Link = styled.a`
+  color: ${green};
+`;
 
 const Eventcard = () => (
-	<Container>
-		<EventImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6CWoKE-mVXIuUoOHd0cZx__NYhHOhw_ncXWa5aLGmgYgXK2bceQ" />
-		<EventInfoWrapper>
-		<LinkButton fontSize="xlarge" size="small" color="green">Nome do Festival</LinkButton>
-    <EventDate />
-    <EventPlace
-      city='Rio de Janeiro'
-      state='RJ'
-    />
-    <Space />	
-    <ButtonWrapper>
-      <PrimaryButton>Quero me inscrever</PrimaryButton>
-    </ButtonWrapper>
-
-		</EventInfoWrapper>
-	</Container>
+  <Container>
+    <EventImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6CWoKE-mVXIuUoOHd0cZx__NYhHOhw_ncXWa5aLGmgYgXK2bceQ" />
+    <EventInfoWrapper>
+      <Link href="link">
+        Nome do Festival
+      </Link>
+      <div>
+        <EventDate />
+        <EventPlace
+          city="Rio de Janeiro"
+          state="RJ"
+        />
+      </div>
+      <ButtonWrapper>
+        <PrimaryButton size="small" customStyle={buttonCustomStyle}>
+          Quero me inscrever
+        </PrimaryButton>
+      </ButtonWrapper>
+    </EventInfoWrapper>
+  </Container>
 );
 
 export default Eventcard;

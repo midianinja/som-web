@@ -2,46 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Avatar from '../../atoms/Avatar.atom';
+import Cover from '../../atoms/Cover';
 import PrimaryButton from '../../atoms/PrimaryButton';
 import LinkButton from '../../atoms/LinkButton';
 import {
-  black, transparent, white, white30,
+  white, white30,
 } from '../../../settings/colors';
 
 const Wrapper = styled.header`
   padding-bottom: 40px;
-`;
-
-const Cover = styled.div`
-  width: 100%;
-  position: relative;
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-top: 65px;
-  z-index: 2;
-
-  :before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url('${props => props.cover}');
-    background-size: cover;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  }
-
-  :after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 101%;
-    background-image: linear-gradient(181.8deg, ${transparent} 1.23%, ${black} 97.56%);
-    top: 0;
-    left: 0;
-    z-index: -1;
-  }
 `;
 
 const Title = styled.h1`
@@ -54,8 +23,7 @@ const Title = styled.h1`
   line-height: 1.1em;
 `;
 
-const ConnectionsWrapper = styled.div`
-`;
+const ConnectionsWrapper = styled.div``;
 
 const buttonCustomStyled = `
   width: 150px;

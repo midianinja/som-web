@@ -5,6 +5,7 @@ import {
 } from '../../settings/colors';
 
 const sizes = {
+  small: '28px',
   medium: '38px',
 };
 

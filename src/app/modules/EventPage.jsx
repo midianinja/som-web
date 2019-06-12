@@ -1,62 +1,65 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import { black , gray03, gray04 } from "../settings/colors";
-import EventInfo from "../components/molecules/EventInfo";
-import OtherEvents from "../components/molecules/OtherEvents";
-import ProductorCard from "../components/molecules/ProductorCard";
-import	EventText from "../components/atoms/EventText";
-import EventConditions from "../components/molecules/EventConditions";
+import { black, gray03, gray04 } from '../settings/colors';
+import EventInfo from '../components/molecules/EventInfo';
+import OtherEvents from '../components/molecules/OtherEvents';
+import ProductorCard from '../components/molecules/ProductorCard';
+import EventText from '../components/atoms/EventText';
+import Cover from '../components/atoms/Cover';
+import EventConditions from '../components/molecules/EventConditions';
 
 const Container = styled.div`
   background-color: ${black};
-  height: 100vh;
-  overflo-y: auto;
-  width: 100%;
-  padding: 25px;
-`;
-
-const Containertwo = styled.div`
-  background-color: ${gray03};
-  min-height: 100vh;
-  width: 100%;
-  padding: 40px 25px;
-`;
-
-const Space = styled.div`
-  height: 25px;
   width: 100%;
 `;
 
-const EventImage = styled.div`
-	width: 100%;
-	height: 60vh;
-	background-color: yellow;
+const ProductorCardWrapper = styled.div`
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 40px;
+`;
+
+const OtherEventsWrapper = styled.div`
+  width: 100%;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+`;
+
+const EventImage = styled.img`
+  width: 100%;
+  visibility: hidden;
 `;
 
 const HorizontalLine = styled.hr`
-	color: ${gray04};
-	margin: 25px 0px;
+  background-color: ${gray04};
+  height: 1px;
+  margin-top: 25px;
+  margin-bottom: 40px;
+  border: none;
 `;
 
 const EventPage = () => (
-	<div>
-		<Container>
-			<EventImage />
-			<EventInfo />
-		</Container>
-		<Containertwo>
-			<EventText />
-			<HorizontalLine />
-			<EventConditions />
-			<ProductorCard />
-		</Containertwo>
-		<Container>
-			<OtherEvents name="Pedro Ricardo" at="de" />
-			<Space />
-			<OtherEvents name="Rio de Janeiro" at="no"/>
-		</Container>
-	</div>
+  <Container>
+    <Cover cover="/images/temp-event-cover.png">
+      <EventImage src="/images/temp-event-cover.png" alt="Cover do Evento" />
+    </Cover>
+    <EventInfo />
+    <EventText />
+    <HorizontalLine />
+    <EventConditions />
+    <ProductorCardWrapper>
+      <ProductorCard />
+    </ProductorCardWrapper>
+    <OtherEventsWrapper>
+      <OtherEvents name="Pedro Ricardo" at="de" />
+    </OtherEventsWrapper>
+    <OtherEventsWrapper>
+      <OtherEvents name="Rio de Janeiro" at="no" />
+    </OtherEventsWrapper>
+  </Container>
 );
 
 export default EventPage;

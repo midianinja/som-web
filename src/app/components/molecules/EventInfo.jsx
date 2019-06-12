@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { white, black } from '../../settings/colors';
+import { black, white } from '../../settings/colors';
 
 import EventDate from '../atoms/EventDate';
 import EventPlace from '../atoms/EventPlace';
@@ -10,20 +10,25 @@ import PrimaryButton from '../atoms/PrimaryButton';
 
 const Container = styled.div`
   width: 100%;
-  height: 50vh;
   overflow-y: auto;
   background-color: ${black};
-  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 40px;
+  color: ${white};
 `;
 
-const Title = styled.div`
-  font-size: 1.8em;
-  line-height: 1.2em;
-  color: white;
+const Title = styled.h1`
+  margin-bottom: 20px;
+  margin-top: 20px;
+  font-size: 1.5714285714em;
+  font-weight: 400;
+  line-height: 1.1em;
+  text-align: left;
 `;
 
 const Space = styled.div`
-  height: 15px;
+  height: 10px;
   width: 100%;
 `;
 
@@ -34,6 +39,7 @@ const SubSpace = styled.div`
 
 const ButtonWrapper = styled.div`
   width: 100%;
+  margin-top: 30px;
   text-align: center;
 `;
 

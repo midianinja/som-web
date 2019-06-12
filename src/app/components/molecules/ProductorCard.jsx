@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { green, white } from '../../settings/colors';
+import {
+  black, white, white30,
+} from '../../settings/colors';
 import FollowersAndFollowing from '../atoms/FollowersAndFollowing';
 import PrimaryButton from '../atoms/PrimaryButton';
+import Avatar from '../atoms/Avatar.atom';
 import LinkButton from '../atoms/LinkButton';
 
 const Container = styled.div`
-  width: 100%;
-  border-radius: 20px;
-  background: #ffffff;
-  border: 1px solid #f2f2f2;
-  box-sizing: border-box;
-  border-radius: 20px;
   display: flex;
-  padding: 35px 17px;
+  width: 100%;
+  padding: 20px 15px;
+  border-radius: 20px;
+  background: ${white};
+  border: 1px solid ${white30};
 `;
 
 const ImageWrapper = styled.div`
@@ -23,79 +24,68 @@ const ImageWrapper = styled.div`
   text-align: center;
 `;
 
-const Image = styled.div`
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  background-color: gray;
-`;
-
-const ProductorTitle = styled.div`
-  margin-top: 5px;
+const ProductorTitle = styled.span`
+  margin-top: 10px;
+  font-size: 0.8571428571em;
   width: 100%;
-  color: black;
+  color: ${black};
   font-size: 11px;
+  font-weight: 300;
 `;
 
 const ProfileWrapper = styled.div`
   height: 100%;
 `;
 
-const ProductorName = styled.div`
-  font-size: 1.5em;
+const ProductorName = styled.h3`
+  font-size: 1.2857142857em;
   line-height: 1.2em;
+  font-weight: 400;  
 `;
 
-const ProductorCity = styled.div`
+const ProductorCity = styled.h4`
   margin-top: 5px;
-  font-size: 1em;
+  font-size: 0.8571428571em;
+  font-weight: 300;
   line-height: 1.2em;
 `;
 
-const ProductorText = styled.div`
-  margin-top: 15px;
-  font-size: 1em;
-  line-height: 1.2em;
-  height: 80px;
-`;
-
-const Space = styled.div`
-  height: 20px;
-  font-size: 1em;
+const ProductorText = styled.p`
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-size: 0.8571428571em;
+  font-weight: 300;
+  line-height: 1.5em;
 `;
 
 const ButtonsWrapper = styled.div`
   width: 100%;
   heigth: 30px;
   display: flex;
-
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
-const HSpace = styled.div`
-  width: 10px;
-  heigth: 100%;
+const avatarStyle = `
+  width: 55px;
+  height: 55px;
 `;
 
 const ProductorCard = () => (
   <Container>
     <ImageWrapper>
-      <Image />
-      <ProductorTitle> Produtor </ProductorTitle>
+      <Avatar customStyle={avatarStyle} src="https://s3.amazonaws.com/musicindustryhowtoimages/wp-content/uploads/2018/01/12070915/full-time-music-producer.jpg" />
+      <ProductorTitle>Produtor</ProductorTitle>
     </ImageWrapper>
     <ProfileWrapper>
-      <ProductorName> Augusto Fernando </ProductorName>
-      <ProductorCity> Rio de Janeiro, RJ </ProductorCity>
+      <ProductorName>Augusto Fernando</ProductorName>
+      <ProductorCity>Rio de Janeiro, RJ</ProductorCity>
       <ProductorText>
-        {' '}
-        O produtor musical mais sinistro da cena. Mais de 500 festivais realizados nos 11 anos de carreira.
+      Mussum Ipsum, cacilds vidis litro abertis. Delegadis gente finis, bibendum egestas augue arcu ut est. Quem num gosta di mim que vai caçá sua turmis!
       </ProductorText>
-      <Space />
       <FollowersAndFollowing />
       <ButtonsWrapper>
-        <PrimaryButton color='green'>seguir</PrimaryButton>
-        <HSpace />
-        <LinkButton color='black'> ver mais eventos</LinkButton>
+        <PrimaryButton color="green">seguir</PrimaryButton>
+        <LinkButton color="black">ver mais eventos</LinkButton>
       </ButtonsWrapper>
     </ProfileWrapper>
   </Container>
