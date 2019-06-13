@@ -2,12 +2,12 @@ import React from 'react';
 import { Route, Switch, Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import Home from './modules/Main';
-import RegisterArtist from './modules/RegisterArtist';
+import RegisterArtist from './modules/register-artist';
 import EventPage from './modules/EventPage';
 import ArtistPage from './modules/ArtistPage';
 
-const history = createBrowserHistory();
 
+const history = createBrowserHistory();
 history.listen(() => {});
 const AppRouter = () => (
   <Router history={history}>

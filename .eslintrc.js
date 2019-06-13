@@ -19,5 +19,6 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "object-property-newline": "off",
     }
 };

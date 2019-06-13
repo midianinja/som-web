@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Input from '../../atoms/Input';
-import UploaderButton from '../../atoms/uploaderButton';
+// import UploaderButton from '../../atoms/uploaderButton';
 import InputGroup from '../../molecules/InputGroup';
 import { white/* , white30 */ } from '../../../settings/colors';
 
@@ -17,22 +17,22 @@ const Title = styled.h2`
   margin-bottom: 30px;
 `;
 
-const UploadSongsWrapper = styled.div`
-  width: 100%;
-`;
+// const UploadSongsWrapper = styled.div`
+//   width: 100%;
+// `;
 
-const UploadSongs = styled.div`
-  display: flex; 
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-`;
+// const UploadSongs = styled.div`
+//   display: flex;
+//   width: 100%;
+//   align-items: center;
+//   justify-content: space-between;
+// `;
 
-const UploadSongsLabel = styled.label`
-  color: ${white};
-  font-size: 0.85714285716em;
-  font-weight: 300;
-`;
+// const UploadSongsLabel = styled.label`
+//   color: ${white};
+//   font-size: 0.85714285716em;
+//   font-weight: 300;
+// `;
 
 // const SongText = styled.p`
 //   width: 100%;
@@ -50,14 +50,17 @@ const UploadSongsLabel = styled.label`
 
 function ContactAndSongs(props) {
   const {
-    handlePhoneChange, handleEmailChange, handleSongsURIChange,
+    handlePhoneChange,
+    handleEmailChange,
+    /* handleSongsURIChange, */
+    contactStepErrors,
     values,
   } = props;
 
   return (
     <Fieldset>
-      <Title>Contatos e músicas</Title>
-      <InputGroup>
+      <Title>Contato</Title>
+      <InputGroup error={contactStepErrors.phone}>
         <Input
           id="phone"
           placeholder="Telefone"
@@ -66,7 +69,7 @@ function ContactAndSongs(props) {
           onChange={handlePhoneChange}
         />
       </InputGroup>
-      <InputGroup>
+      <InputGroup error={contactStepErrors.email}>
         <Input
           id="email"
           placeholder="E-mail"
@@ -75,7 +78,7 @@ function ContactAndSongs(props) {
           onChange={handleEmailChange}
         />
       </InputGroup>
-      <InputGroup label="Sua música" info="Link do Spotify, Deezer, Soundcloud ou similar">
+      {/* <InputGroup label="Sua música" info="Link do Spotify, Deezer, Soundcloud ou similar">
         <Input
           id="songsURI"
           value={values.songsURI}
@@ -89,7 +92,7 @@ function ContactAndSongs(props) {
           </UploadSongsLabel>
           <UploaderButton text="músicas" />
         </UploadSongs>
-      </UploadSongsWrapper>
+      </UploadSongsWrapper> */}
     </Fieldset>
   );
 }
@@ -113,7 +116,8 @@ const valuesShape = {
 ContactAndSongs.propTypes = {
   handlePhoneChange: PropTypes.func.isRequired,
   handleEmailChange: PropTypes.func.isRequired,
-  handleSongsURIChange: PropTypes.func.isRequired,
+  contactStepErrors: PropTypes.func.isRequired,
+  // handleSongsURIChange: PropTypes.func.isRequired,
   values: PropTypes.shape(valuesShape).isRequired,
 };
 

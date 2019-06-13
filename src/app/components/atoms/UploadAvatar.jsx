@@ -7,10 +7,7 @@ const PreLoaderImage = styled.img`
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  opacity: ${(props) => {
-    console.log(props);
-    return !props.src ? 0 : 1;
-  }}
+  opacity: ${props => (!props.src ? 0 : 1)};
   transition-property: opacity;
   transition-duration: 1s;
   transition-delay: 0.5s; 
@@ -57,32 +54,33 @@ function load(src, callback) {
  * @param {object} props component props
  * @returns contains UploadAvatar Component
  */
-function UploadAvatar(props) {
+function UploadAvatar({
+  src, alt, title, handleChange,
+}) {
   const [loaddedSrc, setLoaddedSrc] = useState(null);
-  const { src, alt, title } = props;
 
   useEffect(() => {
     load(src, setLoaddedSrc);
   });
 
-  if (!src) {
-    return (
-      <Fragment>
-        <Uploader htmlFor='uploader-input'>
-          <Icon src='/icons/add_a_photo.png' />
-        </Uploader>
-        <Input type='file' id='uploader-input' />
-      </Fragment>
-    );
-  }
+  const emptyImage = (<Icon src="/icons/add_a_photo.png" />);
+  const image = (<PreLoaderImage src={loaddedSrc} alt={alt} title={title} />);
 
-  return <PreLoaderImage src={loaddedSrc} alt={alt} title={title} />;
+  return (
+    <Fragment>
+      <Uploader onChange={handleChange} htmlFor="uploader-avatar-artist-form-input">
+        {src ? image : emptyImage}
+      </Uploader>
+      <Input onChange={handleChange} type="file" id="uploader-avatar-artist-form-input" />
+    </Fragment>
+  );
 }
 
 UploadAvatar.propTypes = {
   alt: PropTypes.string,
   title: PropTypes.string,
   src: PropTypes.string,
+  handleChange: PropTypes.func.isRequired,
 };
 
 UploadAvatar.defaultProps = {

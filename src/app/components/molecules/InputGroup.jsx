@@ -7,6 +7,7 @@ const InptGroupContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
+  ${props => props.customStyle}
 `;
 const Label = styled.label`
   font-size: 0.8em;
@@ -28,8 +29,10 @@ const InfoText = styled.span`
     font-weight: 300;
 `;
 
-const InputGroup = ({ children, label, info, error }) => (
-  <InptGroupContainer>
+const InputGroup = ({
+  children, label, info, error, customStyle,
+}) => (
+  <InptGroupContainer customStyle={customStyle}>
     {label ? <Label>{label}</Label> : null}
     {children}
     {info ? <InfoText>{info}</InfoText> : null}
@@ -40,8 +43,13 @@ const InputGroup = ({ children, label, info, error }) => (
 InputGroup.propTypes = {
   children: PropTypes.node.isRequired,
   label: PropTypes.string.isRequired,
+  customStyle: PropTypes.string,
   info: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
+};
+
+InputGroup.defaultProps = {
+  customStyle: '',
 };
 
 export default InputGroup;

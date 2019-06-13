@@ -8,6 +8,7 @@ import InputGroup from '../../molecules/InputGroup';
 import TagList from '../../molecules/TagList';
 import { white } from '../../../settings/colors';
 import UploadAvatar from '../../atoms/UploadAvatar';
+import AutocompleteInput from '../../molecules/InputAutocomplete';
 
 const Fieldset = styled.fieldset`
   padding: 30px;
@@ -32,36 +33,53 @@ function BasicInformationFieldset(props) {
     handleStateSelect,
     handleCityChange,
     handleAboutChange,
+    handleAvatarChange,
+    handleMusicalStyleChange,
+    handleMusicalStyleSelect,
+    artistStepErrors,
     values,
   } = props;
 
   return (
     <Fieldset>
       <Title>Informaçoões do artista</Title>
-      <InputGroup>
-        <UploadAvatar />
+      <InputGroup
+        error={artistStepErrors.avatar}
+        customStyle="display: flex; justify-content: center; align-items: center;"
+      >
+        <UploadAvatar
+          alt="botão para subir imagem"
+          title="avatar image"
+          handleChange={handleAvatarChange}
+          src={values.avatar || ''}
+        />
       </InputGroup>
-      <InputGroup>
-        <Input id='name' placeholder='Nome da banda' value={values.name} onChange={handleNameChange} />
+      <InputGroup error={artistStepErrors.name}>
+        <Input id="name" placeholder="Nome da banda" value={values.name} onChange={handleNameChange} />
       </InputGroup>
-      <InputGroup>
-        <Input id='integrants' placeholder='Integrantes' value={values.integrants} onChange={handleIntegrantsChange} />
+      <InputGroup error={artistStepErrors.integrants}>
+        <Input id="integrants" type="tel" placeholder="Integrantes" value={values.integrants} onChange={handleIntegrantsChange} />
       </InputGroup>
-      <InputGroup label='Estilo de música'>
-        <Input id='musical_genres' placeholder='' value='' onChange={() => null} />
-        <TagList data={values.musicalGenres} customStyle={musicalGenresCustomStyle} />
+      <InputGroup label="Estilo de música" error={artistStepErrors.musicalStyles}>
+        <AutocompleteInput
+          predict={values.musicalStylePredict}
+          value={values.musicalStyle}
+          handleChange={handleMusicalStyleChange}
+          handleSelect={handleMusicalStyleSelect}
+        />
+        <TagList data={values.musicalStyles} customStyle={musicalGenresCustomStyle} />
       </InputGroup>
-      <InputGroup>
-        <Select id='country' placeholder='País' value={values.country} onSelect={handleCountrySelect} />
+      <InputGroup error={artistStepErrors.country}>
+        <Select id="country" placeholder="País" value={values.country} onSelect={handleCountrySelect} />
       </InputGroup>
-      <InputGroup>
-        <Select id='state' placeholder='Estado' value={values.state} onSelect={handleStateSelect} />
+      <InputGroup error={artistStepErrors.state}>
+        <Select id="state" placeholder="Estado" value={values.state} onSelect={handleStateSelect} />
       </InputGroup>
-      <InputGroup>
-        <Input id='city' placeholder='Cidade' value={values.city} onChange={handleCityChange} />
+      <InputGroup error={artistStepErrors.city}>
+        <Input id="city" placeholder="Cidade" value={values.city} onChange={handleCityChange} />
       </InputGroup>
-      <InputGroup>
-        <TextArea id='about' placeholder='Conte sobre sua banda :)' value={values.about} onChange={handleAboutChange} />
+      <InputGroup error={artistStepErrors.about}>
+        <TextArea id="about" placeholder="Conte sobre sua banda :)" value={values.about} onChange={handleAboutChange} />
       </InputGroup>
     </Fieldset>
   );
@@ -84,10 +102,12 @@ const valuesShape = {
 
 BasicInformationFieldset.propTypes = {
   handleAboutChange: PropTypes.func.isRequired,
+  handleAvatarChange: PropTypes.func.isRequired,
   handleCityChange: PropTypes.func.isRequired,
   handleCountrySelect: PropTypes.func.isRequired,
   handleIntegrantsChange: PropTypes.func.isRequired,
-  // handleMusicalGenresChange: PropTypes.func.isRequired,
+  handleMusicalStyleChange: PropTypes.func.isRequired,
+  handleMusicalStyleSelect: PropTypes.func.isRequired,
   handleNameChange: PropTypes.func.isRequired,
   handleStateSelect: PropTypes.func.isRequired,
   values: PropTypes.shape(valuesShape).isRequired,
