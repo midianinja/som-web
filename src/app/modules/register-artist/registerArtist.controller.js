@@ -48,16 +48,13 @@ const validateContactForm = ({
   return setVisibles({ ...visibles, social: true });
 };
 
-export const nextAction = ({
-  about, city, integrants,
-  country, state, name,
-  avatar, musicalStyles,
-  musicalStylePredict, musicalStyle,
-  visibles, setVisibles, setArtistStepErrors,
-  phone, email, facebook, instagram,
-  twitter, youtube,
-  setContactStepErrors,
-}) => {
+export const nextAction = (props) => {
+  const {
+    about, city, integrants, country, state, name,
+    avatar, musicalStyles, musicalStylePredict, musicalStyle,
+    visibles, setVisibles, setArtistStepErrors, phone, email,
+    setContactStepErrors,
+  } = props;
   if (!visibles.contact) {
     return validateArtistForm({
       avatar, name, integrants, about,
@@ -79,14 +76,7 @@ export const nextAction = ({
     });
   }
   // if (!visibles.files) validateAbout();
-
-  return;
-  // console.log('twitter, youtube, visibles, setVisibles,: ', twitter, youtube, visibles, setVisibles,);
-  // console.log('email, facebook, instagram,: ', email, facebook, instagram,);
-  // console.log('musicalStylePredict, musicalStyle, phone,: ', musicalStylePredict, musicalStyle, phone,);
-  // console.log('avatar, musicalStyles, musicalStylesOptions,: ', avatar, musicalStyles, musicalStylesOptions,);
-  // console.log('country, state, name,: ', country, state, name,);
-  // console.log('about, city, integrants,: ', about, city, integrants,);
+  return null;
 };
 
 export const skipAction = (e) => {
@@ -154,4 +144,4 @@ export const fetchMusicalStyleOptions = (setMusicalStylesOptions) => {
     query: allMusicalStyleOptionsQuery,
     variables: {},
   }).then(resp => setMusicalStylesOptions(resp.data.allMusicalStyleOptions));
-}
+};
