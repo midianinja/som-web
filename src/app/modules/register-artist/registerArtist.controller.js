@@ -25,9 +25,11 @@ const validateArtistForm = ({
     validate.errors.forEach((e) => {
       errors[e.attribute] = 'Valor inválido ou campo obrigatório';
     });
-    return setArtistStepErrors(errors);
+    setArtistStepErrors(errors);
+    return validate;
   }
-  return setVisibles({ ...visibles, contact: true });
+  setVisibles({ ...visibles, contact: true });
+  return ({});
 };
 
 const validateContactForm = ({
@@ -54,17 +56,21 @@ export const nextAction = ({
   avatar, musicalStyles,
   musicalStylePredict, musicalStyle,
   visibles, setVisibles, setArtistStepErrors,
-  phone, email, facebook, instagram,
-  twitter, youtube,
+  phone, email, /* facebook, instagram,
+  twitter, youtube, */
   setContactStepErrors,
 }) => {
   if (!visibles.contact) {
-    return validateArtistForm({
+    const artistValidation = validateArtistForm({
       avatar, name, integrants, about,
       country, state, city, musicalStyles,
       musicalStylePredict, musicalStyle, setVisibles,
       setArtistStepErrors, visibles,
     });
+    
+    console.log('artistValidation: ', artistValidation);
+    return artistValidation;
+
   }
   if (!visibles.social) {
     validateArtistForm({
@@ -78,15 +84,7 @@ export const nextAction = ({
       visibles, setVisibles,
     });
   }
-  // if (!visibles.files) validateAbout();
-
-  return;
-  // console.log('twitter, youtube, visibles, setVisibles,: ', twitter, youtube, visibles, setVisibles,);
-  // console.log('email, facebook, instagram,: ', email, facebook, instagram,);
-  // console.log('musicalStylePredict, musicalStyle, phone,: ', musicalStylePredict, musicalStyle, phone,);
-  // console.log('avatar, musicalStyles, musicalStylesOptions,: ', avatar, musicalStyles, musicalStylesOptions,);
-  // console.log('country, state, name,: ', country, state, name,);
-  // console.log('about, city, integrants,: ', about, city, integrants,);
+  return null;
 };
 
 export const skipAction = (e) => {
@@ -154,4 +152,4 @@ export const fetchMusicalStyleOptions = (setMusicalStylesOptions) => {
     query: allMusicalStyleOptionsQuery,
     variables: {},
   }).then(resp => setMusicalStylesOptions(resp.data.allMusicalStyleOptions));
-}
+};
