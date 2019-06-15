@@ -25,9 +25,11 @@ const validateArtistForm = ({
     validate.errors.forEach((e) => {
       errors[e.attribute] = 'Valor inválido ou campo obrigatório';
     });
-    return setArtistStepErrors(errors);
+    setArtistStepErrors(errors);
+    return validate;
   }
-  return setVisibles({ ...visibles, contact: true });
+  setVisibles({ ...visibles, contact: true });
+  return ({});
 };
 
 const validateContactForm = ({
@@ -56,13 +58,16 @@ export const nextAction = (props) => {
     setContactStepErrors,
   } = props;
   if (!visibles.contact) {
-    return validateArtistForm({
+    const artistValidation = validateArtistForm({
       avatar, name, integrants, about,
       country, state, city, musicalStyles,
       musicalStylePredict, musicalStyle, setVisibles,
       setArtistStepErrors, visibles,
     });
+
+    return artistValidation;
   }
+
   if (!visibles.social) {
     validateArtistForm({
       avatar, name, integrants, about,
@@ -75,7 +80,7 @@ export const nextAction = (props) => {
       visibles, setVisibles,
     });
   }
-  // if (!visibles.files) validateAbout();
+
   return null;
 };
 
