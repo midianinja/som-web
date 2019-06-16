@@ -105,6 +105,7 @@ function RegisterArtist() {
   const [artistStepErrors, setArtistStepErrors] = useState({});
   const [contactStepErrors, setContactStepErrors] = useState({});
   const [about, setAbout] = useState('');
+  const [id, setId] = useState('');
   const [city, setCity] = useState('');
   const [integrants, setIntegrants] = useState('');
   const [country, setCountry] = useState({});
@@ -164,7 +165,7 @@ function RegisterArtist() {
       {renderFiles({ visibles })}
       <StepFormFooter
         nextAction={() => nextAction({
-          about, city, integrants,
+          about, city, integrants, id, setId,
           country, state, name,
           avatar, musicalStyles, musicalStylesOptions,
           musicalStylePredict, musicalStyle, phone,

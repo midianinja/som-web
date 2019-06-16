@@ -13,7 +13,7 @@ const defaultOptions = {
   },
 };
 
-const link = createHttpLink({ uri: 'http://192.168.250.1:4200/graphql' });
+const link = createHttpLink({ uri: 'http://192.168.2.150:4200/graphql' });
 const cache = new InMemoryCache({
   dataIdFromObject: ({ id }) => id,
 });

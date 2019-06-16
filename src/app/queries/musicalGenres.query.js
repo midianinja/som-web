@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const oneMusicalStyleOptionQuery = gql`
-  query oneMusicalStyleOption($_id: ID!) {
-    oneMusicalStyleOption(_id: $_id) {
+  query oneMusicalStyleOption($id: ID!) {
+    oneMusicalStyleOption(id: $id) {
       id
       name
     }

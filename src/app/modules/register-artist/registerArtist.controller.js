@@ -2,6 +2,8 @@ import apollo from '../../apollo';
 import { allMusicalStyleOptionsQuery } from '../../queries/musicalGenres.query';
 import validateArtist from './artist.validate';
 import validateContact from './contact.validate';
+import validateSocialMedia from './social.validate';
+import { createArtistMutation, upadteArtistMutation } from '../../mutations/artist.mutation';
 
 // const setArtist = (values) => {
 
@@ -11,76 +13,107 @@ const validateArtistForm = ({
   avatar, name, integrants, about,
   country, state, city, musicalStyles,
   musicalStylePredict, musicalStyle,
-  setVisibles, setArtistStepErrors,
-  visibles,
+  phone, email, facebook, instagram,
+  twitter, youtube,
 }) => {
-  const validate = validateArtist({
+  const errors = [];
+  const vArtist = validateArtist({
     avatar, name, integrants, about,
     country, state, city, musicalStyles,
     musicalStylePredict, musicalStyle,
   });
-
-  if (validate.error) {
-    const errors = {};
-    validate.errors.forEach((e) => {
-      errors[e.attribute] = 'Valor inválido ou campo obrigatório';
-    });
-    setArtistStepErrors(errors);
-    return validate;
+  console.log('vArtist: ', vArtist);
+  if (vArtist.error) {
+    errors.concat(vArtist.errors);
   }
-  setVisibles({ ...visibles, contact: true });
-  return ({});
-};
 
-const validateContactForm = ({
-  phone, email, setContactStepErrors,
-  visibles, setVisibles,
-}) => {
-  const validate = validateContact({
+  const vContact = validateContact({
     phone, email,
   });
-
-  if (validate.error) {
-    const errors = {};
-    validate.errors.forEach((e) => {
-      errors[e.attribute] = 'Valor inválido ou campo obrigatório';
-    });
-    return setContactStepErrors(errors);
+  console.log('vContact: ', vContact);
+  if (vContact.error) {
+    errors.concat(vContact.errors);
   }
-  return setVisibles({ ...visibles, social: true });
+
+  const vSocial = validateSocialMedia({
+    facebook, instagram,
+    twitter, youtube,
+  });
+  console.log('vSocial: ', vSocial);
+  if (vSocial.error) {
+    errors.concat(vSocial.errors);
+  }
+
+  console.log('errors: ', errors);
+  if (errors.length) return ({ error: true, errors });
+  return ({ error: false });
 };
 
-export const nextAction = (props) => {
-  const {
-    about, city, integrants, country, state, name,
-    avatar, musicalStyles, musicalStylePredict, musicalStyle,
-    visibles, setVisibles, setArtistStepErrors, phone, email,
-    setContactStepErrors,
-  } = props;
-  if (!visibles.contact) {
-    const artistValidation = validateArtistForm({
-      avatar, name, integrants, about,
-      country, state, city, musicalStyles,
-      musicalStylePredict, musicalStyle, setVisibles,
-      setArtistStepErrors, visibles,
-    });
+const mapArtist = artist => ({
+  name: artist.name,
+  members_number: parseInt(artist.integrants, 10),
+  avatar_image: artist.avatar.url,
+  about: artist.about,
+  country: '',
+  state: '',
+  city: artist.city,
+  musical_styles: artist.musicalStyles.map(m => m.id),
+});
 
+const createArtist = async (artist) => {
+  const artistToApi = mapArtist(artist);
+  const artistPromise = await apollo.mutate({
+    mutation: createArtistMutation,
+    variables: {
+      artist: artistToApi,
+    },
+  });
+  return artistPromise.data.createArtist;
+};
+const updateArtist = async (artist, id) => {
+  console.log('updateArtist - artist: ', artist);
+  console.log('updateArtist - id: ', id);
+  const artistToApi = mapArtist(artist);
+  const artistPromise = await apollo.mutate({
+    mutation: upadteArtistMutation,
+    variables: {
+      artist_id: id,
+      artist: artistToApi,
+    },
+  });
+  return artistPromise.data.updateArtist;
+};
+
+export const nextAction = async ({
+  about, city, integrants, id,
+  country, state, name, setId,
+  avatar, musicalStyles,
+  musicalStylePredict, musicalStyle,
+  visibles, setVisibles, setArtistStepErrors,
+  phone, email, facebook, instagram,
+  twitter, youtube,
+}) => {
+  const artistValidation = validateArtistForm({
+    avatar, name, integrants, about,
+    country, state, city, musicalStyles,
+    musicalStylePredict, musicalStyle, setVisibles,
+    setArtistStepErrors, visibles, facebook, instagram,
+    twitter, youtube, phone, email,
+  });
+  console.log('artistValidation: ', artistValidation);
+  if (artistValidation.error) return null;
+  const artistToApi = {
+    about, city, integrants,
+    country, state, name,
+    avatar, musicalStyles, setId,
+  };
+
+  if (!id) {
+    const artistResponse = await createArtist(artistToApi);
+    setId(artistResponse.id);
     return artistValidation;
   }
-
-  if (!visibles.social) {
-    validateArtistForm({
-      avatar, name, integrants, about,
-      country, state, city, musicalStyles,
-      musicalStylePredict, musicalStyle, setVisibles: () => '',
-      setArtistStepErrors, visibles,
-    });
-    return validateContactForm({
-      phone, email, setContactStepErrors,
-      visibles, setVisibles,
-    });
-  }
-
+  updateArtist(artistToApi, id);
   return null;
 };
 
