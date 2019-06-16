@@ -13,6 +13,7 @@ import {
   handleACMusicalStyle, steps, handleMusicalStyleSelect,
   fetchMusicalStyleOptions, nextAction, skipAction,
 } from './registerArtist.controller';
+import UploadSongs from '../../components/templates/register-artist/UploadSongs';
 
 const Form = styled.form`
   width: 100%;
@@ -98,6 +99,8 @@ const renderFiles = ({ visibles }) => {
   );
 };
 
+const renderUploadFiles = () => <UploadSongs />;
+
 function RegisterArtist() {
   const [artistStepErrors, setArtistStepErrors] = useState({});
   const [contactStepErrors, setContactStepErrors] = useState({});
@@ -152,6 +155,7 @@ function RegisterArtist() {
         setPhone, setEmail, phone,
         email, visibles, contactStepErrors,
       })}
+      {renderUploadFiles()}
       {renderSocialMedia({
         visibles, setFacebook, setInstagram,
         setTwitter, setYoutube, facebook,

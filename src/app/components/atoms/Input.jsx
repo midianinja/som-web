@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { white10, white } from '../../settings/colors';
 
 const Input = styled.input`
@@ -15,6 +16,16 @@ const Input = styled.input`
     padding-left: 14px;
     padding-right: 14px;
   }
+
+  ${props => props.customStyle}
 `;
+
+Input.propTypes = {
+  customStyle: PropTypes.string,
+};
+
+Input.defaultProps = {
+  customStyle: '',
+};
 
 export default Input;

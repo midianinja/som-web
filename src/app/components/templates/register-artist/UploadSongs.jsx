@@ -32,7 +32,7 @@ function renderSongs(songs) {
 }
 
 const UploadSongs = () => {
-  const [songs, setSongs] = useState([]);
+  const [songs, setSongs] = useState([{ ...initialSong }]);
   const handleAddSong = () => {
     const copySongs = [...songs];
     copySongs.push({ ...initialSong });

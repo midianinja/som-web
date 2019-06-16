@@ -50,6 +50,7 @@ const SmallBall = styled.div`
 
 const Title = styled.h1`
   font-size: 1.5714285714em;
+  line-height: 1.1818181818em;
   margin-top: 22px;
   font-weight: 400;
   color: ${white};
