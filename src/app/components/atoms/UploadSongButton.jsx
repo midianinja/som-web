@@ -40,12 +40,12 @@ const UploaddedButton = styled.label`
   align-items: center;
   height: 38px;
   width: 100%;
-  margin-bottom: 15px;
   background-color: transparent;
   border: solid 1px ${green}
   color: ${white};
   padding-left: 15px;
   padding-right: 15px;
+  margin-bottom: 15px;
   border-radius: 38px;
   text-transform: lowercase;
   cursor: pointer;
@@ -74,37 +74,52 @@ const Input = styled.input`
   display: none;
 `;
 
-const handleClick = () => {
+const customInputGroupStyle = `
+  margin-bottom: 0px;
+`;
 
-};
-
-function UploadSongButton({ handleChange, id }) {
+function UploadSongButton({ onChange, id }) {
   return (
     <Fragment>
-      <InputGroup>
-        <Button htmlFor={`file-${id}`} onClick={handleClick}>
+      <InputGroup customStyle={customInputGroupStyle}>
+        <Button htmlFor={`file-${id}`}>
           Subir música
           <Icon src="/icons/upload-song.svg" />
         </Button>
       </InputGroup>
-      <Input type="file" id={`file-${id}`} />
+      <Input type="file" id={`file-${id}`} onChange={onChange} />
     </Fragment>
   );
 }
 
-function UploaddedSongButton({ handleChange, id }) {
+function UploaddedSongButton({ onChange, id, file }) {
   return (
     <Fragment>
-      <UploaddedButton htmlFor={`file-${id}`} onClick={handleClick}>
+      <UploaddedButton htmlFor={`file-${id}`}>
+        { file.name }
         <Icon src="/icons/green-check.svg" />
       </UploaddedButton>
-      <Input type="file" id={`file-${id}`} />
+      <Input onChange={onChange} type="file" id={`file-${id}`} />
     </Fragment>
   );
 }
 
-UploadSongButton.propTypes = {
-  handleChange: PropTypes.func.isRequired,
+const fileShape = {
+  name: PropTypes.string,
 };
 
-export default UploaddedSongButton || UploadSongButton;
+UploadSongButton.propTypes = {
+  id: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
+UploaddedSongButton.propTypes = {
+  id: PropTypes.string.isRequired.isRequired,
+  file: PropTypes.shape(fileShape).isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
+export default (props) => {
+  const { file } = props;
+  return file ? UploaddedSongButton(props) : UploadSongButton(props);
+};

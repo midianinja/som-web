@@ -18,6 +18,8 @@ const PreLoaderImage = styled.img`
   transition-property: opacity;
   transition-duration: 1s;
   transition-delay: 0.5s; 
+
+  ${props => props.customStyle}
 `;
 
 /**
@@ -43,14 +45,23 @@ function load(src, callback) {
 function ProgressiveImage(props) {
   const [loaddedSrc, setLoaddedSrc] = useState(null);
   const {
-    src, alt, title, width, height,
+    src, alt, title, width, height, customStyle,
   } = props;
 
   useEffect(() => {
     load(src, setLoaddedSrc);
   });
 
-  return <PreLoaderImage width={width} height={height} src={loaddedSrc} alt={alt} title={title} />;
+  return (
+    <PreLoaderImage
+      width={width}
+      height={height}
+      src={loaddedSrc}
+      alt={alt}
+      title={title}
+      customStyle={customStyle}
+    />
+  );
 }
 
 ProgressiveImage.propTypes = {
@@ -59,6 +70,7 @@ ProgressiveImage.propTypes = {
   title: PropTypes.string,
   src: PropTypes.string,
   width: PropTypes.string,
+  customStyle: PropTypes.string,
 };
 
 ProgressiveImage.defaultProps = {
@@ -67,6 +79,7 @@ ProgressiveImage.defaultProps = {
   title: '',
   src: '',
   width: '',
+  customStyle: '',
 };
 
 export default ProgressiveImage;

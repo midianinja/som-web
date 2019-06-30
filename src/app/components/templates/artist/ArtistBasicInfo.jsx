@@ -9,18 +9,35 @@ import {
   white, white30,
 } from '../../../settings/colors';
 
-const Wrapper = styled.header`
+const Wrapper = styled.div`
+  display: inline-block;
+  width: 100%;
+  max-width: 420px;
   padding-bottom: 40px;
 `;
 
 const Title = styled.h1`
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-top: 20px;
   padding-left: 40px;
   padding-right: 40px;
   font-size: 2.1428571429em;
   font-weight: 400;
   line-height: 1.1em;
+
+  @media (min-width: 1024px) {
+    padding-left: 10px;
+    padding-right: 0px;
+    margin-top: 0;
+  }
+`;
+
+const TitleAndFollowWrapper = styled.div`
+  @media (min-width: 1024px) {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+  }
 `;
 
 const ConnectionsWrapper = styled.div``;
@@ -33,6 +50,7 @@ const buttonCustomStyled = `
 const avatarCustomStyled = `
   width: 140px;
   height: 140px;
+  vertical-align: middle;
 `;
 
 const FollowText = styled.label`
@@ -66,20 +84,20 @@ const ActionWrapper = styled.div`
   text-align: left;
 `;
 
-function Header(props) {
+function ArtistBasicInfo(props) {
   const {
     name, avatar, followers, following,
-    isFollowing, cover, about,
+    isFollowing, about,
   } = props;
 
   return (
     <Wrapper>
-      <Cover cover={cover}>
-        <Avatar
-          customStyle={avatarCustomStyled}
-          src={avatar}
-          alt={name}
-        />
+      <Avatar
+        customStyle={avatarCustomStyled}
+        src={avatar}
+        alt={name}
+      />
+      <TitleAndFollowWrapper>
         <Title>{name}</Title>
         <ConnectionsWrapper>
           <FollowText>
@@ -91,7 +109,7 @@ function Header(props) {
             seguindo
           </FollowText>
         </ConnectionsWrapper>
-      </Cover>
+      </TitleAndFollowWrapper>
       <About>{about}</About>
       <ActionWrapper>
         <PrimaryButton customStyle={buttonCustomStyled}>Seguir</PrimaryButton>
@@ -101,14 +119,13 @@ function Header(props) {
   );
 }
 
-Header.propTypes = {
+ArtistBasicInfo.propTypes = {
   about: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
-  cover: PropTypes.string.isRequired,
   followers: PropTypes.number.isRequired,
   following: PropTypes.number.isRequired,
   isFollowing: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
 };
 
-export default Header;
+export default ArtistBasicInfo;

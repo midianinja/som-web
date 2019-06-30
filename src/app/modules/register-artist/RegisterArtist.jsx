@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import StepFormHeader from '../../components/organisms/stepFormHeader.organism';
+import StepFormHeader from '../../components/organisms/StepFormHeader.organism';
 import BasicInformationFieldset from '../../components/templates/register-artist/BasicInformationFieldset';
 import ContactAndSongsFieldset from '../../components/templates/register-artist/ContactAndSongsFieldset';
 import FilesFieldset from '../../components/templates/register-artist/FilesFieldSet';
@@ -13,7 +13,7 @@ import {
   handleACMusicalStyle, steps, handleMusicalStyleSelect,
   fetchMusicalStyleOptions, nextAction, skipAction,
 } from './registerArtist.controller';
-import UploadSongs from '../../components/templates/register-artist/UploadSongs';
+import UploadSongs, { initialSong } from '../../components/templates/register-artist/UploadSongs';
 
 const Form = styled.form`
   width: 100%;
@@ -99,7 +99,12 @@ const renderFiles = ({ visibles }) => {
   );
 };
 
-const renderUploadFiles = () => <UploadSongs />;
+const renderUploadFiles = () => {
+  const [songs, setSongs] = useState([{ ...initialSong }]);
+  return (
+    <UploadSongs songs={songs} setSongs={setSongs} />
+  );
+};
 
 function RegisterArtist() {
   const [artistStepErrors, setArtistStepErrors] = useState({});

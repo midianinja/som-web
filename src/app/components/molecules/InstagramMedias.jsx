@@ -5,7 +5,15 @@ import { white } from '../../settings/colors';
 import LinkButton from '../atoms/LinkButton';
 import ProgresiveImage from '../atoms/ProgressiveImage.atom';
 
-const imgSize = 'calc(33.33vw - 26.6666666667px)';
+const imgStyle = `
+  width: calc(33.33vw - 26.6666666667px);
+  height: calc(33.33vw - 26.6666666667px);
+  
+  @media (min-width: 1024px) {
+    width: calc(195px - 26.6666666667px);
+    height: calc(195px - 26.6666666667px);
+  }
+`;
 
 const Container = styled.div`
   margin-top: 20px;
@@ -30,52 +38,43 @@ const InstagramMedia = ({ images }) => (
     <Row>
       <ProgresiveImage
         src={images[0]}
-        width={imgSize}
-        height={imgSize}
+        customStyle={imgStyle}
       />
       <ProgresiveImage
         src={images[1]}
-        width={imgSize}
-        height={imgSize}
+        customStyle={imgStyle}
       />
       <ProgresiveImage
         src={images[2]}
-        width={imgSize}
-        height={imgSize}
+        customStyle={imgStyle}
       />
     </Row>
     <Row>
       <ProgresiveImage
         src={images[3]}
-        width={imgSize}
-        height={imgSize}
+        customStyle={imgStyle}
       />
       <ProgresiveImage
         src={images[4]}
-        width={imgSize}
-        height={imgSize}
+        customStyle={imgStyle}
       />
       <ProgresiveImage
         src={images[5]}
-        width={imgSize}
-        height={imgSize}
+        customStyle={imgStyle}
       />
     </Row>
     <Row>
       <ProgresiveImage
         src={images[6]}
-        width={imgSize}
-        height={imgSize}
+        customStyle={imgStyle}
       />
       <ProgresiveImage
         src={images[7]}
-        width={imgSize}
-        height={imgSize}
+        customStyle={imgStyle}
       />
       <ProgresiveImage
         src={images[8]}
-        width={imgSize}
-        height={imgSize}
+        customStyle={imgStyle}
       />
     </Row>
     <LinkButton color="white"> Abrir Instagram </LinkButton>
