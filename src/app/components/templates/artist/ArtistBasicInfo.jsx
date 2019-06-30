@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Avatar from '../../atoms/Avatar.atom';
-import Cover from '../../atoms/Cover';
+import Socials from '../../organisms/Socials';
 import PrimaryButton from '../../atoms/PrimaryButton';
 import LinkButton from '../../atoms/LinkButton';
 import {
@@ -115,6 +115,7 @@ function ArtistBasicInfo(props) {
         <PrimaryButton customStyle={buttonCustomStyled}>Seguir</PrimaryButton>
         <LinkButton color="white">Ler release</LinkButton>
       </ActionWrapper>
+      <Socials />
     </Wrapper>
   );
 }
