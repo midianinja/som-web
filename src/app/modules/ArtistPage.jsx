@@ -20,6 +20,7 @@ const CoverWrapper = styled.div`
   position: absolute;
   width: 100%;
   z-index: 0;
+  top: 0;
 `;
 
 const HeaderWrapper = styled.div`
@@ -67,7 +68,12 @@ function ArtistPage() {
     <ArtistWrapper>
       <CoverWrapper>
         <Cover cover="/images/temp-cover.jpg">
-          <HeaderWrapper />
+          <HeaderWrapper>
+            <Header
+              name="Fulana Ciclana"
+              avatar="https://api.adorable.io/avatars/285/abott@adorable.png"
+            />
+          </HeaderWrapper>
         </Cover>
       </CoverWrapper>
       <Content>

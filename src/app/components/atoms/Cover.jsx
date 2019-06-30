@@ -8,7 +8,6 @@ const Cover = styled.div`
   position: relative;
   padding-left: 40px;
   padding-right: 40px;
-  padding-top: 65px;
   z-index: 2;
 
   :before {
