@@ -9,7 +9,7 @@ import {
   white, white30,
 } from '../../../settings/colors';
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   display: inline-block;
   width: 100%;
   max-width: 420px;
@@ -91,7 +91,7 @@ function ArtistBasicInfo(props) {
   } = props;
 
   return (
-    <Wrapper>
+    <Wrapper id="infos">
       <Avatar
         customStyle={avatarCustomStyled}
         src={avatar}

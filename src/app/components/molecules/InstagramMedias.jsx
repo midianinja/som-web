@@ -16,7 +16,7 @@ const imgStyle = `
 `;
 
 const Container = styled.div`
-  margin-top: 20px;
+  margin-top: 30px;
   padding: 10px 40px;
 `;
 
@@ -24,12 +24,20 @@ const Row = styled.div`
   display: flex;
 `;
 
+const MobileRow = styled.div`
+  display: flex;
+
+  @media (min-width: 1024px) {
+    display: none;
+  }
+`;
+
 const Title = styled.h3`
   font-weight: 400;
   line-height: 1em;
   color: ${white};
   text-align: left;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 `;
 
 const InstagramMedia = ({ images }) => (
@@ -49,7 +57,7 @@ const InstagramMedia = ({ images }) => (
         customStyle={imgStyle}
       />
     </Row>
-    <Row>
+    <MobileRow>
       <ProgresiveImage
         src={images[3]}
         customStyle={imgStyle}
@@ -62,8 +70,8 @@ const InstagramMedia = ({ images }) => (
         src={images[5]}
         customStyle={imgStyle}
       />
-    </Row>
-    <Row>
+    </MobileRow>
+    <MobileRow>
       <ProgresiveImage
         src={images[6]}
         customStyle={imgStyle}
@@ -76,7 +84,7 @@ const InstagramMedia = ({ images }) => (
         src={images[8]}
         customStyle={imgStyle}
       />
-    </Row>
+    </MobileRow>
     <LinkButton color="white"> Abrir Instagram </LinkButton>
   </Container>
 );
