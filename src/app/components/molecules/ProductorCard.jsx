@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  black, white, white30,
-} from '../../settings/colors';
+import { black, white, white30 } from '../../settings/colors';
 import FollowersAndFollowing from '../atoms/FollowersAndFollowing';
 import PrimaryButton from '../atoms/PrimaryButton';
 import Avatar from '../atoms/Avatar.atom';
@@ -40,7 +38,7 @@ const ProfileWrapper = styled.div`
 const ProductorName = styled.h3`
   font-size: 1.2857142857em;
   line-height: 1.2em;
-  font-weight: 400;  
+  font-weight: 400;
 `;
 
 const ProductorCity = styled.h4`
@@ -73,19 +71,23 @@ const avatarStyle = `
 const ProductorCard = () => (
   <Container>
     <ImageWrapper>
-      <Avatar customStyle={avatarStyle} src="https://s3.amazonaws.com/musicindustryhowtoimages/wp-content/uploads/2018/01/12070915/full-time-music-producer.jpg" />
+      <Avatar
+        customStyle={avatarStyle}
+        src='https://s3.amazonaws.com/musicindustryhowtoimages/wp-content/uploads/2018/01/12070915/full-time-music-producer.jpg'
+      />
       <ProductorTitle>Produtor</ProductorTitle>
     </ImageWrapper>
     <ProfileWrapper>
       <ProductorName>Augusto Fernando</ProductorName>
       <ProductorCity>Rio de Janeiro, RJ</ProductorCity>
       <ProductorText>
-      Mussum Ipsum, cacilds vidis litro abertis. Delegadis gente finis, bibendum egestas augue arcu ut est. Quem num gosta di mim que vai caçá sua turmis!
+        Mussum Ipsum, cacilds vidis litro abertis. Delegadis gente finis, bibendum egestas augue arcu ut est. Quem num
+        gosta di mim que vai caçá sua turmis!
       </ProductorText>
       <FollowersAndFollowing />
       <ButtonsWrapper>
-        <PrimaryButton color="green">seguir</PrimaryButton>
-        <LinkButton color="black">ver mais eventos</LinkButton>
+        <PrimaryButton color='green'>seguir</PrimaryButton>
+        <LinkButton color='black'>ver mais eventos</LinkButton>
       </ButtonsWrapper>
     </ProfileWrapper>
   </Container>

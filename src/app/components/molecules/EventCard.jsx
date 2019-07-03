@@ -7,7 +7,6 @@ import EventPlace from '../atoms/EventPlace';
 
 import PrimaryButton from '../atoms/PrimaryButton';
 
-
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -43,20 +42,15 @@ const Link = styled.a`
 
 const Eventcard = () => (
   <Container>
-    <EventImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6CWoKE-mVXIuUoOHd0cZx__NYhHOhw_ncXWa5aLGmgYgXK2bceQ" />
+    <EventImage src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6CWoKE-mVXIuUoOHd0cZx__NYhHOhw_ncXWa5aLGmgYgXK2bceQ' />
     <EventInfoWrapper>
-      <Link href="link">
-        Nome do Festival
-      </Link>
+      <Link href='link'>Nome do Festival</Link>
       <div>
         <EventDate />
-        <EventPlace
-          city="Rio de Janeiro"
-          state="RJ"
-        />
+        <EventPlace city='Rio de Janeiro' state='RJ' />
       </div>
       <ButtonWrapper>
-        <PrimaryButton size="small" customStyle={buttonCustomStyle}>
+        <PrimaryButton size='small' customStyle={buttonCustomStyle}>
           Quero me inscrever
         </PrimaryButton>
       </ButtonWrapper>

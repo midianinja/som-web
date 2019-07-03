@@ -35,7 +35,7 @@ const Space = styled.div`
 
 const Main = () => (
   <Wrapper>
-    <input type="range" />
+    <input type='range' />
     <InputGroup label='Nome' error='Nome inválido' info='Apenas letras'>
       <Input placeholder='Digite aqui' />
     </InputGroup>

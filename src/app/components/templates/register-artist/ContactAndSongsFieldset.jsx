@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Input from '../../atoms/Input';
 // import UploaderButton from '../../atoms/uploaderButton';
 import InputGroup from '../../molecules/InputGroup';
-import { white/* , white30 */ } from '../../../settings/colors';
+import { white /* , white30 */ } from '../../../settings/colors';
 
 const Fieldset = styled.fieldset`
   padding: 30px;
@@ -61,22 +61,10 @@ function ContactAndSongs(props) {
     <Fieldset>
       <Title>Contato</Title>
       <InputGroup error={contactStepErrors.phone}>
-        <Input
-          id="phone"
-          placeholder="Telefone"
-          value={values.phone}
-          type="tel"
-          onChange={handlePhoneChange}
-        />
+        <Input id='phone' placeholder='Telefone' value={values.phone} type='tel' onChange={handlePhoneChange} />
       </InputGroup>
       <InputGroup error={contactStepErrors.email}>
-        <Input
-          id="email"
-          placeholder="E-mail"
-          value={values.email}
-          type="ëmail"
-          onChange={handleEmailChange}
-        />
+        <Input id='email' placeholder='E-mail' value={values.email} type='ëmail' onChange={handleEmailChange} />
       </InputGroup>
       {/* <InputGroup label="Sua música" info="Link do Spotify, Deezer, Soundcloud ou similar">
         <Input

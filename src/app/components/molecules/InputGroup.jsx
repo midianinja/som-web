@@ -7,7 +7,7 @@ const InptGroupContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  ${props => props.customStyle}
+  ${(props) => props.customStyle}
 `;
 const Label = styled.label`
   font-size: 0.8em;
@@ -29,9 +29,7 @@ const InfoText = styled.span`
     font-weight: 300;
 `;
 
-const InputGroup = ({
-  children, label, info, error, customStyle,
-}) => (
+const InputGroup = ({ children, label, info, error, customStyle }) => (
   <InptGroupContainer customStyle={customStyle}>
     {label ? <Label>{label}</Label> : null}
     {children}

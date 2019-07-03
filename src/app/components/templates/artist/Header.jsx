@@ -5,9 +5,7 @@ import Avatar from '../../atoms/Avatar.atom';
 import Cover from '../../atoms/Cover';
 import PrimaryButton from '../../atoms/PrimaryButton';
 import LinkButton from '../../atoms/LinkButton';
-import {
-  white, white30,
-} from '../../../settings/colors';
+import { white, white30 } from '../../../settings/colors';
 
 const Wrapper = styled.header`
   padding-bottom: 40px;
@@ -57,7 +55,7 @@ const About = styled.p`
   padding-left: 40px;
   padding-right: 40px;
   text-align: left;
-  font-size: 0.8571428571em;;
+  font-size: 0.8571428571em;
 `;
 
 const ActionWrapper = styled.div`
@@ -67,19 +65,12 @@ const ActionWrapper = styled.div`
 `;
 
 function Header(props) {
-  const {
-    name, avatar, followers, following,
-    isFollowing, cover, about,
-  } = props;
+  const { name, avatar, followers, following, isFollowing, cover, about } = props;
 
   return (
     <Wrapper>
       <Cover cover={cover}>
-        <Avatar
-          customStyle={avatarCustomStyled}
-          src={avatar}
-          alt={name}
-        />
+        <Avatar customStyle={avatarCustomStyled} src={avatar} alt={name} />
         <Title>{name}</Title>
         <ConnectionsWrapper>
           <FollowText>
@@ -95,7 +86,7 @@ function Header(props) {
       <About>{about}</About>
       <ActionWrapper>
         <PrimaryButton customStyle={buttonCustomStyled}>Seguir</PrimaryButton>
-        <LinkButton color="white">Ler release</LinkButton>
+        <LinkButton color='white'>Ler release</LinkButton>
       </ActionWrapper>
     </Wrapper>
   );

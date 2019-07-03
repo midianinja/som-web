@@ -75,18 +75,17 @@ const Label = styled.label`
  * @param {function} onClick it is the function that select the option
  * @returns contains Option Component array
  */
-const renderOptions = (options, onClick) => options.map(({ id, image, label }) => (
-  <Option key={id} id={id} onClick={() => onClick({ id, label, image })}>
-    <Image src={image} visible={!!image} />
-    {label}
-  </Option>
-));
+const renderOptions = (options, onClick) =>
+  options.map(({ id, image, label }) => (
+    <Option key={id} id={id} onClick={() => onClick({ id, label, image })}>
+      <Image src={image} visible={!!image} />
+      {label}
+    </Option>
+  ));
 
 function Select(props) {
   const [focus, setFocus] = useState(false);
-  const {
-    placeholder, options, selected, tabIndex, onSelect,
-  } = props;
+  const { placeholder, options, selected, tabIndex, onSelect } = props;
 
   return (
     <SelectWrapper focus={focus} onBlur={() => setFocus(false)} tabIndex={tabIndex}>

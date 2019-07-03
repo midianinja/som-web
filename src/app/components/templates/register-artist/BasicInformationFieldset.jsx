@@ -45,22 +45,28 @@ function BasicInformationFieldset(props) {
       <Title>Informaçoões do artista</Title>
       <InputGroup
         error={artistStepErrors.avatar}
-        customStyle="display: flex; justify-content: center; align-items: center;"
+        customStyle='display: flex; justify-content: center; align-items: center;'
       >
         <UploadAvatar
-          alt="botão para subir imagem"
-          title="avatar image"
+          alt='botão para subir imagem'
+          title='avatar image'
           handleChange={handleAvatarChange}
           src={values.avatar || ''}
         />
       </InputGroup>
       <InputGroup error={artistStepErrors.name}>
-        <Input id="name" placeholder="Nome da banda" value={values.name} onChange={handleNameChange} />
+        <Input id='name' placeholder='Nome da banda' value={values.name} onChange={handleNameChange} />
       </InputGroup>
       <InputGroup error={artistStepErrors.integrants}>
-        <Input id="integrants" type="tel" placeholder="Integrantes" value={values.integrants} onChange={handleIntegrantsChange} />
+        <Input
+          id='integrants'
+          type='tel'
+          placeholder='Integrantes'
+          value={values.integrants}
+          onChange={handleIntegrantsChange}
+        />
       </InputGroup>
-      <InputGroup label="Estilo de música" error={artistStepErrors.musicalStyles}>
+      <InputGroup label='Estilo de música' error={artistStepErrors.musicalStyles}>
         <AutocompleteInput
           predict={values.musicalStylePredict}
           value={values.musicalStyle}
@@ -70,16 +76,16 @@ function BasicInformationFieldset(props) {
         <TagList data={values.musicalStyles} customStyle={musicalGenresCustomStyle} />
       </InputGroup>
       <InputGroup error={artistStepErrors.country}>
-        <Select id="country" placeholder="País" value={values.country} onSelect={handleCountrySelect} />
+        <Select id='country' placeholder='País' value={values.country} onSelect={handleCountrySelect} />
       </InputGroup>
       <InputGroup error={artistStepErrors.state}>
-        <Select id="state" placeholder="Estado" value={values.state} onSelect={handleStateSelect} />
+        <Select id='state' placeholder='Estado' value={values.state} onSelect={handleStateSelect} />
       </InputGroup>
       <InputGroup error={artistStepErrors.city}>
-        <Input id="city" placeholder="Cidade" value={values.city} onChange={handleCityChange} />
+        <Input id='city' placeholder='Cidade' value={values.city} onChange={handleCityChange} />
       </InputGroup>
       <InputGroup error={artistStepErrors.about}>
-        <TextArea id="about" placeholder="Conte sobre sua banda :)" value={values.about} onChange={handleAboutChange} />
+        <TextArea id='about' placeholder='Conte sobre sua banda :)' value={values.about} onChange={handleAboutChange} />
       </InputGroup>
     </Fieldset>
   );

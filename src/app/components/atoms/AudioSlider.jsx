@@ -121,8 +121,8 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
   }
 
   :focus::-ms-fill-upper {
-  background: ${orange};
-}
+    background: ${orange};
+  }
 `;
 
 export default AudioSlider;

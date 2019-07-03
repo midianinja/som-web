@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   border-radius: 50%;
   overflow: hidden;
   background-color: ${white30};
-  ${props => props.customStyle}
+  ${(props) => props.customStyle}
 `;
 
 const PreLoaderImage = styled.img`
@@ -48,9 +48,7 @@ function load(src, callback) {
  */
 function Avatar(props) {
   const [loaddedSrc, setLoaddedSrc] = useState(null);
-  const {
-    src, alt, title, customStyle,
-  } = props;
+  const { src, alt, title, customStyle } = props;
 
   useEffect(() => {
     load(src, setLoaddedSrc);

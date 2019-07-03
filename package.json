@@ -8,7 +8,8 @@
     "dev": "eslint src && nodemon index.js --exec babel-node",
     "build": "webpack --progress --watch",
     "lint": "eslint src",
-    "prettier": "prettier --config ./.prettierrc --write \"./**/*.jsx\""
+    "prettier": "prettier --config ./.prettierrc --write \"./**/*.jsx\"",
+    "lint:fix": "eslint src --fix"
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.3.3",

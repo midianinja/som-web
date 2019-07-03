@@ -17,49 +17,34 @@ const Title = styled.h2`
 `;
 
 function SocialsFielset(props) {
-  const {
-    handleFacebookChange, handleTwitterChange, handleInstagramChange,
-    handleYoutubeChange, values,
-  } = props;
+  const { handleFacebookChange, handleTwitterChange, handleInstagramChange, handleYoutubeChange, values } = props;
 
   return (
     <Fieldset>
       <Title>Redes sociais</Title>
       <InputGroup>
         <Input
-          id="facebook"
-          placeholder="Facebook"
+          id='facebook'
+          placeholder='Facebook'
           value={values.facebook}
-          type="url"
+          type='url'
           onChange={handleFacebookChange}
         />
       </InputGroup>
       <InputGroup>
         <Input
-          id="instagram"
-          placeholder="Instagram"
+          id='instagram'
+          placeholder='Instagram'
           value={values.instagram}
-          type="url"
+          type='url'
           onChange={handleInstagramChange}
         />
       </InputGroup>
       <InputGroup>
-        <Input
-          id="twitter"
-          placeholder="Twitter"
-          value={values.twitter}
-          type="url"
-          onChange={handleTwitterChange}
-        />
+        <Input id='twitter' placeholder='Twitter' value={values.twitter} type='url' onChange={handleTwitterChange} />
       </InputGroup>
       <InputGroup>
-        <Input
-          id="youtube"
-          placeholder="Yuutube"
-          value={values.youtube}
-          type="url"
-          onChange={handleYoutubeChange}
-        />
+        <Input id='youtube' placeholder='Yuutube' value={values.youtube} type='url' onChange={handleYoutubeChange} />
       </InputGroup>
     </Fieldset>
   );

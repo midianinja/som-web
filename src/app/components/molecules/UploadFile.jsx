@@ -49,7 +49,7 @@ const UploadFile = ({ title, subtitle, type }) => (
     <Title>{title}</Title>
     <Subtitle>{subtitle}</Subtitle>
     <ButtonsWrapper>
-      <LinkButton color="green"> ver exemplo</LinkButton>
+      <LinkButton color='green'> ver exemplo</LinkButton>
       <Space />
       <UploaderButton text={type} handleClick={() => console.log('clicou')} />
     </ButtonsWrapper>

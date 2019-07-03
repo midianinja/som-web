@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { black } from '../settings/colors';
 import Header from '../components/templates/artist/Header';
 import AudioPlayer from '../components/organisms/AudioPlayer';
 import InstagramMedia from '../components/molecules/InstagramMedias';
+import { fetchArtistData, fetchArtistInsta } from './artist/ArtistController';
 
 const ArtistWrapper = styled.div`
   width: 100%;
@@ -26,20 +27,50 @@ const images = [
   '/images/8.png',
 ];
 
-function ArtistPage() {
+const artistObj = {
+  avatar: 'https://f001.backblazeb2.com/file/heloisatolipan/imagens/2016/04/12973601_1099945353403569_5156213399083618245_o.jpg',
+  about: "jhsjh aksjhdaoieu a;ld ashsuhawi idhcc  suh i ihioh oi hihu i ihhlkj kh hjhiu lk jh. j hj klhlih a.",
+  fs: 4,
+  fg: 0,
+  cover: '/images/temp-cover.png',
+  isFollowing: false
+}
+
+const loadingComponents = {
+  artistInfo: false,
+  artistMedia: false,
+  artistInsta: false
+}
+
+function ArtistPage({ id }) {
+  const [ headerLoading, setHeaderLoading ] = useState(false);
+  const [ instaLoading, setInstagramLoading ] = useState(false);
+  const [ artistName, setArtistName ] = useState('nome do artista');
+  const [ instaUsername, setInstaUsername ] = useState(null);
+  const [ artistHeaderInfo, setHeaderInfo ] = useState(artistObj);
+  const [ instaPics, setInstaPics ] = useState(images);
+
+  useEffect(async id => {
+    const fetchArtist = async () => {
+      await fetchArtistData( id, setArtistName, setHeaderLoading, setInstaUsername);
+      await fetchArtistInsta( 'fernandopvidigal', setInstaPics, setInstagramLoading);
+    }
+    fetchArtist();
+  },[]);
+
   return (
     <ArtistWrapper>
       <Header
-        name="Criolo"
-        avatar="https://f001.backblazeb2.com/file/heloisatolipan/imagens/2016/04/12973601_1099945353403569_5156213399083618245_o.jpg"
-        about="Mussum Ipsum, cacilds vidis litro abertis. Praesent malesuada urna nisi, quis volutpat erat hendrerit non. Nam vulputate dapibus. Mé faiz elementum girarzis, nisi eros vermeio. Nec orci ornare consequat."
-        followers={234}
-        following={10}
-        cover="/images/temp-cover.png"
-        isFollowing={false}
+        name={artistName}
+        avatar={artistHeaderInfo.avatar}
+        about={artistHeaderInfo.about}
+        followers={artistHeaderInfo.fs}
+        following={artistHeaderInfo.fg}
+        cover={artistHeaderInfo.cover}
+        isFollowing={artistHeaderInfo.isFollowing}
       />
       <AudioPlayer />
-      <InstagramMedia images={images} />
+      <InstagramMedia images={instaPics} />
     </ArtistWrapper>
   );
 }

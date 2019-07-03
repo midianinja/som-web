@@ -28,57 +28,21 @@ const InstagramMedia = ({ images }) => (
   <Container>
     <Title> Instagram </Title>
     <Row>
-      <ProgresiveImage
-        src={images[0]}
-        width={imgSize}
-        height={imgSize}
-      />
-      <ProgresiveImage
-        src={images[1]}
-        width={imgSize}
-        height={imgSize}
-      />
-      <ProgresiveImage
-        src={images[2]}
-        width={imgSize}
-        height={imgSize}
-      />
+      <ProgresiveImage src={images[0]} width={imgSize} height={imgSize} />
+      <ProgresiveImage src={images[1]} width={imgSize} height={imgSize} />
+      <ProgresiveImage src={images[2]} width={imgSize} height={imgSize} />
     </Row>
     <Row>
-      <ProgresiveImage
-        src={images[3]}
-        width={imgSize}
-        height={imgSize}
-      />
-      <ProgresiveImage
-        src={images[4]}
-        width={imgSize}
-        height={imgSize}
-      />
-      <ProgresiveImage
-        src={images[5]}
-        width={imgSize}
-        height={imgSize}
-      />
+      <ProgresiveImage src={images[3]} width={imgSize} height={imgSize} />
+      <ProgresiveImage src={images[4]} width={imgSize} height={imgSize} />
+      <ProgresiveImage src={images[5]} width={imgSize} height={imgSize} />
     </Row>
     <Row>
-      <ProgresiveImage
-        src={images[6]}
-        width={imgSize}
-        height={imgSize}
-      />
-      <ProgresiveImage
-        src={images[7]}
-        width={imgSize}
-        height={imgSize}
-      />
-      <ProgresiveImage
-        src={images[8]}
-        width={imgSize}
-        height={imgSize}
-      />
+      <ProgresiveImage src={images[6]} width={imgSize} height={imgSize} />
+      <ProgresiveImage src={images[7]} width={imgSize} height={imgSize} />
+      <ProgresiveImage src={images[8]} width={imgSize} height={imgSize} />
     </Row>
-    <LinkButton color="white"> Abrir Instagram </LinkButton>
+    <LinkButton color='white'> Abrir Instagram </LinkButton>
   </Container>
 );
 

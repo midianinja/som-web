@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from "prop-types";
-import { white } from "../../settings/colors";
-import EventCondition from "../atoms/EventCondition";
+import PropTypes from 'prop-types';
+import { white } from '../../settings/colors';
+import EventCondition from '../atoms/EventCondition';
 
 const Container = styled.div`
   width: 100%;

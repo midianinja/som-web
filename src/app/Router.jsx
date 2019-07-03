@@ -6,16 +6,15 @@ import RegisterArtist from './modules/register-artist';
 import EventPage from './modules/EventPage';
 import ArtistPage from './modules/ArtistPage';
 
-
 const history = createBrowserHistory();
 history.listen(() => {});
 const AppRouter = () => (
   <Router history={history}>
     <Switch>
-      <Route exact path="/test" component={() => <Home />} />
-      <Route exact path="/event/:eventId" component={() => <EventPage />} />
-      <Route exact path="/" component={() => <RegisterArtist />} />
-      <Route exact path="/artist/:id" component={() => <ArtistPage />} />
+      <Route exact path='/test' component={() => <Home />} />
+      <Route exact path='/event/:eventId' component={() => <EventPage />} />
+      <Route exact path='/' component={() => <RegisterArtist />} />
+      <Route exact path='/artist/:id' component={() => <ArtistPage />} />
     </Switch>
   </Router>
 );

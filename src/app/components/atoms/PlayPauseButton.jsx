@@ -17,9 +17,9 @@ const PlayPauseButton = styled.button`
     position: relative;
     left: 2px;
     background-image: url(${(props) => {
-    const { play } = props;
-    return play ? '/icons/play.svg' : '/icons/pause.svg';
-  }});
+      const { play } = props;
+      return play ? '/icons/play.svg' : '/icons/pause.svg';
+    }});
     background-repeat: no-repeat;
     background-size: auto 100%;
   }

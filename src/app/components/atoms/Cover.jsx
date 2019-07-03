@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import {
-  black, transparent,
-} from '../../settings/colors';
+import { black, transparent } from '../../settings/colors';
 
 const Cover = styled.div`
   width: 100%;
@@ -16,7 +14,7 @@ const Cover = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url('${props => props.cover}');
+    background-image: url('${(props) => props.cover}');
     background-size: cover;
     top: 0;
     left: 0;

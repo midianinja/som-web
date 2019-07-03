@@ -111,11 +111,9 @@ function AudioPlayer({ tracks }) {
           <Title>{tracks[0].title}</Title>
           <Album>{tracks[0].album}</Album>
         </Info>
-        <AudioSlider min="0" max="10" />
+        <AudioSlider min='0' max='10' />
       </Header>
-      <List>
-        {renderTracks(tracks)}
-      </List>
+      <List>{renderTracks(tracks)}</List>
     </Wrapper>
   );
 }

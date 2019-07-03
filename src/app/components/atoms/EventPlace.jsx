@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { white, black } from '../../settings/colors';
 
 const Container = styled.h4`
-  with: 100%;
+  width: 100%;
   display: flex;
 `;
 
@@ -27,7 +27,7 @@ const Adress = styled.span`
 const EventPlace = ({ address, city, state }) => (
   <Container>
     <IconWrapper>
-      <Icon src="/icons/place_mark.svg" />
+      <Icon src='/icons/place_mark.svg' />
     </IconWrapper>
     <Adress>
       {' '}

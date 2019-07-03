@@ -10,7 +10,7 @@ const Card = styled.div`
 `;
 const LabelWrapper = styled.div`
   position: relative;
-  
+
   :before {
     content: '';
     position: absolute;
@@ -48,10 +48,7 @@ const MySongCard = ({ index }) => (
       <Label>{`Faixa ${index}`}</Label>
     </LabelWrapper>
     <UploadSongButton />
-    <Input
-      placeholder="Nome da música"
-      customStyle={inputCustomStyle}
-    />
+    <Input placeholder='Nome da música' customStyle={inputCustomStyle} />
   </Card>
 );
 

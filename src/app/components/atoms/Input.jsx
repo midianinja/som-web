@@ -17,7 +17,7 @@ const Input = styled.input`
     padding-right: 14px;
   }
 
-  ${props => props.customStyle}
+  ${(props) => props.customStyle}
 `;
 
 Input.propTypes = {

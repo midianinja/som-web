@@ -2,9 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import InputGroup from '../molecules/InputGroup';
-import {
-  green, gray, white, orange,
-} from '../../settings/colors';
+import { green, gray, white, orange } from '../../settings/colors';
 
 const Button = styled.label`
   display: flex;
@@ -32,7 +30,6 @@ const Button = styled.label`
     cursor: not-allowed;
   }
 `;
-
 
 const UploaddedButton = styled.label`
   display: flex;
@@ -74,9 +71,7 @@ const Input = styled.input`
   display: none;
 `;
 
-const handleClick = () => {
-
-};
+const handleClick = () => {};
 
 function UploadSongButton({ handleChange, id }) {
   return (
@@ -84,10 +79,10 @@ function UploadSongButton({ handleChange, id }) {
       <InputGroup>
         <Button htmlFor={`file-${id}`} onClick={handleClick}>
           Subir música
-          <Icon src="/icons/upload-song.svg" />
+          <Icon src='/icons/upload-song.svg' />
         </Button>
       </InputGroup>
-      <Input type="file" id={`file-${id}`} />
+      <Input type='file' id={`file-${id}`} />
     </Fragment>
   );
 }
@@ -96,9 +91,9 @@ function UploaddedSongButton({ handleChange, id }) {
   return (
     <Fragment>
       <UploaddedButton htmlFor={`file-${id}`} onClick={handleClick}>
-        <Icon src="/icons/green-check.svg" />
+        <Icon src='/icons/green-check.svg' />
       </UploaddedButton>
-      <Input type="file" id={`file-${id}`} />
+      <Input type='file' id={`file-${id}`} />
     </Fragment>
   );
 }

@@ -28,9 +28,7 @@ const Button = styled.button`
 `;
 
 function MoreASongButton({ onClick }) {
-  return (
-    <Button onClick={onClick}>Carregar mais músicas +</Button>
-  );
+  return <Button onClick={onClick}>Carregar mais músicas +</Button>;
 }
 
 MoreASongButton.propTypes = {

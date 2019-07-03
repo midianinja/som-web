@@ -42,9 +42,7 @@ function load(src, callback) {
  */
 function ProgressiveImage(props) {
   const [loaddedSrc, setLoaddedSrc] = useState(null);
-  const {
-    src, alt, title, width, height,
-  } = props;
+  const { src, alt, title, width, height } = props;
 
   useEffect(() => {
     load(src, setLoaddedSrc);

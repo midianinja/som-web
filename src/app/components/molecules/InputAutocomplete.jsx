@@ -12,14 +12,14 @@ const Input = styled.input`
   padding-right: 15px;
   width: 100%;
   background-color: transparent;
-  
+
   :focus {
     outiline: none;
     box-shadow: none;
     padding-left: 14px;
     padding-right: 14px;
   }
-  ${props => props.customStyle}
+  ${(props) => props.customStyle}
 `;
 
 const Wrapper = styled.div`
@@ -27,21 +27,19 @@ const Wrapper = styled.div`
   height: 38px;
 `;
 
-const AutocompleteInput = ({
-  value, predict, handleChange, handleSelect,
-}) => (
+const AutocompleteInput = ({ value, predict, handleChange, handleSelect }) => (
   <Wrapper>
     <Input
-      type="search"
-      customStyle="z-index: 2;"
+      type='search'
+      customStyle='z-index: 2;'
       onChange={handleChange}
       keyn
-      onKeyDown={e => (e.keyCode === 13 ? e.preventDefault() : null)}
+      onKeyDown={(e) => (e.keyCode === 13 ? e.preventDefault() : null)}
       value={value}
-      onKeyUp={e => (e.keyCode === 13 && predict ? handleSelect(predict) : null)}
+      onKeyUp={(e) => (e.keyCode === 13 && predict ? handleSelect(predict) : null)}
     />
     <Input
-      type="text"
+      type='text'
       disabled
       value={predict}
       customStyle={`z-index: 1; background-color: ${white10}; color: ${gray02};`}

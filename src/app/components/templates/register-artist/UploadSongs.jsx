@@ -25,9 +25,7 @@ const initialSong = {
 function renderSongs(songs) {
   return songs.map((song, key) => {
     const index = key + 1;
-    return (
-      <MySongCard key={index} song={song} index={index} />
-    );
+    return <MySongCard key={index} song={song} index={index} />;
   });
 }
 
@@ -42,14 +40,12 @@ const UploadSongs = () => {
   return (
     <Fieldset>
       <Title>Músicas</Title>
-      { renderSongs(songs) }
+      {renderSongs(songs)}
       <MoreASongButton onClick={handleAddSong} />
     </Fieldset>
   );
 };
 
-UploadSongs.propTypes = {
-
-};
+UploadSongs.propTypes = {};
 
 export default UploadSongs;

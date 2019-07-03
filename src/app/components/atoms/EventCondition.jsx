@@ -26,7 +26,6 @@ const Status = styled.div`
   color: ${green};
   font-size: 1em;
   line-height: 1.4em;
-  
 `;
 
 const EventCondition = ({ condition, status, title }) => (
@@ -41,12 +40,12 @@ EventCondition.propTypes = {
   condition: PropTypes.string,
   status: PropTypes.string,
   title: PropTypes.string,
-}
+};
 
 EventCondition.defaultProps = {
-  condition:'calendar',
+  condition: 'calendar',
   status: 'Sim',
   title: 'Transporte',
-}
+};
 
 export default EventCondition;

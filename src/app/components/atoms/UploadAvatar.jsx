@@ -7,10 +7,10 @@ const PreLoaderImage = styled.img`
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  opacity: ${props => (!props.src ? 0 : 1)};
+  opacity: ${(props) => (!props.src ? 0 : 1)};
   transition-property: opacity;
   transition-duration: 1s;
-  transition-delay: 0.5s; 
+  transition-delay: 0.5s;
 `;
 
 const Uploader = styled.label`
@@ -54,24 +54,22 @@ function load(src, callback) {
  * @param {object} props component props
  * @returns contains UploadAvatar Component
  */
-function UploadAvatar({
-  src, alt, title, handleChange,
-}) {
+function UploadAvatar({ src, alt, title, handleChange }) {
   const [loaddedSrc, setLoaddedSrc] = useState(null);
 
   useEffect(() => {
     load(src, setLoaddedSrc);
   });
 
-  const emptyImage = (<Icon src="/icons/add_a_photo.png" />);
-  const image = (<PreLoaderImage src={loaddedSrc} alt={alt} title={title} />);
+  const emptyImage = <Icon src='/icons/add_a_photo.png' />;
+  const image = <PreLoaderImage src={loaddedSrc} alt={alt} title={title} />;
 
   return (
     <Fragment>
-      <Uploader onChange={handleChange} htmlFor="uploader-avatar-artist-form-input">
+      <Uploader onChange={handleChange} htmlFor='uploader-avatar-artist-form-input'>
         {src ? image : emptyImage}
       </Uploader>
-      <Input onChange={handleChange} type="file" id="uploader-avatar-artist-form-input" />
+      <Input onChange={handleChange} type='file' id='uploader-avatar-artist-form-input' />
     </Fragment>
   );
 }

@@ -10,8 +10,12 @@ import SocialsFieldset from '../../components/templates/register-artist/SocialsF
 import { black } from '../../settings/colors';
 import StepFormFooter from '../../components/organisms/StepFormFooter.organism';
 import {
-  handleACMusicalStyle, steps, handleMusicalStyleSelect,
-  fetchMusicalStyleOptions, nextAction, skipAction,
+  handleACMusicalStyle,
+  steps,
+  handleMusicalStyleSelect,
+  fetchMusicalStyleOptions,
+  nextAction,
+  skipAction,
 } from './registerArtist.controller';
 import UploadSongs from '../../components/templates/register-artist/UploadSongs';
 
@@ -22,39 +26,58 @@ const Form = styled.form`
 `;
 
 const renderArtistInfos = ({
-  values, setAvatar, setAbout, artistStepErrors,
-  setCity, setIntegrants, setName,
-  setCountry, setState, musicalStylesOptions,
-  musicalStyles, setMusicalStyle, setMusicalStylePredict,
+  values,
+  setAvatar,
+  setAbout,
+  artistStepErrors,
+  setCity,
+  setIntegrants,
+  setName,
+  setCountry,
+  setState,
+  musicalStylesOptions,
+  musicalStyles,
+  setMusicalStyle,
+  setMusicalStylePredict,
   setMusicalStyles,
 }) => (
   <BasicInformationFieldset
     artistStepErrors={artistStepErrors}
     values={values}
-    handleAvatarChange={({ target }) => setAvatar({
-      url: URL.createObjectURL(target.files[0]),
-      file: target.files[0],
-    })}
+    handleAvatarChange={({ target }) =>
+      setAvatar({
+        url: URL.createObjectURL(target.files[0]),
+        file: target.files[0],
+      })
+    }
     handleAboutChange={({ target }) => setAbout(target.value)}
     handleCityChange={({ target }) => setCity(target.value)}
     handleIntegrantsChange={({ target }) => setIntegrants(target.value)}
     handleNameChange={({ target }) => setName(target.value)}
-    handleCountryChange={option => setCountry(option)}
-    handleStateChange={option => setState(option)}
-    handleMusicalStyleChange={({ target }) => handleACMusicalStyle({
-      value: target.value, musicalStylesOptions, setMusicalStylePredict, setMusicalStyle,
-    })}
-    handleMusicalStyleSelect={value => handleMusicalStyleSelect({
-      value, musicalStylesOptions, musicalStyles, setMusicalStyle,
-      setMusicalStylePredict, setMusicalStyles,
-    })}
+    handleCountryChange={(option) => setCountry(option)}
+    handleStateChange={(option) => setState(option)}
+    handleMusicalStyleChange={({ target }) =>
+      handleACMusicalStyle({
+        value: target.value,
+        musicalStylesOptions,
+        setMusicalStylePredict,
+        setMusicalStyle,
+      })
+    }
+    handleMusicalStyleSelect={(value) =>
+      handleMusicalStyleSelect({
+        value,
+        musicalStylesOptions,
+        musicalStyles,
+        setMusicalStyle,
+        setMusicalStylePredict,
+        setMusicalStyles,
+      })
+    }
   />
 );
 
-const renderContacts = ({
-  setPhone, setEmail, phone,
-  email, visibles, contactStepErrors,
-}) => {
+const renderContacts = ({ setPhone, setEmail, phone, email, visibles, contactStepErrors }) => {
   if (!visibles.contact) return null;
   return (
     <ContactAndSongsFieldset
@@ -71,9 +94,15 @@ const renderContacts = ({
 };
 
 const renderSocialMedia = ({
-  visibles, setFacebook, setInstagram,
-  setTwitter, setYoutube, facebook,
-  instagram, twitter, youtube,
+  visibles,
+  setFacebook,
+  setInstagram,
+  setTwitter,
+  setYoutube,
+  facebook,
+  instagram,
+  twitter,
+  youtube,
 }) => {
   if (!visibles.social) return null;
   return (
@@ -94,9 +123,7 @@ const renderSocialMedia = ({
 
 const renderFiles = ({ visibles }) => {
   if (!visibles.files) return null;
-  return (
-    <FilesFieldset />
-  );
+  return <FilesFieldset />;
 };
 
 const renderUploadFiles = () => <UploadSongs />;
@@ -137,30 +164,57 @@ function RegisterArtist() {
   }, [musicalStylesOptions]);
   const values = {
     avatar: avatar.url,
-    name, integrants, about,
-    country, state, city,
-    musicalStyles, musicalStylePredict, musicalStyle,
+    name,
+    integrants,
+    about,
+    country,
+    state,
+    city,
+    musicalStyles,
+    musicalStylePredict,
+    musicalStyle,
   };
 
   return (
-    <Form onSubmit={e => e.preventDefault()}>
+    <Form onSubmit={(e) => e.preventDefault()}>
       <StepFormHeader items={steps} index={step} />
       {renderArtistInfos({
-        values, setAvatar, setAbout, artistStepErrors,
-        setCity, setIntegrants, setName,
-        setCountry, setState, handleACMusicalStyle,
-        handleMusicalStyleSelect, musicalStylesOptions, musicalStyles,
-        setMusicalStyle, setMusicalStylePredict, setMusicalStyles,
+        values,
+        setAvatar,
+        setAbout,
+        artistStepErrors,
+        setCity,
+        setIntegrants,
+        setName,
+        setCountry,
+        setState,
+        handleACMusicalStyle,
+        handleMusicalStyleSelect,
+        musicalStylesOptions,
+        musicalStyles,
+        setMusicalStyle,
+        setMusicalStylePredict,
+        setMusicalStyles,
       })}
       {renderContacts({
-        setPhone, setEmail, phone,
-        email, visibles, contactStepErrors,
+        setPhone,
+        setEmail,
+        phone,
+        email,
+        visibles,
+        contactStepErrors,
       })}
       {renderUploadFiles()}
       {renderSocialMedia({
-        visibles, setFacebook, setInstagram,
-        setTwitter, setYoutube, facebook,
-        instagram, twitter, youtube,
+        visibles,
+        setFacebook,
+        setInstagram,
+        setTwitter,
+        setYoutube,
+        facebook,
+        instagram,
+        twitter,
+        youtube,
       })}
       {renderFiles({ visibles })}
       <StepFormFooter
@@ -173,6 +227,7 @@ function RegisterArtist() {
           twitter, youtube, visibles, setVisibles,
           setArtistStepErrors, setContactStepErrors,
         })}
+
         skipAction={() => skipAction('Skip')}
       />
     </Form>

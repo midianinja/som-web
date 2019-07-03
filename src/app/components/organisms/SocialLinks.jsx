@@ -5,11 +5,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div``;
 
 function SocialLinks() {
-  return (
-    <Wrapper>
-
-    </Wrapper>
-  );
+  return <Wrapper />;
 }
 
 export default SocialLinks;

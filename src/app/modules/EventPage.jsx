@@ -43,8 +43,8 @@ const HorizontalLine = styled.hr`
 
 const EventPage = () => (
   <Container>
-    <Cover cover="/images/temp-event-cover.png">
-      <EventImage src="/images/temp-event-cover.png" alt="Cover do Evento" />
+    <Cover cover='/images/temp-event-cover.png'>
+      <EventImage src='/images/temp-event-cover.png' alt='Cover do Evento' />
     </Cover>
     <EventInfo />
     <EventText />
@@ -54,10 +54,10 @@ const EventPage = () => (
       <ProductorCard />
     </ProductorCardWrapper>
     <OtherEventsWrapper>
-      <OtherEvents name="Pedro Ricardo" at="de" />
+      <OtherEvents name='Pedro Ricardo' at='de' />
     </OtherEventsWrapper>
     <OtherEventsWrapper>
-      <OtherEvents name="Rio de Janeiro" at="no" />
+      <OtherEvents name='Rio de Janeiro' at='no' />
     </OtherEventsWrapper>
   </Container>
 );
