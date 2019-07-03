@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import { white, black } from '../../settings/colors';
 
 const Container = styled.h4`
-  width: 100%;
+  with: 100%;
+  max-width: 300px;
   display: flex;
+  text-align: left;
 `;
 
 const IconWrapper = styled.div``;

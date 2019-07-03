@@ -1,50 +1,65 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { white, black, green } from '../../settings/colors';
+import {
+  green, red,
+} from '../../settings/colors';
 
 const Container = styled.div`
-  display: flex;
+  display: inline-flex;
+  flex-direction: column;
   with: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
 `;
 
 const Icon = styled.img`
-  width: 1.6em;
-  height: 1.6em;
+  width: 20px;
+  height: 20px;
   vertical-align: middle;
+  margin-bottom: 5px;
 `;
 
-const ECondition = styled.div`
-  margin-left: 5px;
+const ECondition = styled.label`
+  display: block;
+  vertical-align: middle;
   color: white;
   font-size: 1em;
   line-height: 1.4em;
+  margin-bottom: 5px;
 `;
 
 const Status = styled.div`
   margin-left: 5px;
-  color: ${green};
+  color: ${(props) => {
+    const { checked } = props;
+    return checked ? green : red;
+  }};
   font-size: 1em;
   line-height: 1.4em;
 `;
 
-const EventCondition = ({ condition, status, title }) => (
+const EventCondition = ({ condition, checked, title }) => (
   <Container>
-    <Icon src={`/icons/${condition}.svg`} />
-    <ECondition>{title}</ECondition>
-    <Status>Sim</Status>
+    <div>
+      <Icon src={`/icons/${condition}.svg`} />
+      <ECondition>{title}</ECondition>
+    </div>
+    <Status checked={checked}>
+      {checked ? 'Sim' : 'Não'}
+    </Status>
   </Container>
 );
 
 EventCondition.propTypes = {
   condition: PropTypes.string,
-  status: PropTypes.string,
+  checked: PropTypes.bool,
   title: PropTypes.string,
 };
 
 EventCondition.defaultProps = {
   condition: 'calendar',
-  status: 'Sim',
+  checked: false,
   title: 'Transporte',
 };
 

@@ -66,6 +66,7 @@ const TrackText = styled.h4`
   display: flex;
   align-items: center;
   font-size: 0.7142857143em;
+  font-weight: 300;
 `;
 
 const TrackInfo = styled.div`
@@ -74,7 +75,7 @@ const TrackInfo = styled.div`
 
 const TrackTime = styled.label`
   font-size: 0.8571428571em;
-  font-weight: 400;
+  font-weight: 300;
 `;
 
 const TrackLikedIcon = styled.img`

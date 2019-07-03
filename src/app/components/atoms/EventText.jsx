@@ -1,22 +1,48 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { black, white } from '../../settings/colors';
+import { black, gray04, white } from '../../settings/colors';
 
-const Container = styled.div`
+const Container = styled.section`
   width: 100%;
-  background-color: ${black};
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 20px;
+  margin-bottom: 40px;
+
+  @media (min-width: 1024px) {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+`;
+
+const Title = styled.h3`
+  font-size: 1em;
+  color: ${gray04};
+  text-align: left;
+  margin-bottom: 10px;
+  font-weight: 400;
+`;
+
+const Text = styled.p`
   font-size: 0.8571428571em;
   color: ${white};
   text-align: left;
   line-height: 1.6em;
   font-weight: 300;
+  padding-bottom: 40px;
+  border-bottom: solid 1px ${gray04};
 `;
 
-const EventText = ({ text }) => <Container>{text}</Container>;
+function EventText({ text }) {
+  return (
+    <Container>
+      <Title>Sobre o evento</Title>
+      <Text>
+        {text}
+      </Text>
+    </Container>
+  );
+} 
 
 EventText.propTypes = {
   text: PropTypes.string,

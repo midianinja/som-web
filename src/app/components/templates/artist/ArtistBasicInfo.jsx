@@ -2,23 +2,44 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Avatar from '../../atoms/Avatar.atom';
-import Cover from '../../atoms/Cover';
+import Socials from '../../organisms/Socials';
 import PrimaryButton from '../../atoms/PrimaryButton';
 import LinkButton from '../../atoms/LinkButton';
 import { white, white30 } from '../../../settings/colors';
 
-const Wrapper = styled.header`
+const Wrapper = styled.section`
+  display: inline-block;
+  width: 100%;
+  max-width: 420px;
   padding-bottom: 40px;
+
+  @media (min-width: 1024px) {
+    position: fixed;
+  }
 `;
 
 const Title = styled.h1`
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-top: 20px;
   padding-left: 40px;
   padding-right: 40px;
   font-size: 2.1428571429em;
   font-weight: 400;
   line-height: 1.1em;
+
+  @media (min-width: 1024px) {
+    padding-left: 10px;
+    padding-right: 0px;
+    margin-top: 0;
+  }
+`;
+
+const TitleAndFollowWrapper = styled.div`
+  @media (min-width: 1024px) {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+  }
 `;
 
 const ConnectionsWrapper = styled.div``;
@@ -31,6 +52,7 @@ const buttonCustomStyled = `
 const avatarCustomStyled = `
   width: 140px;
   height: 140px;
+  vertical-align: middle;
 `;
 
 const FollowText = styled.label`
@@ -64,13 +86,20 @@ const ActionWrapper = styled.div`
   text-align: left;
 `;
 
-function Header(props) {
-  const { name, avatar, followers, following, isFollowing, cover, about } = props;
+function ArtistBasicInfo(props) {
+  const {
+    name, avatar, followers, following,
+    isFollowing, about,
+  } = props;
 
   return (
-    <Wrapper>
-      <Cover cover={cover}>
-        <Avatar customStyle={avatarCustomStyled} src={avatar} alt={name} />
+    <Wrapper id="infos">
+      <Avatar
+        customStyle={avatarCustomStyled}
+        src={avatar}
+        alt={name}
+      />
+      <TitleAndFollowWrapper>
         <Title>{name}</Title>
         <ConnectionsWrapper>
           <FollowText>
@@ -82,24 +111,24 @@ function Header(props) {
             seguindo
           </FollowText>
         </ConnectionsWrapper>
-      </Cover>
+      </TitleAndFollowWrapper>
       <About>{about}</About>
       <ActionWrapper>
         <PrimaryButton customStyle={buttonCustomStyled}>Seguir</PrimaryButton>
         <LinkButton color='white'>Ler release</LinkButton>
       </ActionWrapper>
+      <Socials />
     </Wrapper>
   );
 }
 
-Header.propTypes = {
+ArtistBasicInfo.propTypes = {
   about: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
-  cover: PropTypes.string.isRequired,
   followers: PropTypes.number.isRequired,
   following: PropTypes.number.isRequired,
   isFollowing: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
 };
 
-export default Header;
+export default ArtistBasicInfo;
