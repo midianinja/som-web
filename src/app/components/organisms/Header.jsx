@@ -3,19 +3,28 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Avatar from '../atoms/Avatar.atom';
 
-const Wrapper = styled.header`
+const HeaderComponent = styled.header`
   display: none;
 
-  @media (min-width: 1024px){
-    display: flex;
+  @media (min-width: 1024px) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
     width: 100%;
-    max-width: 1024px;
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: space-between;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    z-index: 10;
   }
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+  padding-top: 30px;
+  padding-bottom: 30px;
 `;
 
 const AvatarWrapper = styled.div``;
@@ -33,19 +42,22 @@ const Name = styled.h3`
   color: white;
   display: inline-block;
   font-size: 0.7857142857em;
+  font-weight: 300;
   vertical-align: middle;
   margin-right: 10px;
 `;
 
 function Header({ avatar, name }) {
   return (
-    <Wrapper>
-      <Logo src="/images/logo.svg" alt="SOM - Sistema Operacional da Música" />
-      <AvatarWrapper>
-        <Name>{name}</Name>
-        <Avatar src={avatar} customStyle={avatarCustomStyle} />
-      </AvatarWrapper>
-    </Wrapper>
+    <HeaderComponent>
+      <Wrapper>
+        <Logo src="/images/logo.svg" alt="SOM - Sistema Operacional da Música" />
+        <AvatarWrapper>
+          <Name>{name}</Name>
+          <Avatar src={avatar} customStyle={avatarCustomStyle} />
+        </AvatarWrapper>
+      </Wrapper>
+    </HeaderComponent>
   );
 }
 

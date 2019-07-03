@@ -12,10 +12,12 @@ import LinkButton from '../atoms/LinkButton';
 const Container = styled.div`
   display: flex;
   width: 100%;
+  max-width: 420px;
   padding: 20px 15px;
   border-radius: 20px;
   background: ${white};
   border: 1px solid ${white30};
+  text-align: left;
 `;
 
 const ImageWrapper = styled.div`
@@ -85,7 +87,7 @@ const ProductorCard = () => (
       <FollowersAndFollowing />
       <ButtonsWrapper>
         <PrimaryButton color="green">seguir</PrimaryButton>
-        <LinkButton color="black">ver mais eventos</LinkButton>
+        <LinkButton customStyle="margin-left: 10px" color="black">ver mais eventos</LinkButton>
       </ButtonsWrapper>
     </ProfileWrapper>
   </Container>

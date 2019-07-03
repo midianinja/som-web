@@ -14,6 +14,10 @@ const Wrapper = styled.section`
   width: 100%;
   max-width: 420px;
   padding-bottom: 40px;
+
+  @media (min-width: 1024px) {
+    position: fixed;
+  }
 `;
 
 const Title = styled.h1`

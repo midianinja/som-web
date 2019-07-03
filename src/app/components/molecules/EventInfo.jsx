@@ -11,16 +11,19 @@ import PrimaryButton from '../atoms/PrimaryButton';
 const Container = styled.div`
   width: 100%;
   overflow-y: auto;
-  background-color: ${black};
+  max-width: 420px;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 40px;
   color: ${white};
+
+  @media (min-width: 1024px) {
+    position: fixed;
+  }
 `;
 
 const Title = styled.h1`
   margin-bottom: 20px;
-  margin-top: 20px;
   font-size: 1.5714285714em;
   font-weight: 400;
   line-height: 1.1em;
@@ -41,11 +44,15 @@ const ButtonWrapper = styled.div`
   width: 100%;
   margin-top: 30px;
   text-align: center;
+
+  @media (min-width: 1024px) {
+    text-align: left;
+  }
 `;
 
 const EventInfo = ({ name, date, place, bands }) => (
   <Container>
-    <Title>Nome do Festival</Title>
+    <Title>Bananada 2017</Title>
     <Space />
     <EventDate />
     <SubSpace />

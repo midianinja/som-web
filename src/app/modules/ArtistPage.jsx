@@ -25,6 +25,10 @@ const CoverWrapper = styled.div`
   width: 100%;
   z-index: 0;
   top: 0;
+
+  @media (min-width: 1024px) {
+    position: fixed;
+  }
 `;
 
 const HeaderWrapper = styled.div`
@@ -48,10 +52,9 @@ const ColumnWrapper = styled.div`
   display: inline-block;
   width: 100%;
   vertical-align: top;
-
   @media (min-width: 1024px) {
     max-width: calc(100% - 454px);
-    margin-left: 30px;
+    margin-left: 484px;
   }
 `;
 
@@ -93,14 +96,13 @@ const DUMMY_ARTISTS = [
 function ArtistPage() {
   return (
     <ArtistWrapper>
+      <Header
+        name="Fulana Ciclana"
+        avatar="https://api.adorable.io/avatars/285/abott@adorable.png"
+      />
       <CoverWrapper>
         <Cover cover="/images/temp-cover.jpg">
-          <HeaderWrapper>
-            <Header
-              name="Fulana Ciclana"
-              avatar="https://api.adorable.io/avatars/285/abott@adorable.png"
-            />
-          </HeaderWrapper>
+          <HeaderWrapper />
         </Cover>
       </CoverWrapper>
       <Content>

@@ -5,7 +5,9 @@ import { white, black } from '../../settings/colors';
 
 const Container = styled.h4`
   with: 100%;
+  max-width: 300px;
   display: flex;
+  text-align: left;
 `;
 
 const IconWrapper = styled.div``;
