@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { black } from '../settings/colors';
-import ArtistBasicInfo from '../components/templates/artist/ArtistBasicInfo';
-import AudioPlayer from '../components/organisms/AudioPlayer';
-import MoreArtist from '../components/templates/artist/MoreArtist';
-import Cover from '../components/atoms/Cover';
-import Header from '../components/organisms/Header';
-import InstagramMedia from '../components/molecules/InstagramMedias';
-import { fetchArtistData, fetchArtistInsta } from './artist/ArtistController';
+import { black } from '../../settings/colors';
+import ArtistBasicInfo from '../../components/templates/artist/ArtistBasicInfo';
+import AudioPlayer from '../../components/organisms/AudioPlayer';
+import MoreArtist from '../../components/templates/artist/MoreArtist';
+import Cover from '../../components/atoms/Cover';
+import Header from '../../components/organisms/Header';
+import InstagramMedia from '../../components/molecules/InstagramMedias';
+import { fetchArtistData, fetchArtistInsta } from './ArtistController';
 
 const ArtistWrapper = styled.div`
   width: 100%;

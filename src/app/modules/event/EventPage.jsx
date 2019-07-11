@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import Cover from '../components/atoms/Cover';
-import EventText from '../components/atoms/EventText';
-import EventInfo from '../components/molecules/EventInfo';
-import EventConditions from '../components/molecules/EventConditions';
-import ProductorCard from '../components/molecules/ProductorCard';
-import Header from '../components/organisms/Header';
-import SubscribedArtists from '../components/templates/event/SubscribedArtists';
-import Subscribed from '../components/modals/Subscribed';
-import Dialog from '../components/modals/Dialog.modal';
-import { black } from '../settings/colors';
+import Cover from '../../components/atoms/Cover';
+import EventText from '../../components/atoms/EventText';
+import EventInfo from '../../components/molecules/EventInfo';
+import EventConditions from '../../components/molecules/EventConditions';
+import ProductorCard from '../../components/molecules/ProductorCard';
+import Header from '../../components/organisms/Header';
+import SubscribedArtists from '../../components/templates/event/SubscribedArtists';
+import Subscribed from '../../components/modals/Subscribed';
+import Dialog from '../../components/modals/Dialog.modal';
+import { black } from '../../settings/colors';
 
 const DUMMY_ARTISTS = [
   {
