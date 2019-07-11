@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { green, white } from '../../settings/colors';
-import EventCard from './EventCard';
-import LinkButton from '../atoms/LinkButton';
+import EventCard from '../molecules/EventCard';
 
 const Container = styled.div`
   width: 100%;
@@ -39,7 +38,7 @@ const OtherEvents = ({ name, at }) => (
     <Header>
       <Title>
         {`Outros Eventos ${at}`}
-        <Link href='link'>{name}</Link>
+        <Link href="#link">{name}</Link>
       </Title>
     </Header>
     <Space />

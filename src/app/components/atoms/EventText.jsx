@@ -17,7 +17,7 @@ const Container = styled.section`
 
 const Title = styled.h3`
   font-size: 1em;
-  color: ${gray04};
+  color: ${white};
   text-align: left;
   margin-bottom: 10px;
   font-weight: 400;
