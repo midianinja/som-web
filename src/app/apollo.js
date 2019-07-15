@@ -13,7 +13,6 @@ const defaultOptions = {
   },
 };
 
-
 const link = createHttpLink({ uri: 'http://localhost:3000/graphql' });
 const cache = new InMemoryCache({
   dataIdFromObject: ({ id }) => id,

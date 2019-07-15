@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { black, gray04, white } from '../../settings/colors';
+import { gray04, white } from '../../settings/colors';
 
 const Container = styled.section`
   width: 100%;

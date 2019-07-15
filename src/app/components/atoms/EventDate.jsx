@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { white, black } from '../../settings/colors';
 
 const Container = styled.div`
   display: flex;
@@ -23,9 +22,21 @@ const EDate = styled.h4`
 
 const EventDate = ({ day, month, year }) => (
   <Container>
-    <Icon src='/icons/calendar.svg' />
-    <EDate>10/10/2020</EDate>
+    <Icon src="/icons/calendar.svg" />
+    <EDate>{`${day}/${month}/${year}`}</EDate>
   </Container>
 );
+
+EventDate.propTypes = {
+  day: PropTypes.string,
+  month: PropTypes.string,
+  year: PropTypes.string,
+};
+
+EventDate.defaultProps = {
+  day: '00',
+  month: '00',
+  year: '0000',
+};
 
 export default EventDate;

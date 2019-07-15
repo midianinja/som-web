@@ -50,30 +50,53 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const EventInfo = ({ name, date, place, bands }) => (
-  <Container>
-    <Title>Bananada 2017</Title>
-    <Space />
-    <EventDate />
-    <SubSpace />
-    <EventPlace
-      address='Palácio dos Castelos, Rua da Subida, nº 1432 - Santa Teresa'
-      city='Rio de Janeiro'
-      state='RJ'
-    />
-    <SubSpace />
-    <EventBands subscribed='15' />
-    <Space />
-    <ButtonWrapper>
-      <PrimaryButton>Clique e Participe</PrimaryButton>
-    </ButtonWrapper>
-  </Container>
-);
+const EventInfo = ({
+  name, date, place, subscribed,
+}) => {
+  const dateInstance = new Date(date);
+  return (
+    <Container>
+      <Title>{name}</Title>
+      <Space />
+      <EventDate
+        day={dateInstance.getDate()}
+        month={dateInstance.getMonth() + 1}
+        yaer={dateInstance.getFullYear()}
+      />
+      <SubSpace />
+      <EventPlace
+        address={place.address}
+        city={place.city}
+        state={place.state}
+      />
+      <SubSpace />
+      <EventBands subscribed={subscribed} />
+      <Space />
+      <ButtonWrapper>
+        <PrimaryButton>Clique e Participe</PrimaryButton>
+      </ButtonWrapper>
+    </Container>
+  );
+};
+
+const placeShape = {
+  address: PropTypes.string,
+  city: PropTypes.string,
+  state: PropTypes.string,
+};
 
 EventInfo.propTypes = {
   name: PropTypes.string,
   date: PropTypes.string,
-  bands: PropTypes.number,
+  subscribed: PropTypes.number,
+  place: PropTypes.shape(placeShape),
+};
+
+EventInfo.defaultProps = {
+  name: '',
+  date: '',
+  subscribed: 0,
+  place: {},
 };
 
 export default EventInfo;
