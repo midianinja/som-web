@@ -18,6 +18,7 @@ const Dialog = styled.div`
     padding: 40px;
   }
 `;
+
 const Description = styled.p`
   margin-top: 7px;
   font-weight: 300;
@@ -77,8 +78,8 @@ const DialogModal = ({
       <Title>{title}</Title>
       <Description>{description}</Description>
       <Actions>
-        <BackButton onClick={disagreeAction}>{disagreeText}</BackButton>
-        <PrimaryButton onClick={confirmAction}>{agreeText}</PrimaryButton>
+        {disagreeAction ? <BackButton onClick={disagreeAction}>{disagreeText}</BackButton> : null}
+        {confirmAction ? <PrimaryButton onClick={confirmAction}>{agreeText}</PrimaryButton> : null}
       </Actions>
     </Dialog>
   </DialogWrapper>
@@ -97,8 +98,8 @@ DialogModal.propTypes = {
 DialogModal.defaultProps = {
   title: 'Title',
   description: 'Description',
-  agreeText: 'agree',
-  disagreeText: 'disagree',
+  agreeText: '',
+  disagreeText: '',
   isOpen: false,
 };
 

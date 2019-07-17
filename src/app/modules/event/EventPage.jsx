@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Cover from '../../components/atoms/Cover';
@@ -10,8 +11,10 @@ import Header from '../../components/organisms/Header';
 import SubscribedArtists from '../../components/templates/event/SubscribedArtists';
 import Subscribed from '../../components/modals/Subscribed';
 import Dialog from '../../components/modals/Dialog.modal';
+import Store from '../../store/Store';
 import {
-  fetchEventData, initialEvent, initialLoading, loadingStatus, DUMMY_ARTISTS,
+  fetchEventData, initialEvent, initialLoading, loadingStatus,
+  subscribeAction,
 } from './EventController';
 import { black } from '../../settings/colors';
 
@@ -26,7 +29,11 @@ const ProductorCardWrapper = styled.div`
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 20px;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
+
+  @media (min-width: 1024px) {
+    padding-bottom: 40px;
+  }
 `;
 
 const CoverWrapper = styled.div`
@@ -74,53 +81,102 @@ const EventImage = styled.img`
   visibility: hidden;
 `;
 
-const EventPage = ({ history }) => {
+const dialogStatus = {
+  NOT_LOGGED: {
+    title: 'Você não está logado :(',
+    description: 'Pra se inscrever em eventos você precisa ter uma conta e estar logado.',
+    agreeText: 'Logar',
+    disagreeText: 'Voltar',
+    confirmAction: () => null,
+    disagreeAction: () => null,
+  },
+};
+
+const EventPage = ({ match }) => {
   const [loading, setLoading] = useState({ ...initialLoading });
   const [event, setEvent] = useState({ ...initialEvent });
+  const [dialog, setDialog] = useState(null);
 
-  console.log(history);
   useEffect(() => {
     if (loading.event === loadingStatus.TO_LOAD) {
-      // fetchEventData(id);
+      fetchEventData(match.params.id, setEvent, loading, setLoading);
     }
   });
 
-  return (
-    <Container>
-      <Header
-        name="Fulana Ciclana"
-        avatar="https://api.adorable.io/avatars/285/abott@adorable.png"
-      />
-      <CoverWrapper>
-        <Cover cover={event.cover}>
-          <EventImage src={event.cover} alt="Cover do Evento" />
-          <HeaderWrapper />
-        </Cover>
-      </CoverWrapper>
-      <Content>
-        <EventInfo
+  const eventPlace = {
+    city: event.location.city,
+    state: event.location.state,
+    district: event.location.district,
+    address: `${event.location.address}, nº ${event.location.number}`,
+  };
 
-        />
-        <ColumnWrapper>
-          <EventText />
-          <EventConditions />
-          <ProductorCardWrapper>
-            <ProductorCard />
-          </ProductorCardWrapper>
-          <SubscribedArtists artists={DUMMY_ARTISTS} />
-        </ColumnWrapper>
-      </Content>
-      <Subscribed />
-      <Dialog
-        title="Cadastro incompleto :("
-        description="Pra se inscrever em eventos você precisa preencher os dados obrigatórios."
-        agreeText="Cadastrar"
-        disagreeText="Voltar"
-        confirmAction={() => null}
-        disagreeAction={() => null}
-      />
-    </Container>
+  const eventConditions = {
+    has_local_transportation: event.has_local_transportation,
+    has_accommodation: event.has_accommodation,
+    has_food: event.has_food,
+  };
+
+  return (
+    <Store.Consumer>
+      { ({ state, dispatch }) => (
+        <Container>
+          <Header
+            name="Fulana Ciclana"
+            avatar="https://api.adorable.io/avatars/285/abott@adorable.png"
+          />
+          <CoverWrapper>
+            <Cover cover={event.cover}>
+              <EventImage src={event.cover} alt="Cover do Evento" />
+              <HeaderWrapper />
+            </Cover>
+          </CoverWrapper>
+          <Content>
+            <EventInfo
+              name={event.name}
+              date={event.event_date}
+              place={eventPlace}
+              subscribers={event.subscribers.length}
+              subscribeAction={() => subscribeAction(state.auth, null, null, dispatch)}
+            />
+            <ColumnWrapper>
+              <EventText
+                text={event.about}
+              />
+              <EventConditions conditions={eventConditions} />
+              <ProductorCardWrapper>
+                <ProductorCard
+                  productor={event.productor}
+                />
+              </ProductorCardWrapper>
+              <SubscribedArtists artists={event.subscribers} />
+            </ColumnWrapper>
+          </Content>
+          <Subscribed />
+          {
+            dialog ? (
+              <Dialog
+                isOpen
+                title={dialog.title}
+                description={dialog.description}
+                agreeText={dialog.agreeText}
+                disagreeText={dialog.disagreeText}
+                confirmAction={dialog.confirmAction}
+                disagreeAction={dialog.disagreeAction}
+              />
+            ) : null
+          }
+        </Container>
+      )}
+    </Store.Consumer>
   );
+};
+
+const routerParamsShape = {
+  id: PropTypes.string,
+};
+
+EventPage.propTypes = {
+  match: PropTypes.shape(routerParamsShape).isRequired,
 };
 
 export default withRouter(EventPage);

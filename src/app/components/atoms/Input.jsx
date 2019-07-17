@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { white10, white } from '../../settings/colors';
+import { white50, white10, white } from '../../settings/colors';
 
 const Input = styled.input`
   height: 38px;
@@ -17,7 +17,20 @@ const Input = styled.input`
     padding-right: 14px;
   }
 
-  ${(props) => props.customStyle}
+  ::placeholder {
+    color: ${white50};
+    opacity: 1;
+  }
+  
+  :-ms-input-placeholder {
+    color: ${white50};
+  }
+  
+  ::-ms-input-placeholder {
+    color: ${white50};
+  }
+
+  ${props => props.customStyle}
 `;
 
 Input.propTypes = {

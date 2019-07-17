@@ -70,29 +70,49 @@ const avatarStyle = `
   height: 55px;
 `;
 
-const ProductorCard = () => (
+const ProductorCard = ({ productor }) => (
   <Container>
     <ImageWrapper>
       <Avatar
         customStyle={avatarStyle}
-        src='https://s3.amazonaws.com/musicindustryhowtoimages/wp-content/uploads/2018/01/12070915/full-time-music-producer.jpg'
+        src={productor.photo}
       />
       <ProductorTitle>Produtor</ProductorTitle>
     </ImageWrapper>
     <ProfileWrapper>
-      <ProductorName>Augusto Fernando</ProductorName>
-      <ProductorCity>Rio de Janeiro, RJ</ProductorCity>
-      <ProductorText>
-        Mussum Ipsum, cacilds vidis litro abertis. Delegadis gente finis, bibendum egestas augue arcu ut est. Quem num
-        gosta di mim que vai caçá sua turmis!
-      </ProductorText>
-      <FollowersAndFollowing />
+      <ProductorName>{productor.name}</ProductorName>
+      <ProductorCity>
+        {`${productor.location.city}, ${productor.location.state}`}
+      </ProductorCity>
+      <ProductorText>{productor.description}</ProductorText>
+      <FollowersAndFollowing
+        nFollowers={productor.followers.length}
+        nFollowing={productor.following.length}
+      />
       <ButtonsWrapper>
         <PrimaryButton color="green">seguir</PrimaryButton>
-        <LinkButton customStyle="margin-left: 10px" color="black">ver mais eventos</LinkButton>
+        {/* <LinkButton customStyle="margin-left: 10px" color="black">ver mais eventos</LinkButton> */}
       </ButtonsWrapper>
     </ProfileWrapper>
   </Container>
 );
+
+const locationShape = {
+  city: PropTypes.string,
+  state: PropTypes.string,
+};
+
+const productorShape = {
+  description: PropTypes.string,
+  photo: PropTypes.string,
+  location: PropTypes.shape(locationShape),
+  name: PropTypes.string,
+  followers: PropTypes.array,
+  following: PropTypes.array,
+};
+
+ProductorCard.propTypes = {
+  productor: PropTypes.shape(productorShape).isRequired,
+};
 
 export default ProductorCard;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { white30 } from '../../settings/colors';
+import { getGradient } from '../../settings/gradients';
 
 const Wrapper = styled.div`
   display: inline-block;
@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   height: 120px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: ${white30};
+  background: ${getGradient()};
   ${(props) => props.customStyle}
 `;
 

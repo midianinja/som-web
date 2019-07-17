@@ -6,7 +6,10 @@ import {
 } from '../../settings/colors';
 
 const Container = styled.div`
-  display: inline-flex;
+  display: ${(props) => {
+    const { checked } = props;
+    return checked ? 'inline-flex' : 'none';
+  }}
   flex-direction: column;
   with: 100%;
   padding-left: 15px;
@@ -40,13 +43,13 @@ const Status = styled.div`
 `;
 
 const EventCondition = ({ condition, checked, title }) => (
-  <Container>
+  <Container checked={checked}>
     <div>
       <Icon src={`/icons/${condition}.svg`} />
       <ECondition>{title}</ECondition>
     </div>
     <Status checked={checked}>
-      {checked ? 'Sim' : 'Não'}
+      <Icon src="/icons/checked.svg" />
     </Status>
   </Container>
 );

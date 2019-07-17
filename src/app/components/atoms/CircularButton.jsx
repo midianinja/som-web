@@ -4,20 +4,6 @@ import {
   white, purple, green, orange, magenta, gray, secondaryPurple, transparent,
 } from '../../settings/colors';
 
-const sizes = {
-  small: '28px',
-  medium: '38px',
-};
-
-/**
- * function that getting size based on props
- * @param {string} key it is size key
- * @returns contains size in pixel
- */
-function getSize(key) {
-  return sizes[key] ? sizes[key] : sizes.medium;
-}
-
 const colors = {
   secondaryPurple,
   purple,
@@ -26,7 +12,6 @@ const colors = {
   magenta,
   gray,
   transparent,
-  white,
 };
 
 /**
@@ -51,16 +36,14 @@ function getHoverColor(key) {
   return hoverColors[key] ? colors[key] : hoverColors.purple;
 }
 
-const PrimaryButton = styled.button`
-  height: ${props => getSize(props.size)};
-  padding-left: 30px;
-  padding-right: 30px;
-  border-radius: ${props => getSize(props.size)};
+const CircularButton = styled.button`
+  width: 50px;
+  height: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 50%;
   background-color: ${props => getColor(props.color)};
-  color: ${(props) => {
-    const { color } = props;
-    return color === 'white' ? purple : white;
-  }};
+  color: ${white};
   cursor: pointer;
   transition-duration: 0.3s;
   font-size: 0.8571428571em;
@@ -78,20 +61,18 @@ const PrimaryButton = styled.button`
     cursor: not-allowed;
   }
 
-  ${props => props.customStyle}
-
+  ${(props) => props.customStyle}
 `;
 
-PrimaryButton.propTypes = {
+CircularButton.propTypes = {
   size: PropTypes.string,
   color: PropTypes.string,
   customStyle: PropTypes.string,
 };
 
-PrimaryButton.defualtProps = {
-  size: 'medium',
+CircularButton.defualtProps = {
   color: 'purple',
   customStyle: '',
 };
 
-export default PrimaryButton;
+export default CircularButton;

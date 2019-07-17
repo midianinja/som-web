@@ -26,14 +26,14 @@ const Adress = styled.span`
   line-height: 1.5em;
 `;
 
-const EventPlace = ({ address, city, state }) => (
+const EventPlace = ({ address, district, city, state }) => (
   <Container>
     <IconWrapper>
       <Icon src='/icons/place_mark.svg' />
     </IconWrapper>
     <Adress>
-      {' '}
-      {address ? `${address} ,` : ''} {city}, {state}
+      {`${address ? `${address} - ` : ''} ${district},
+      ${city}, ${state}`}
     </Adress>
   </Container>
 );

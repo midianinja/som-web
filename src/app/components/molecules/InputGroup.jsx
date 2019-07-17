@@ -9,11 +9,13 @@ const InptGroupContainer = styled.div`
   margin-bottom: 30px;
   ${(props) => props.customStyle}
 `;
+
 const Label = styled.label`
   font-size: 0.8em;
   color: ${white}
   margin-bottom: 5px;
-  margin-left: 5px
+  margin-left: 5px;
+  ${(props) => props.customStyle}
 `;
 
 const ErrorText = styled.span`
@@ -29,9 +31,11 @@ const InfoText = styled.span`
     font-weight: 300;
 `;
 
-const InputGroup = ({ children, label, info, error, customStyle }) => (
+const InputGroup = ({
+  children, label, info, error, customStyle, customLabelStyle,
+}) => (
   <InptGroupContainer customStyle={customStyle}>
-    {label ? <Label>{label}</Label> : null}
+    {label ? <Label customStyle={customLabelStyle}>{label}</Label> : null}
     {children}
     {info ? <InfoText>{info}</InfoText> : null}
     {error ? <ErrorText>{error}</ErrorText> : null}
@@ -42,12 +46,14 @@ InputGroup.propTypes = {
   children: PropTypes.node.isRequired,
   label: PropTypes.string.isRequired,
   customStyle: PropTypes.string,
+  customLabelStyle: PropTypes.string,
   info: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
 };
 
 InputGroup.defaultProps = {
   customStyle: '',
+  customLabelStyle: '',
 };
 
 export default InputGroup;

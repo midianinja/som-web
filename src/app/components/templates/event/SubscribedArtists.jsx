@@ -94,10 +94,10 @@ const ArtistName = styled.h4`
 `;
 
 function renderArtists(artists) {
-  return artists.map(({ name, avatar }) => (
+  return artists.map(artist => (
     <Card>
-      <Avatar src={avatar} customStyle={avatarCustomStyle} />
-      <ArtistName>{name}</ArtistName>
+      <Avatar src={artist.avatar_image} customStyle={avatarCustomStyle} />
+      <ArtistName>{artist.name}</ArtistName>
     </Card>
   ));
 }
@@ -114,7 +114,7 @@ function SubscribedArtists({ artists }) {
 }
 
 const artistShape = {
-  avatar: PropTypes.string,
+  avatar_image: PropTypes.string,
   name: PropTypes.string,
 };
 

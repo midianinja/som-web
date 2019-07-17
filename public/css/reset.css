@@ -30,6 +30,10 @@ body {
 	background-color: #000000;
 }
 
+body.-scroll-blocked {
+	overflow: hidden;
+}
+
 ol, ul {
 	list-style: none;
 }

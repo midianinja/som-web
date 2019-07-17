@@ -14,12 +14,26 @@ const Container = styled.div`
   margin-bottom: 20px;
 `;
 
-const EventConditions = () => (
+const EventConditions = ({ conditions }) => (
   <Container>
-    <EventCondition title="Transporte" condition="directions-car" />
-    <EventCondition title="Acomodações" condition="hotel" checked />
-    <EventCondition title="Alimentacção" condition="local-dining" checked />
+    <EventCondition
+      title="Transporte"
+      condition="directions-car"
+      checked={conditions.has_local_transportation}
+    />
+    <EventCondition title="Acomodações" condition="hotel" checked={conditions.has_accommodation} />
+    <EventCondition title="Alimentacção" condition="local-dining" checked={conditions.has_food} />
   </Container>
 );
+
+const conditionsShape = {
+  has_local_transportation: PropTypes.bool.isRequired,
+  has_accommodation: PropTypes.bool.isRequired,
+  has_food: PropTypes.bool.isRequired,
+};
+
+EventConditions.propTypes = {
+  conditions: PropTypes.shape(conditionsShape).isRequired,
+};
 
 export default EventConditions;

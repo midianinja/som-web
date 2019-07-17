@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { black, white } from '../../settings/colors';
+import { white } from '../../settings/colors';
 
 import EventDate from '../atoms/EventDate';
 import EventPlace from '../atoms/EventPlace';
@@ -50,10 +50,13 @@ const ButtonWrapper = styled.div`
   }
 `;
 
+const unixTime = unixtime => new Date(+unixtime)
+  .toISOString().slice(0, 19).replace('T', ' ');
+
 const EventInfo = ({
-  name, date, place, subscribed,
+  name, date, place, subscribers, subscribeAction,
 }) => {
-  const dateInstance = new Date(date);
+  const dateInstance = new Date(unixTime(date));
   return (
     <Container>
       <Title>{name}</Title>
@@ -61,19 +64,20 @@ const EventInfo = ({
       <EventDate
         day={dateInstance.getDate()}
         month={dateInstance.getMonth() + 1}
-        yaer={dateInstance.getFullYear()}
+        year={dateInstance.getFullYear()}
       />
       <SubSpace />
       <EventPlace
         address={place.address}
         city={place.city}
         state={place.state}
+        district={place.district}
       />
       <SubSpace />
-      <EventBands subscribed={subscribed} />
+      <EventBands subscribed={subscribers} />
       <Space />
       <ButtonWrapper>
-        <PrimaryButton>Clique e Participe</PrimaryButton>
+        <PrimaryButton onClick={subscribeAction}>Inscrever-se</PrimaryButton>
       </ButtonWrapper>
     </Container>
   );
@@ -88,14 +92,15 @@ const placeShape = {
 EventInfo.propTypes = {
   name: PropTypes.string,
   date: PropTypes.string,
-  subscribed: PropTypes.number,
+  subscribers: PropTypes.number,
   place: PropTypes.shape(placeShape),
+  subscribeAction: PropTypes.func.isRequired,
 };
 
 EventInfo.defaultProps = {
   name: '',
   date: '',
-  subscribed: 0,
+  subscribers: 0,
   place: {},
 };
 
