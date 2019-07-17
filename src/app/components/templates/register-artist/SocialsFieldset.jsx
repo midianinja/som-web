@@ -22,7 +22,7 @@ function SocialsFielset(props) {
   return (
     <Fieldset>
       <Title>Redes sociais</Title>
-      <InputGroup>
+      <InputGroup info="O link deve conter https://">
         <Input
           id='facebook'
           placeholder='Facebook'
@@ -31,7 +31,7 @@ function SocialsFielset(props) {
           onChange={handleFacebookChange}
         />
       </InputGroup>
-      <InputGroup>
+      <InputGroup info="O link deve conter https://">
         <Input
           id='instagram'
           placeholder='Instagram'
@@ -40,11 +40,23 @@ function SocialsFielset(props) {
           onChange={handleInstagramChange}
         />
       </InputGroup>
-      <InputGroup>
-        <Input id='twitter' placeholder='Twitter' value={values.twitter} type='url' onChange={handleTwitterChange} />
+      <InputGroup info="O link deve conter https://">
+        <Input
+          id="twitter"
+          placeholder="Twitter"
+          value={values.twitter}
+          type="url"
+          onChange={handleTwitterChange}
+        />
       </InputGroup>
-      <InputGroup>
-        <Input id='youtube' placeholder='Yuutube' value={values.youtube} type='url' onChange={handleYoutubeChange} />
+      <InputGroup info="O link deve conter https://">
+        <Input
+          id="youtube"
+          placeholder="Yuutube"
+          value={values.youtube}
+          type="url"
+          onChange={handleYoutubeChange}
+        />
       </InputGroup>
     </Fieldset>
   );

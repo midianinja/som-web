@@ -10,11 +10,22 @@ export const createArtistMutation = gql`
       id
       name
       members_number
-      avatar_image
+      stage_map
+      tec_rider
+      kit
+      avatar_image {
+        mimified
+        thumbnail
+      }
       about
       country
       state
       city
+      songs {
+        id
+        title
+        url
+      }
       musical_styles {
         id
         name
@@ -33,9 +44,20 @@ export const upadteArtistMutation = gql`
       artist: $artist
     ) {
       id
+      stage_map
+      tec_rider
+      kit
       name
       members_number
-      avatar_image
+      avatar_image {
+        mimified
+        thumbnail
+      }
+      songs {
+        id
+        url
+        title
+      }
       about
       country
       state

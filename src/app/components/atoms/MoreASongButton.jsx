@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { gray, white30 } from '../../settings/colors';
+import { gray, gray02 } from '../../settings/colors';
 
 const Button = styled.button`
   height: 38px;
   width: 100%;
   background-color: transparent;
-  color: ${white30};
-  border: dashed 1px ${white30};
+  color: ${gray02};
+  border: dashed 1px ${gray02};
   padding-left: 30px;
   padding-right: 30px;
   border-radius: 38px;

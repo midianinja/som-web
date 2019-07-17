@@ -36,6 +36,8 @@ function BasicInformationFieldset(props) {
     handleAvatarChange,
     handleMusicalStyleChange,
     handleMusicalStyleSelect,
+    handleBlurChange,
+    setArtistStepErrors,
     artistStepErrors,
     values,
   } = props;
@@ -55,13 +57,20 @@ function BasicInformationFieldset(props) {
         />
       </InputGroup>
       <InputGroup error={artistStepErrors.name}>
-        <Input id='name' placeholder='Nome da banda' value={values.name} onChange={handleNameChange} />
+        <Input
+          id="name"
+          placeholder="Nome da banda"
+          value={values.name}
+          onBlur={e => handleBlurChange(e, 'common', setArtistStepErrors, artistStepErrors)}
+          onChange={handleNameChange}
+        />
       </InputGroup>
       <InputGroup error={artistStepErrors.integrants}>
         <Input
-          id='integrants'
-          type='tel'
-          placeholder='Integrantes'
+          id="integrants"
+          type="tel"
+          placeholder="Integrantes"
+          onBlur={e => handleBlurChange(e, 'number', setArtistStepErrors, artistStepErrors)}
           value={values.integrants}
           onChange={handleIntegrantsChange}
         />
@@ -82,10 +91,29 @@ function BasicInformationFieldset(props) {
         <Select id='state' placeholder='Estado' value={values.state} onSelect={handleStateSelect} />
       </InputGroup>
       <InputGroup error={artistStepErrors.city}>
+<<<<<<< Updated upstream
         <Input id='city' placeholder='Cidade' value={values.city} onChange={handleCityChange} />
       </InputGroup>
       <InputGroup error={artistStepErrors.about}>
         <TextArea id='about' placeholder='Conte sobre sua banda :)' value={values.about} onChange={handleAboutChange} />
+=======
+        <Input
+          id="city"
+          placeholder="Cidade"
+          onBlur={e => handleBlurChange(e, 'common', setArtistStepErrors, artistStepErrors)}
+          value={values.city}
+          onChange={handleCityChange}
+        />
+      </InputGroup>
+      <InputGroup error={artistStepErrors.about}>
+        <TextArea
+          id="about"
+          placeholder="Conte sobre sua banda :)"
+          onBlur={e => handleBlurChange(e, 'description', setArtistStepErrors, artistStepErrors)}
+          value={values.about}
+          onChange={handleAboutChange}
+        />
+>>>>>>> Stashed changes
       </InputGroup>
     </Fieldset>
   );
@@ -106,6 +134,10 @@ const valuesShape = {
   about: PropTypes.string.isRequired,
 };
 
+BasicInformationFieldset.defaultProps = {
+  handleBlurChange: () => '',
+};
+
 BasicInformationFieldset.propTypes = {
   handleAboutChange: PropTypes.func.isRequired,
   handleAvatarChange: PropTypes.func.isRequired,
@@ -116,6 +148,8 @@ BasicInformationFieldset.propTypes = {
   handleMusicalStyleSelect: PropTypes.func.isRequired,
   handleNameChange: PropTypes.func.isRequired,
   handleStateSelect: PropTypes.func.isRequired,
+  setArtistStepErrors: PropTypes.func.isRequired,
+  handleBlurChange: PropTypes.func,
   values: PropTypes.shape(valuesShape).isRequired,
 };
 
