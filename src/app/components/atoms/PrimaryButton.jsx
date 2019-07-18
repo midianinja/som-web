@@ -74,7 +74,18 @@ const PrimaryButton = styled.button`
   }
 
   :disabled {
-    background-color: ${gray};
+    background-color: ${(props) => {
+    const { color } = props;
+    return color === 'white' ? white : gray;
+  }};
+    color: ${(props) => {
+    const { color } = props;
+    return color === 'white' ? purple : white;
+  }};
+  opacity: ${(props) => {
+    const { color } = props;
+    return color === 'white' ? '0.7' : '1';
+  }};
     cursor: not-allowed;
   }
 

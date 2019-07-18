@@ -1,12 +1,15 @@
 import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import InputGroup from '../molecules/InputGroup';
-import Input from '../atoms/Input';
-import CircularButton from '../atoms/CircularButton';
-import LinkButton from '../atoms/LinkButton';
-import { black, gray, white } from '../../settings/colors';
-import Store from '../../store/Store';
-import { blockBodyScroll, allowBodyScroll } from '../../utils/scroll';
+import InputGroup from '../../molecules/InputGroup';
+import Input from '../../atoms/Input';
+import CircularButton from '../../atoms/CircularButton';
+import LinkButton from '../../atoms/LinkButton';
+import { black, gray, white } from '../../../settings/colors';
+import Store from '../../../store/Store';
+import { login } from './controller';
+import { blockBodyScroll, allowBodyScroll } from '../../../utils/scroll';
 
 const LoginWrapper = styled.section`
   display: ${(props) => {
@@ -112,12 +115,6 @@ const Actions = styled.div`
   }
 `;
 
-const RegisterLink = styled.a`
-  text-decoration: none;
-  color: ${white};
-  font-weight: 300;
-`;
-
 const ForgetPasswordLink = styled.a`
   text-decoration: none;
   color: ${white};
@@ -131,16 +128,16 @@ function registerAction(dispatch) {
   dispatch({ type: 'SHOW_REGISTER_MODAL' });
 }
 
-function closeModal(dispatch) {
-  allowBodyScroll();
-  dispatch({ type: 'CLOSE_MODAL' });
-}
-
-function Login() {
+function Login({ history }) {
   const { state, dispatch } = useContext(Store);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState({});
+
+  const closeModal = () => {
+    allowBodyScroll();
+    dispatch({ type: 'CLOSE_MODAL' });
+  };
 
   if (state.modals.login) blockBodyScroll();
 
@@ -148,7 +145,7 @@ function Login() {
     <LoginWrapper id="login" isOpen={state.modals.login}>
       <Container>
         <ExitArrow src="/icons/arrow_forward_left.svg" />
-        <Icon src="/icons/login.svg" onClick={() => closeModal(dispatch)} />
+        <Icon src="/icons/login.svg" onClick={closeModal} />
         <Form>
           <Title>Bem vindx de volta!</Title>
           <InputGroup
@@ -181,7 +178,13 @@ function Login() {
             <ForgetPasswordLink>Esqueci minha senha</ForgetPasswordLink>
           </InputGroup>
           <Actions>
-            <CircularButton>
+            <CircularButton
+              onClick={(e) => {
+                e.preventDefault();
+                login(username, password, setError, closeModal, history);
+              }}
+              disabled={!username || !password}
+            >
               <Arrow src="/icons/arrow_forward_right.svg" />
             </CircularButton>
             <LinkButton
@@ -198,4 +201,12 @@ function Login() {
   );
 }
 
-export default Login;
+const historyShape = {
+  push: PropTypes.func,
+};
+
+Login.propTypes = {
+  history: PropTypes.shape(historyShape).isRequired,
+};
+
+export default withRouter(Login);

@@ -7,9 +7,14 @@ import phoneFieldset from './components/PhoneFieldset';
 import selectConfirmationMathodFieldset from './components/SelectConfirmationMathodFieldset';
 import sentEmailFieldset from './components/SentEmailFieldset';
 import sentPhoneFieldset from './components/SentPhoneFieldset';
+import {
+  usernameValidation, passwordValidation, getPasswordPoint,
+} from './validations';
+import {
+  createAccount,
+} from './controller';
 import { purple, black50 } from '../../../settings/colors';
 import Store from '../../../store/Store';
-import { blockBodyScroll } from '../../../utils/scroll';
 
 const RegisterWrapper = styled.section`
   display: ${(props) => {
@@ -83,7 +88,8 @@ const Actions = styled.div`
 `;
 
 function Register() {
-  const { state, dispatch } = useContext(Store);
+  const { state } = useContext(Store);
+  const [ida, setIDA] = useState('');
   const [step, setStep] = useState('account');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -93,22 +99,57 @@ function Register() {
   const [method, setMethod] = useState('');
   const [error, setError] = useState({});
 
-  if (state.modals.register) blockBodyScroll();
-  const fieldsets = {
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+
+    const regex = /^[a-zA-Z0-9]{1,}$/;
+    let message = null;
+    if (!e.target.value) {
+      message = 'Preencha o campo username';
+    } else if (!regex.test(e.target.value)) {
+      message = 'Ultilize apenas caracteres do alfabeto e numerais';
+    }
+
+    setError({ ...error, username: message });
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    const point = getPasswordPoint(e.target.value);
+    let message = '';
+    if (point <= 0) message = '';
+    if (point < 60) message = 'Senha fraca';
+    if (point < 90) message = 'Senha razoável';
+    if (point >= 90) message = 'Senha forte';
+
+    setError({ ...error, password: message });
+  };
+
+  const fields = {
     account: {
-      render: () => createAccountFieldset(username, setUsername, password, setPassword, error),
+      render: () => (
+        step === 'account' ? createAccountFieldset(
+          username, handleUsernameChange, password, handlePasswordChange, error,
+        ) : null),
       next: 'methods',
+      validation: () => (
+        usernameValidation(username) && passwordValidation(password)
+      ),
+      submit: createAccount,
     },
     email: {
       render: () => emailFieldset(email, setEmail, error),
+      validation: () => false,
       next: 'sentEmail',
     },
     phone: {
       render: () => phoneFieldset(phone, setPhone, error),
+      validation: () => false,
       next: 'sentPhone',
     },
     methods: {
       render: () => selectConfirmationMathodFieldset(method, setMethod, error),
+      validation: () => false,
       next: method === 'phone' ? 'phone' : 'email',
     },
     sentEmail: {
@@ -119,14 +160,18 @@ function Register() {
     },
   };
 
-  const field = fieldsets[step];
+  const data = {
+    ida, step, username, password, email, phone, code, method, error,
+    setIDA, setStep, setUsername, setPassword, setEmail, setPhone, setCode, setMethod, setError,
+  };
+  const field = fields[step];
   return (
     <RegisterWrapper id="register" isOpen={state.modals.register}>
       <Container>
         <ExitWrapper>
           <ExitIcon src="/icons/arrow_forward_left.svg" />
         </ExitWrapper>
-        <Form>
+        <Form autoComplete="off">
           <Fieldset>
             {field.render()}
           </Fieldset>
@@ -134,7 +179,8 @@ function Register() {
             <PrimaryButton
               color="white"
               type="button"
-              onClick={() => setStep(field.next)}
+              disabled={!field.validation()}
+              onClick={() => field.submit(data)}
             >
               Próximo
             </PrimaryButton>
