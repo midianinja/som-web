@@ -44,14 +44,16 @@ const Space = styled.div`
   heigth: 100%;
 `;
 
-const UploadFile = ({ title, subtitle, type }) => (
+const UploadFile = ({
+  title, subtitle, type, handleFileChange, accept,
+}) => (
   <ContentWrapper>
     <Title>{title}</Title>
     <Subtitle>{subtitle}</Subtitle>
     <ButtonsWrapper>
-      <LinkButton color='green'> ver exemplo</LinkButton>
+      <LinkButton> ver exemplo</LinkButton>
       <Space />
-      <UploaderButton text={type} handleClick={() => console.log('clicou')} />
+      <UploaderButton accept={accept} text={type} handleClick={handleFileChange} />
     </ButtonsWrapper>
   </ContentWrapper>
 );
@@ -60,12 +62,15 @@ UploadFile.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   type: PropTypes.string,
+  accept: PropTypes.string,
+  handleFileChange: PropTypes.isRequired,
 };
 
 UploadFile.defaultProps = {
   title: 'Tipo de Arquivo',
   subtitle: 'Descrição',
   type: 'Arquivo',
+  accept: '',
 };
 
 export default UploadFile;

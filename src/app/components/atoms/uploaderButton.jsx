@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { white, purple, green, gray } from '../../settings/colors';
+import InputGroup from '../molecules/InputGroup';
+import {
+  white, purple, green, gray,
+} from '../../settings/colors';
 
-const Button = styled.div`
+const Button = styled.label`
   background-color: ${purple};
   color: ${white};
   font-size: 13px;
@@ -28,37 +31,45 @@ const Button = styled.div`
     cursor: not-allowed;
   }
 
-  ${(props) => props.customStyle}
-`;
-
-const Title = styled.div`
-  vertical-align: middle;
-  display: inline-block;
-  margin-right: 15px;
+  ${props => props.customStyle}
 `;
 
 const Icon = styled.img`
   width: 24px;
   height: 24px;
+  margin-left: 5px;
   vertical-align: middle;
 `;
 
-const UploaderButton = ({ customStyle, text, handleClick }) => (
-  <Button customStyle={customStyle} onClick={handleClick}>
-    <Title>{`Subir ${text}`}</Title>
-    <Icon src='/icons/upload.svg' />
-  </Button>
+const Input = styled.input`
+  display: none;
+`;
+
+const customInputGroupStyle = `
+  margin-bottom: 0px;
+`;
+
+const UploadSongButton = ({ handleClick, text, accept }) => (
+  <InputGroup customStyle={customInputGroupStyle}>
+    <Fragment>
+      <Button htmlFor={`file-${text}`}>
+        {`Subir ${text}`}
+        <Icon src="/icons/upload.svg" />
+      </Button>
+      <Input type="file" accept={accept} id={`file-${text}`} onChange={handleClick} />
+    </Fragment>
+  </InputGroup>
 );
 
-UploaderButton.propTypes = {
+UploadSongButton.propTypes = {
   handleClick: PropTypes.func.isRequired,
-  customStyle: PropTypes.string,
   text: PropTypes.string,
+  accept: PropTypes.string,
 };
 
-UploaderButton.defaultProps = {
+UploadSongButton.defaultProps = {
   text: 'Label',
-  customStyle: '',
+  accept: '',
 };
 
-export default UploaderButton;
+export default UploadSongButton;

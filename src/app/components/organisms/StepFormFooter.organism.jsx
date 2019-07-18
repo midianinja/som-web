@@ -10,6 +10,7 @@ const Footer = styled.div`
   color: #fff;
   flex-direction: column;
   padding: 30px;
+  ${props => props.customStyle}
 `;
 
 const Icon = styled.img`
@@ -19,10 +20,13 @@ const Icon = styled.img`
   vertical-align: middle;
 `;
 
-const StepFormFooter = ({ nextAction, skipAction }) => {
+const StepFormFooter = ({ nextAction, skipAction, customStyle }) => {
   return (
-    <Footer>
-      <PrimaryButton onClick={nextAction} customStyle='padding: 20px 0; height: auto; letter-spacing: 3px;'>
+    <Footer customStyle={customStyle}>
+      <PrimaryButton
+        onClick={nextAction}
+        customStyle="padding: 20px 0; height: auto; letter-spacing: 3px;"
+      >
         CONTINUAR
       </PrimaryButton>
       <PrimaryButton
@@ -40,6 +44,11 @@ const StepFormFooter = ({ nextAction, skipAction }) => {
 StepFormFooter.propTypes = {
   nextAction: PropTypes.func.isRequired,
   skipAction: PropTypes.func.isRequired,
+  customStyle: PropTypes.string,
+};
+
+StepFormFooter.defaultProps = {
+  customStyle: '',
 };
 
 export default StepFormFooter;

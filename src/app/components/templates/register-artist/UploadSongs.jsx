@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MoreASongButton from '../../atoms/MoreASongButton';
 import MySongCard from '../../organisms/MySongCard';
-import { white } from '../../../settings/colors';
+import { black, white } from '../../../settings/colors';
+import { getBase64, uploadSongToStorage } from '../../../utilities/file.utils';
 
 const Fieldset = styled.fieldset`
   padding: 30px;
+  background-color: ${white};
 `;
 
 const Title = styled.h2`
-  color: ${white};
+  color: ${black};
   font-size: 1.2857142857rem;
   font-weight: 400;
   margin-bottom: 30px;
@@ -23,30 +25,73 @@ export const initialSong = {
   uri: '',
 };
 
-function renderSongs(songs, setSongs) {
-  const handleSongChange = (event, index) => {
+const renderSongs = (songs, setSongs, authId, titleBlurAction) => {
+  const [loadings, setLoadinds] = useState({});
+  const handleSongChange = async (event, index) => {
     const copySong = { ...songs[index] };
     const copySongs = [...songs];
     const file = event.target.files[0];
+    const loadingsBasicCopy = JSON.parse(JSON.stringify(loadings));
+    loadingsBasicCopy[index] = { total: file.size, loaded: 0, isLoading: true };
+    setLoadinds(loadingsBasicCopy);
     copySong.file = file;
+    copySong.title = file.name.replace('.mp3', '');
+    copySongs[index] = copySong;
+    setSongs(copySongs);
+
+    const updateProgress = ({ total, loaded }) => {
+      const loadingsCopy = JSON.parse(JSON.stringify(loadings));
+      loadingsCopy[index] = { total, loaded, isLoading: total !== loaded };
+      setLoadinds(loadingsCopy);
+    };
+
+    try {
+      const file64 = await getBase64(file);
+      // console.log('file64: ', file64);
+      const uploadedSong = await uploadSongToStorage({ file: file64, id: authId, updateProgress });
+      copySong.file = file;
+      copySong.title = file.name.replace('.mp3', '').replace('_', ' ');
+      copySong.url = uploadedSong.data.link;
+      copySongs[index] = copySong;
+      setSongs(copySongs);
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  const handleTitleChange = (event, index) => {
+    const copySong = { ...songs[index] };
+    const copySongs = [...songs];
+    copySong.title = event.target.value;
     copySongs[index] = copySong;
     setSongs(copySongs);
   };
 
+  const onBlurTitle = (event, index) => {
+    const copySong = { ...songs[index] };
+    titleBlurAction({ song: copySong, id: authId });
+  };
+
   return songs.map((song, key) => {
     const index = key;
+    console.log('loadings: ', loadings);
     return (
       <MySongCard
         key={index}
         handleSongChange={handleSongChange}
+        handleTitleChange={handleTitleChange}
+        loading={loadings[index] || {}}
+        titleBlurAction={onBlurTitle}
         song={song}
         index={index}
       />
     );
   });
-}
+};
 
-const UploadSongs = ({ songs, setSongs }) => {
+const UploadSongs = ({
+  songs, setSongs, authId, titleBlurAction,
+}) => {
   const handleAddSong = () => {
     const copySongs = [...songs];
     copySongs.push({ ...initialSong });
@@ -56,7 +101,7 @@ const UploadSongs = ({ songs, setSongs }) => {
   return (
     <Fieldset>
       <Title>Músicas</Title>
-      { renderSongs(songs, setSongs) }
+      { renderSongs(songs, setSongs, authId, titleBlurAction) }
       <MoreASongButton onClick={handleAddSong} />
     </Fieldset>
   );
@@ -70,8 +115,10 @@ const songShape = {
 };
 
 UploadSongs.propTypes = {
-  songs: PropTypes.arrayOf(PropTypes.shape(songShape)).isRequried,
-  setSongs: PropTypes.func.isRequried,
+  songs: PropTypes.arrayOf(PropTypes.shape(songShape)).isRequired,
+  setSongs: PropTypes.func.isRequired,
+  titleBlurAction: PropTypes.func.isRequired,
+  authId: PropTypes.string.isRequired,
 };
 
 export default UploadSongs;

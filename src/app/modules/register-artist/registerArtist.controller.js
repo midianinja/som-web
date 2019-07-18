@@ -1,64 +1,63 @@
 import apollo from '../../apollo';
 import { allMusicalStyleOptionsQuery } from '../../queries/musicalGenres.query';
-import validateArtist from './artist.validate';
-import validateContact from './contact.validate';
-import validateSocialMedia from './social.validate';
 import { createArtistMutation, upadteArtistMutation } from '../../mutations/artist.mutation';
-
-// const setArtist = (values) => {
-
-// }
-
-const validateArtistForm = ({
-  avatar, name, integrants, about,
-  country, state, city, musicalStyles,
-  musicalStylePredict, musicalStyle,
-  phone, email, facebook, instagram,
-  twitter, youtube,
-}) => {
-  const errors = [];
-  const vArtist = validateArtist({
-    avatar, name, integrants, about,
-    country, state, city, musicalStyles,
-    musicalStylePredict, musicalStyle,
-  });
-  console.log('vArtist: ', vArtist);
-  if (vArtist.error) {
-    errors.concat(vArtist.errors);
-  }
-
-  const vContact = validateContact({
-    phone, email,
-  });
-  console.log('vContact: ', vContact);
-  if (vContact.error) {
-    errors.concat(vContact.errors);
-  }
-
-  const vSocial = validateSocialMedia({
-    facebook, instagram,
-    twitter, youtube,
-  });
-  console.log('vSocial: ', vSocial);
-  if (vSocial.error) {
-    errors.concat(vSocial.errors);
-  }
-
-  console.log('errors: ', errors);
-  if (errors.length) return ({ error: true, errors });
-  return ({ error: false });
-};
+import { getBase64, uploadImageToStorage, uploadPdfDocumentToStorage } from '../../utilities/file.utils';
+import { validateArtistForm } from './registerArtist.validate';
+import { createSongMutation } from './songs.mutation';
 
 const mapArtist = artist => ({
   name: artist.name,
   members_number: parseInt(artist.integrants, 10),
-  avatar_image: artist.avatar.url,
+  avatar_image: artist.avatar,
   about: artist.about,
   country: '',
   state: '',
+  songs: artist.songs,
   city: artist.city,
   musical_styles: artist.musicalStyles.map(m => m.id),
+  phone: artist.phone,
+  email: artist.email,
+  facebook: artist.facebook,
+  instagram: artist.instagram,
+  twitter: artist.twitter,
+  youtube: artist.youtube,
 });
+
+export const uploadDocumentFile = async ({ target }, id, artist) => {
+  try {
+    const file = target.files[0];
+    const pdfBase64 = await getBase64(file);
+    const name = `${new Date().getTime()}_${id}.pdf`;
+
+    const uploadedFile = await uploadPdfDocumentToStorage({
+      file: pdfBase64,
+      id: artist || 'salve',
+      fileName: name,
+    });
+    let doc;
+    const artistToApi = {};
+
+    switch (id) {
+      case 'mapa': doc = 'stage_map'; break;
+      case 'rider': doc = 'tec_rider'; break;
+      case 'kit': doc = 'kit'; break;
+      default: throw new Error('ID is not mapped.');
+    }
+
+    artistToApi[doc] = uploadedFile.data.link;
+
+    const updatedPromise = await apollo.mutate({
+      mutation: upadteArtistMutation,
+      variables: {
+        artist_id: artist,
+        artist: artistToApi,
+      },
+    });
+    console.log('updatedPromise.data: ', updatedPromise.data);
+  } catch (err) {
+    throw err;
+  }
+};
 
 const createArtist = async (artist) => {
   const artistToApi = mapArtist(artist);
@@ -70,18 +69,34 @@ const createArtist = async (artist) => {
   });
   return artistPromise.data.createArtist;
 };
+
 const updateArtist = async (artist, id) => {
-  console.log('updateArtist - artist: ', artist);
-  console.log('updateArtist - id: ', id);
   const artistToApi = mapArtist(artist);
-  const artistPromise = await apollo.mutate({
+  const updatedPromise = await apollo.mutate({
     mutation: upadteArtistMutation,
     variables: {
       artist_id: id,
       artist: artistToApi,
     },
   });
-  return artistPromise.data.updateArtist;
+  return updatedPromise.data.updateArtist;
+};
+
+const mapSong = (song, artist) => ({
+  artist,
+  url: song.url,
+  title: song.title,
+});
+
+const createSong = async (song, artist) => {
+  const songToApi = mapSong(song, artist);
+  const songPromise = await apollo.mutate({
+    mutation: createSongMutation,
+    variables: {
+      song: songToApi,
+    },
+  });
+  return songPromise.data.createSong;
 };
 
 export const nextAction = async ({
@@ -91,35 +106,76 @@ export const nextAction = async ({
   musicalStylePredict, musicalStyle,
   visibles, setVisibles, setArtistStepErrors,
   phone, email, facebook, instagram,
-  twitter, youtube,
+  twitter, youtube, songs, setSongs,
 }) => {
   const artistValidation = validateArtistForm({
     avatar, name, integrants, about,
     country, state, city, musicalStyles,
     musicalStylePredict, musicalStyle, setVisibles,
     setArtistStepErrors, visibles, facebook, instagram,
-    twitter, youtube, phone, email,
+    twitter, youtube, phone, email, songs,
   });
-  console.log('artistValidation: ', artistValidation);
-  if (artistValidation.error) return null;
+
+  if (artistValidation.error) {
+    const errors = {};
+    artistValidation.errors.forEach((e) => {
+      errors[e.attribute] = 'Valor inválido ou campo obrigatório';
+    });
+    setArtistStepErrors(errors);
+    return;
+  }
+
   const artistToApi = {
     about, city, integrants,
     country, state, name,
-    avatar, musicalStyles, setId,
+    musicalStyles,
+    phone, email, facebook,
+    instagram, twitter, youtube,
+    songs: songs.map(s => s.id).filter(e => e),
   };
 
-  if (!id) {
-    const artistResponse = await createArtist(artistToApi);
-    setId(artistResponse.id);
-    return artistValidation;
+  try {
+    let preRegister = {};
+    if (!id) preRegister = await createArtist(artistToApi);
+
+    const base64 = await getBase64(avatar.file);
+    const newImage = await uploadImageToStorage({
+      file: base64,
+      id: id || preRegister.id,
+    });
+    const images = newImage.data.urls;
+    artistToApi.avatar = images;
+    if (songs.length) {
+      const songsToUpload = songs.filter(s => !(s.id));
+      const promises = songsToUpload.map(song => new Promise((res, rej) => {
+        createSong(song, id || preRegister.id)
+          .then(data => res(data))
+          .catch(err => rej(err));
+      }));
+      const uploadedSongs = await Promise.all(promises);
+      artistToApi.songs = uploadedSongs.concat(songs).map(s => s.id).filter(n => n);
+    }
+
+    const updatedArtist = await updateArtist(artistToApi, id || preRegister.id);
+    setSongs(updatedArtist.songs || []);
+    setId(preRegister.id || id);
+    setVisibles({
+      artist: true,
+      contact: visibles.artist,
+      social: visibles.contact,
+      files: visibles.social,
+    });
+  } catch (err) {
+    throw err;
   }
-  updateArtist(artistToApi, id);
-  return null;
 };
 
-export const skipAction = (e) => {
-  console.log('skipAction: ', e);
-};
+export const skipAction = (setVisibles, visibles) => setVisibles({
+  artist: true,
+  contact: visibles.artist,
+  social: visibles.contact,
+  files: visibles.social,
+});
 
 
 export const handleACMusicalStyle = ({
@@ -165,16 +221,31 @@ export const handleMusicalStyleSelect = ({
     'yellow',
   ];
   const style = musicalStylesOptions.filter(o => (o.name.toLowerCase() === value))[0];
-  const newMusicalStyles = musicalStyles.filter(o => (o.text.toLowerCase() !== value));
-  setMusicalStyle('');
-  setMusicalStylePredict('');
-  setMusicalStyles([
-    ...newMusicalStyles,
+  const newMusicalStyles = musicalStyles.filter(o => (o.text.toLowerCase() !== value)).concat([
     {
       id: style.id,
       text: style.name,
       color: colors[Math.floor(Math.random() * 5)],
-    }]);
+    },
+  ]);
+
+  let cont = 0;
+
+  const stylesWithColor = newMusicalStyles.map((s) => {
+    const stl = ({
+      ...s,
+      color: colors[cont],
+    });
+
+    if (cont >= 4) cont = -1;
+
+    cont += 1;
+    return stl;
+  });
+
+  setMusicalStyle('');
+  setMusicalStylePredict('');
+  setMusicalStyles(stylesWithColor);
 };
 
 export const fetchMusicalStyleOptions = (setMusicalStylesOptions) => {

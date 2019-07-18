@@ -48,23 +48,36 @@ const Title = styled.h2`
 //   return songs.map(song => <SongText>{song}</SongText>);
 // }
 
-function ContactAndSongs(props) {
-  const {
-    handlePhoneChange,
-    handleEmailChange,
-    /* handleSongsURIChange, */
-    contactStepErrors,
-    values,
-  } = props;
-
+const ContactAndSongs = ({
+  handlePhoneChange,
+  handleEmailChange,
+  handleBlurChange,
+  setErrors,
+  stepErrors,
+  values,
+}) => {
   return (
     <Fieldset>
       <Title>Contato</Title>
-      <InputGroup error={contactStepErrors.phone}>
-        <Input id='phone' placeholder='Telefone' value={values.phone} type='tel' onChange={handlePhoneChange} />
+      <InputGroup label={values.phone ? 'Telefone' : ''} error={stepErrors.phone}>
+        <Input
+          id="phone"
+          placeholder="Telefone"
+          value={values.phone}
+          type="tel"
+          onChange={handlePhoneChange}
+          onBlur={e => handleBlurChange(e, 'phone', setErrors, stepErrors)}
+        />
       </InputGroup>
-      <InputGroup error={contactStepErrors.email}>
-        <Input id='email' placeholder='E-mail' value={values.email} type='ëmail' onChange={handleEmailChange} />
+      <InputGroup label={values.email ? 'E-mail' : ''} error={stepErrors.email}>
+        <Input
+          id="email"
+          placeholder="E-mail"
+          value={values.email}
+          type="email"
+          onChange={handleEmailChange}
+          onBlur={e => handleBlurChange(e, 'email', setErrors, stepErrors)}
+        />
       </InputGroup>
       {/* <InputGroup label="Sua música" info="Link do Spotify, Deezer, Soundcloud ou similar">
         <Input
@@ -101,10 +114,17 @@ const valuesShape = {
   about: PropTypes.string.isRequired,
 };
 
+const errorsShape = {
+  phone: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+};
+
 ContactAndSongs.propTypes = {
   handlePhoneChange: PropTypes.func.isRequired,
   handleEmailChange: PropTypes.func.isRequired,
-  contactStepErrors: PropTypes.func.isRequired,
+  handleBlurChange: PropTypes.func.isRequired,
+  setErrors: PropTypes.func.isRequired,
+  stepErrors: PropTypes.shape(errorsShape).isRequired,
   // handleSongsURIChange: PropTypes.func.isRequired,
   values: PropTypes.shape(valuesShape).isRequired,
 };

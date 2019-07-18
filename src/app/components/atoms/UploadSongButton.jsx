@@ -2,7 +2,9 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import InputGroup from '../molecules/InputGroup';
-import { green, gray, white, orange } from '../../settings/colors';
+import {
+  green, gray, white, orange, black,
+} from '../../settings/colors';
 
 const Button = styled.label`
   display: flex;
@@ -39,7 +41,7 @@ const UploaddedButton = styled.label`
   width: 100%;
   background-color: transparent;
   border: solid 1px ${green}
-  color: ${white};
+  color: ${black};
   padding-left: 15px;
   padding-right: 15px;
   margin-bottom: 15px;
@@ -84,7 +86,7 @@ function UploadSongButton({ onChange, id }) {
           <Icon src='/icons/upload-song.svg' />
         </Button>
       </InputGroup>
-      <Input type="file" id={`file-${id}`} onChange={onChange} />
+      <Input accept=".mp3" type="file" id={`file-${id}`} onChange={onChange} />
     </Fragment>
   );
 }
@@ -94,9 +96,9 @@ function UploaddedSongButton({ onChange, id, file }) {
     <Fragment>
       <UploaddedButton htmlFor={`file-${id}`}>
         { file.name }
-        <Icon src="/icons/green-check.svg" />
+        <Icon src="/icons/edit.svg" />
       </UploaddedButton>
-      <Input onChange={onChange} type="file" id={`file-${id}`} />
+      <Input accept=".mp3" onChange={onChange} type="file" id={`file-${id}`} />
     </Fragment>
   );
 }
