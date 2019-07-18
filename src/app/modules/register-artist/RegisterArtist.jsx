@@ -85,14 +85,15 @@ const renderArtistInfos = ({
 );
 
 const renderContacts = ({
-  setPhone, setEmail, phone,
+  setPhone, setEmail, phone, setContactStepErrors,
   email, visibles, contactStepErrors,
 }) => {
   if (!visibles.contact) return null;
   return (
     <ContactAndSongsFieldset
+      setErrors={setContactStepErrors}
       handleBlurChange={handleBlurChange}
-      contactStepErrors={contactStepErrors}
+      stepErrors={contactStepErrors}
       handlePhoneChange={({ target }) => setPhone(target.value)}
       handleEmailChange={({ target }) => setEmail(target.value)}
       values={{
@@ -107,11 +108,15 @@ const renderContacts = ({
 const renderSocialMedia = ({
   visibles, setFacebook, setInstagram,
   setTwitter, setYoutube, facebook,
-  instagram, twitter, youtube,
+  instagram, twitter, youtube, setSocialMediaStepErrors,
+  socialMediaStepErrors,
 }) => {
   if (!visibles.social) return null;
   return (
     <SocialsFieldset
+      handleBlurChange={handleBlurChange}
+      setStepErrors={setSocialMediaStepErrors}
+      stepErrors={socialMediaStepErrors}
       handleFacebookChange={({ target }) => setFacebook(target.value)}
       handleInstagramChange={({ target }) => setInstagram(target.value)}
       handleTwitterChange={({ target }) => setTwitter(target.value)}
@@ -148,6 +153,7 @@ const renderUploadSongs = ({
 function RegisterArtist() {
   const [artistStepErrors, setArtistStepErrors] = useState({});
   const [contactStepErrors, setContactStepErrors] = useState({});
+  const [socialMediaStepErrors, setSocialMediaStepErrors] = useState({});
   const [about, setAbout] = useState('');
   const [id, setId] = useState('');
   const [city, setCity] = useState('');
@@ -200,13 +206,14 @@ function RegisterArtist() {
         setArtistStepErrors,
       })}
       {renderContacts({
-        setPhone, setEmail, phone,
+        setPhone, setEmail, phone, setContactStepErrors,
         email, visibles, contactStepErrors,
       })}
       {renderSocialMedia({
         visibles, setFacebook, setInstagram,
         setTwitter, setYoutube, facebook,
-        instagram, twitter, youtube,
+        instagram, twitter, youtube, setSocialMediaStepErrors,
+        socialMediaStepErrors,
       })}
       {renderUploadSongs({
         authId: id, visibles, songs, setSongs,

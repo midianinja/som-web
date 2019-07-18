@@ -47,16 +47,16 @@ function BasicInformationFieldset(props) {
       <Title>Informaçoões do artista</Title>
       <InputGroup
         error={artistStepErrors.avatar}
-        customStyle='display: flex; justify-content: center; align-items: center;'
+        customStyle="display: flex; justify-content: center; align-items: center;"
       >
         <UploadAvatar
-          alt='botão para subir imagem'
-          title='avatar image'
+          alt="botão para subir imagem"
+          title="avatar image"
           handleChange={handleAvatarChange}
           src={values.avatar || ''}
         />
       </InputGroup>
-      <InputGroup error={artistStepErrors.name}>
+      <InputGroup label={values.name ? 'Nome da banda' : ''} error={artistStepErrors.name}>
         <Input
           id="name"
           placeholder="Nome da banda"
@@ -65,7 +65,7 @@ function BasicInformationFieldset(props) {
           onChange={handleNameChange}
         />
       </InputGroup>
-      <InputGroup error={artistStepErrors.integrants}>
+      <InputGroup label={values.integrants ? 'Numero de Integrantes' : ''} error={artistStepErrors.integrants}>
         <Input
           id="integrants"
           type="tel"
@@ -75,7 +75,7 @@ function BasicInformationFieldset(props) {
           onChange={handleIntegrantsChange}
         />
       </InputGroup>
-      <InputGroup label='Estilo de música' error={artistStepErrors.musicalStyles}>
+      <InputGroup label="Estilo de música" error={artistStepErrors.musicalStyles}>
         <AutocompleteInput
           predict={values.musicalStylePredict}
           value={values.musicalStyle}
@@ -84,19 +84,13 @@ function BasicInformationFieldset(props) {
         />
         <TagList data={values.musicalStyles} customStyle={musicalGenresCustomStyle} />
       </InputGroup>
-      <InputGroup error={artistStepErrors.country}>
-        <Select id='country' placeholder='País' value={values.country} onSelect={handleCountrySelect} />
+      <InputGroup label={values.country ? 'País' : ''} error={artistStepErrors.country}>
+        <Select id="country" placeholder="País" value={values.country} onSelect={handleCountrySelect} />
       </InputGroup>
-      <InputGroup error={artistStepErrors.state}>
-        <Select id='state' placeholder='Estado' value={values.state} onSelect={handleStateSelect} />
+      <InputGroup label={values.state ? 'Estado' : ''} error={artistStepErrors.state}>
+        <Select id="state" placeholder="Estado" value={values.state} onSelect={handleStateSelect} />
       </InputGroup>
-      <InputGroup error={artistStepErrors.city}>
-<<<<<<< Updated upstream
-        <Input id='city' placeholder='Cidade' value={values.city} onChange={handleCityChange} />
-      </InputGroup>
-      <InputGroup error={artistStepErrors.about}>
-        <TextArea id='about' placeholder='Conte sobre sua banda :)' value={values.about} onChange={handleAboutChange} />
-=======
+      <InputGroup label={values.city ? 'Cidade' : ''} error={artistStepErrors.city}>
         <Input
           id="city"
           placeholder="Cidade"
@@ -105,7 +99,7 @@ function BasicInformationFieldset(props) {
           onChange={handleCityChange}
         />
       </InputGroup>
-      <InputGroup error={artistStepErrors.about}>
+      <InputGroup label={values.about ? 'Sobre sua banda' : ''} error={artistStepErrors.about}>
         <TextArea
           id="about"
           placeholder="Conte sobre sua banda :)"
@@ -113,7 +107,6 @@ function BasicInformationFieldset(props) {
           value={values.about}
           onChange={handleAboutChange}
         />
->>>>>>> Stashed changes
       </InputGroup>
     </Fieldset>
   );
@@ -134,6 +127,16 @@ const valuesShape = {
   about: PropTypes.string.isRequired,
 };
 
+const errorsShape = {
+  city: PropTypes.string,
+  country: PropTypes.string,
+  select: PropTypes.string,
+  musicalGenres: PropTypes.string,
+  integrants: PropTypes.string,
+  name: PropTypes.string,
+  about: PropTypes.string,
+};
+
 BasicInformationFieldset.defaultProps = {
   handleBlurChange: () => '',
 };
@@ -151,6 +154,7 @@ BasicInformationFieldset.propTypes = {
   setArtistStepErrors: PropTypes.func.isRequired,
   handleBlurChange: PropTypes.func,
   values: PropTypes.shape(valuesShape).isRequired,
+  artistStepErrors: PropTypes.shape(errorsShape).isRequired,
 };
 
 export default BasicInformationFieldset;
