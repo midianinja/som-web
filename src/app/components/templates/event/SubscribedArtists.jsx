@@ -94,12 +94,15 @@ const ArtistName = styled.h4`
 `;
 
 function renderArtists(artists) {
-  return artists.map(artist => (
-    <Card>
-      <Avatar src={artist.avatar_image} customStyle={avatarCustomStyle} />
-      <ArtistName>{artist.name}</ArtistName>
-    </Card>
-  ));
+  return artists.map((artist) => {
+    const src = artist && artist.avatar_image ? artist.avatar_image.mimified : '';
+    return (
+      <Card>
+        <Avatar src={src} customStyle={avatarCustomStyle} />
+        <ArtistName>{artist.name}</ArtistName>
+      </Card>
+    );
+  });
 }
 
 function SubscribedArtists({ artists }) {
@@ -113,8 +116,12 @@ function SubscribedArtists({ artists }) {
   );
 }
 
+const imageShape = {
+  mimified: PropTypes.string,
+};
+
 const artistShape = {
-  avatar_image: PropTypes.string,
+  avatar_image: PropTypes.shape(imageShape),
   name: PropTypes.string,
 };
 
