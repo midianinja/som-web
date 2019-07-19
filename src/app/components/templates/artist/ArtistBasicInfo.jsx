@@ -87,18 +87,11 @@ const ActionWrapper = styled.div`
 `;
 
 function ArtistBasicInfo(props) {
-  const {
-    name, avatar, followers, following,
-    isFollowing, about,
-  } = props;
+  const { name, avatar, followers, following, isFollowing, about } = props;
 
   return (
-    <Wrapper id="infos">
-      <Avatar
-        customStyle={avatarCustomStyled}
-        src={avatar}
-        alt={name}
-      />
+    <Wrapper id='infos'>
+      <Avatar customStyle={avatarCustomStyled} src={avatar} alt={name} />
       <TitleAndFollowWrapper>
         <Title>{name}</Title>
         <ConnectionsWrapper>

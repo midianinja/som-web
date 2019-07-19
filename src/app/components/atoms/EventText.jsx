@@ -37,12 +37,10 @@ function EventText({ text }) {
   return (
     <Container>
       <Title>Sobre o evento</Title>
-      <Text>
-        {text}
-      </Text>
+      <Text>{text}</Text>
     </Container>
   );
-} 
+}
 
 EventText.propTypes = {
   text: PropTypes.string,

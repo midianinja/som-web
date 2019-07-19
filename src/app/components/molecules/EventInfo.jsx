@@ -50,29 +50,21 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const unixTime = unixtime => new Date(+unixtime)
-  .toISOString().slice(0, 19).replace('T', ' ');
+const unixTime = (unixtime) =>
+  new Date(+unixtime)
+    .toISOString()
+    .slice(0, 19)
+    .replace('T', ' ');
 
-const EventInfo = ({
-  name, date, place, subscribers, subscribeAction,
-}) => {
+const EventInfo = ({ name, date, place, subscribers, subscribeAction }) => {
   const dateInstance = new Date(unixTime(date));
   return (
     <Container>
       <Title>{name}</Title>
       <Space />
-      <EventDate
-        day={dateInstance.getDate()}
-        month={dateInstance.getMonth() + 1}
-        year={dateInstance.getFullYear()}
-      />
+      <EventDate day={dateInstance.getDate()} month={dateInstance.getMonth() + 1} year={dateInstance.getFullYear()} />
       <SubSpace />
-      <EventPlace
-        address={place.address}
-        city={place.city}
-        state={place.state}
-        district={place.district}
-      />
+      <EventPlace address={place.address} city={place.city} state={place.state} district={place.district} />
       <SubSpace />
       <EventBands subscribed={subscribers} />
       <Space />

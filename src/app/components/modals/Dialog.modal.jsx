@@ -10,7 +10,7 @@ const Dialog = styled.div`
   justify-content: space-around;
   flex-direction: column;
   border-radius: 25px;
-  background-color: #FFF;
+  background-color: #fff;
   text-align: left;
   padding: 30px;
 
@@ -62,17 +62,14 @@ const BackButton = styled.a`
 const Title = styled.h2`
   font-size: 1.3285714286em;
   font-weight: 400;
-  margin-bottom : 15px;
+  margin-bottom: 15px;
 
   @media (min-width: 1024px) {
-    font-size: 1.4285714286em;  
+    font-size: 1.4285714286em;
   }
 `;
 
-const DialogModal = ({
-  title, description, confirmAction, disagreeAction, agreeText, disagreeText,
-  isOpen,
-}) => (
+const DialogModal = ({ title, description, confirmAction, disagreeAction, agreeText, disagreeText, isOpen }) => (
   <DialogWrapper isOpen={isOpen}>
     <Dialog>
       <Title>{title}</Title>

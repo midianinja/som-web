@@ -21,17 +21,8 @@ function EmailFieldset(email, setEmail, error) {
   return (
     <Fragment>
       <Title>Qual seu e-mail?</Title>
-      <InputGroup
-        customStyle={inputGroupStyle}
-        error={error.email}
-      >
-        <Input
-          id="email"
-          type="email"
-          placeholder="E-mail"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
+      <InputGroup customStyle={inputGroupStyle} error={error.email}>
+        <Input id='email' type='email' placeholder='E-mail' value={email} onChange={(e) => setEmail(e.target.value)} />
       </InputGroup>
     </Fragment>
   );

@@ -31,9 +31,7 @@ const InfoText = styled.span`
     font-weight: 300;
 `;
 
-const InputGroup = ({
-  children, label, info, error, customStyle, customLabelStyle,
-}) => (
+const InputGroup = ({ children, label, info, error, customStyle, customLabelStyle }) => (
   <InptGroupContainer customStyle={customStyle}>
     {label ? <Label customStyle={customLabelStyle}>{label}</Label> : null}
     {children}

@@ -31,7 +31,7 @@ const Card = styled.div`
   vertical-align: top;
   flex-direction: column;
   align-items: center;
-  padding: 15px;  
+  padding: 15px;
   width: 100px;
   background-color: ${secondaryBlack};
   border-radius: 15px;
@@ -43,7 +43,7 @@ const Card = styled.div`
   }
 
   @media (min-width: 1024px) {
-    padding: 15px 60px;  
+    padding: 15px 60px;
   }
 `;
 
@@ -94,7 +94,7 @@ const ArtistName = styled.h4`
 `;
 
 function renderArtists(artists) {
-  return artists.map(artist => (
+  return artists.map((artist) => (
     <Card>
       <Avatar src={artist.avatar_image} customStyle={avatarCustomStyle} />
       <ArtistName>{artist.name}</ArtistName>
@@ -106,9 +106,7 @@ function SubscribedArtists({ artists }) {
   return (
     <Wrapper>
       <Title>Artistas Inscritos</Title>
-      <ListWrapper>
-        {renderArtists(artists)}
-      </ListWrapper>
+      <ListWrapper>{renderArtists(artists)}</ListWrapper>
     </Wrapper>
   );
 }

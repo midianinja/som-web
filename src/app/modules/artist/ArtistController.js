@@ -14,7 +14,7 @@ export const fetchArtistData = async (id, setArtistName, setHeaderLoading, setIn
   } catch (e) {
     throw e;
   }
-  console.log('artistName', promise.data.oneArtist.name);
+
   setArtistName(promise.data.oneArtist.name);
   setInstaUsername(promise.data.oneArtist.instagram_id);
   setHeaderLoading(false);

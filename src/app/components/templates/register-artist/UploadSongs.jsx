@@ -89,9 +89,7 @@ const renderSongs = (songs, setSongs, authId, titleBlurAction) => {
   });
 };
 
-const UploadSongs = ({
-  songs, setSongs, authId, titleBlurAction,
-}) => {
+const UploadSongs = ({ songs, setSongs, authId, titleBlurAction }) => {
   const handleAddSong = () => {
     const copySongs = [...songs];
     copySongs.push({ ...initialSong });
@@ -101,7 +99,7 @@ const UploadSongs = ({
   return (
     <Fieldset>
       <Title>Músicas</Title>
-      { renderSongs(songs, setSongs, authId, titleBlurAction) }
+      {renderSongs(songs, setSongs, authId, titleBlurAction)}
       <MoreASongButton onClick={handleAddSong} />
     </Fieldset>
   );

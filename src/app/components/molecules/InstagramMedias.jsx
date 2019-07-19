@@ -44,48 +44,21 @@ const InstagramMedia = ({ images }) => (
   <Container>
     <Title> Instagram </Title>
     <Row>
-      <ProgresiveImage
-        src={images[0]}
-        customStyle={imgStyle}
-      />
-      <ProgresiveImage
-        src={images[1]}
-        customStyle={imgStyle}
-      />
-      <ProgresiveImage
-        src={images[2]}
-        customStyle={imgStyle}
-      />
+      <ProgresiveImage src={images[0]} customStyle={imgStyle} />
+      <ProgresiveImage src={images[1]} customStyle={imgStyle} />
+      <ProgresiveImage src={images[2]} customStyle={imgStyle} />
     </Row>
     <MobileRow>
-      <ProgresiveImage
-        src={images[3]}
-        customStyle={imgStyle}
-      />
-      <ProgresiveImage
-        src={images[4]}
-        customStyle={imgStyle}
-      />
-      <ProgresiveImage
-        src={images[5]}
-        customStyle={imgStyle}
-      />
+      <ProgresiveImage src={images[3]} customStyle={imgStyle} />
+      <ProgresiveImage src={images[4]} customStyle={imgStyle} />
+      <ProgresiveImage src={images[5]} customStyle={imgStyle} />
     </MobileRow>
     <MobileRow>
-      <ProgresiveImage
-        src={images[6]}
-        customStyle={imgStyle}
-      />
-      <ProgresiveImage
-        src={images[7]}
-        customStyle={imgStyle}
-      />
-      <ProgresiveImage
-        src={images[8]}
-        customStyle={imgStyle}
-      />
+      <ProgresiveImage src={images[6]} customStyle={imgStyle} />
+      <ProgresiveImage src={images[7]} customStyle={imgStyle} />
+      <ProgresiveImage src={images[8]} customStyle={imgStyle} />
     </MobileRow>
-    <LinkButton color="white"> Abrir Instagram </LinkButton>
+    <LinkButton color='white'> Abrir Instagram </LinkButton>
   </Container>
 );
 

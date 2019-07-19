@@ -47,35 +47,35 @@ function BasicInformationFieldset(props) {
       <Title>Informaçoões do artista</Title>
       <InputGroup
         error={artistStepErrors.avatar}
-        customStyle="display: flex; justify-content: center; align-items: center;"
+        customStyle='display: flex; justify-content: center; align-items: center;'
       >
         <UploadAvatar
-          alt="botão para subir imagem"
-          title="avatar image"
+          alt='botão para subir imagem'
+          title='avatar image'
           handleChange={handleAvatarChange}
           src={values.avatar || ''}
         />
       </InputGroup>
       <InputGroup label={values.name ? 'Nome da banda' : ''} error={artistStepErrors.name}>
         <Input
-          id="name"
-          placeholder="Nome da banda"
+          id='name'
+          placeholder='Nome da banda'
           value={values.name}
-          onBlur={e => handleBlurChange(e, 'common', setArtistStepErrors, artistStepErrors)}
+          onBlur={(e) => handleBlurChange(e, 'common', setArtistStepErrors, artistStepErrors)}
           onChange={handleNameChange}
         />
       </InputGroup>
       <InputGroup label={values.integrants ? 'Numero de Integrantes' : ''} error={artistStepErrors.integrants}>
         <Input
-          id="integrants"
-          type="tel"
-          placeholder="Integrantes"
-          onBlur={e => handleBlurChange(e, 'number', setArtistStepErrors, artistStepErrors)}
+          id='integrants'
+          type='tel'
+          placeholder='Integrantes'
+          onBlur={(e) => handleBlurChange(e, 'number', setArtistStepErrors, artistStepErrors)}
           value={values.integrants}
           onChange={handleIntegrantsChange}
         />
       </InputGroup>
-      <InputGroup label="Estilo de música" error={artistStepErrors.musicalStyles}>
+      <InputGroup label='Estilo de música' error={artistStepErrors.musicalStyles}>
         <AutocompleteInput
           predict={values.musicalStylePredict}
           value={values.musicalStyle}
@@ -85,25 +85,25 @@ function BasicInformationFieldset(props) {
         <TagList data={values.musicalStyles} customStyle={musicalGenresCustomStyle} />
       </InputGroup>
       <InputGroup label={values.country ? 'País' : ''} error={artistStepErrors.country}>
-        <Select id="country" placeholder="País" value={values.country} onSelect={handleCountrySelect} />
+        <Select id='country' placeholder='País' value={values.country} onSelect={handleCountrySelect} />
       </InputGroup>
       <InputGroup label={values.state ? 'Estado' : ''} error={artistStepErrors.state}>
-        <Select id="state" placeholder="Estado" value={values.state} onSelect={handleStateSelect} />
+        <Select id='state' placeholder='Estado' value={values.state} onSelect={handleStateSelect} />
       </InputGroup>
       <InputGroup label={values.city ? 'Cidade' : ''} error={artistStepErrors.city}>
         <Input
-          id="city"
-          placeholder="Cidade"
-          onBlur={e => handleBlurChange(e, 'common', setArtistStepErrors, artistStepErrors)}
+          id='city'
+          placeholder='Cidade'
+          onBlur={(e) => handleBlurChange(e, 'common', setArtistStepErrors, artistStepErrors)}
           value={values.city}
           onChange={handleCityChange}
         />
       </InputGroup>
       <InputGroup label={values.about ? 'Sobre sua banda' : ''} error={artistStepErrors.about}>
         <TextArea
-          id="about"
-          placeholder="Conte sobre sua banda :)"
-          onBlur={e => handleBlurChange(e, 'description', setArtistStepErrors, artistStepErrors)}
+          id='about'
+          placeholder='Conte sobre sua banda :)'
+          onBlur={(e) => handleBlurChange(e, 'description', setArtistStepErrors, artistStepErrors)}
           value={values.about}
           onChange={handleAboutChange}
         />

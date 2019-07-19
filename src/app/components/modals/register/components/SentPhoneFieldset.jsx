@@ -52,24 +52,19 @@ function SentPhoneFieldset(code, setCode, resendClick, error) {
   return (
     <Fragment>
       <Title>Confirmação enviada</Title>
-      <Label>
-        Insira aqui o código de seis digitos que enviamos pro seu celular:
-      </Label>
+      <Label>Insira aqui o código de seis digitos que enviamos pro seu celular:</Label>
       <Resend onClick={resendClick}>
         Não recebeu?
         <Bold>Reenviar SMS</Bold>
       </Resend>
-      <InputGroup
-        customStyle={inputGroupStyle}
-        error={error.code}
-      >
+      <InputGroup customStyle={inputGroupStyle} error={error.code}>
         <Input
-          id="code"
-          type="text"
-          placeholder=""
+          id='code'
+          type='text'
+          placeholder=''
           customStyle={inputStyle}
           value={code}
-          onChange={e => setCode(e.target.value)}
+          onChange={(e) => setCode(e.target.value)}
         />
       </InputGroup>
     </Fragment>

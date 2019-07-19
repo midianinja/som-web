@@ -13,9 +13,12 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'SHOW_LOGIN_MODAL': return { ...state, modals: { ...initialState.modals, login: true } };
-    case 'SHOW_REGISTER_MODAL': return { ...state, modals: { ...initialState.modals, register: true } };
-    case 'CLOSE_MODAL': return { ...state, modals: { ...initialState.modals } };
+    case 'SHOW_LOGIN_MODAL':
+      return { ...state, modals: { ...initialState.modals, login: true } };
+    case 'SHOW_REGISTER_MODAL':
+      return { ...state, modals: { ...initialState.modals, register: true } };
+    case 'CLOSE_MODAL':
+      return { ...state, modals: { ...initialState.modals } };
     default:
       return state;
   }

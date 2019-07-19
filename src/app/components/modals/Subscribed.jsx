@@ -36,7 +36,7 @@ const IconWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: 187px;
-  background: ${getGradient()}
+  background: ${getGradient()};
 `;
 
 const Icon = styled.img`
@@ -69,7 +69,7 @@ function Subscribed({ festival, isOpen }) {
     <ModalWrapper isOpen={isOpen}>
       <Modal>
         <IconWrapper>
-          <Icon src="/icons/yeah.svg" alt="yeah, você está inscrito no festival." />
+          <Icon src='/icons/yeah.svg' alt='yeah, você está inscrito no festival.' />
         </IconWrapper>
         <Content>
           <Title>Pronto!</Title>
@@ -85,7 +85,7 @@ function Subscribed({ festival, isOpen }) {
 
 Subscribed.propTypes = {
   festival: PropTypes.string.isRequired,
-  isOpen: PropTypes.bool, 
+  isOpen: PropTypes.bool,
 };
 
 Subscribed.defualtProps = {

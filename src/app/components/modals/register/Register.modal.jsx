@@ -121,21 +121,15 @@ function Register() {
 
   const field = fieldsets[step];
   return (
-    <RegisterWrapper id="register" isOpen={state.modals.register}>
+    <RegisterWrapper id='register' isOpen={state.modals.register}>
       <Container>
         <ExitWrapper>
-          <ExitIcon src="/icons/arrow_forward_left.svg" />
+          <ExitIcon src='/icons/arrow_forward_left.svg' />
         </ExitWrapper>
         <Form>
-          <Fieldset>
-            {field.render()}
-          </Fieldset>
+          <Fieldset>{field.render()}</Fieldset>
           <Actions hide={!field.next}>
-            <PrimaryButton
-              color="white"
-              type="button"
-              onClick={() => setStep(field.next)}
-            >
+            <PrimaryButton color='white' type='button' onClick={() => setStep(field.next)}>
               Próximo
             </PrimaryButton>
           </Actions>

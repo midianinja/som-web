@@ -51,7 +51,7 @@ function Header({ avatar, name }) {
   return (
     <HeaderComponent>
       <Wrapper>
-        <Logo src="/images/logo.svg" alt="SOM - Sistema Operacional da Música" />
+        <Logo src='/images/logo.svg' alt='SOM - Sistema Operacional da Música' />
         <AvatarWrapper>
           <Name>{name}</Name>
           <Avatar src={avatar} customStyle={avatarCustomStyle} />

@@ -21,9 +21,15 @@ const Social = styled.img`
 function Socials({ facebook, instagram, twitter }) {
   return (
     <Wrapper>
-      <a href={facebook}><Social src="/icons/facebook-white.svg" alt={facebook} /></a>
-      <a href={instagram}><Social src="/icons/instagram-white.svg" alt={instagram} /></a>
-      <a href={twitter}><Social src="/icons/twitter-white.svg" alt={twitter} /></a>
+      <a href={facebook}>
+        <Social src='/icons/facebook-white.svg' alt={facebook} />
+      </a>
+      <a href={instagram}>
+        <Social src='/icons/instagram-white.svg' alt={instagram} />
+      </a>
+      <a href={twitter}>
+        <Social src='/icons/twitter-white.svg' alt={twitter} />
+      </a>
     </Wrapper>
   );
 }

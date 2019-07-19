@@ -145,50 +145,46 @@ function Login() {
   if (state.modals.login) blockBodyScroll();
 
   return (
-    <LoginWrapper id="login" isOpen={state.modals.login}>
+    <LoginWrapper id='login' isOpen={state.modals.login}>
       <Container>
-        <ExitArrow src="/icons/arrow_forward_left.svg" />
-        <Icon src="/icons/login.svg" onClick={() => closeModal(dispatch)} />
+        <ExitArrow src='/icons/arrow_forward_left.svg' />
+        <Icon src='/icons/login.svg' onClick={() => closeModal(dispatch)} />
         <Form>
           <Title>Bem vindx de volta!</Title>
           <InputGroup
             customStyle={inputGroupStyle}
             customLabelStyle={inputGroupLabelStyle}
-            label="Nome de usuário"
+            label='Nome de usuário'
             error={error.username}
           >
             <Input
-              id="username"
-              type="text"
-              placeholder=""
+              id='username'
+              type='text'
+              placeholder=''
               value={username}
-              onChange={e => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </InputGroup>
           <InputGroup
             customStyle={inputGroupStyle}
             customLabelStyle={inputGroupLabelStyle}
-            label="Senha"
+            label='Senha'
             error={error.password}
           >
             <Input
-              id="password"
-              type="password"
-              placeholder=""
+              id='password'
+              type='password'
+              placeholder=''
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <ForgetPasswordLink>Esqueci minha senha</ForgetPasswordLink>
           </InputGroup>
           <Actions>
             <CircularButton>
-              <Arrow src="/icons/arrow_forward_right.svg" />
+              <Arrow src='/icons/arrow_forward_right.svg' />
             </CircularButton>
-            <LinkButton
-              color="white"
-              type="button"
-              onClick={() => registerAction(dispatch)}
-            >
+            <LinkButton color='white' type='button' onClick={() => registerAction(dispatch)}>
               Criar conta
             </LinkButton>
           </Actions>

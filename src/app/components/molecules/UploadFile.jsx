@@ -44,9 +44,7 @@ const Space = styled.div`
   heigth: 100%;
 `;
 
-const UploadFile = ({
-  title, subtitle, type, handleFileChange, accept,
-}) => (
+const UploadFile = ({ title, subtitle, type, handleFileChange, accept }) => (
   <ContentWrapper>
     <Title>{title}</Title>
     <Subtitle>{subtitle}</Subtitle>

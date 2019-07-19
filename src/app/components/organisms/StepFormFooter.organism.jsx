@@ -10,7 +10,7 @@ const Footer = styled.div`
   color: #fff;
   flex-direction: column;
   padding: 30px;
-  ${props => props.customStyle}
+  ${(props) => props.customStyle}
 `;
 
 const Icon = styled.img`
@@ -23,10 +23,7 @@ const Icon = styled.img`
 const StepFormFooter = ({ nextAction, skipAction, customStyle }) => {
   return (
     <Footer customStyle={customStyle}>
-      <PrimaryButton
-        onClick={nextAction}
-        customStyle="padding: 20px 0; height: auto; letter-spacing: 3px;"
-      >
+      <PrimaryButton onClick={nextAction} customStyle='padding: 20px 0; height: auto; letter-spacing: 3px;'>
         CONTINUAR
       </PrimaryButton>
       <PrimaryButton

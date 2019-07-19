@@ -18,53 +18,74 @@ const Title = styled.h2`
 
 function SocialsFielset(props) {
   const {
-    handleFacebookChange, handleTwitterChange,
-    handleInstagramChange, handleYoutubeChange, values,
-    setStepErrors, stepErrors, handleBlurChange,
+    handleFacebookChange,
+    handleTwitterChange,
+    handleInstagramChange,
+    handleYoutubeChange,
+    values,
+    setStepErrors,
+    stepErrors,
+    handleBlurChange,
   } = props;
   console.log('stepErrors: ', stepErrors);
 
   return (
     <Fieldset>
       <Title>Redes sociais</Title>
-      <InputGroup label={values.facebook ? 'Facebook url' : ''} info="O link deve conter https://" error={stepErrors.facebook}>
+      <InputGroup
+        label={values.facebook ? 'Facebook url' : ''}
+        info='O link deve conter https://'
+        error={stepErrors.facebook}
+      >
         <Input
-          id="facebook"
-          placeholder="Facebook"
+          id='facebook'
+          placeholder='Facebook'
           value={values.facebook}
-          type="url"
+          type='url'
           onChange={handleFacebookChange}
-          onBlur={e => handleBlurChange(e, 'facebookUrl', setStepErrors, stepErrors)}
+          onBlur={(e) => handleBlurChange(e, 'facebookUrl', setStepErrors, stepErrors)}
         />
       </InputGroup>
-      <InputGroup label={values.instagram ? 'Instagram url' : ''} info="O link deve conter https://" error={stepErrors.instagram}>
+      <InputGroup
+        label={values.instagram ? 'Instagram url' : ''}
+        info='O link deve conter https://'
+        error={stepErrors.instagram}
+      >
         <Input
-          id="instagram"
-          placeholder="Instagram"
+          id='instagram'
+          placeholder='Instagram'
           value={values.instagram}
-          type="url"
+          type='url'
           onChange={handleInstagramChange}
-          onBlur={e => handleBlurChange(e, 'instagramUrl', setStepErrors, stepErrors)}
+          onBlur={(e) => handleBlurChange(e, 'instagramUrl', setStepErrors, stepErrors)}
         />
       </InputGroup>
-      <InputGroup label={values.twitter ? 'Twitter url' : ''} info="O link deve conter https://" error={stepErrors.twitter}>
+      <InputGroup
+        label={values.twitter ? 'Twitter url' : ''}
+        info='O link deve conter https://'
+        error={stepErrors.twitter}
+      >
         <Input
-          id="twitter"
-          placeholder="Twitter"
+          id='twitter'
+          placeholder='Twitter'
           value={values.twitter}
-          type="url"
+          type='url'
           onChange={handleTwitterChange}
-          onBlur={e => handleBlurChange(e, 'twitterUrl', setStepErrors, stepErrors)}
+          onBlur={(e) => handleBlurChange(e, 'twitterUrl', setStepErrors, stepErrors)}
         />
       </InputGroup>
-      <InputGroup label={values.youtube ? 'Youtube url' : ''} info="O link deve conter https://" error={stepErrors.youtube}>
+      <InputGroup
+        label={values.youtube ? 'Youtube url' : ''}
+        info='O link deve conter https://'
+        error={stepErrors.youtube}
+      >
         <Input
-          id="youtube"
-          placeholder="Youtube"
+          id='youtube'
+          placeholder='Youtube'
           value={values.youtube}
-          type="url"
+          type='url'
           onChange={handleYoutubeChange}
-          onBlur={e => handleBlurChange(e, 'youtubeUrl', setStepErrors, stepErrors)}
+          onBlur={(e) => handleBlurChange(e, 'youtubeUrl', setStepErrors, stepErrors)}
         />
       </InputGroup>
     </Fieldset>

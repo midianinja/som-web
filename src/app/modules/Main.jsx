@@ -6,10 +6,6 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const Main = ({ children }) => (
-  <Wrapper>
-    {children}
-  </Wrapper>
-);
+const Main = ({ children }) => <Wrapper>{children}</Wrapper>;
 
 export default Main;

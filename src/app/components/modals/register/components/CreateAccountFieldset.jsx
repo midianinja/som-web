@@ -30,29 +30,24 @@ function CreateAccountFieldset(username, setUsername, password, setPassword, err
       <InputGroup
         customStyle={inputGroupStyle}
         customLabelStyle={inputGroupLabelStyle}
-        label="Nome de usuário"
+        label='Nome de usuário'
         error={error.username}
       >
         <Input
-          id="username"
-          type="text"
-          placeholder=""
+          id='username'
+          type='text'
+          placeholder=''
           value={username}
-          onChange={e => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
         />
       </InputGroup>
       <InputGroup
         customStyle={inputGroupStyle}
         customLabelStyle={inputGroupLabelStyle}
-        label="Senha"
+        label='Senha'
         error={error.password}
       >
-        <PasswordInput
-          id="password"
-          placeholder=""
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
+        <PasswordInput id='password' placeholder='' value={password} onChange={(e) => setPassword(e.target.value)} />
       </InputGroup>
     </Fragment>
   );

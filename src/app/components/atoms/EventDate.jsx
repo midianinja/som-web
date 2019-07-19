@@ -22,7 +22,7 @@ const EDate = styled.h4`
 
 const EventDate = ({ day, month, year }) => (
   <Container>
-    <Icon src="/icons/calendar.svg" />
+    <Icon src='/icons/calendar.svg' />
     <EDate>{`${day}/${month}/${year}`}</EDate>
   </Container>
 );

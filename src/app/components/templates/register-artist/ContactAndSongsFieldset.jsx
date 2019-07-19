@@ -48,35 +48,28 @@ const Title = styled.h2`
 //   return songs.map(song => <SongText>{song}</SongText>);
 // }
 
-const ContactAndSongs = ({
-  handlePhoneChange,
-  handleEmailChange,
-  handleBlurChange,
-  setErrors,
-  stepErrors,
-  values,
-}) => {
+const ContactAndSongs = ({ handlePhoneChange, handleEmailChange, handleBlurChange, setErrors, stepErrors, values }) => {
   return (
     <Fieldset>
       <Title>Contato</Title>
       <InputGroup label={values.phone ? 'Telefone' : ''} error={stepErrors.phone}>
         <Input
-          id="phone"
-          placeholder="Telefone"
+          id='phone'
+          placeholder='Telefone'
           value={values.phone}
-          type="tel"
+          type='tel'
           onChange={handlePhoneChange}
-          onBlur={e => handleBlurChange(e, 'phone', setErrors, stepErrors)}
+          onBlur={(e) => handleBlurChange(e, 'phone', setErrors, stepErrors)}
         />
       </InputGroup>
       <InputGroup label={values.email ? 'E-mail' : ''} error={stepErrors.email}>
         <Input
-          id="email"
-          placeholder="E-mail"
+          id='email'
+          placeholder='E-mail'
           value={values.email}
-          type="email"
+          type='email'
           onChange={handleEmailChange}
-          onBlur={e => handleBlurChange(e, 'email', setErrors, stepErrors)}
+          onBlur={(e) => handleBlurChange(e, 'email', setErrors, stepErrors)}
         />
       </InputGroup>
       {/* <InputGroup label="Sua música" info="Link do Spotify, Deezer, Soundcloud ou similar">
@@ -96,7 +89,7 @@ const ContactAndSongs = ({
       </UploadSongsWrapper> */}
     </Fieldset>
   );
-}
+};
 
 const selectShape = {
   id: PropTypes.string,

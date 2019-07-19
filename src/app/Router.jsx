@@ -11,10 +11,10 @@ history.listen(() => {});
 const AppRouter = () => (
   <Router history={history}>
     <Switch>
-      <Route exact path="/test" component={() => <Home />} />
-      <Route exact path="/event/:id" component={() => <EventPage />} />
-      <Route exact path="/" component={() => <RegisterArtist />} />
-      <Route exact path="/artist/:id" component={() => <ArtistPage />} />
+      <Route exact path='/test' component={() => <Home />} />
+      <Route exact path='/event/:id' component={() => <EventPage />} />
+      <Route exact path='/' component={() => <RegisterArtist />} />
+      <Route exact path='/artist/:id' component={() => <ArtistPage />} />
     </Switch>
   </Router>
 );

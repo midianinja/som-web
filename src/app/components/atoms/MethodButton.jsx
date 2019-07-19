@@ -22,7 +22,7 @@ const Button = styled.button`
       transform: scale(1.1)
     `;
   }};
-  
+
   & + & {
     margin-left: 20px;
   }
@@ -45,7 +45,7 @@ const Text = styled.p`
 
 function MethodButton({ onClick, selected, text, iconSrc }) {
   return (
-    <Button onClick={onClick} type="button" selected={selected}>
+    <Button onClick={onClick} type='button' selected={selected}>
       <Wrapper>
         <Icon src={iconSrc} alt={text} />
         <Text>{text}</Text>

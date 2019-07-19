@@ -2,9 +2,7 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import InputGroup from '../molecules/InputGroup';
-import {
-  white, purple, green, gray,
-} from '../../settings/colors';
+import { white, purple, green, gray } from '../../settings/colors';
 
 const Button = styled.label`
   background-color: ${purple};
@@ -31,7 +29,7 @@ const Button = styled.label`
     cursor: not-allowed;
   }
 
-  ${props => props.customStyle}
+  ${(props) => props.customStyle}
 `;
 
 const Icon = styled.img`
@@ -54,9 +52,9 @@ const UploadSongButton = ({ handleClick, text, accept }) => (
     <Fragment>
       <Button htmlFor={`file-${text}`}>
         {`Subir ${text}`}
-        <Icon src="/icons/upload.svg" />
+        <Icon src='/icons/upload.svg' />
       </Button>
-      <Input type="file" accept={accept} id={`file-${text}`} onChange={handleClick} />
+      <Input type='file' accept={accept} id={`file-${text}`} onChange={handleClick} />
     </Fragment>
   </InputGroup>
 );

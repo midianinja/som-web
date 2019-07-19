@@ -59,21 +59,21 @@ const ColumnWrapper = styled.div`
   }
 `;
 
-
 const artistObj = {
-  avatar: 'https://f001.backblazeb2.com/file/heloisatolipan/imagens/2016/04/12973601_1099945353403569_5156213399083618245_o.jpg',
-  about: "jhsjh aksjhdaoieu a;ld ashsuhawi idhcc  suh i ihioh oi hihu i ihhlkj kh hjhiu lk jh. j hj klhlih a.",
+  avatar:
+    'https://f001.backblazeb2.com/file/heloisatolipan/imagens/2016/04/12973601_1099945353403569_5156213399083618245_o.jpg',
+  about: 'jhsjh aksjhdaoieu a;ld ashsuhawi idhcc  suh i ihioh oi hihu i ihhlkj kh hjhiu lk jh. j hj klhlih a.',
   fs: 4,
   fg: 0,
   cover: '/images/temp-cover.png',
-  isFollowing: false
-}
+  isFollowing: false,
+};
 
 const loadingComponents = {
   artistInfo: false,
   artistMedia: false,
-  artistInsta: false
-}
+  artistInsta: false,
+};
 
 const DUMMY_ARTISTS = [
   {
@@ -89,7 +89,8 @@ const DUMMY_ARTISTS = [
     name: 'Led Zeppelin',
   },
   {
-    avatar: 'https://followthecolours.com.br/wp-content/uploads/2016/06/follow-the-colours-the-beatles-experience-exposicao-sao-paulo-02.jpg',
+    avatar:
+      'https://followthecolours.com.br/wp-content/uploads/2016/06/follow-the-colours-the-beatles-experience-exposicao-sao-paulo-02.jpg',
     name: 'Beatles',
   },
   {
@@ -99,25 +100,24 @@ const DUMMY_ARTISTS = [
 ];
 
 function ArtistPage({ id }) {
-  const [ headerLoading, setHeaderLoading ] = useState(false);
-  const [ instaLoading, setInstagramLoading ] = useState(false);
-  const [ artistName, setArtistName ] = useState('');
-  const [ instaUsername, setInstaUsername ] = useState(null);
-  const [ artistHeaderInfo, setHeaderInfo ] = useState(artistObj);
-  const [ instaPics, setInstaPics ] = useState([]);
+  const [headerLoading, setHeaderLoading] = useState(false);
+  const [instaLoading, setInstagramLoading] = useState(false);
+  const [artistName, setArtistName] = useState('');
+  const [instaUsername, setInstaUsername] = useState(null);
+  const [artistHeaderInfo, setHeaderInfo] = useState(artistObj);
+  const [instaPics, setInstaPics] = useState([]);
 
-  useEffect(async id => {
+  useEffect((id) => {
     const fetchArtist = async () => {
-      await fetchArtistData( id, setArtistName, setHeaderLoading, setInstaUsername);
-      await fetchArtistInsta( 'fernandopvidigal', setInstaPics, setInstagramLoading);
-    }
+      await fetchArtistData(id, setArtistName, setHeaderLoading, setInstaUsername);
+      await fetchArtistInsta('midianinja', setInstaPics, setInstagramLoading);
+    };
     fetchArtist();
-  },[]);
+  }, []);
 
   return (
     <ArtistWrapper>
-      <Header
-      />
+      <Header />
       <CoverWrapper>
         <Cover cover={artistHeaderInfo.cover}>
           <HeaderWrapper />
@@ -137,7 +137,7 @@ function ArtistPage({ id }) {
           <InstagramMedia images={instaPics} />
           <MoreArtist artists={DUMMY_ARTISTS} />
         </ColumnWrapper>
-      </Content> 
+      </Content>
     </ArtistWrapper>
   );
 }
