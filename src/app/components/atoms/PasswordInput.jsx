@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { white10, white } from '../../settings/colors';
+import {
+  white10, white, secondaryRed, secondaryYellow, terciaryGreen,
+  transparent,
+} from '../../settings/colors';
+
+function getColor(point) {
+  if (point <= 0) return transparent;
+  if (point < 60) return secondaryRed;
+  if (point < 90) return secondaryYellow;
+  return terciaryGreen;
+}
 
 const Input = styled.input`
   width: calc(100% - 18px);
@@ -24,12 +34,16 @@ const Icon = styled.img`
 `;
 
 const PasswordInputWrapper = styled.div`
-  width: ${(props) => props.width}
+  width: ${props => props.width};
   height: 38px;
   background-color: ${white10};
   border-radius: 38px;
   padding-left: 15px;
   padding-right: 15px;
+
+  :focus-within {
+    border: solid 2px ${props => getColor(props.point)};
+  }
 `;
 
 /**
@@ -39,13 +53,14 @@ const PasswordInputWrapper = styled.div`
  */
 function PasswordInput(props) {
   const [visibility, setvisibility] = useState(false);
-  const { onChange, placeholder, value, width } = props;
+  const {
+    onChange, placeholder, value, width, point,
+  } = props;
   const src = visibility ? '/icons/visibility_outlined.svg' : '/icons/visibility_off_outlined.svg';
-
   return (
-    <PasswordInputWrapper width={width}>
+    <PasswordInputWrapper width={width} point={point}>
       <Input onChange={onChange} placeholder={placeholder} value={value} type={visibility ? 'text' : 'password'} />
-      <Icon src={src} alt='' onClick={() => setvisibility(!visibility)} />
+      <Icon src={src} alt="" onClick={() => setvisibility(!visibility)} />
     </PasswordInputWrapper>
   );
 }
@@ -55,11 +70,13 @@ PasswordInput.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string.isRequired,
   width: PropTypes.string,
+  point: PropTypes.number,
 };
 
 PasswordInput.defaultProps = {
   placeholder: '',
   width: 'auto',
+  point: 10,
 };
 
 export default PasswordInput;

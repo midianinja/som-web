@@ -43,6 +43,7 @@ export const fetchEventData = async (id, setEvent, loading, setLoading) => {
     });
   } catch (err) {
     // tratar esse erro
+    console.log([err]);
     setLoading({ ...loading, event: loadingStatus.ERROR });
     throw err;
   }

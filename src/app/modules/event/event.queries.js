@@ -21,7 +21,10 @@ export const getOneEventQuery = gql`
       }
       subscribers {
         id
-        avatar_image
+        avatar_image {
+          mimified
+          thumbnail
+        }
         name
       }
       approved_artists {
