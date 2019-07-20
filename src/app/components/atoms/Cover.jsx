@@ -10,15 +10,15 @@ const Cover = styled.div`
   z-index: 2;
 
   :before {
-    content: "";
+    content: '';
     position: absolute;
     width: 100%;
     height: 100%;
     background: ${getGradient()};
-  ${(props) => {
-    const { cover } = props;
-    return cover ? `background-image: url('${cover}');` : '';
-  }}
+    ${(props) => {
+      const { cover } = props;
+      return cover ? `background-image: url('${cover}');` : '';
+    }}
     background-size: cover;
     top: 0;
     left: 0;
@@ -26,7 +26,7 @@ const Cover = styled.div`
   }
 
   :after {
-    content: "";
+    content: '';
     position: absolute;
     width: 100%;
     height: 101%;

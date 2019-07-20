@@ -73,24 +73,16 @@ const avatarStyle = `
 const ProductorCard = ({ productor }) => (
   <Container>
     <ImageWrapper>
-      <Avatar
-        customStyle={avatarStyle}
-        src={productor.photo}
-      />
+      <Avatar customStyle={avatarStyle} src={productor.photo} />
       <ProductorTitle>Produtor</ProductorTitle>
     </ImageWrapper>
     <ProfileWrapper>
       <ProductorName>{productor.name}</ProductorName>
-      <ProductorCity>
-        {`${productor.location.city}, ${productor.location.state}`}
-      </ProductorCity>
+      <ProductorCity>{`${productor.location.city}, ${productor.location.state}`}</ProductorCity>
       <ProductorText>{productor.description}</ProductorText>
-      <FollowersAndFollowing
-        nFollowers={productor.followers.length}
-        nFollowing={productor.following.length}
-      />
+      <FollowersAndFollowing nFollowers={productor.followers.length} nFollowing={productor.following.length} />
       <ButtonsWrapper>
-        <PrimaryButton color="green">seguir</PrimaryButton>
+        <PrimaryButton color='green'>seguir</PrimaryButton>
         {/* <LinkButton customStyle="margin-left: 10px" color="black">ver mais eventos</LinkButton> */}
       </ButtonsWrapper>
     </ProfileWrapper>

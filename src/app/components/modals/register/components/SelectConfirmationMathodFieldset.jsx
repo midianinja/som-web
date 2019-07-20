@@ -26,14 +26,14 @@ function SelectConfirmationMathodFieldset(confirmationMethod, setConfirmationMet
       <Label>Confirmar identidade com:</Label>
       <div>
         <MethodButton
-          text="SMS"
-          iconSrc="/icons/phone.svg"
+          text='SMS'
+          iconSrc='/icons/phone.svg'
           selected={confirmationMethod === 'phone'}
           onClick={() => setConfirmationMethod('phone')}
         />
         <MethodButton
-          text="E-mail"
-          iconSrc="/icons/mail.svg"
+          text='E-mail'
+          iconSrc='/icons/mail.svg'
           selected={confirmationMethod === 'email'}
           onClick={() => setConfirmationMethod('email')}
         />

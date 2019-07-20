@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import UploadSongButton from '../atoms/UploadSongButton';
 import Input from '../atoms/Input';
-import {
-  black, white, black07, green,
-} from '../../settings/colors';
+import { black, white, black07, green } from '../../settings/colors';
 
 const Card = styled.div`
   margin-bottom: 30px;
@@ -70,7 +68,7 @@ const LoadingProgress = styled.label`
   background-color: ${green};
   overflow: hidden;
   white-space: nowrap;
-  ${props => `width: ${props.progess}%;`}
+  ${(props) => `width: ${props.progess}%;`}
 `;
 
 const inputCustomStyle = `
@@ -80,40 +78,26 @@ const inputCustomStyle = `
 `;
 
 const renderUploadButon = (song, index, handleSongChange) => (
-  <UploadSongButton
-    file={song.file}
-    id={`track-${index + 1}`}
-    onChange={e => handleSongChange(e, index)}
-  />
+  <UploadSongButton file={song.file} id={`track-${index + 1}`} onChange={(e) => handleSongChange(e, index)} />
 );
 
 const renderProgressBar = (loading, song) => (
   <LoadingWrapper>
-    <LoadingProgress
-      progess={(loading.loaded * 100) / loading.total}
-    >
-      {song.title}
-    </LoadingProgress>
+    <LoadingProgress progess={(loading.loaded * 100) / loading.total}>{song.title}</LoadingProgress>
   </LoadingWrapper>
 );
 
-const MySongCard = ({
-  index, handleSongChange, handleTitleChange,
-  song, titleBlurAction, loading,
-}) => (
+const MySongCard = ({ index, handleSongChange, handleTitleChange, song, titleBlurAction, loading }) => (
   <Card>
     <LabelWrapper>
       <Label>{`Faixa ${index + 1}`}</Label>
     </LabelWrapper>
-    {
-      loading.isLoading
-        ? renderProgressBar(loading, song) : renderUploadButon(song, index, handleSongChange)
-    }
+    {loading.isLoading ? renderProgressBar(loading, song) : renderUploadButon(song, index, handleSongChange)}
     <Input
       value={song.title}
-      onChange={e => handleTitleChange(e, index)}
-      onBlur={e => titleBlurAction(e, index)}
-      placeholder="Nome da música"
+      onChange={(e) => handleTitleChange(e, index)}
+      onBlur={(e) => titleBlurAction(e, index)}
+      placeholder='Nome da música'
       customStyle={inputCustomStyle}
     />
   </Card>

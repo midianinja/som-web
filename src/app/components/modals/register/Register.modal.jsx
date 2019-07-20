@@ -36,19 +36,12 @@ const RegisterWrapper = styled.section`
 const Container = styled.div`
   position: relative;
   width: 100%;
-  max-width: 768px;
+  max-width: 320px;
   margin-left: auto;
   margin-right: auto;
   padding: 15px 15px 30px 15px;
   background-color: ${purple};
   border-radius: 20px;
-
-  @media (min-width: 768px) {
-    padding: 0;
-    display: flex;
-    align-items: center;
-    height: 100%;
-  }
 `;
 
 const ExitWrapper = styled.div`
@@ -62,12 +55,6 @@ const ExitIcon = styled.img`
 
 const Form = styled.form`
   width: 100%;
-  @media (min-width: 768px) {
-    display: inline-block;
-    width: calc(100% - 404px);
-    max-width: 400;
-    vertical-align: middle;
-  }
 `;
 
 const Fieldset = styled.div`
@@ -166,10 +153,10 @@ function Register() {
   };
   const field = fields[step];
   return (
-    <RegisterWrapper id="register" isOpen={state.modals.register}>
+    <RegisterWrapper id='register' isOpen={state.modals.register}>
       <Container>
         <ExitWrapper>
-          <ExitIcon src="/icons/arrow_forward_left.svg" />
+          <ExitIcon src='/icons/arrow_forward_left.svg' />
         </ExitWrapper>
         <Form autoComplete="off">
           <Fieldset>

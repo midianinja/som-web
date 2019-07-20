@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import PlayPauseButton from '../atoms/PlayPauseButton';
@@ -103,16 +103,73 @@ function renderTracks(tracks) {
   ));
 }
 
+const handlePlayPause = (e, setPlay, play, audio) => {
+  if (play) audio.pause();
+  else audio.play();
+
+  setPlay(!play);
+};
+
+const handleInputRange = (e, setRange, setNewTime, duration) => {
+  setRange(e.target.value);
+  setNewTime((e.target.value * duration) / 1000);
+};
+
+const handleTimeUpdate = (audio, setCurrentTime) => {
+  setCurrentTime(audio.currentTime);
+};
+
+const renderAudio = (audioUrl, audio, setCurrentTime) => (
+  <audio id='player' onTimeUpdate={() => handleTimeUpdate(audio, setCurrentTime)}>
+    <source src={audioUrl} />
+  </audio>
+);
+
 function AudioPlayer({ tracks }) {
+  const [play, setPlay] = useState(false);
+  const [audioUrl, setAudioUrl] = useState(
+    'https://som-dev-storage.s3.us-west-2.amazonaws.com/songs/5d24bcb872410a1543299a6a/mp3/1562688715576.mp3',
+  );
+  const [audio, setAudio] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(1);
+  const [range, setRange] = useState(0);
+  const [newTime, setNewTime] = useState(0);
+
+  useEffect(() => {
+    setAudio(document.getElementById('player'));
+    setDuration(audio.duration);
+  });
+
+  useEffect(() => {
+    if (audio) {
+      setRange(1000 * (currentTime / duration));
+    }
+  }, [currentTime]);
+
+  useEffect(() => {
+    if (audio) {
+      audio.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  }, [newTime]);
+
   return (
     <Wrapper>
       <Header>
-        <PlayPauseButton />
+        {renderAudio(audioUrl, audio, setCurrentTime)}
+        <PlayPauseButton ket={play} shouldPlay={play} onClick={(e) => handlePlayPause(e, setPlay, play, audio)} />
         <Info>
           <Title>{tracks[0].title}</Title>
           <Album>{tracks[0].album}</Album>
         </Info>
-        <AudioSlider min='0' max='10' />
+        <AudioSlider
+          value={range}
+          defaultValue='0'
+          onChange={(e) => handleInputRange(e, setRange, setNewTime, duration)}
+          min='0'
+          max='1000'
+        />
       </Header>
       <List>{renderTracks(tracks)}</List>
     </Wrapper>

@@ -13,7 +13,7 @@ const View = styled.div`
   padding-top: 30px;
   padding-left: 30px;
   padding-right: 30px;
-  ${props => props.customStyle}
+  ${(props) => props.customStyle}
 `;
 
 const ContentWrapper = styled.div`
@@ -44,25 +44,25 @@ const Files = ({ customStyle, handleFileChange, artist }) => (
       <Title> Arquivos </Title>
       <Subtitle> Documentos básicos para inscrição em qualquer evento do SOM</Subtitle>
       <UploadFile
-        title="Mapa de palco"
-        subtitle="Com esse desenho fica mais fácil saber a posição de todos equipamentos no palco"
-        type="Mapa"
-        accept=".pdf"
-        handleFileChange={e => handleFileChange(e, 'mapa', artist)}
+        title='Mapa de palco'
+        subtitle='Com esse desenho fica mais fácil saber a posição de todos equipamentos no palco'
+        type='Mapa'
+        accept='.pdf'
+        handleFileChange={(e) => handleFileChange(e, 'mapa', artist)}
       />
       <UploadFile
-        title="Rider técnico"
-        subtitle="Essa é a lista técnica de todos os equipamentos necessários para o show"
-        type="Rider"
-        accept=".pdf"
-        handleFileChange={e => handleFileChange(e, 'rider', artist)}
+        title='Rider técnico'
+        subtitle='Essa é a lista técnica de todos os equipamentos necessários para o show'
+        type='Rider'
+        accept='.pdf'
+        handleFileChange={(e) => handleFileChange(e, 'rider', artist)}
       />
       <UploadFile
-        title="Press Kit"
-        subtitle="Esse é seu kit para a mídia: conte sua história, mostre quem você é e o que falam de você"
-        type="Kit"
-        accept=".pdf"
-        handleFileChange={e => handleFileChange(e, 'kit', artist)}
+        title='Press Kit'
+        subtitle='Esse é seu kit para a mídia: conte sua história, mostre quem você é e o que falam de você'
+        type='Kit'
+        accept='.pdf'
+        handleFileChange={(e) => handleFileChange(e, 'kit', artist)}
       />
     </ContentWrapper>
   </View>

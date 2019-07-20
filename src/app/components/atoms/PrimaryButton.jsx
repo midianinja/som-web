@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  white, purple, green, orange, magenta, gray, secondaryPurple, transparent,
-} from '../../settings/colors';
+import { white, purple, green, orange, magenta, gray, secondaryPurple, transparent } from '../../settings/colors';
 
 const sizes = {
   small: '28px',
@@ -52,11 +50,11 @@ function getHoverColor(key) {
 }
 
 const PrimaryButton = styled.button`
-  height: ${props => getSize(props.size)};
+  height: ${(props) => getSize(props.size)};
   padding-left: 30px;
   padding-right: 30px;
-  border-radius: ${props => getSize(props.size)};
-  background-color: ${props => getColor(props.color)};
+  border-radius: ${(props) => getSize(props.size)};
+  background-color: ${(props) => getColor(props.color)};
   color: ${(props) => {
     const { color } = props;
     return color === 'white' ? purple : white;
@@ -64,9 +62,9 @@ const PrimaryButton = styled.button`
   cursor: pointer;
   transition-duration: 0.3s;
   font-size: 0.8571428571em;
-  
+
   :active {
-    background-color: ${props => getHoverColor(props.color)};
+    background-color: ${(props) => getHoverColor(props.color)};
   }
 
   :focus {
@@ -89,8 +87,7 @@ const PrimaryButton = styled.button`
     cursor: not-allowed;
   }
 
-  ${props => props.customStyle}
-
+  ${(props) => props.customStyle}
 `;
 
 PrimaryButton.propTypes = {

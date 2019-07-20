@@ -21,16 +21,16 @@ const Input = styled.input`
     color: ${white50};
     opacity: 1;
   }
-  
+
   :-ms-input-placeholder {
     color: ${white50};
   }
-  
+
   ::-ms-input-placeholder {
     color: ${white50};
   }
 
-  ${props => props.customStyle}
+  ${(props) => props.customStyle}
 `;
 
 Input.propTypes = {

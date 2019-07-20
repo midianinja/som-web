@@ -2,9 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import InputGroup from '../molecules/InputGroup';
-import {
-  green, gray, white, orange, black,
-} from '../../settings/colors';
+import { green, gray, white, orange, black } from '../../settings/colors';
 
 const Button = styled.label`
   display: flex;
@@ -86,7 +84,7 @@ function UploadSongButton({ onChange, id }) {
           <Icon src='/icons/upload-song.svg' />
         </Button>
       </InputGroup>
-      <Input accept=".mp3" type="file" id={`file-${id}`} onChange={onChange} />
+      <Input accept='.mp3' type='file' id={`file-${id}`} onChange={onChange} />
     </Fragment>
   );
 }
@@ -95,10 +93,10 @@ function UploaddedSongButton({ onChange, id, file }) {
   return (
     <Fragment>
       <UploaddedButton htmlFor={`file-${id}`}>
-        { file.name }
-        <Icon src="/icons/edit.svg" />
+        {file.name}
+        <Icon src='/icons/edit.svg' />
       </UploaddedButton>
-      <Input accept=".mp3" onChange={onChange} type="file" id={`file-${id}`} />
+      <Input accept='.mp3' onChange={onChange} type='file' id={`file-${id}`} />
     </Fragment>
   );
 }

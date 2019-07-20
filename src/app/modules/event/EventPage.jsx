@@ -12,10 +12,7 @@ import SubscribedArtists from '../../components/templates/event/SubscribedArtist
 import Subscribed from '../../components/modals/Subscribed';
 import Dialog from '../../components/modals/Dialog.modal';
 import Store from '../../store/Store';
-import {
-  fetchEventData, initialEvent, initialLoading, loadingStatus,
-  subscribeAction,
-} from './EventController';
+import { fetchEventData, initialEvent, initialLoading, loadingStatus, subscribeAction } from './EventController';
 import { black } from '../../settings/colors';
 
 const Container = styled.div`
@@ -118,15 +115,12 @@ const EventPage = ({ match }) => {
 
   return (
     <Store.Consumer>
-      { ({ state, dispatch }) => (
+      {({ state, dispatch }) => (
         <Container>
-          <Header
-            name="Fulana Ciclana"
-            avatar="https://api.adorable.io/avatars/285/abott@adorable.png"
-          />
+          <Header name='Fulana Ciclana' avatar='https://api.adorable.io/avatars/285/abott@adorable.png' />
           <CoverWrapper>
             <Cover cover={event.cover}>
-              <EventImage src={event.cover} alt="Cover do Evento" />
+              <EventImage src={event.cover} alt='Cover do Evento' />
               <HeaderWrapper />
             </Cover>
           </CoverWrapper>
@@ -139,32 +133,26 @@ const EventPage = ({ match }) => {
               subscribeAction={() => subscribeAction(state.auth, null, null, dispatch)}
             />
             <ColumnWrapper>
-              <EventText
-                text={event.about}
-              />
+              <EventText text={event.about} />
               <EventConditions conditions={eventConditions} />
               <ProductorCardWrapper>
-                <ProductorCard
-                  productor={event.productor}
-                />
+                <ProductorCard productor={event.productor} />
               </ProductorCardWrapper>
               <SubscribedArtists artists={event.subscribers} />
             </ColumnWrapper>
           </Content>
           <Subscribed />
-          {
-            dialog ? (
-              <Dialog
-                isOpen
-                title={dialog.title}
-                description={dialog.description}
-                agreeText={dialog.agreeText}
-                disagreeText={dialog.disagreeText}
-                confirmAction={dialog.confirmAction}
-                disagreeAction={dialog.disagreeAction}
-              />
-            ) : null
-          }
+          {dialog ? (
+            <Dialog
+              isOpen
+              title={dialog.title}
+              description={dialog.description}
+              agreeText={dialog.agreeText}
+              disagreeText={dialog.disagreeText}
+              confirmAction={dialog.confirmAction}
+              disagreeAction={dialog.disagreeAction}
+            />
+          ) : null}
         </Container>
       )}
     </Store.Consumer>

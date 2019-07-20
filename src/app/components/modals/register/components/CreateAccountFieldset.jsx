@@ -47,9 +47,9 @@ function CreateAccountFieldset(
         error={parentError.username}
       >
         <Input
-          id="username"
-          type="text"
-          placeholder=""
+          id='username'
+          type='text'
+          placeholder=''
           value={username}
           onChange={setUsername}
         />

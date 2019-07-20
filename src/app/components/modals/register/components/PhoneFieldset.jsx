@@ -21,17 +21,8 @@ function PhoneFieldset(phone, setPhone, error) {
   return (
     <Fragment>
       <Title>Qual seu celular?</Title>
-      <InputGroup
-        customStyle={inputGroupStyle}
-        error={error.phone}
-      >
-        <Input
-          id="phone"
-          type="tel"
-          placeholder="Celular"
-          value={phone}
-          onChange={e => setPhone(e.target.value)}
-        />
+      <InputGroup customStyle={inputGroupStyle} error={error.phone}>
+        <Input id='phone' type='tel' placeholder='Celular' value={phone} onChange={(e) => setPhone(e.target.value)} />
       </InputGroup>
     </Fragment>
   );

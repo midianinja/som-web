@@ -61,7 +61,7 @@ const avatarCustomStyle = `
 const ArtistName = styled.h4`
   font-size: 0.8571428571em;
   font-weight: 300;
-  margin-top: 10px
+  margin-top: 10px;
 `;
 
 function renderArtists(artists) {
@@ -77,9 +77,7 @@ function MoreArtist({ artists }) {
   return (
     <Wrapper>
       <Title>Bandas Relacionadas</Title>
-      <ListWrapper>
-        {renderArtists(artists)}
-      </ListWrapper>
+      <ListWrapper>{renderArtists(artists)}</ListWrapper>
     </Wrapper>
   );
 }

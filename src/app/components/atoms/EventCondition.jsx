@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  green, red,
-} from '../../settings/colors';
+import { green, red } from '../../settings/colors';
 
 const Container = styled.div`
   display: ${(props) => {
@@ -49,7 +47,7 @@ const EventCondition = ({ condition, checked, title }) => (
       <ECondition>{title}</ECondition>
     </div>
     <Status checked={checked}>
-      <Icon src="/icons/checked.svg" />
+      <Icon src='/icons/checked.svg' />
     </Status>
   </Container>
 );

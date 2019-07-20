@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  white, purple, green, orange, magenta, gray, secondaryPurple, transparent,
-} from '../../settings/colors';
+import { white, purple, green, orange, magenta, gray, secondaryPurple, transparent } from '../../settings/colors';
 
 const colors = {
   secondaryPurple,
@@ -42,14 +40,14 @@ const CircularButton = styled.button`
   padding-left: 10px;
   padding-right: 10px;
   border-radius: 50%;
-  background-color: ${props => getColor(props.color)};
+  background-color: ${(props) => getColor(props.color)};
   color: ${white};
   cursor: pointer;
   transition-duration: 0.3s;
   font-size: 0.8571428571em;
-  
+
   :active {
-    background-color: ${props => getHoverColor(props.color)};
+    background-color: ${(props) => getHoverColor(props.color)};
   }
 
   :focus {

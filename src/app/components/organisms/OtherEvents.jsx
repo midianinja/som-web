@@ -38,7 +38,7 @@ const OtherEvents = ({ name, at }) => (
     <Header>
       <Title>
         {`Outros Eventos ${at}`}
-        <Link href="#link">{name}</Link>
+        <Link href='#link'>{name}</Link>
       </Title>
     </Header>
     <Space />
