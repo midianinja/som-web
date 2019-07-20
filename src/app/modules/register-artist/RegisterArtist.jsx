@@ -101,42 +101,38 @@ const renderArtistInfos = ({
   <BasicInformationFieldset
     artistStepErrors={artistStepErrors}
     values={values}
-    handleAvatarChange={({ target }) =>
-      setAvatar({
-        url: URL.createObjectURL(target.files[0]),
-        file: target.files[0],
-      })
-    }
+    handleAvatarChange={({ target }) => setAvatar({
+      url: URL.createObjectURL(target.files[0]),
+      file: target.files[0],
+    })}
     setArtistStepErrors={setArtistStepErrors}
     handleAboutChange={({ target }) => setAbout(target.value)}
     handleCityChange={({ target }) => setCity(target.value)}
     handleBlurChange={handleBlurChange}
     handleIntegrantsChange={({ target }) => setIntegrants(target.value)}
     handleNameChange={({ target }) => setName(target.value)}
-    handleCountryChange={(option) => setCountry(option)}
-    handleStateChange={(option) => setState(option)}
-    handleMusicalStyleChange={({ target }) =>
-      handleACMusicalStyle({
-        value: target.value,
-        musicalStylesOptions,
-        setMusicalStylePredict,
-        setMusicalStyle,
-      })
-    }
-    handleMusicalStyleSelect={(value) =>
-      handleMusicalStyleSelect({
-        value,
-        musicalStylesOptions,
-        musicalStyles,
-        setMusicalStyle,
-        setMusicalStylePredict,
-        setMusicalStyles,
-      })
-    }
+    handleCountryChange={option => setCountry(option)}
+    handleStateChange={option => setState(option)}
+    handleMusicalStyleChange={({ target }) => handleACMusicalStyle({
+      value: target.value,
+      musicalStylesOptions,
+      setMusicalStylePredict,
+      setMusicalStyle,
+    })}
+    handleMusicalStyleSelect={value => handleMusicalStyleSelect({
+      value,
+      musicalStylesOptions,
+      musicalStyles,
+      setMusicalStyle,
+      setMusicalStylePredict,
+      setMusicalStyles,
+    })}
   />
 );
 
-const renderContacts = ({ setPhone, setEmail, phone, setContactStepErrors, email, visibles, contactStepErrors }) => {
+const renderContacts = ({
+  setPhone, setEmail, phone, setContactStepErrors, email, visibles, contactStepErrors,
+}) => {
   if (!visibles.contact) return null;
   return (
     <ContactAndSongsFieldset
@@ -188,16 +184,18 @@ const renderSocialMedia = ({
 };
 
 const renderFiles = ({ visibles, artist }) => {
-  if (!visibles.files /* || !artist */) return null;
+  if (!visibles.files || !artist) return null;
   return <FilesFieldset handleFileChange={uploadDocumentFile} artist={artist} />;
 };
 
-const renderUploadSongs = ({ songs, setSongs, authId, visibles }) => {
+const renderUploadSongs = ({
+  songs, setSongs, authId, visibles,
+}) => {
   if (!visibles.files || !authId) return null;
   return <UploadSongs authId={authId} songs={songs} setSongs={setSongs} />;
 };
 
-function RegisterArtist() {
+const RegisterArtist = () => {
   const [artistStepErrors, setArtistStepErrors] = useState({});
   const [contactStepErrors, setContactStepErrors] = useState({});
   const [socialMediaStepErrors, setSocialMediaStepErrors] = useState({});
@@ -224,10 +222,10 @@ function RegisterArtist() {
   ]);
   const [visibles, setVisibles] = useState({
     artist: true,
-    music: true,
-    contact: true,
-    social: true,
-    files: true,
+    music: false,
+    contact: false,
+    social: false,
+    files: false,
   });
   const [step] = useState(2);
 
@@ -250,7 +248,7 @@ function RegisterArtist() {
   };
 
   return (
-    <Form onSubmit={(e) => e.preventDefault()}>
+    <Form onSubmit={e => e.preventDefault()}>
       <StepFormHeader items={steps} index={step} />
       {renderArtistInfos({
         values,
@@ -301,40 +299,38 @@ function RegisterArtist() {
       })}
       {renderFiles({ visibles, artist: id })}
       <StepFormFooter
-        nextAction={() =>
-          nextAction({
-            about,
-            city,
-            integrants,
-            id,
-            setId,
-            country,
-            state,
-            name,
-            avatar,
-            musicalStyles,
-            musicalStylesOptions,
-            musicalStylePredict,
-            musicalStyle,
-            phone,
-            email,
-            facebook,
-            instagram,
-            twitter,
-            youtube,
-            visibles,
-            setVisibles,
-            setArtistStepErrors,
-            setContactStepErrors,
-            songs,
-            setSongs,
-          })
-        }
+        nextAction={() => nextAction({
+          about,
+          city,
+          integrants,
+          id,
+          setId,
+          country,
+          state,
+          name,
+          avatar,
+          musicalStyles,
+          musicalStylesOptions,
+          musicalStylePredict,
+          musicalStyle,
+          phone,
+          email,
+          facebook,
+          instagram,
+          twitter,
+          youtube,
+          visibles,
+          setVisibles,
+          setArtistStepErrors,
+          setContactStepErrors,
+          songs,
+          setSongs,
+        })}
         customStyle={visibles.files ? `background-color: ${white}` : ''}
         skipAction={() => skipAction(setVisibles, visibles)}
       />
     </Form>
   );
-}
+};
 
 export default RegisterArtist;
