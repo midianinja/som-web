@@ -16,7 +16,7 @@ export function getPasswordPoint(password) {
   regex = /[0-9]/;
   if (regex.test(password)) points += 10;
 
-  regex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+  regex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
   if (regex.test(password)) points += 20;
 
   return points;
