@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import Avatar from '../atoms/Avatar.atom';
+import { white } from '../../settings/colors';
+import Store from '../../store/Store';
+import { blockBodyScroll } from '../../utils/scroll';
+
 
 const HeaderComponent = styled.header`
   display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  z-index: 10;
+  padding-left: 15px;  
+  padding-right: 15px;
 
   @media (min-width: 1024px) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    z-index: 10;
+    padding-left: 0px;    
+    padding-right: 0px;    
   }
 `;
 
@@ -25,50 +31,50 @@ const Wrapper = styled.div`
   justify-content: space-between;
   padding-top: 30px;
   padding-bottom: 30px;
-`;
-
-const AvatarWrapper = styled.div``;
-const avatarCustomStyle = `
-  width: 38px;
-  height: 38px;
-  vertical-align: middle;
+  align-items: center;
 `;
 
 const Logo = styled.img`
-  height: 15px;
+  height: 20px;
+  cursor: pointer;
 `;
 
-const Name = styled.h3`
-  color: white;
-  display: inline-block;
-  font-size: 0.7857142857em;
-  font-weight: 300;
-  vertical-align: middle;
-  margin-right: 10px;
+const BurgerButton = styled.div`
+  width: 22px;
+  cursor: pointer;
 `;
 
-function Header({ avatar, name }) {
+const Line = styled.span`
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: ${white};
+
+  & + & {
+    margin-top: 4px;
+  }
+`;
+
+function Header() {
+  const { dispatch } = useContext(Store);
+
   return (
     <HeaderComponent>
       <Wrapper>
         <Logo src="/images/logo.svg" alt="SOM - Sistema Operacional da Música" />
-        <AvatarWrapper>
-          <Name>{name}</Name>
-          <Avatar src={avatar} customStyle={avatarCustomStyle} />
-        </AvatarWrapper>
+        <BurgerButton
+          onClick={() => {
+            blockBodyScroll();
+            dispatch({ type: 'SHOW_NAVIGATION_MODAL' });
+          }}
+        >
+          <Line />
+          <Line />
+          <Line />
+        </BurgerButton>
       </Wrapper>
     </HeaderComponent>
   );
 }
-
-Header.propTypes = {
-  avatar: PropTypes.string,
-  name: PropTypes.string,
-};
-
-Header.defaultProps = {
-  avatar: '',
-  name: '',
-};
 
 export default Header;

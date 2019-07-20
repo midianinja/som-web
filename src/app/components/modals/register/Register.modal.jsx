@@ -139,17 +139,17 @@ function Register() {
     },
     email: {
       render: () => emailFieldset(email, setEmail, error),
-      validation: () => false,
+      validation: () => true,
       next: 'sentEmail',
     },
     phone: {
       render: () => phoneFieldset(phone, setPhone, error),
-      validation: () => false,
+      validation: () => true,
       next: 'sentPhone',
     },
     methods: {
       render: () => selectConfirmationMathodFieldset(method, setMethod, error),
-      validation: () => false,
+      validation: () => true,
       next: method === 'phone' ? 'phone' : 'email',
     },
     sentEmail: {
@@ -180,7 +180,10 @@ function Register() {
               color="white"
               type="button"
               disabled={!field.validation()}
-              onClick={() => field.submit(data)}
+              onClick={() => {
+                const { submit, next } = field;
+                return submit ? submit(data) : setStep(next);
+              }}
             >
               Próximo
             </PrimaryButton>

@@ -11,7 +11,7 @@ import PrimaryButton from '../atoms/PrimaryButton';
 const Container = styled.div`
   width: 100%;
   overflow-y: auto;
-  max-width: 420px;
+  max-width: 440px;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 40px;
@@ -19,6 +19,7 @@ const Container = styled.div`
 
   @media (min-width: 1024px) {
     position: fixed;
+    padding-left: 0px;
   }
 `;
 
