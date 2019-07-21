@@ -5,7 +5,7 @@ import Store from '../../store/Store';
 import {
   black50, black, white, purple,
 } from '../../settings/colors';
-import { allowBodyScroll } from '../../utils/scroll';
+import { allowBodyScroll } from '../../utilities/scroll';
 
 const links = [
   {

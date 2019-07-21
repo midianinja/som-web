@@ -9,10 +9,12 @@ import EventConditions from '../../components/molecules/EventConditions';
 import ProductorCard from '../../components/molecules/ProductorCard';
 import Header from '../../components/organisms/Header';
 import SubscribedArtists from '../../components/templates/event/SubscribedArtists';
-import Subscribed from '../../components/modals/Subscribed';
 import Dialog from '../../components/modals/Dialog.modal';
 import Store from '../../store/Store';
-import { fetchEventData, initialEvent, initialLoading, loadingStatus, subscribeAction } from './EventController';
+import {
+  fetchEventData, initialEvent, initialLoading, loadingStatus, subscribeAction,
+  unsubscribeAction,
+} from './EventController';
 import { black } from '../../settings/colors';
 
 const Container = styled.div`
@@ -78,18 +80,7 @@ const EventImage = styled.img`
   visibility: hidden;
 `;
 
-const dialogStatus = {
-  NOT_LOGGED: {
-    title: 'Você não está logado :(',
-    description: 'Pra se inscrever em eventos você precisa ter uma conta e estar logado.',
-    agreeText: 'Logar',
-    disagreeText: 'Voltar',
-    confirmAction: () => null,
-    disagreeAction: () => null,
-  },
-};
-
-const EventPage = ({ match }) => {
+const EventPage = ({ match, history }) => {
   const [loading, setLoading] = useState({ ...initialLoading });
   const [event, setEvent] = useState({ ...initialEvent });
   const [dialog, setDialog] = useState(null);
@@ -113,24 +104,39 @@ const EventPage = ({ match }) => {
     has_food: event.has_food,
   };
 
+  const isSubscribed = (u, e) => {
+    let subscribed = false;
+    if (u && u.artists.length > 0) {
+      if (e.subscribers.find(({ id }) => u.artists[0].id === id)) {
+        subscribed = true;
+      }
+    }
+    return subscribed;
+  };
+
   return (
     <Store.Consumer>
       {({ state, dispatch }) => (
         <Container>
-          <Header name='Fulana Ciclana' avatar='https://api.adorable.io/avatars/285/abott@adorable.png' />
+          <Header />
           <CoverWrapper>
             <Cover cover={event.cover}>
-              <EventImage src={event.cover} alt='Cover do Evento' />
+              <EventImage src={event.cover} alt="Cover do Evento" />
               <HeaderWrapper />
             </Cover>
           </CoverWrapper>
           <Content>
             <EventInfo
+              subscribed={isSubscribed(state.user, event)}
               name={event.name}
               date={event.event_date}
               place={eventPlace}
               subscribers={event.subscribers.length}
-              subscribeAction={() => subscribeAction(state.auth, null, null, dispatch)}
+              subscribeAction={() => subscribeAction(
+                state.auth, state.user, event, dispatch, setDialog,
+                setEvent, history, event,
+              )}
+              unsubscribeAction={() => unsubscribeAction(state.user, event, setEvent)}
             />
             <ColumnWrapper>
               <EventText text={event.about} />
@@ -141,7 +147,6 @@ const EventPage = ({ match }) => {
               <SubscribedArtists artists={event.subscribers} />
             </ColumnWrapper>
           </Content>
-          <Subscribed />
           {dialog ? (
             <Dialog
               isOpen
@@ -163,8 +168,13 @@ const routerParamsShape = {
   id: PropTypes.string,
 };
 
+const routerHistoryShape = {
+  push: PropTypes.function,
+};
+
 EventPage.propTypes = {
   match: PropTypes.shape(routerParamsShape).isRequired,
+  history: PropTypes.shape(routerHistoryShape).isRequired,
 };
 
 export default withRouter(EventPage);

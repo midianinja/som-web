@@ -9,7 +9,7 @@ import LinkButton from '../../atoms/LinkButton';
 import { black, gray, white } from '../../../settings/colors';
 import Store from '../../../store/Store';
 import { login } from './controller';
-import { blockBodyScroll, allowBodyScroll } from '../../../utils/scroll';
+import { blockBodyScroll, allowBodyScroll } from '../../../utilities/scroll';
 
 const LoginWrapper = styled.section`
   display: ${(props) => {

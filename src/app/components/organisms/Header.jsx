@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { white } from '../../settings/colors';
 import Store from '../../store/Store';
-import { blockBodyScroll } from '../../utils/scroll';
-
+import { blockBodyScroll } from '../../utilities/scroll';
 
 const HeaderComponent = styled.header`
   display: none;
