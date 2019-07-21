@@ -8,6 +8,15 @@ import { white /* , white30 */ } from '../../../settings/colors';
 
 const Fieldset = styled.fieldset`
   padding: 30px;
+  width: 100%;
+`;
+
+const InputsWrapper = styled.div`
+@media (min-width: 1024px) {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 `;
 
 const Title = styled.h2`
@@ -15,6 +24,12 @@ const Title = styled.h2`
   font-size: 1.2857142857rem;
   font-weight: 400;
   margin-bottom: 30px;
+`;
+
+const inputGroupStyle = `
+  @media (min-width: 1024px) {
+    width: 45%;
+  }
 `;
 
 // const UploadSongsWrapper = styled.div`
@@ -48,48 +63,51 @@ const Title = styled.h2`
 //   return songs.map(song => <SongText>{song}</SongText>);
 // }
 
-const ContactAndSongs = ({ handlePhoneChange, handleEmailChange, handleBlurChange, setErrors, stepErrors, values }) => {
-  return (
-    <Fieldset>
-      <Title>Contato</Title>
-      <InputGroup label={values.phone ? 'Telefone' : ''} error={stepErrors.phone}>
+const ContactAndSongs = ({
+  handlePhoneChange, handleEmailChange, handleBlurChange,
+  setErrors, stepErrors, values,
+}) => (
+  <Fieldset>
+    <Title>Contato</Title>
+    <InputsWrapper>
+      <InputGroup customStyle={inputGroupStyle} label={values.phone ? 'Telefone' : ''} error={stepErrors.phone}>
         <Input
-          id='phone'
-          placeholder='Telefone'
+          id="phone"
+          placeholder="Telefone"
           value={values.phone}
-          type='tel'
+          type="tel"
           onChange={handlePhoneChange}
-          onBlur={(e) => handleBlurChange(e, 'phone', setErrors, stepErrors)}
+          onBlur={e => handleBlurChange(e, 'phone', setErrors, stepErrors)}
         />
       </InputGroup>
-      <InputGroup label={values.email ? 'E-mail' : ''} error={stepErrors.email}>
+      <InputGroup customStyle={inputGroupStyle} label={values.email ? 'E-mail' : ''} error={stepErrors.email}>
         <Input
-          id='email'
-          placeholder='E-mail'
+          id="email"
+          placeholder="E-mail"
           value={values.email}
-          type='email'
+          type="email"
           onChange={handleEmailChange}
-          onBlur={(e) => handleBlurChange(e, 'email', setErrors, stepErrors)}
+          onBlur={e => handleBlurChange(e, 'email', setErrors, stepErrors)}
         />
       </InputGroup>
-      {/* <InputGroup label="Sua música" info="Link do Spotify, Deezer, Soundcloud ou similar">
-        <Input
-          id="songsURI"
-          value={values.songsURI}
-          onChange={handleSongsURIChange}
-        />
-      </InputGroup>
-      <UploadSongsWrapper>
-        <UploadSongs>
-          <UploadSongsLabel>
-            ou suba seus arquivos
-          </UploadSongsLabel>
-          <UploaderButton text="músicas" />
-        </UploadSongs>
-      </UploadSongsWrapper> */}
-    </Fieldset>
-  );
-};
+    </InputsWrapper>
+    {/* <InputGroup label="Sua música" info="Link do Spotify, Deezer, Soundcloud ou similar">
+      <Input
+        id="songsURI"
+        value={values.songsURI}
+        onChange={handleSongsURIChange}
+      />
+    </InputGroup>
+    <UploadSongsWrapper>
+      <UploadSongs>
+        <UploadSongsLabel>
+          ou suba seus arquivos
+        </UploadSongsLabel>
+        <UploaderButton text="músicas" />
+      </UploadSongs>
+    </UploadSongsWrapper> */}
+  </Fieldset>
+);
 
 const selectShape = {
   id: PropTypes.string,

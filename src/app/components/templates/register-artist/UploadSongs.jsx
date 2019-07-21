@@ -11,6 +11,17 @@ const Fieldset = styled.fieldset`
   background-color: ${white};
 `;
 
+const SongsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
+
+const songCardStyle = `
+  max-width: 350px;
+`;
+
 const Title = styled.h2`
   color: ${black};
   font-size: 1.2857142857rem;
@@ -77,6 +88,7 @@ const renderSongs = (songs, setSongs, authId, titleBlurAction) => {
     console.log('loadings: ', loadings);
     return (
       <MySongCard
+        customStyle={songCardStyle}
         key={index}
         handleSongChange={handleSongChange}
         handleTitleChange={handleTitleChange}
@@ -99,7 +111,9 @@ const UploadSongs = ({ songs, setSongs, authId, titleBlurAction }) => {
   return (
     <Fieldset>
       <Title>Músicas</Title>
-      {renderSongs(songs, setSongs, authId, titleBlurAction)}
+      <SongsWrapper>
+        {renderSongs(songs, setSongs, authId, titleBlurAction)}
+      </SongsWrapper>
       <MoreASongButton onClick={handleAddSong} />
     </Fieldset>
   );

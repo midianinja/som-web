@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { secondaryRed, white } from '../../settings/colors';
 
 const InptGroupContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
@@ -19,6 +20,8 @@ const Label = styled.label`
 `;
 
 const ErrorText = styled.span`
+  position: absolute;
+  bottom: -20px;
   font-size: 0.8em;
   margin-top: 5px;
   margin-left: 5px;
@@ -31,9 +34,9 @@ const ErrorText = styled.span`
 const InfoText = styled.span`
   font-size: 0.6em;
   margin-top: 5px;
-    margin-left: 5px
-    color: ${white};
-    font-weight: 300;
+  margin-left: 5px
+  color: ${white};
+  font-weight: 300;
 `;
 
 const InputGroup = ({
@@ -42,7 +45,7 @@ const InputGroup = ({
   <InptGroupContainer customStyle={customStyle}>
     {label ? <Label customStyle={customLabelStyle}>{label}</Label> : null}
     {children}
-    {info ? <InfoText>{info}</InfoText> : null}
+    {(info && !error) ? <InfoText>{info}</InfoText> : null}
     {error ? <ErrorText customStyle={customErrorStyle}>{error}</ErrorText> : null}
   </InptGroupContainer>
 );

@@ -15,6 +15,7 @@ export const verifyAuth = async (token) => {
   } catch (err) {
     window.localStorage.setItem('som@ida', '');
     window.localStorage.setItem('som@token', '');
+    return undefined;
   }
 };
 

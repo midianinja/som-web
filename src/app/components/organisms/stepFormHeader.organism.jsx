@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import CommonHeader from './Header';
 import { magenta, white, white30 } from '../../settings/colors';
 
 const Header = styled.div`
@@ -9,6 +10,7 @@ const Header = styled.div`
   flex-direction: column;
   padding: 30px;
   background-color: ${magenta};
+  ${props => props.customStyle}
 `;
 
 const Logo = styled.label`
@@ -30,6 +32,7 @@ const BigBall = styled.div`
   background-color: ${white};
   margin: 0 5px;
   border-radius: 50%;
+  ${props => props.customStyle}
 `;
 
 const MidBall = styled.div`
@@ -38,6 +41,7 @@ const MidBall = styled.div`
   background-color: ${white};
   margin: 0 5px;
   border-radius: 50%;
+  ${props => props.customStyle}
 `;
 
 const SmallBall = styled.div`
@@ -46,6 +50,7 @@ const SmallBall = styled.div`
   background-color: ${white};
   margin: 0 5px;
   border-radius: 50%;
+  ${props => props.customStyle}
 `;
 
 const Title = styled.h1`
@@ -55,11 +60,13 @@ const Title = styled.h1`
   font-weight: 400;
   color: ${white};
   letter-spacing: 0.16px;
+  ${props => props.customStyle}
 `;
 
 const Body = styled.div`
   width: 100%;
   color: ${white};
+  ${props => (props.small ? 'padding-top: 30px;' : '')}
 `;
 
 const Text = styled.h3`
@@ -70,24 +77,33 @@ const Text = styled.h3`
   line-height: 1.5384615385em;
   font-weight: 300;
   margin-top: 22px;
+  ${props => props.customStyle}
 `;
 
-const renderBall = ({ items, index }) =>
-  items.map((e, i) => {
-    if (index === i) return <BigBall />;
-    if (index + 1 === i || index - 1 === i) return <MidBall />;
-    return <SmallBall />;
-  });
+const smallTitleStyle = `
+  font-size: 0.8571428571rem;
+  margin: 0;
+`;
+
+const renderBall = ({ items, index, small }) => items.map((e, i) => {
+  if (index === i) return <BigBall small={small} />;
+  if (index + 1 === i || index - 1 === i) return <MidBall small={small} />;
+  return <SmallBall small={small} />;
+});
 
 const StepFormHeader = (props) => {
-  const { items, index } = props;
+  const { items, index, small } = props;
   return (
     <Header {...props}>
-      <Logo>LOGO</Logo>
+      <CommonHeader />
       <IndexContainer>{renderBall(props)}</IndexContainer>
-      <Body>
-        <Title>{items[index].title}</Title>
-        <Text>{items[index].description}</Text>
+      <Body small={small}>
+        <Title
+          customStyle={small ? smallTitleStyle : ''}
+        >
+          {items[index].title}
+        </Title>
+        { small ? null : (<Text>{items[index].description}</Text>)}
       </Body>
     </Header>
   );
@@ -95,12 +111,14 @@ const StepFormHeader = (props) => {
 
 const itemShape = {
   title: PropTypes.string.isRequired,
+  small: PropTypes.bool.isRequired,
   description: PropTypes.string.isRequired,
 };
 
 StepFormHeader.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape(itemShape)).isRequired,
   index: PropTypes.string.isRequired,
+  customStyle: PropTypes.string.isRequired,
 };
 
 export default StepFormHeader;

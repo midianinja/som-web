@@ -6,7 +6,7 @@ const Store = React.createContext();
 const initialState = {
   auth: null,
   modals: {
-    login: false,
+    login: true,
     register: false,
     navigation: false,
   },

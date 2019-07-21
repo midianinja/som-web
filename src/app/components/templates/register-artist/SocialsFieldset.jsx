@@ -9,11 +9,26 @@ const Fieldset = styled.fieldset`
   padding: 30px;
 `;
 
+const InputsWrapper = styled.div`
+@media (min-width: 1024px) {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+`;
+
+
 const Title = styled.h2`
   color: ${white};
   font-size: 1.2857142857rem;
   font-weight: 400;
   margin-bottom: 30px;
+`;
+
+const inputGroupStyle = `
+@media (min-width: 1024px) {
+  width: 45%;
+}
 `;
 
 function SocialsFielset(props) {
@@ -27,67 +42,74 @@ function SocialsFielset(props) {
     stepErrors,
     handleBlurChange,
   } = props;
-  console.log('stepErrors: ', stepErrors);
 
   return (
     <Fieldset>
       <Title>Redes sociais</Title>
-      <InputGroup
-        label={values.facebook ? 'Facebook url' : ''}
-        info='O link deve conter https://'
-        error={stepErrors.facebook}
-      >
-        <Input
-          id='facebook'
-          placeholder='Facebook'
-          value={values.facebook}
-          type='url'
-          onChange={handleFacebookChange}
-          onBlur={(e) => handleBlurChange(e, 'facebookUrl', setStepErrors, stepErrors)}
-        />
-      </InputGroup>
-      <InputGroup
-        label={values.instagram ? 'Instagram url' : ''}
-        info='O link deve conter https://'
-        error={stepErrors.instagram}
-      >
-        <Input
-          id='instagram'
-          placeholder='Instagram'
-          value={values.instagram}
-          type='url'
-          onChange={handleInstagramChange}
-          onBlur={(e) => handleBlurChange(e, 'instagramUrl', setStepErrors, stepErrors)}
-        />
-      </InputGroup>
-      <InputGroup
-        label={values.twitter ? 'Twitter url' : ''}
-        info='O link deve conter https://'
-        error={stepErrors.twitter}
-      >
-        <Input
-          id='twitter'
-          placeholder='Twitter'
-          value={values.twitter}
-          type='url'
-          onChange={handleTwitterChange}
-          onBlur={(e) => handleBlurChange(e, 'twitterUrl', setStepErrors, stepErrors)}
-        />
-      </InputGroup>
-      <InputGroup
-        label={values.youtube ? 'Youtube url' : ''}
-        info='O link deve conter https://'
-        error={stepErrors.youtube}
-      >
-        <Input
-          id='youtube'
-          placeholder='Youtube'
-          value={values.youtube}
-          type='url'
-          onChange={handleYoutubeChange}
-          onBlur={(e) => handleBlurChange(e, 'youtubeUrl', setStepErrors, stepErrors)}
-        />
-      </InputGroup>
+      <InputsWrapper>
+        <InputGroup
+          customStyle={inputGroupStyle}
+          label={values.facebook ? 'Facebook url' : ''}
+          info="O link deve conter https://"
+          error={stepErrors.facebook}
+        >
+          <Input
+            id="facebook"
+            placeholder="Facebook"
+            value={values.facebook}
+            type="url"
+            onChange={handleFacebookChange}
+            onBlur={e => handleBlurChange(e, 'facebookUrl', setStepErrors, stepErrors)}
+          />
+        </InputGroup>
+        <InputGroup
+          customStyle={inputGroupStyle}
+          label={values.instagram ? 'Instagram url' : ''}
+          info="O link deve conter https://"
+          error={stepErrors.instagram}
+        >
+          <Input
+            id="instagram"
+            placeholder="Instagram"
+            value={values.instagram}
+            type="url"
+            onChange={handleInstagramChange}
+            onBlur={e => handleBlurChange(e, 'instagramUrl', setStepErrors, stepErrors)}
+          />
+        </InputGroup>
+      </InputsWrapper>
+      <InputsWrapper>
+        <InputGroup
+          customStyle={inputGroupStyle}
+          label={values.twitter ? 'Twitter url' : ''}
+          info="O link deve conter https://"
+          error={stepErrors.twitter}
+        >
+          <Input
+            id="twitter"
+            placeholder="Twitter"
+            value={values.twitter}
+            type="url"
+            onChange={handleTwitterChange}
+            onBlur={e => handleBlurChange(e, 'twitterUrl', setStepErrors, stepErrors)}
+          />
+        </InputGroup>
+        <InputGroup
+          customStyle={inputGroupStyle}
+          label={values.youtube ? 'Youtube url' : ''}
+          info="O link deve conter https://"
+          error={stepErrors.youtube}
+        >
+          <Input
+            id="youtube"
+            placeholder="Youtube"
+            value={values.youtube}
+            type="url"
+            onChange={handleYoutubeChange}
+            onBlur={e => handleBlurChange(e, 'youtubeUrl', setStepErrors, stepErrors)}
+          />
+        </InputGroup>
+      </InputsWrapper>
     </Fieldset>
   );
 }

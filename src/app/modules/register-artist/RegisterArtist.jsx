@@ -35,6 +35,30 @@ const Form = styled.form`
   width: 100%;
   background-color: ${black};
   min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  
+`;
+
+const FormWrapper = styled.div`
+  width: 100%;
+  max-width: 720px;
+`;
+
+const FilesBackGround = styled.div`
+  background-color: ${white};
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const headerStyle = `
+  top: 0;
+  left: 0;
+  position: fixed;
 `;
 
 const handleBlurChange = ({ target }, type, setErrors, currentErrors) => {
@@ -197,6 +221,7 @@ const renderUploadSongs = ({
 
 const RegisterArtist = () => {
   const [artistStepErrors, setArtistStepErrors] = useState({});
+  const [smallHeader, setSmallHeader] = useState(false);
   const [contactStepErrors, setContactStepErrors] = useState({});
   const [socialMediaStepErrors, setSocialMediaStepErrors] = useState({});
   const [about, setAbout] = useState('');
@@ -230,10 +255,14 @@ const RegisterArtist = () => {
   const [step] = useState(2);
 
   useEffect(() => {
+    window.addEventListener('scroll', () => {
+      // if (window.scrollY > 212) setSmallHeader(true);
+      // else setSmallHeader(false);
+    });
     if (!musicalStylesOptions.length) {
       fetchMusicalStyleOptions(setMusicalStylesOptions);
     }
-  }, [musicalStylesOptions]);
+  }, [musicalStylesOptions, smallHeader]);
   const values = {
     avatar: avatar.url,
     name,
@@ -249,84 +278,73 @@ const RegisterArtist = () => {
 
   return (
     <Form onSubmit={e => e.preventDefault()}>
-      <StepFormHeader items={steps} index={step} />
-      {renderArtistInfos({
-        values,
-        setAvatar,
-        setAbout,
-        artistStepErrors,
-        setCity,
-        setIntegrants,
-        setName,
-        setCountry,
-        setState,
-        handleACMusicalStyle,
-        handleMusicalStyleSelect,
-        musicalStylesOptions,
-        musicalStyles,
-        setMusicalStyle,
-        setMusicalStylePredict,
-        setMusicalStyles,
-        setArtistStepErrors,
-      })}
-      {renderContacts({
-        setPhone,
-        setEmail,
-        phone,
-        setContactStepErrors,
-        email,
-        visibles,
-        contactStepErrors,
-      })}
-      {renderSocialMedia({
-        visibles,
-        setFacebook,
-        setInstagram,
-        setTwitter,
-        setYoutube,
-        facebook,
-        instagram,
-        twitter,
-        youtube,
-        setSocialMediaStepErrors,
-        socialMediaStepErrors,
-      })}
-      {renderUploadSongs({
-        authId: id,
-        visibles,
-        songs,
-        setSongs,
-      })}
-      {renderFiles({ visibles, artist: id })}
-      <StepFormFooter
-        nextAction={() => nextAction({
-          about,
-          city,
-          integrants,
-          id,
-          setId,
-          country,
-          state,
-          name,
-          avatar,
-          musicalStyles,
+      <StepFormHeader small={false} customStyle={headerStyle} items={steps} index={step} />
+      <StepFormHeader small={false} customStyle="visibility: hidden;" items={steps} index={step} />
+      <FormWrapper>
+        {renderArtistInfos({
+          values,
+          setAvatar,
+          setAbout,
+          artistStepErrors,
+          setCity,
+          setIntegrants,
+          setName,
+          setCountry,
+          setState,
+          handleACMusicalStyle,
+          handleMusicalStyleSelect,
           musicalStylesOptions,
-          musicalStylePredict,
-          musicalStyle,
+          musicalStyles,
+          setMusicalStyle,
+          setMusicalStylePredict,
+          setMusicalStyles,
+          setArtistStepErrors,
+        })}
+        {renderContacts({
+          setPhone,
+          setEmail,
           phone,
+          setContactStepErrors,
           email,
+          visibles,
+          contactStepErrors,
+        })}
+        {renderSocialMedia({
+          visibles,
+          setFacebook,
+          setInstagram,
+          setTwitter,
+          setYoutube,
           facebook,
           instagram,
           twitter,
           youtube,
-          visibles,
-          setVisibles,
-          setArtistStepErrors,
-          setContactStepErrors,
-          songs,
-          setSongs,
+          setSocialMediaStepErrors,
+          socialMediaStepErrors,
         })}
-        customStyle={visibles.files ? `background-color: ${white}` : ''}
+      </FormWrapper>
+      <FilesBackGround>
+        <FormWrapper>
+          {renderUploadSongs({
+            authId: id,
+            visibles,
+            songs,
+            setSongs,
+          })}
+          {renderFiles({ visibles, artist: id })}
+        </FormWrapper>
+      </FilesBackGround>
+      <StepFormFooter
+        nextAction={() => nextAction({
+          about, city, integrants, id, setId,
+          country, state, name, avatar,
+          musicalStyles, musicalStylesOptions, musicalStylePredict,
+          musicalStyle, phone, email, facebook, instagram,
+          twitter, youtube, visibles, setVisibles,
+          setArtistStepErrors, setContactStepErrors,
+          songs, setSongs,
+        })}
+        customStyle={visibles.files && id ? `background-color: ${white}` : ''}
         skipAction={() => skipAction(setVisibles, visibles)}
       />
     </Form>
