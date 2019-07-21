@@ -13,7 +13,6 @@ const history = createBrowserHistory();
 history.listen(() => {});
 const AppRouter = ({ children }) => (
   <Router history={history}>
-<<<<<<< Updated upstream
     <Main>
       <Switch>
         <Route path="/welcome" component={() => <Welcome />} />
@@ -21,21 +20,12 @@ const AppRouter = ({ children }) => (
         <Route path="/artist/:id" component={() => <ArtistPage />} />
         <Private>
           <Switch>
-            <Route path="/register-artist" component={() => <RegisterArtist />} />
+            <Route path="/private/register-artist" component={() => <RegisterArtist />} />
           </Switch>
         </Private>
       </Switch>
       {children}
     </Main>
-=======
-    <Switch>
-      <Route exact path='/test' component={() => <Home />} />
-      <Route exact path='/event/:id' component={() => <EventPage />} />
-      <Route exact path='/' component={() => <RegisterArtist />} />
-      <Route exact path='/artist/:id' component={() => <ArtistPage />} />
-    </Switch>
-    {children}
->>>>>>> Stashed changes
   </Router>
 );
 
