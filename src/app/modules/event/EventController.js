@@ -43,7 +43,6 @@ export const fetchEventData = async (id, setEvent, loading, setLoading) => {
     });
   } catch (err) {
     // tratar esse erro
-    console.log([err]);
     setLoading({ ...loading, event: loadingStatus.ERROR });
     throw err;
   }
@@ -56,8 +55,24 @@ export const associatedEvents = async (id, setAssociatedEvents) => {
   setAssociatedEvents([]);
 };
 
-export const subscribeAction = async (auth, eventID, artistID, dispatch) => {
+export const subscribeAction = async (
+  auth, user, eventID, dispatch, setDialog, setEvent,
+  history,
+) => {
   if (!auth) {
     dispatch({ type: 'SHOW_LOGIN_MODAL' });
+    return;
+  }
+
+  if (!user.artists.length) {
+    setDialog({
+      title: 'Cadastro incompleto',
+      icon: '/icons/guita-error.svg',
+      description: 'Para se escrever em eventos, você precisa preencher os dados obrigatórios.',
+      agreeText: 'Cadastrar',
+      disagreeText: 'Voltar',
+      confirmAction: () => history.push('/register-artist'),
+      disagreeAction: () => setDialog(null),
+    });
   }
 };

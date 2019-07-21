@@ -5,6 +5,11 @@ const Store = React.createContext();
 
 const initialState = {
   auth: null,
+  user: null,
+  loading: {
+    auth: false,
+    verify: true,
+  },
   modals: {
     login: false,
     register: false,
@@ -14,12 +19,24 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'START_AUTH_LOADING':
+      return { ...state, loading: { ...state.loading, auth: true } };
+    case 'STOP_AUTH_LOADING':
+      return { ...state, loading: { ...state.loading, auth: false } };
+    case 'STOP_VERIFY_LOADING':
+      return { ...state, loading: { ...state.loading, verify: false } };
     case 'SHOW_NAVIGATION_MODAL':
       return { ...state, modals: { ...initialState.modals, navigation: true } };
     case 'SHOW_LOGIN_MODAL':
       return { ...state, modals: { ...initialState.modals, login: true } };
     case 'SHOW_REGISTER_MODAL':
       return { ...state, modals: { ...initialState.modals, register: true } };
+    case 'SET_AUTH':
+      return { ...state, auth: { ...(state.auth || {}), ...action.auth } };
+    case 'SET_USER':
+      return { ...state, user: { ...(state.user || {}), ...action.user } };
+    case 'RESET_AUTH':
+      return { ...state, auth: null };
     case 'CLOSE_MODAL':
       return { ...state, modals: { ...initialState.modals } };
     default:

@@ -1,5 +1,5 @@
 import { authorize } from './repository';
-import { allowBodyScroll } from '../../../utils/scroll';
+import { allowBodyScroll } from '../../../utilities/scroll';
 
 export async function login(username, password, setError, closeModal, history) {
   let promise;

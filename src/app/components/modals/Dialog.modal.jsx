@@ -1,57 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { purple, wrapperModal } from '../../settings/colors';
+import { white, purple, black50 } from '../../settings/colors';
 import PrimaryButton from '../atoms/PrimaryButton';
 
-const Dialog = styled.div`
-  width: 100%;
-  max-width: 380px;
-  justify-content: space-around;
-  flex-direction: column;
-  border-radius: 25px;
-  background-color: #fff;
-  text-align: left;
-  padding: 30px;
-
-  @media (min-width: 1024px) {
-    padding: 40px;
-  }
-`;
-
-const Description = styled.p`
-  margin-top: 7px;
-  font-weight: 300;
-  font-size: 1em;
-  line-height: 1.625em;
-  margin-bottom: 15px;
-
-  @media (min-width: 1024px) {
-    margin-bottom: 40px;
-  }
-`;
-
-const Actions = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-`;
-
-const DialogWrapper = styled.section`
+const ModalWrapper = styled.div`
   display: ${(props) => {
     const { isOpen } = props;
     return !isOpen ? 'none' : 'flex';
   }};
+  align-items: center;
+  justify-content: center;
   position: fixed;
   width: 100%;
   height: 100vh;
-  padding: 30px;
-  background-color: ${wrapperModal};
-  align-items: center;
-  justify-content: center;
   top: 0;
   left: 0;
   z-index: 20;
+  padding: 30px;
+  background-color: ${black50};
+`;
+
+const Modal = styled.div`
+  border-radius: 20px;
+  width: 100%;
+  max-width: 320px;
+  overflow: hidden;
+  background-color: ${white};
+  text-align: left;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 200px;
+  padding-top: 30px; 
+`;
+
+const Icon = styled.img`
+  height: 100%;
+`;
+
+const Content = styled.div`
+  padding: 30px;
+`;
+
+const Title = styled.h2`
+  font-size: 1.5714285714em;
+  font-weight: 400;
+`;
+
+const Message = styled.h3`
+  font-size: 1em;
+  font-weight: 300;
+  line-height: 1.625em;
+  margin-top: 25px;
+  margin-bottom: 25px;
+`;
+
+const Actions = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 const BackButton = styled.a`
@@ -59,32 +71,34 @@ const BackButton = styled.a`
   color: ${purple};
 `;
 
-const Title = styled.h2`
-  font-size: 1.3285714286em;
-  font-weight: 400;
-  margin-bottom: 15px;
 
-  @media (min-width: 1024px) {
-    font-size: 1.4285714286em;
-  }
-`;
-
-const DialogModal = ({ title, description, confirmAction, disagreeAction, agreeText, disagreeText, isOpen }) => (
-  <DialogWrapper isOpen={isOpen}>
-    <Dialog>
-      <Title>{title}</Title>
-      <Description>{description}</Description>
-      <Actions>
-        {disagreeAction ? <BackButton onClick={disagreeAction}>{disagreeText}</BackButton> : null}
-        {confirmAction ? <PrimaryButton onClick={confirmAction}>{agreeText}</PrimaryButton> : null}
-      </Actions>
-    </Dialog>
-  </DialogWrapper>
+const DialogModal = ({
+  title, description, confirmAction, disagreeAction, agreeText, disagreeText, isOpen,
+  icon,
+}) => (
+  <ModalWrapper isOpen={isOpen}>
+    <Modal>
+      <IconWrapper>
+        <Icon src={icon} alt={title} />
+      </IconWrapper>
+      <Content>
+        <Title>{title}</Title>
+        <Message>
+          {description}
+        </Message>
+        <Actions>
+          {disagreeAction ? <BackButton onClick={disagreeAction}>{disagreeText}</BackButton> : null}
+          {confirmAction ? <PrimaryButton onClick={confirmAction}>{agreeText}</PrimaryButton> : null}
+        </Actions>
+      </Content>
+    </Modal>
+  </ModalWrapper>
 );
 
 DialogModal.propTypes = {
   title: PropTypes.string,
-  description: PropTypes.string,
+  icon: PropTypes.string,
+  description: PropTypes.node,
   agreeText: PropTypes.string,
   disagreeText: PropTypes.string,
   confirmAction: PropTypes.func.isRequired,
@@ -93,6 +107,7 @@ DialogModal.propTypes = {
 };
 
 DialogModal.defaultProps = {
+  icon: '/icons/guita-error.svg',
   title: 'Title',
   description: 'Description',
   agreeText: '',

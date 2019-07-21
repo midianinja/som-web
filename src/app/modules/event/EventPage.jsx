@@ -78,18 +78,7 @@ const EventImage = styled.img`
   visibility: hidden;
 `;
 
-const dialogStatus = {
-  NOT_LOGGED: {
-    title: 'Você não está logado :(',
-    description: 'Pra se inscrever em eventos você precisa ter uma conta e estar logado.',
-    agreeText: 'Logar',
-    disagreeText: 'Voltar',
-    confirmAction: () => null,
-    disagreeAction: () => null,
-  },
-};
-
-const EventPage = ({ match }) => {
+const EventPage = ({ match, history }) => {
   const [loading, setLoading] = useState({ ...initialLoading });
   const [event, setEvent] = useState({ ...initialEvent });
   const [dialog, setDialog] = useState(null);
@@ -117,7 +106,7 @@ const EventPage = ({ match }) => {
     <Store.Consumer>
       {({ state, dispatch }) => (
         <Container>
-          <Header name='Fulana Ciclana' avatar='https://api.adorable.io/avatars/285/abott@adorable.png' />
+          <Header />
           <CoverWrapper>
             <Cover cover={event.cover}>
               <EventImage src={event.cover} alt='Cover do Evento' />
@@ -130,7 +119,10 @@ const EventPage = ({ match }) => {
               date={event.event_date}
               place={eventPlace}
               subscribers={event.subscribers.length}
-              subscribeAction={() => subscribeAction(state.auth, null, null, dispatch)}
+              subscribeAction={() => subscribeAction(
+                state.auth, state.user, event.id, dispatch, setDialog,
+                setEvent, history, event,
+              )}
             />
             <ColumnWrapper>
               <EventText text={event.about} />
@@ -163,8 +155,13 @@ const routerParamsShape = {
   id: PropTypes.string,
 };
 
+const routerHistoryShape = {
+  push: PropTypes.function,
+};
+
 EventPage.propTypes = {
   match: PropTypes.shape(routerParamsShape).isRequired,
+  history: PropTypes.shape(routerHistoryShape).isRequired,
 };
 
 export default withRouter(EventPage);
