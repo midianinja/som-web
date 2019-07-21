@@ -87,8 +87,8 @@ const DialogModal = ({
           {description}
         </Message>
         <Actions>
-          {disagreeAction ? <BackButton onClick={disagreeAction}>{disagreeText}</BackButton> : null}
-          {confirmAction ? <PrimaryButton onClick={confirmAction}>{agreeText}</PrimaryButton> : null}
+          {disagreeAction ? <BackButton type="button" onClick={disagreeAction}>{disagreeText}</BackButton> : null}
+          {confirmAction ? <PrimaryButton type="button" onClick={confirmAction}>{agreeText}</PrimaryButton> : null}
         </Actions>
       </Content>
     </Modal>

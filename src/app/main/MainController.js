@@ -49,5 +49,4 @@ export const fetchLoggedUser = async (ida, dispatch) => {
     type: 'SET_USER',
     user: response.data.oneUser,
   });
-  console.log(response);
 };

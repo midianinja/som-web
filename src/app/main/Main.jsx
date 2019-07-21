@@ -17,7 +17,6 @@ const Main = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log('here', ida);
     if (ida) fetchLoggedUser(ida, dispatch);
   }, [ida]);
 
