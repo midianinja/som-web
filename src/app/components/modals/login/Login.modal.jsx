@@ -141,7 +141,7 @@ function Login({ history }) {
     dispatch({ type: 'CLOSE_MODAL' });
   };
 
-  if (state.modals.login) blockBodyScroll();
+  if (state.modals.login && (!ida && !token)) blockBodyScroll();
 
   return (
     <LoginWrapper id="login" isOpen={state.modals.login && (!ida && !token)}>

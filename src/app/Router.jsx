@@ -22,7 +22,7 @@ const AppRouter = ({ children }) => (
         <Route path="/artist/:id" component={() => <ArtistPage />} />
         <Private>
           <Switch>
-            <Route path="/register-artist" component={() => <RegisterArtist />} />
+            <Route path="/private/register-artist" component={() => <RegisterArtist />} />
           </Switch>
         </Private>
       </Switch>

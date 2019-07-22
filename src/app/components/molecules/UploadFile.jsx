@@ -10,8 +10,7 @@ const ContentWrapper = styled.div`
   width: 100%;
   height: 110px;
   margin-top: 40px;
-  padding-left: 20px;
-  padding-right: 20px;
+  ${props => props.customStyle}
 `;
 
 const Title = styled.div`
@@ -44,8 +43,11 @@ const Space = styled.div`
   heigth: 100%;
 `;
 
-const UploadFile = ({ title, subtitle, type, handleFileChange, accept }) => (
-  <ContentWrapper>
+const UploadFile = ({
+  title, subtitle, type, handleFileChange,
+  accept, customStyle,
+}) => (
+  <ContentWrapper customStyle={customStyle}>
     <Title>{title}</Title>
     <Subtitle>{subtitle}</Subtitle>
     <ButtonsWrapper>
@@ -60,6 +62,7 @@ UploadFile.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   type: PropTypes.string,
+  customStyle: PropTypes.string,
   accept: PropTypes.string,
   handleFileChange: PropTypes.isRequired,
 };

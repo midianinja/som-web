@@ -11,7 +11,7 @@ const initialState = {
     verify: true,
   },
   modals: {
-    login: false,
+    login: true,
     register: false,
     navigation: false,
   },

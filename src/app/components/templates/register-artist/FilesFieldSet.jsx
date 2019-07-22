@@ -13,12 +13,19 @@ const View = styled.div`
   padding-top: 30px;
   padding-left: 30px;
   padding-right: 30px;
-  ${(props) => props.customStyle}
+  ${props => props.customStyle}
 `;
 
 const ContentWrapper = styled.div`
   width: 100%;
   height: 521px;
+`;
+
+const FilesWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 const Title = styled.h2`
@@ -38,32 +45,43 @@ const Subtitle = styled.h3`
   font-weight: 300;
 `;
 
+const uploadFileStyle = `
+  @media (min-width: 1024px) {
+    max-width: 300px
+  }
+`;
+
 const Files = ({ customStyle, handleFileChange, artist }) => (
   <View customStyle={customStyle}>
     <ContentWrapper>
       <Title> Arquivos </Title>
       <Subtitle> Documentos básicos para inscrição em qualquer evento do SOM</Subtitle>
-      <UploadFile
-        title='Mapa de palco'
-        subtitle='Com esse desenho fica mais fácil saber a posição de todos equipamentos no palco'
-        type='Mapa'
-        accept='.pdf'
-        handleFileChange={(e) => handleFileChange(e, 'mapa', artist)}
-      />
-      <UploadFile
-        title='Rider técnico'
-        subtitle='Essa é a lista técnica de todos os equipamentos necessários para o show'
-        type='Rider'
-        accept='.pdf'
-        handleFileChange={(e) => handleFileChange(e, 'rider', artist)}
-      />
-      <UploadFile
-        title='Press Kit'
-        subtitle='Esse é seu kit para a mídia: conte sua história, mostre quem você é e o que falam de você'
-        type='Kit'
-        accept='.pdf'
-        handleFileChange={(e) => handleFileChange(e, 'kit', artist)}
-      />
+      <FilesWrapper>
+        <UploadFile
+          customStyle={uploadFileStyle}
+          title='Mapa de palco'
+          subtitle='Com esse desenho fica mais fácil saber a posição de todos equipamentos no palco'
+          type='Mapa'
+          accept='.pdf'
+          handleFileChange={(e) => handleFileChange(e, 'mapa', artist)}
+        />
+        <UploadFile
+          customStyle={uploadFileStyle}
+          title='Rider técnico'
+          subtitle='Essa é a lista técnica de todos os equipamentos necessários para o show'
+          type='Rider'
+          accept='.pdf'
+          handleFileChange={(e) => handleFileChange(e, 'rider', artist)}
+        />
+        <UploadFile
+          customStyle={uploadFileStyle}
+          title='Press Kit'
+          subtitle='Esse é seu kit para a mídia: conte sua história, mostre quem você é e o que falam de você'
+          type='Kit'
+          accept='.pdf'
+          handleFileChange={(e) => handleFileChange(e, 'kit', artist)}
+        />
+      </FilesWrapper>
     </ContentWrapper>
   </View>
 );

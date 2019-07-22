@@ -12,6 +12,29 @@ import AutocompleteInput from '../../molecules/InputAutocomplete';
 
 const Fieldset = styled.fieldset`
   padding: 30px;
+  width: 100%;
+`;
+
+const MainInformationWrapper = styled.div`
+width: 100%;
+  @media (min-width: 1024px) {
+    display: flex;
+  }
+`;
+
+const LocationWrapper = styled.div`
+  @media (min-width: 1024px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+`;
+
+const TextInpustWrapper = styled.div`
+  @media (min-width: 1024px) {
+    margin-left: 20px;
+    width: 100%;
+  }
 `;
 
 const Title = styled.h2`
@@ -23,6 +46,18 @@ const Title = styled.h2`
 
 const musicalGenresCustomStyle = `
   margin-top: 10px;
+`;
+
+const avatarInputStyle = `
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const inputGroupStyle = `
+  @media (min-width: 1024px) {
+    margim-bottom: 0;
+    width: 200px
+  }
 `;
 
 function BasicInformationFieldset(props) {
@@ -45,65 +80,83 @@ function BasicInformationFieldset(props) {
   return (
     <Fieldset>
       <Title>Informaçoões do artista</Title>
-      <InputGroup
-        error={artistStepErrors.avatar}
-        customStyle='display: flex; justify-content: center; align-items: center;'
-      >
-        <UploadAvatar
-          alt='botão para subir imagem'
-          title='avatar image'
-          handleChange={handleAvatarChange}
-          src={values.avatar || ''}
-        />
-      </InputGroup>
-      <InputGroup label={values.name ? 'Nome da banda' : ''} error={artistStepErrors.name}>
-        <Input
-          id='name'
-          placeholder='Nome da banda'
-          value={values.name}
-          onBlur={(e) => handleBlurChange(e, 'common', setArtistStepErrors, artistStepErrors)}
-          onChange={handleNameChange}
-        />
-      </InputGroup>
-      <InputGroup label={values.integrants ? 'Numero de Integrantes' : ''} error={artistStepErrors.integrants}>
-        <Input
-          id='integrants'
-          type='tel'
-          placeholder='Integrantes'
-          onBlur={(e) => handleBlurChange(e, 'number', setArtistStepErrors, artistStepErrors)}
-          value={values.integrants}
-          onChange={handleIntegrantsChange}
-        />
-      </InputGroup>
-      <InputGroup label='Estilo de música' error={artistStepErrors.musicalStyles}>
-        <AutocompleteInput
-          predict={values.musicalStylePredict}
-          value={values.musicalStyle}
-          handleChange={handleMusicalStyleChange}
-          handleSelect={handleMusicalStyleSelect}
-        />
-        <TagList data={values.musicalStyles} customStyle={musicalGenresCustomStyle} />
-      </InputGroup>
-      <InputGroup label={values.country ? 'País' : ''} error={artistStepErrors.country}>
-        <Select id='country' placeholder='País' value={values.country} onSelect={handleCountrySelect} />
-      </InputGroup>
-      <InputGroup label={values.state ? 'Estado' : ''} error={artistStepErrors.state}>
-        <Select id='state' placeholder='Estado' value={values.state} onSelect={handleStateSelect} />
-      </InputGroup>
-      <InputGroup label={values.city ? 'Cidade' : ''} error={artistStepErrors.city}>
-        <Input
-          id='city'
-          placeholder='Cidade'
-          onBlur={(e) => handleBlurChange(e, 'common', setArtistStepErrors, artistStepErrors)}
-          value={values.city}
-          onChange={handleCityChange}
-        />
-      </InputGroup>
+      <MainInformationWrapper>
+        <InputGroup
+          error={artistStepErrors.avatar}
+          customStyle={avatarInputStyle}
+        >
+          <UploadAvatar
+            alt="botão para subir imagem"
+            title="avatar image"
+            handleChange={handleAvatarChange}
+            src={values.avatar || ''}
+          />
+        </InputGroup>
+        <TextInpustWrapper>
+          <InputGroup label={values.name ? 'Nome da banda' : ''} error={artistStepErrors.name}>
+            <Input
+              id="name"
+              placeholder="Nome da banda"
+              value={values.name}
+              onBlur={e => handleBlurChange(e, 'common', setArtistStepErrors, artistStepErrors)}
+              onChange={handleNameChange}
+            />
+          </InputGroup>
+          <InputGroup label={values.integrants ? 'Numero de Integrantes' : ''} error={artistStepErrors.integrants}>
+            <Input
+              id="integrants"
+              type="tel"
+              placeholder="Integrantes"
+              onBlur={e => handleBlurChange(e, 'number', setArtistStepErrors, artistStepErrors)}
+              value={values.integrants}
+              onChange={handleIntegrantsChange}
+            />
+          </InputGroup>
+          <InputGroup label="Estilo de música" error={artistStepErrors.musicalStyles}>
+            <AutocompleteInput
+              predict={values.musicalStylePredict}
+              value={values.musicalStyle}
+              handleChange={handleMusicalStyleChange}
+              handleSelect={handleMusicalStyleSelect}
+            />
+            <TagList data={values.musicalStyles} customStyle={musicalGenresCustomStyle} />
+          </InputGroup>        
+        </TextInpustWrapper>
+      </MainInformationWrapper>
+      <LocationWrapper>
+        <InputGroup
+          customStyle={inputGroupStyle}
+          label={values.country.value ? 'País' : ''}
+          error={artistStepErrors.country}
+        >
+          <Select id="country" placeholder="País" value={values.country} onSelect={handleCountrySelect} />
+        </InputGroup>
+        <InputGroup
+          customStyle={inputGroupStyle}
+          label={values.state.value ? 'Estado' : ''}
+          error={artistStepErrors.state}
+        >
+          <Select id="state" placeholder="Estado" value={values.state} onSelect={handleStateSelect} />
+        </InputGroup>
+        <InputGroup
+          customStyle={inputGroupStyle}
+          label={values.city ? 'Cidade' : ''}
+          error={artistStepErrors.city}
+        >
+          <Input
+            id="city"
+            placeholder="Cidade"
+            onBlur={e => handleBlurChange(e, 'common', setArtistStepErrors, artistStepErrors)}
+            value={values.city}
+            onChange={handleCityChange}
+          />
+        </InputGroup>
+      </LocationWrapper>
       <InputGroup label={values.about ? 'Sobre sua banda' : ''} error={artistStepErrors.about}>
         <TextArea
-          id='about'
-          placeholder='Conte sobre sua banda :)'
-          onBlur={(e) => handleBlurChange(e, 'description', setArtistStepErrors, artistStepErrors)}
+          id="about"
+          placeholder="Conte sobre sua banda :)"
+          onBlur={e => handleBlurChange(e, 'description', setArtistStepErrors, artistStepErrors)}
           value={values.about}
           onChange={handleAboutChange}
         />

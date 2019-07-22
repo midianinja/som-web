@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { white } from '../../settings/colors';
 import Store from '../../store/Store';
@@ -19,6 +20,7 @@ const HeaderComponent = styled.header`
     padding-left: 0px;    
     padding-right: 0px;    
   }
+  ${props => props.customStyle}
 `;
 
 const Wrapper = styled.div`
@@ -54,11 +56,11 @@ const Line = styled.span`
   }
 `;
 
-function Header() {
+function Header({ customStyle }) {
   const { dispatch } = useContext(Store);
 
   return (
-    <HeaderComponent>
+    <HeaderComponent customStyle={customStyle}>
       <Wrapper>
         <Logo src="/images/logo.svg" alt="SOM - Sistema Operacional da Música" />
         <BurgerButton
@@ -75,5 +77,8 @@ function Header() {
     </HeaderComponent>
   );
 }
+Header.propTypes = {
+  customStyle: PropTypes.string.isRequired,
+};
 
 export default Header;

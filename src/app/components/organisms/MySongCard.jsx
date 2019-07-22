@@ -7,6 +7,7 @@ import { black, white, black07, green } from '../../settings/colors';
 
 const Card = styled.div`
   margin-bottom: 30px;
+  ${props => props.customStyle}
 `;
 const LabelWrapper = styled.div`
   position: relative;
@@ -87,8 +88,11 @@ const renderProgressBar = (loading, song) => (
   </LoadingWrapper>
 );
 
-const MySongCard = ({ index, handleSongChange, handleTitleChange, song, titleBlurAction, loading }) => (
-  <Card>
+const MySongCard = ({
+  index, handleSongChange, handleTitleChange,
+  song, titleBlurAction, loading, customStyle,
+}) => (
+  <Card customStyle={customStyle}>
     <LabelWrapper>
       <Label>{`Faixa ${index + 1}`}</Label>
     </LabelWrapper>
