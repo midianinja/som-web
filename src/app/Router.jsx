@@ -6,6 +6,7 @@ import Welcome from './modules/welcome/Welcome';
 import RegisterArtist from './modules/register-artist';
 import EventPage from './modules/event/EventPage';
 import ArtistPage from './modules/artist/ArtistPage';
+import Home from './modules/home/Home';
 import Private from './Private';
 import Main from './main/Main';
 
@@ -15,6 +16,7 @@ const AppRouter = ({ children }) => (
   <Router history={history}>
     <Main>
       <Switch>
+        <Route path="/" component={() => <Home />} />
         <Route path="/welcome" component={() => <Welcome />} />
         <Route path="/event/:id" component={() => <EventPage />} />
         <Route path="/artist/:id" component={() => <ArtistPage />} />
