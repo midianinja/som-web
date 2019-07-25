@@ -49,6 +49,7 @@ const Content = styled.div`
 
 const Title = styled.h2`
   font-size: 1.5714285714em;
+  line-height: 1.1em;
   font-weight: 400;
 `;
 

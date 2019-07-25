@@ -33,7 +33,7 @@ export const initialEvent = {
   },
 };
 
-export const fetchEventData = async (id, setEvent, loading, setLoading) => {
+export const fetchEventData = async (id, setEvent, loading, setLoading, setDialog, history) => {
   setLoading({ ...loading, event: loadingStatus.LOADING });
   let eventData;
 
@@ -48,7 +48,18 @@ export const fetchEventData = async (id, setEvent, loading, setLoading) => {
     throw err;
   }
 
-  setEvent(eventData.data.oneEvent);
+  if (!eventData.data.oneEvent) {
+    setDialog({
+      title: 'Evento não encontrado',
+      icon: '/icons/guita-error.svg',
+      description: 'Logo teremos mais eventos, fique ligado para se inscrever.',
+      disagreeText: 'Ir para home',
+      disagreeAction: () => history.push('/'),
+    });
+    return;
+  }
+
+  setEvent(eventData.data.oneEvent || { ...initialEvent });
   setLoading({ ...loading, event: loadingStatus.LOADDED });
 };
 

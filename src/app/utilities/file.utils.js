@@ -16,7 +16,7 @@ export const getBase64 = (file) => {
 
 export const uploadImageToStorage = ({ file, id }) => axios({
   method: 'POST',
-  url: 'http://192.168.1.13:3000/image/upload/',
+  url: `${process.env.STORAGE_API_URI}/image/upload/`,
   headers: {},
   data: {
     file,
@@ -26,7 +26,7 @@ export const uploadImageToStorage = ({ file, id }) => axios({
 
 export const uploadPdfDocumentToStorage = ({ file, id, fileName }) => axios({
   method: 'POST',
-  url: 'http://192.168.1.13:3000/document/upload/',
+  url: `${process.env.STORAGE_API_URI}/document/upload/`,
   headers: {},
   data: {
     file,

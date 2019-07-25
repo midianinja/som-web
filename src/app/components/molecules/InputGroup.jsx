@@ -7,14 +7,14 @@ const InptGroupContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   ${props => props.customStyle}
 `;
 
 const Label = styled.label`
   font-size: 0.8em;
   color: ${white}
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   margin-left: 5px;
   ${props => props.customStyle}
 `;
@@ -23,7 +23,7 @@ const ErrorText = styled.span`
   position: absolute;
   bottom: -20px;
   font-size: 0.8em;
-  margin-top: 5px;
+  margin-bottom: 10px;
   margin-left: 5px;
   font-weight: 300;   
   color: ${secondaryRed};
@@ -33,18 +33,26 @@ const ErrorText = styled.span`
 
 const InfoText = styled.span`
   font-size: 0.6em;
-  margin-top: 5px;
   margin-left: 5px
   color: ${white};
   font-weight: 300;
+  margin-bottom: 10px;
 `;
+
+const InputWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 10px;
+`;
+
 
 const InputGroup = ({
   children, label, info, error, customStyle, customLabelStyle, customErrorStyle,
 }) => (
   <InptGroupContainer customStyle={customStyle}>
     {label ? <Label customStyle={customLabelStyle}>{label}</Label> : null}
-    {children}
+    <InputWrapper>
+      {children}
+    </InputWrapper>
     {(info && !error) ? <InfoText>{info}</InfoText> : null}
     {error ? <ErrorText customStyle={customErrorStyle}>{error}</ErrorText> : null}
   </InptGroupContainer>

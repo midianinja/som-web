@@ -3,7 +3,7 @@ import apollo from '../../../apollo';
 import { createUserMutation } from './mutations';
 
 export async function createIDA(username, password) {
-  return fetch('http://localhost:3001/auth/signup', {
+  return fetch(`${process.env.AUTH_API_URI}/auth/signup`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -20,7 +20,7 @@ export async function createUserSOM(ida) {
   return apollo.mutate({
     mutation: createUserMutation,
     variables: {
-      user: { ida },
+      user: { ida, artists: [], likes: [] },
     },
   });
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { white50, white10, white } from '../../settings/colors';
 
 const Input = styled.input`
+  width: 100%;
   height: 38px;
   color: ${white};
   background-color: ${white10};
@@ -30,7 +31,7 @@ const Input = styled.input`
     color: ${white50};
   }
 
-  ${(props) => props.customStyle}
+  ${props => props.customStyle}
 `;
 
 Input.propTypes = {

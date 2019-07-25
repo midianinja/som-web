@@ -1,3 +1,4 @@
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -6,12 +7,12 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const env = process.env.NODE_ENV || 'local';
 const analyze = process.env.ANALYZE_BUNDLE;
 
-const plugins = [];
+const plugins = [new Dotenv()];
 
 if (analyze) {
   plugins.push(new BundleAnalyzerPlugin());
 }
-if (env != 'local') {
+if (env !== 'local') {
   plugins.push(new CompressionPlugin());
 }
 
@@ -24,7 +25,7 @@ module.exports = {
       path.resolve(__dirname, 'src/app/index.jsx'),
     ],
   },
-  mode: env == 'local' ? 'development' : 'production',
+  mode: env === 'local' ? 'development' : 'production',
   output: {
     path: path.resolve(__dirname, 'public/build'),
     filename: '[name].bundle.js',
@@ -48,7 +49,7 @@ module.exports = {
       new TerserPlugin(),
     ],
   },
-  watch: env == 'local',
+  watch: env === 'local',
   resolve: {
     extensions: ['.js', '.jsx'],
   },

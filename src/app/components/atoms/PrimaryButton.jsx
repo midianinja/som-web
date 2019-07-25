@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { white, purple, green, orange, magenta, gray, secondaryPurple, transparent } from '../../settings/colors';
+import {
+  white, purple, green, orange, magenta, gray, secondaryPurple, transparent,
+  darkGray,
+} from '../../settings/colors';
 
 const sizes = {
   small: '28px',
@@ -25,6 +28,7 @@ const colors = {
   gray,
   transparent,
   white,
+  darkGray,
 };
 
 /**

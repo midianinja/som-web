@@ -12,7 +12,7 @@ const HeaderComponent = styled.header`
   left: 0;
   display: block;
   width: 100%;
-  z-index: 10;
+  z-index: 20;
   padding-left: 15px;  
   padding-right: 15px;
 

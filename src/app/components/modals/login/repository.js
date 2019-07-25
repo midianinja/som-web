@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 export async function authorize(username, password) {
-  return fetch('http://localhost:3001/auth/login', {
+  return fetch(`${process.env.AUTH_API_URI}/auth/login`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',

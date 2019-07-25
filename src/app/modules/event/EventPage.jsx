@@ -12,7 +12,7 @@ import SubscribedArtists from '../../components/templates/event/SubscribedArtist
 import Dialog from '../../components/modals/Dialog.modal';
 import Store from '../../store/Store';
 import {
-  fetchEventData, initialEvent, initialLoading, loadingStatus, subscribeAction,
+  fetchEventData, initialLoading, loadingStatus, subscribeAction,
   unsubscribeAction,
 } from './EventController';
 import { black } from '../../settings/colors';
@@ -82,14 +82,34 @@ const EventImage = styled.img`
 
 const EventPage = ({ match, history }) => {
   const [loading, setLoading] = useState({ ...initialLoading });
-  const [event, setEvent] = useState({ ...initialEvent });
+  const [event, setEvent] = useState(null);
   const [dialog, setDialog] = useState(null);
 
   useEffect(() => {
     if (loading.event === loadingStatus.TO_LOAD) {
-      fetchEventData(match.params.id, setEvent, loading, setLoading);
+      fetchEventData(
+        match.params.id, setEvent, loading, setLoading, setDialog, history,
+      );
     }
   });
+
+  if (!event) {
+    return (
+      <Container>
+        {dialog ? (
+          <Dialog
+            isOpen
+            title={dialog.title}
+            description={dialog.description}
+            agreeText={dialog.agreeText}
+            disagreeText={dialog.disagreeText}
+            confirmAction={dialog.confirmAction}
+            disagreeAction={dialog.disagreeAction}
+          />
+        ) : null}
+      </Container>
+    );
+  }
 
   const eventPlace = {
     city: event.location.city,
