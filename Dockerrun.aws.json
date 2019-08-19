@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "032383812007.dkr.ecr.us-west-2.amazonaws.com/som-web:lastest",
+    "Name": "032383812007.dkr.ecr.us-west-2.amazonaws.com/som-web:latest",
     "Update": "true"
   },
   "Ports": [
