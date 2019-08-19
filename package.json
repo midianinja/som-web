@@ -10,7 +10,7 @@
     "lint": "eslint src",
     "prettier": "prettier --config ./.prettierrc --write \"./**/*.jsx\"",
     "lint:fix": "eslint src --fix",
-    "docker:build": "docker build --build-arg NODE_ENV=development -t som-web-prod:latest ."
+    "docker:build": "docker build --build-arg NODE_ENV=production -t som-web-prod:latest ."
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.3.3",

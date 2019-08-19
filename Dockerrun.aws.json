@@ -17,7 +17,7 @@
   "Volumes": [
     {
       "HostDirectory": "/var/app/node",
-      "ContainerDirectory": "/etc/node"
+      "ContainerDirectory": "/etc/node/home/node/app"
     }
   ],
   "Logging": "/var/log/nginx"
