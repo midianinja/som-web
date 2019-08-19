@@ -28,7 +28,8 @@ export async function login(username, password, setError, closeModal, history) {
   window.localStorage.setItem('som@token', data.token);
   allowBodyScroll();
   closeModal();
-  history.push('/welcome');
+
+  history.push('/event/5d3a31e9dd3e02dd26be4fd2');
 }
 
 export const ignore = null;

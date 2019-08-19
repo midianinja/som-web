@@ -91,7 +91,7 @@ const EventPage = ({ match, history }) => {
         match.params.id, setEvent, loading, setLoading, setDialog, history,
       );
     }
-  });
+  }, []);
 
   if (!event) {
     return (

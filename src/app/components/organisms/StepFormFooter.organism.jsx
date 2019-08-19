@@ -7,10 +7,13 @@ import PrimaryButton from '../atoms/PrimaryButton';
 const Footer = styled.div`
   display: flex;
   width: 100%;
+  max-width: 768px;
+  margin-left: auto;
+  margin-right: auto;
   color: #fff;
   flex-direction: column;
   padding: 30px;
-  ${(props) => props.customStyle}
+  ${props => props.customStyle}
 `;
 
 const Icon = styled.img`

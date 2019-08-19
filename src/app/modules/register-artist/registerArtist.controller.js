@@ -145,6 +145,7 @@ export const nextAction = async ({
     });
     const images = newImage.data.urls;
     artistToApi.avatar = images;
+
     if (songs.length) {
       const songsToUpload = songs.filter(s => !(s.id));
       const promises = songsToUpload.map(song => new Promise((res, rej) => {

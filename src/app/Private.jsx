@@ -1,22 +1,11 @@
-import { useEffect } from 'react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { verifyAuth } from './utilities/auth.utils';
-
+import Store from './store/Store';
 
 const Private = ({ children, history }) => {
-  useEffect(() => {
-    const verify = async () => {
-      const token = window.localStorage.getItem('som@token');
-      if (token) {
-        const validated = await verifyAuth(token);
-        if (!validated) history.push('/');
-      } else {
-        history.push('/');
-      }
-    };
-    verify();
-  });
+  const { state } = useContext(Store);
+  if (!state.auth) history.push('/');
   return children;
 };
 

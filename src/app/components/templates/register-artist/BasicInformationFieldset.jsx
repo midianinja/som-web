@@ -11,7 +11,7 @@ import UploadAvatar from '../../atoms/UploadAvatar';
 import AutocompleteInput from '../../molecules/InputAutocomplete';
 
 const Fieldset = styled.fieldset`
-  padding: 30px;
+  padding: 30px 15px;
   width: 100%;
 `;
 
@@ -39,8 +39,8 @@ const TextInpustWrapper = styled.div`
 
 const Title = styled.h2`
   color: ${white};
-  font-size: 1.2857142857rem;
-  font-weight: 400;
+  font-size: 1.25em;
+  font-weight: 300;
   margin-bottom: 30px;
 `;
 
@@ -48,11 +48,15 @@ const musicalGenresCustomStyle = `
   margin-top: 10px;
 `;
 
-const avatarInputStyle = `
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const avatarInputGroupStyle = `
+  text-align: center;
+
+  @media (min-width: 1024px) {
+    margim-bottom: 0;
+    width: 200px
+  }
 `;
+
 const inputGroupStyle = `
   @media (min-width: 1024px) {
     margim-bottom: 0;
@@ -83,7 +87,7 @@ function BasicInformationFieldset(props) {
       <MainInformationWrapper>
         <InputGroup
           error={artistStepErrors.avatar}
-          customStyle={avatarInputStyle}
+          customStyle={avatarInputGroupStyle}
         >
           <UploadAvatar
             alt="botão para subir imagem"
@@ -120,7 +124,7 @@ function BasicInformationFieldset(props) {
               handleSelect={handleMusicalStyleSelect}
             />
             <TagList data={values.musicalStyles} customStyle={musicalGenresCustomStyle} />
-          </InputGroup>        
+          </InputGroup>
         </TextInpustWrapper>
       </MainInformationWrapper>
       <LocationWrapper>

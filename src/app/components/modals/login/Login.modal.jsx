@@ -33,6 +33,7 @@ const Container = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 30px;
+  padding-top: 45px;
 
   @media (min-width: 768px) {
     padding: 0;
@@ -142,6 +143,7 @@ function Login({ history }) {
   };
 
   if (state.modals.login && (!ida && !token)) blockBodyScroll();
+  if (state.modals.login && ida) history.push('/event/5d3a31e9dd3e02dd26be4fd2');
 
   return (
     <LoginWrapper id="login" isOpen={state.modals.login && (!ida && !token)}>

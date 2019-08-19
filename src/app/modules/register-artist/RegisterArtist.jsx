@@ -44,7 +44,7 @@ const Form = styled.form`
 
 const FormWrapper = styled.div`
   width: 100%;
-  max-width: 720px;
+  max-width: 768px;
 `;
 
 const FilesBackGround = styled.div`
@@ -53,12 +53,6 @@ const FilesBackGround = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const headerStyle = `
-  top: 0;
-  left: 0;
-  position: fixed;
 `;
 
 const handleBlurChange = ({ target }, type, setErrors, currentErrors) => {
@@ -221,7 +215,6 @@ const renderUploadSongs = ({
 
 const RegisterArtist = () => {
   const [artistStepErrors, setArtistStepErrors] = useState({});
-  const [smallHeader, setSmallHeader] = useState(false);
   const [contactStepErrors, setContactStepErrors] = useState({});
   const [socialMediaStepErrors, setSocialMediaStepErrors] = useState({});
   const [about, setAbout] = useState('');
@@ -255,14 +248,10 @@ const RegisterArtist = () => {
   const [step] = useState(2);
 
   useEffect(() => {
-    window.addEventListener('scroll', () => {
-      // if (window.scrollY > 212) setSmallHeader(true);
-      // else setSmallHeader(false);
-    });
     if (!musicalStylesOptions.length) {
       fetchMusicalStyleOptions(setMusicalStylesOptions);
     }
-  }, [musicalStylesOptions, smallHeader]);
+  }, [musicalStylesOptions]);
   const values = {
     avatar: avatar.url,
     name,
@@ -278,8 +267,7 @@ const RegisterArtist = () => {
 
   return (
     <Form onSubmit={e => e.preventDefault()}>
-      <StepFormHeader small={false} customStyle={headerStyle} items={steps} index={step} />
-      <StepFormHeader small={false} customStyle="visibility: hidden;" items={steps} index={step} />
+      <StepFormHeader items={steps} index={step} />
       <FormWrapper>
         {renderArtistInfos({
           values,

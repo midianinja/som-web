@@ -16,7 +16,8 @@ const Card = styled.div`
   color: ${white};
   padding: 15px;
   will-change: transform;
-  transition-duration: 1s;
+  transition-duration: 05s;
+  z-index: 2;  
   
   & + & {
     margin-top: 15px;
@@ -26,15 +27,16 @@ const Card = styled.div`
     max-height: 0;
     overflow: hidden;
     opacity: 0;
+    transition-duration: 0.05s;
   }
 
   :hover {
     justify-content: flex-start;
-    transform: scale(1.01);
+    transform: scale(1.001);
     box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.4);
   }
 
-  :hover > .comment {
+  &:hover > .comment {
     max-height: 400px;
     opacity: 1;
     margin-top: 10px;
@@ -48,10 +50,9 @@ const Card = styled.div`
       margin-top: 0px;
     }
 
-    :hover > .comment {
+    &:hover > .comment {
       max-height: 500px;
       opacity: 1;
-      transition-duration: 0.2s;
     }
   }
 `;

@@ -11,6 +11,7 @@ const Container = styled.section`
   max-width: 768px;
   margin-left: auto;
   margin-right: auto;
+  transition: translateX(0);
 
   @media (min-width: 1024px) {
     padding-left: 0px;

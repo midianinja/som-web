@@ -1,21 +1,19 @@
-import React, { Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import CommonHeader from './Header';
 import { magenta, white, white30 } from '../../settings/colors';
 
 const Header = styled.div`
+  position: sticky;
+  top: 0;
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 30px;
+  padding: 15px;
   background-color: ${magenta};
-  ${props => props.customStyle}
-`;
-
-const Logo = styled.label`
-  color: ${white30};
-  margin-bottom: 30px;
+  z-index: 10;
+  max-height: 400px;
 `;
 
 const IndexContainer = styled.div`
@@ -24,6 +22,7 @@ const IndexContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: ${white30};
+  margin-top: 45px;
 `;
 
 const BigBall = styled.div`
@@ -54,7 +53,7 @@ const SmallBall = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 1.5714285714em;
+  font-size: 1.25em;
   line-height: 1.1818181818em;
   margin-top: 22px;
   font-weight: 400;
@@ -65,24 +64,33 @@ const Title = styled.h1`
 
 const Body = styled.div`
   width: 100%;
+  max-width: 768px;
+  margin-left: auto;
+  margin-right: auto;
   color: ${white};
-  ${props => (props.small ? 'padding-top: 30px;' : '')}
 `;
 
 const Text = styled.h3`
+  max-height: ${(props) => {
+    const { small } = props;
+    return !small ? '100px' : '0px';
+  }};
+  opacity: ${(props) => {
+    const { small } = props;
+    return !small ? '1' : '0';
+  }};
+  margin-top: ${(props) => {
+    const { small } = props;
+    return !small ? '12px' : '0px';
+  }};
   width: 100%;
   color: ${white};
-  font-size: 0.8571428571rem;
+  font-size: 0.8125em;
   letter-spacing: 0.16px;
   line-height: 1.5384615385em;
   font-weight: 300;
-  margin-top: 22px;
-  ${props => props.customStyle}
-`;
-
-const smallTitleStyle = `
-  font-size: 0.8571428571rem;
-  margin: 0;
+  transition-duration: 0.6s;
+  will-change: height;
 `;
 
 const renderBall = ({ items, index, small }) => items.map((e, i) => {
@@ -92,18 +100,22 @@ const renderBall = ({ items, index, small }) => items.map((e, i) => {
 });
 
 const StepFormHeader = (props) => {
-  const { items, index, small } = props;
+  const [small, setSmall] = useState(0);
+  const { items, index } = props;
+
+  useEffect(() => {
+    window.document.addEventListener('scroll', (event) => {
+      setSmall(event.target.documentElement.scrollTop > 0);
+    });
+  }, []);
+
   return (
     <Header {...props}>
       <CommonHeader />
       <IndexContainer>{renderBall(props)}</IndexContainer>
-      <Body small={small}>
-        <Title
-          customStyle={small ? smallTitleStyle : ''}
-        >
-          {items[index].title}
-        </Title>
-        { small ? null : (<Text>{items[index].description}</Text>)}
+      <Body>
+        <Title>{items[index].title}</Title>
+        <Text small={small}>{items[index].description}</Text>
       </Body>
     </Header>
   );

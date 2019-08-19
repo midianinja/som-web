@@ -14,10 +14,10 @@ app.get('*', (req, res) => {
   res.render('index');
 });
 
-app.listen(8080, (err) => {
+app.listen(process.env.PORT, (err) => {
   if (err) {
     console.log(err);
   } else {
-    console.log(`Server Running - Listening to port ${8080}`);
+    console.log(`Server Running - Listening to port ${process.env.PORT}`);
   }
 });

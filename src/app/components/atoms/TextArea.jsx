@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { white10, white } from '../../settings/colors';
 
 const TextArea = styled.textarea`
+  width: 100%;
   height: 139px;
   color: ${white};
   background-color: ${white10};

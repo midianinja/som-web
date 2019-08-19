@@ -30,8 +30,13 @@ const Wrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   justify-content: space-between;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  @media (min-width: 1024px) {
+    padding-top: 30px;    
+    padding-bottom: 30px;    
+  }
   align-items: center;
 `;
 
