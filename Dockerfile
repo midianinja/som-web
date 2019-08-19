@@ -8,14 +8,13 @@ ARG STORAGE_API_URI
 ARG INSTAGRAM_API_URI
 ARG PORT
 
-WORKDIR /home/node/app/
-
-COPY package*.json /home/node/app/
+WORKDIR /usr/src/app
+COPY package*.json ./
 
 RUN npm install
 RUN npm install -g webpack webpack-cli
 
-COPY . /home/node/app/
+COPY . .
 EXPOSE 8080
 
 CMD ["npm", "start"]
