@@ -6,7 +6,8 @@
   "scripts": {
     "start": "babel-node index.js",
     "dev": "eslint src && nodemon index.js --exec babel-node",
-    "build": "webpack --progress --watch",
+    "build": "webpack --progress",
+    "build:production": "NODE_ENV=production webpack",
     "lint": "eslint src",
     "prettier": "prettier --config ./.prettierrc --write \"./**/*.jsx\"",
     "lint:fix": "eslint src --fix",

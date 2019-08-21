@@ -1,5 +1,5 @@
 {
-  "AWSEBDockerrunVersion": "1.1",
+  "AWSEBDockerrunVersion": "1",
   "Image": {
     "Name": "032383812007.dkr.ecr.us-west-2.amazonaws.com/som-web:latest",
     "Update": "true"
@@ -13,12 +13,5 @@
 			"HostPort": "443",
 			"ContainerPort": "8080"
 		}
-  ],
-  "Volumes": [
-    {
-      "HostDirectory": "/var/app/node",
-      "ContainerDirectory": "/etc/node"
-    }
-  ],
-  "Logging": "/var/log/nginx"
+  ]
 }
