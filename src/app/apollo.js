@@ -13,7 +13,7 @@ const defaultOptions = {
   },
 };
 
-const link = createHttpLink({ uri: `${process.env.GRAPH_API_URI}/graphql` });
+const link = createHttpLink({ uri: process.env.GRAPH_API_URI });
 const cache = new InMemoryCache({
   dataIdFromObject: ({ id }) => id,
 });

@@ -1,3 +1,4 @@
+const { DefinePlugin } = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -8,6 +9,16 @@ const env = process.env.NODE_ENV || 'local';
 const analyze = process.env.ANALYZE_BUNDLE;
 
 const plugins = [new Dotenv()];
+
+plugins.push(new DefinePlugin({
+  'process.env': {
+    NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+    GRAPH_API_URI: JSON.stringify(process.env.GRAPH_API_URI),
+    AUTH_API_URI: JSON.stringify(process.env.AUTH_API_URI),
+    STORAGE_API_URI: JSON.stringify(process.env.STORAGE_API_URI),
+    INSTAGRAM_API_URI: JSON.stringify(process.env.INSTAGRAM_API_URI),
+  },
+}));
 
 if (analyze) {
   plugins.push(new BundleAnalyzerPlugin());

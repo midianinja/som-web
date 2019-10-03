@@ -17,7 +17,6 @@ const PreLoaderImage = styled.img`
   width: 100%;
   height: 100%;
   opacity: ${(props) => {
-    console.log('');
     return !props.src ? 0 : 1;
   }}
   object-fit: cover;
@@ -48,11 +47,13 @@ function load(src, callback) {
  */
 function Avatar(props) {
   const [loaddedSrc, setLoaddedSrc] = useState(null);
-  const { src, alt, title, customStyle } = props;
+  const {
+    src, alt, title, customStyle,
+  } = props;
 
   useEffect(() => {
     load(src, setLoaddedSrc);
-  });
+  }, []);
 
   return (
     <Wrapper customStyle={customStyle}>

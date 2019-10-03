@@ -126,11 +126,13 @@ const EventPage = ({ match, history }) => {
 
   const isSubscribed = (u, e) => {
     let subscribed = false;
-    if (u && u.artists.length > 0) {
+
+    if (u && u.artists && u.artists.length > 0) {
       if (e.subscribers.find(({ id }) => u.artists[0].id === id)) {
         subscribed = true;
       }
     }
+
     return subscribed;
   };
 

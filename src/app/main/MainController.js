@@ -16,6 +16,7 @@ export const verify = async (dispatch, setIDA) => {
     verified = await verifyAuth(token);
   } catch (err) {
     dispatch({ type: 'STOP_VERIFY_LOADING' });
+    console.log('heree', [err]);
     throw err;
   }
 

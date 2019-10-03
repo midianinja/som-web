@@ -45,6 +45,7 @@ export const fetchEventData = async (id, setEvent, loading, setLoading, setDialo
   } catch (err) {
     // tratar esse erro
     setLoading({ ...loading, event: loadingStatus.ERROR });
+    console.log([err]);
     throw err;
   }
 
