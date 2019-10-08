@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build --build-arg NODE_ENV=$NODE_ENV --build-arg GRAPH_API_URI=$GRAPH_API_URI --build-arg AUTH_API_URI=$AUTH_API_URI --build-arg STORAGE_API_URI=$STORAGE_API_URI --build-arg INSTAGRAM_API_URI=$INSTAGRAM_API_URI --build-arg PORT=$PORT
+      - docker tag som-web-prod:lastest 032383812007.dkr.ecr.us-west-2.amazonaws.com/som-web:lastest
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - docker push 032383812007.dkr.ecr.us-west-2.amazonaws.com/som-web
+      - echo Changing the Dockerrun file to the correct for this environment
+      - sed -i 's/DUMMY_ENV/'$NODE_ENV'/g' Dockerrun.aws.json
+artifacts:
+  files:
+    - Dockerrun.aws.json
+    - .ebextensions/*
