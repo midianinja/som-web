@@ -13,7 +13,8 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build --build-arg NODE_ENV=$NODE_ENV --build-arg GRAPH_API_URI=$GRAPH_API_URI --build-arg AUTH_API_URI=$AUTH_API_URI --build-arg STORAGE_API_URI=$STORAGE_API_URI --build-arg INSTAGRAM_API_URI=$INSTAGRAM_API_URI --build-arg PORT=$PORT -t som-web-prod:latest .
+      - echo salve $REPOSITORY_URI
+      - docker build -t --build-arg NODE_ENV=$NODE_ENV --build-arg GRAPH_API_URI=$GRAPH_API_URI --build-arg AUTH_API_URI=$AUTH_API_URI --build-arg STORAGE_API_URI=$STORAGE_API_URI --build-arg INSTAGRAM_API_URI=$INSTAGRAM_API_URI --build-arg PORT=$PORT som-web-prod:latest .
       - docker tag som-web-prod:latest $REPOSITORY_URI:latest
   post_build:
     commands:
