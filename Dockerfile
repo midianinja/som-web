@@ -13,7 +13,6 @@ COPY package.json /tmp/
 RUN npm config set registry http://registry.npmjs.org/ && npm install
 WORKDIR /usr/src/app
 COPY . /usr/src/app/
-COPY .env .env
 
 RUN cp -a /tmp/node_modules /usr/src/app/
 RUN NODE_ENV=production webpack
