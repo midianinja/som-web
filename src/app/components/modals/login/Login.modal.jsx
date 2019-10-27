@@ -149,8 +149,8 @@ function Login({ history }) {
   return (
     <LoginWrapper id="login" isOpen={state.modals.login && (!ida && !token)}>
       <Container>
-        <ExitArrow src="/icons/arrow_forward_left.svg" />
-        <Icon src="/icons/login.svg" onClick={closeModal} />
+        <ExitArrow onClick={closeModal} src="/icons/arrow_forward_left.svg" />
+        <Icon src="/icons/login.svg" />
         <Form>
           <Title>Bem vindx de volta!</Title>
           <InputGroup
