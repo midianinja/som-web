@@ -7,8 +7,9 @@ export async function login(username, password, setError, closeModal, history) {
   let promise;
   try {
     promise = await authorize(username, password);
+    console.log('promise: ', promise);
   } catch (err) {
-    console.log('err: ', {err});
+    console.log('err ---: ', { err });
     throw err;
   }
 
