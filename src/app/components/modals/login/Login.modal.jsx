@@ -2,12 +2,12 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import Store from '../../../store/Store';
 import InputGroup from '../../molecules/InputGroup';
 import Input from '../../atoms/Input';
 import CircularButton from '../../atoms/CircularButton';
 import LinkButton from '../../atoms/LinkButton';
 import { black, gray, white } from '../../../settings/colors';
-import Store from '../../../store/Store';
 import { login } from './controller';
 import { blockBodyScroll, allowBodyScroll } from '../../../utilities/scroll';
 
@@ -139,7 +139,6 @@ function Login({ history }) {
 
   const closeModal = () => {
     allowBodyScroll();
-    console.log('{ type: CLOSE_MODAL }: ', { type: 'CLOSE_MODAL' });
     dispatch({ type: 'CLOSE_MODAL' });
   };
 

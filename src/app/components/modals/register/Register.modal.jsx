@@ -15,6 +15,7 @@ import {
 } from './controller';
 import { purple, black50 } from '../../../settings/colors';
 import Store from '../../../store/Store';
+import { allowBodyScroll } from '../../../utilities/scroll';
 
 const RegisterWrapper = styled.section`
   display: ${(props) => {
@@ -75,7 +76,7 @@ const Actions = styled.div`
 `;
 
 function Register() {
-  const { state } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const [ida, setIDA] = useState('');
   const [step, setStep] = useState('account');
   const [username, setUsername] = useState('');
@@ -110,6 +111,11 @@ function Register() {
     if (point >= 90) message = 'Senha forte';
 
     setError({ ...error, password: message });
+  };
+
+  const closeModal = () => {
+    allowBodyScroll();
+    dispatch({ type: 'CLOSE_MODAL' });
   };
 
   const fields = {
@@ -153,10 +159,10 @@ function Register() {
   };
   const field = fields[step];
   return (
-    <RegisterWrapper id='register' isOpen={state.modals.register}>
+    <RegisterWrapper id="register" isOpen={state.modals.register}>
       <Container>
         <ExitWrapper>
-          <ExitIcon src='/icons/arrow_forward_left.svg' />
+          <ExitIcon onClick={closeModal} src="/icons/arrow_forward_left.svg" />
         </ExitWrapper>
         <Form autoComplete="off">
           <Fieldset>
