@@ -13,6 +13,7 @@ export async function createAccount({
   }
 
   const { data, error } = await promise.json();
+  console.log('data: ', data);
   const dataError = {};
 
   if (error && error === 'auth/duplicated-user') {
