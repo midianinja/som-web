@@ -6,7 +6,9 @@ export async function createAccount({
   let promise;
   try {
     promise = await createIDA(username, password);
+    console.log('promise: ', promise);
   } catch (err) {
+    console.log('err: ', err);
     throw err;
   }
 
