@@ -139,6 +139,7 @@ function Login({ history }) {
 
   const closeModal = () => {
     allowBodyScroll();
+    console.log('{ type: CLOSE_MODAL }: ', { type: 'CLOSE_MODAL' });
     dispatch({ type: 'CLOSE_MODAL' });
   };
 
