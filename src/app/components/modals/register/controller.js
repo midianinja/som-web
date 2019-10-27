@@ -13,6 +13,7 @@ export async function createAccount({
   }
 
   const { data, error } = await promise.json();
+  console.log('error: ', error);
   console.log('data: ', data);
   const dataError = {};
 
