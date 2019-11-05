@@ -7,15 +7,11 @@ export async function login(username, password, setError, closeModal, history) {
   let promise;
   try {
     promise = await authorize(username, password);
-    console.log('promise: ', promise);
   } catch (err) {
-    console.log('err ---: ', { err });
     throw err;
   }
 
   const { data, error } = await promise.json();
-  console.log('error: ', error);
-  console.log('data: ', data);
   const dataError = {};
 
   if (error && error === 'user/not-found') {
@@ -45,6 +41,7 @@ export async function login(username, password, setError, closeModal, history) {
     `,
     variables: {},
   });
+
   console.log('artists: ', artists);
 
   allowBodyScroll();

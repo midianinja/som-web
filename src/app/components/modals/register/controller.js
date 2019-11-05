@@ -6,16 +6,13 @@ export async function createAccount({
   let promise;
   try {
     promise = await createIDA(username, password);
-    console.log('promise: ', promise);
-  } catch (err) {
-    console.log('err: ', err);
-    throw err;
+  } catch (error) {
+    throw error;
   }
 
   const { data, error } = await promise.json();
-  console.log('data: ', data);
   const dataError = {};
-
+  console.log(error);
   if (error && error === 'auth/duplicated-user') {
     dataError.username = 'Nome de usuário já em uso';
     setError(dataError);
@@ -25,7 +22,6 @@ export async function createAccount({
   try {
     promise = await createUserSOM(data.ida);
   } catch (err) {
-    console.log([err]);
     throw err;
   }
 

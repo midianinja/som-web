@@ -3,7 +3,7 @@ import apollo from '../../../apollo';
 import { createUserMutation } from './mutations';
 
 export async function createIDA(username, password) {
-  return fetch(`${process.env.AUTH_API_URI}/auth/signup`, {
+  return fetch(`${process.env.AUTH_API_URI}/signup`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',

@@ -10,14 +10,15 @@ const Wrapper = styled.div`
   border-radius: 50%;
   overflow: hidden;
   background: ${getGradient()};
-  ${(props) => props.customStyle}
+  ${props => props.customStyle}
 `;
 
 const PreLoaderImage = styled.img`
   width: 100%;
   height: 100%;
   opacity: ${(props) => {
-    return !props.src ? 0 : 1;
+    const { src } = props;
+    return !src ? 0 : 1;
   }}
   object-fit: cover;
   transition-property: opacity;

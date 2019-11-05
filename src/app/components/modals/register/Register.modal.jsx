@@ -153,10 +153,10 @@ function Register() {
   };
   const field = fields[step];
   return (
-    <RegisterWrapper id='register' isOpen={state.modals.register}>
+    <RegisterWrapper id="register" isOpen={state.modals.register}>
       <Container>
         <ExitWrapper>
-          <ExitIcon src='/icons/arrow_forward_left.svg' />
+          <ExitIcon src="/icons/arrow_forward_left.svg" />
         </ExitWrapper>
         <Form autoComplete="off">
           <Fieldset>
