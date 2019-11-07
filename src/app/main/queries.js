@@ -6,7 +6,7 @@ export const oneUserQuery = gql`
       id
       ida
       type
-      artists {
+      artist {
         id
       }
     }

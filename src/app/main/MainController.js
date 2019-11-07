@@ -3,7 +3,9 @@ import { getUser } from './MainRepository';
 
 export const verify = async (dispatch, setIDA) => {
   const ida = window.localStorage.getItem('som@ida');
+  console.log('ida: ', ida);
   const token = window.localStorage.getItem('som@token');
+  console.log('token: ', token);
 
   if (!ida || !token) {
     window.localStorage.setItem('som@ida', '');
@@ -14,19 +16,20 @@ export const verify = async (dispatch, setIDA) => {
 
   try {
     verified = await verifyAuth(token);
+    console.log('verified: ', verified);
   } catch (err) {
     dispatch({ type: 'STOP_VERIFY_LOADING' });
     console.log('heree', [err]);
     throw err;
   }
 
-  if (verified && verified.data.ida) {
-    setIDA(verified.data.ida);
+  if (verified && verified.ida) {
+    setIDA(verified.ida);
     dispatch({
       type: 'SET_AUTH',
       auth: {
-        ida: verified.data.ida,
-        username: verified.data.username,
+        ida: verified.ida,
+        username: verified.username,
       },
     });
   } else {
@@ -42,7 +45,9 @@ export const fetchLoggedUser = async (ida, dispatch) => {
 
   try {
     response = await getUser(ida);
+    console.log('response: ', response);
   } catch (err) {
+    console.log('err: ', {err});
     throw err;
   }
 

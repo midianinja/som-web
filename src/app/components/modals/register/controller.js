@@ -25,6 +25,7 @@ export async function createAccount({
 
   try {
     promise = await createUserSOM(data.ida);
+    console.log('promise: ', promise);
   } catch (err) {
     console.log([err]);
     throw err;

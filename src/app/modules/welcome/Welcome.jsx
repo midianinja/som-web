@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import Store from '../../store/Store';
 import PrimaryButton from '../../components/atoms/PrimaryButton';
 import { white, purple } from '../../settings/colors';
 
@@ -52,14 +53,18 @@ const Footer = styled.footer`
   text-align: center;
 `;
 
-function Welcome({ history }) {
+function Welcome(props) {
+  console.log('props: ', props);
+  const store = useContext(Store);
+  console.log('store: ', store);
+  const { history } = props;
   return (
     <Wrapper>
       <Title>Seja bem vinda ao Som,</Title>
-      <Name>gabriel</Name>
+      <Name>{store.state.auth.username}</Name>
       <Footer>
         <Text>Agora é só se inscrever nos eventos que quiser tocar</Text>
-        <PrimaryButton color="orange">Inscrever agora!</PrimaryButton>
+        <PrimaryButton onClick={() => history.push('/register-artist')} color="orange">Inscrever agora!</PrimaryButton>
       </Footer>
     </Wrapper>
   );
