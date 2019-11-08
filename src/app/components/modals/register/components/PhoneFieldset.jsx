@@ -22,7 +22,7 @@ function PhoneFieldset(phone, setPhone, error) {
     <Fragment>
       <Title>Qual seu celular?</Title>
       <InputGroup customStyle={inputGroupStyle} error={error.phone}>
-        <Input id='phone' type='tel' placeholder='Celular' value={phone} onChange={(e) => setPhone(e.target.value)} />
+        <Input id="phone" type="tel" placeholder="Celular" value={phone} onChange={setPhone} />
       </InputGroup>
     </Fragment>
   );

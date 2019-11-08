@@ -2,12 +2,12 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import Store from '../../../store/Store';
 import InputGroup from '../../molecules/InputGroup';
 import Input from '../../atoms/Input';
 import CircularButton from '../../atoms/CircularButton';
 import LinkButton from '../../atoms/LinkButton';
 import { black, gray, white } from '../../../settings/colors';
-import Store from '../../../store/Store';
 import { login } from './controller';
 import { blockBodyScroll, allowBodyScroll } from '../../../utilities/scroll';
 
@@ -148,8 +148,8 @@ function Login({ history }) {
   return (
     <LoginWrapper id="login" isOpen={state.modals.login && (!ida && !token)}>
       <Container>
-        <ExitArrow src="/icons/arrow_forward_left.svg" />
-        <Icon src="/icons/login.svg" onClick={closeModal} />
+        <ExitArrow onClick={closeModal} src="/icons/arrow_forward_left.svg" />
+        <Icon src="/icons/login.svg" />
         <Form>
           <Title>Bem vindx de volta!</Title>
           <InputGroup

@@ -1,4 +1,6 @@
 import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import PrimaryButton from '../../atoms/PrimaryButton';
 import createAccountFieldset from './components/CreateAccountFieldset';
@@ -9,12 +11,14 @@ import sentEmailFieldset from './components/SentEmailFieldset';
 import sentPhoneFieldset from './components/SentPhoneFieldset';
 import {
   usernameValidation, passwordValidation, getPasswordPoint,
+  phoneValidation,
 } from './validations';
 import {
-  createAccount,
+  createAccount, generatePhoneCodeSubmit, validatePhoneCodeSubmit,
 } from './controller';
 import { purple, black50 } from '../../../settings/colors';
 import Store from '../../../store/Store';
+import { allowBodyScroll } from '../../../utilities/scroll';
 
 const RegisterWrapper = styled.section`
   display: ${(props) => {
@@ -74,9 +78,10 @@ const Actions = styled.div`
   align-items: center;
 `;
 
-function Register() {
-  const { state } = useContext(Store);
+function Register({ history }) {
+  const { state, dispatch } = useContext(Store);
   const [ida, setIDA] = useState('');
+  const [token, setToken] = useState('');
   const [step, setStep] = useState('account');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -112,6 +117,35 @@ function Register() {
     setError({ ...error, password: message });
   };
 
+  const handlePhoneChange = (e) => {
+    setPhone(e.target.value);
+    if (!phoneValidation(e.target.value)) {
+      setError({ ...error, phone: 'Número inválido. Ex: +5511999999999' });
+    } else {
+      setError({ ...error, phone: null });
+    }
+  };
+
+  const closeModal = () => {
+    allowBodyScroll();
+    dispatch({ type: 'CLOSE_MODAL' });
+  };
+
+  const handleCodeChange = (inputCode) => {
+    if (inputCode.length > 6) {
+      return;
+    }
+
+    if (inputCode.length === 6) {
+      validatePhoneCodeSubmit({
+        ida, code: inputCode, setError, navigationTo: history.push, token,
+        closeModal,
+      });
+    }
+
+    setCode(inputCode);
+  };
+
   const fields = {
     account: {
       render: () => (
@@ -130,9 +164,10 @@ function Register() {
       next: 'sentEmail',
     },
     phone: {
-      render: () => phoneFieldset(phone, setPhone, error),
-      validation: () => true,
+      render: () => phoneFieldset(phone, handlePhoneChange, error),
+      validation: () => phoneValidation(phone),
       next: 'sentPhone',
+      submit: generatePhoneCodeSubmit,
     },
     methods: {
       render: () => selectConfirmationMathodFieldset(method, setMethod, error),
@@ -143,20 +178,23 @@ function Register() {
       render: () => sentEmailFieldset(() => setStep('email')),
     },
     sentPhone: {
-      render: () => sentPhoneFieldset(code, setCode, () => setStep('phone'), error),
+      render: () => sentPhoneFieldset(code, handleCodeChange, () => setStep('phone'), error),
+      validation: () => code.length === 6,
+      submit: validatePhoneCodeSubmit,
     },
   };
 
   const data = {
     ida, step, username, password, email, phone, code, method, error,
     setIDA, setStep, setUsername, setPassword, setEmail, setPhone, setCode, setMethod, setError,
+    token, setToken,
   };
   const field = fields[step];
   return (
     <RegisterWrapper id="register" isOpen={state.modals.register}>
       <Container>
         <ExitWrapper>
-          <ExitIcon src="/icons/arrow_forward_left.svg" />
+          <ExitIcon onClick={closeModal} src="/icons/arrow_forward_left.svg" />
         </ExitWrapper>
         <Form autoComplete="off">
           <Fieldset>
@@ -181,4 +219,12 @@ function Register() {
   );
 }
 
-export default Register;
+const historyShape = {
+  push: PropTypes.func,
+};
+
+Register.propTypes = {
+  history: PropTypes.shape(historyShape).isRequired,
+};
+
+export default withRouter(Register);

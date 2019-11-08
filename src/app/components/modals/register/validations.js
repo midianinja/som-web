@@ -3,6 +3,11 @@ export function usernameValidation(username) {
   return regex.test(username);
 }
 
+export function phoneValidation(phone) {
+  const regex = /^\+55[0-9]{11}$/;
+  return regex.test(phone);
+}
+
 export function getPasswordPoint(password) {
   let points = 0;
   if (password.length > 5) points += 50;

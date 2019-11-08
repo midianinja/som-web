@@ -17,6 +17,7 @@ export const green = '#51DBA9';
 export const secondaryGreen = '#46BC91';
 export const terciaryGreen = '#62EBBA';
 export const orange = '#FF4B4B';
+export const orange50 = 'rgba(255, 75, 75, 0.5)';
 export const yellow = '#C9C228';
 export const secondaryYellow = '#ECFF77';
 export const gray = '#5A5A5A';

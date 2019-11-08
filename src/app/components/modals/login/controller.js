@@ -1,7 +1,5 @@
-import gql from 'graphql-tag';
 import { authorize } from './repository';
 import { allowBodyScroll } from '../../../utilities/scroll';
-import apollo from '../../../apollo';
 
 export async function login(username, password, setError, closeModal, history) {
   let promise;
@@ -28,21 +26,6 @@ export async function login(username, password, setError, closeModal, history) {
 
   window.localStorage.setItem('som@ida', data.ida);
   window.localStorage.setItem('som@token', data.token);
-
-  const artists = await apollo.query({
-    query: gql`
-      query($artist: ArtistInput){
-        oneArtist( artist: $artist) {
-          name
-          hometown
-          instagram_id
-        }
-      }
-    `,
-    variables: {},
-  });
-
-  console.log('artists: ', artists);
 
   allowBodyScroll();
   closeModal();

@@ -25,4 +25,30 @@ export async function createUserSOM(ida) {
   });
 }
 
-export const ignore = null;
+export async function generatePhoneCode(ida, phone) {
+  return fetch(`${process.env.AUTH_API_URI}/phone-generate-code`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ida,
+      phone,
+    }),
+  });
+}
+
+export async function validatePhoneCode(ida, code) {
+  return fetch(`${process.env.AUTH_API_URI}/phone-validate-code`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ida,
+      code,
+    }),
+  });
+}

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { white, orange } from '../../settings/colors';
+import { white, orange, orange50 } from '../../settings/colors';
 
 const AudioSlider = styled.input.attrs({ type: 'range' })`
   -webkit-appearance: none;
@@ -11,9 +11,9 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
     content: '';
     position: absolute;
     display: inline-block;
-    height: 8px;
-    width: 8px;
-    bottom: -2.5px;
+    height: 10px;
+    width: 10px;
+    bottom: -3.5px;
     border-radius: 50%;
     background: ${white};
     cursor: pointer;
@@ -24,9 +24,9 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
     content: '';
     position: absolute;
     display: inline-block;
-    height: 8px;
-    width: 8px;
-    bottom: -2.5px;
+    height: 10px;
+    width: 10px;
+    bottom: -3.5px;
     right: 0px;
     border-radius: 50%;
     background: ${white};
@@ -48,20 +48,30 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
 
   ::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 15px;
+    height: 10px;
     border-radius: 50%;
-    width: 15px;
+    width: 10px;
     background: ${orange};
     cursor: pointer;
-    margin-top: -7.5px;
+    margin-top: -4px;
+    box-shadow: 0px 0px 0px 8px ${orange50};
     position: relative;
     z-index: 2;
   }
 
+  ::-webkit-slider-thumb:after {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: green;
+  }
+
   ::-moz-range-thumb {
-    height: 15px;
+    height: 10px;
     border-radius: 50%;
-    width: 15px;
+    width: 10px;
     margin-left: -2;
     border-radius: 50%;
     background: ${orange};
@@ -70,9 +80,9 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
   }
 
   ::-ms-thumb {
-    height: 15px;
+    height: 10px;
     border-radius: 50%;
-    width: 15px;
+    width: 10px;
     margin-left: -2;
     border-radius: 50%;
     background: ${orange};

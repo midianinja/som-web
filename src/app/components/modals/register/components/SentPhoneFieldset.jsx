@@ -59,12 +59,12 @@ function SentPhoneFieldset(code, setCode, resendClick, error) {
       </Resend>
       <InputGroup customStyle={inputGroupStyle} error={error.code}>
         <Input
-          id='code'
-          type='text'
-          placeholder=''
+          id="code"
+          type="text"
+          placeholder=""
           customStyle={inputStyle}
           value={code}
-          onChange={(e) => setCode(e.target.value)}
+          onChange={e => setCode(e.target.value)}
         />
       </InputGroup>
     </Fragment>

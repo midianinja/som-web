@@ -19,13 +19,13 @@ export const verify = async (dispatch, setIDA) => {
     throw err;
   }
 
-  if (verified && verified.data.ida) {
-    setIDA(verified.data.ida);
+  if (verified && verified.ida) {
+    setIDA(verified.ida);
     dispatch({
       type: 'SET_AUTH',
       auth: {
-        ida: verified.data.ida,
-        username: verified.data.username,
+        ida: verified.ida,
+        username: verified.username,
       },
     });
   } else {
