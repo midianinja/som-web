@@ -59,7 +59,7 @@ function SentEmailFieldset(resendClick, toHomeClick) {
         <Bold>Reinsira seus dados</Bold>
       </Resend>
       <ToHome onClick={toHomeClick}>
-        <Arrow src='/icons/arrow_forward_left.svg' />
+        <Arrow src="/icons/arrow_forward_left.svg" />
         Voltar para a home
       </ToHome>
     </Fragment>

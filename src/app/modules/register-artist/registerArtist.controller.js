@@ -5,7 +5,8 @@ import { getBase64, uploadImageToStorage, uploadPdfDocumentToStorage } from '../
 import { validateArtistForm } from './registerArtist.validate';
 import { createSongMutation } from './songs.mutation';
 
-const mapArtist = artist => ({
+const mapArtist = (artist, user) => ({
+  user,
   name: artist.name,
   members_number: parseInt(artist.integrants, 10),
   avatar_image: artist.avatar,
@@ -59,8 +60,8 @@ export const uploadDocumentFile = async ({ target }, id, artist) => {
   }
 };
 
-const createArtist = async (artist) => {
-  const artistToApi = mapArtist(artist);
+const createArtist = async (artist, userId) => {
+  const artistToApi = mapArtist(artist, userId);
   const artistPromise = await apollo.mutate({
     mutation: createArtistMutation,
     variables: {
@@ -106,7 +107,7 @@ export const nextAction = async ({
   musicalStylePredict, musicalStyle,
   visibles, setVisibles, setArtistStepErrors,
   phone, email, facebook, instagram,
-  twitter, youtube, songs, setSongs,
+  twitter, youtube, songs, setSongs, store,
 }) => {
   const artistValidation = validateArtistForm({
     avatar, name, integrants, about,
@@ -134,9 +135,11 @@ export const nextAction = async ({
     songs: songs.map(s => s.id).filter(e => e),
   };
 
+  console.log('user', store.state.user.id);
+
   try {
     let preRegister = {};
-    if (!id) preRegister = await createArtist(artistToApi);
+    if (!id) preRegister = await createArtist(artistToApi, store.state.user.id);
 
     const base64 = await getBase64(avatar.file);
     const newImage = await uploadImageToStorage({

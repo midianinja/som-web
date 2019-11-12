@@ -1,5 +1,6 @@
 import {
   createIDA, createUserSOM, generatePhoneCode, validatePhoneCode,
+  sendValidationEmail,
 } from './repository';
 
 export async function createAccount({
@@ -23,6 +24,7 @@ export async function createAccount({
   try {
     promise = await createUserSOM(data.ida);
   } catch (err) {
+    console.log([err]);
     throw err;
   }
 
@@ -65,4 +67,25 @@ export async function validatePhoneCodeSubmit({
     closeModal();
     navigationTo('/welcome');
   }
+}
+
+export async function sendConfirmationEmail({
+  ida, email, setError, setStep,
+}) {
+  let promise;
+  try {
+    promise = await sendValidationEmail(ida, email);
+  } catch (err) {
+    throw err;
+  }
+
+  const { error } = await promise.json();
+  const dataError = {};
+  if (error && error === 'email/invalid-email') {
+    dataError.email = 'Email inválido';
+    setError(dataError);
+    return;
+  }
+
+  setStep('sentEmail');
 }

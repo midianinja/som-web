@@ -8,6 +8,11 @@ export function phoneValidation(phone) {
   return regex.test(phone);
 }
 
+export function emailValidation(email) {
+  const regex = /^[a-z0-9._-]{2,}@[a-z0-9]{2,}\.[a-z]{2,}(\.[a-z]{2})?$/;
+  return regex.test(email);
+}
+
 export function getPasswordPoint(password) {
   let points = 0;
   if (password.length > 5) points += 50;

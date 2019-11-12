@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-
+import Store from '../../store/Store';
 import StepFormHeader from '../../components/organisms/stepFormHeader.organism';
 import BasicInformationFieldset from '../../components/templates/register-artist/BasicInformationFieldset';
 import ContactAndSongsFieldset from '../../components/templates/register-artist/ContactAndSongsFieldset';
@@ -214,6 +214,7 @@ const renderUploadSongs = ({
 };
 
 const RegisterArtist = () => {
+  const store = useContext(Store);
   const [artistStepErrors, setArtistStepErrors] = useState({});
   const [contactStepErrors, setContactStepErrors] = useState({});
   const [socialMediaStepErrors, setSocialMediaStepErrors] = useState({});
@@ -330,7 +331,7 @@ const RegisterArtist = () => {
           musicalStyle, phone, email, facebook, instagram,
           twitter, youtube, visibles, setVisibles,
           setArtistStepErrors, setContactStepErrors,
-          songs, setSongs,
+          songs, setSongs, store,
         })}
         customStyle={visibles.files && id ? `background-color: ${white}` : ''}
         skipAction={() => skipAction(setVisibles, visibles)}

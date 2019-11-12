@@ -11,10 +11,11 @@ import sentEmailFieldset from './components/SentEmailFieldset';
 import sentPhoneFieldset from './components/SentPhoneFieldset';
 import {
   usernameValidation, passwordValidation, getPasswordPoint,
-  phoneValidation,
+  phoneValidation, emailValidation,
 } from './validations';
 import {
   createAccount, generatePhoneCodeSubmit, validatePhoneCodeSubmit,
+  sendConfirmationEmail,
 } from './controller';
 import { purple, black50 } from '../../../settings/colors';
 import Store from '../../../store/Store';
@@ -160,7 +161,8 @@ function Register({ history }) {
     },
     email: {
       render: () => emailFieldset(email, setEmail, error),
-      validation: () => true,
+      validation: () => emailValidation(email),
+      submit: sendConfirmationEmail,
       next: 'sentEmail',
     },
     phone: {
@@ -175,7 +177,8 @@ function Register({ history }) {
       next: method === 'phone' ? 'phone' : 'email',
     },
     sentEmail: {
-      render: () => sentEmailFieldset(() => setStep('email')),
+      render: () => sentEmailFieldset(() => setStep('email'), closeModal),
+      validation: () => true,
     },
     sentPhone: {
       render: () => sentPhoneFieldset(code, handleCodeChange, () => setStep('phone'), error),

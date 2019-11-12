@@ -20,7 +20,7 @@ export async function createUserSOM(ida) {
   return apollo.mutate({
     mutation: createUserMutation,
     variables: {
-      user: { ida, artists: [], likes: [] },
+      user: { ida, likes: [] },
     },
   });
 }
@@ -49,6 +49,20 @@ export async function validatePhoneCode(ida, code) {
     body: JSON.stringify({
       ida,
       code,
+    }),
+  });
+}
+
+export async function sendValidationEmail(ida, email) {
+  return fetch(`${process.env.AUTH_API_URI}/send-email-validation`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ida,
+      email,
     }),
   });
 }
