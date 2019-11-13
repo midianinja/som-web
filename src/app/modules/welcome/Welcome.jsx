@@ -54,10 +54,10 @@ const Footer = styled.footer`
 `;
 
 function Welcome(props) {
-  console.log('props: ', props);
   const store = useContext(Store);
   console.log('store: ', store);
   const { history } = props;
+  if (!store.state.auth) return null;
   return (
     <Wrapper>
       <Title>Seja bem vinda ao Som,</Title>

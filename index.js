@@ -3,6 +3,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 
 dotenv.config();
+console.log('dotenv: ', dotenv);
 
 const app = express();
 

@@ -42,6 +42,7 @@ const InfoText = styled.span`
 const InputWrapper = styled.div`
   width: 100%;
   margin-bottom: 10px;
+  ${props => props.customStyle}
 `;
 
 
@@ -50,7 +51,7 @@ const InputGroup = ({
 }) => (
   <InptGroupContainer customStyle={customStyle}>
     {label ? <Label customStyle={customLabelStyle}>{label}</Label> : null}
-    <InputWrapper>
+    <InputWrapper customStyle={customStyle}>
       {children}
     </InputWrapper>
     {(info && !error) ? <InfoText>{info}</InfoText> : null}
