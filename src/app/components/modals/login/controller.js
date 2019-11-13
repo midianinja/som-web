@@ -1,7 +1,7 @@
-import { authorize } from './repository';
+import { authorize, getUser, getIDA } from './repository';
 import { allowBodyScroll } from '../../../utilities/scroll';
 
-export async function login(username, password, setError, closeModal, history) {
+export async function login(username, password, setError, closeModal, history, dispatch) {
   let promise;
   try {
     promise = await authorize(username, password);
@@ -23,6 +23,33 @@ export async function login(username, password, setError, closeModal, history) {
     setError(dataError);
     return;
   }
+
+  let userIDAPromise;
+  try {
+    userIDAPromise = await getIDA(data.ida);
+  } catch (err) {
+    throw err;
+  }
+
+  const userIDAResult = await userIDAPromise.json();
+  if (userIDAPromise.error) throw userIDAPromise.error;
+
+  dispatch({
+    type: 'SET_AUTH',
+    auth: userIDAResult.data.user,
+  });
+
+  let userResult;
+  try {
+    userResult = await getUser(data.ida);
+  } catch (err) {
+    throw err;
+  }
+
+  dispatch({
+    type: 'SET_USER',
+    user: userResult.data.oneUser,
+  });
 
   window.localStorage.setItem('som@ida', data.ida);
   window.localStorage.setItem('som@token', data.token);

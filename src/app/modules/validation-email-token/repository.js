@@ -1,4 +1,6 @@
 import fetch from 'node-fetch';
+import apollo from '../../apollo';
+import { oneUserQuery } from './queries';
 
 export async function validateToken(ida, token) {
   return fetch(`${process.env.AUTH_API_URI}/validate-email-token`, {
@@ -14,4 +16,21 @@ export async function validateToken(ida, token) {
   });
 }
 
-export const ignore = () => null;
+export async function getUser(ida) {
+  return apollo.query({
+    query: oneUserQuery,
+    variables: {
+      ida,
+    },
+  });
+}
+
+export async function getIDA(ida) {
+  return fetch(`${process.env.AUTH_API_URI}/user/${ida}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+}

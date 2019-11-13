@@ -1,5 +1,15 @@
 import fetch from 'node-fetch';
+import apollo from '../../../apollo';
+import { oneUserQuery } from './queries';
 
+export async function getUser(ida) {
+  return apollo.query({
+    query: oneUserQuery,
+    variables: {
+      ida,
+    },
+  });
+}
 export async function authorize(username, password) {
   return fetch(`${process.env.AUTH_API_URI}/login`, {
     method: 'POST',
@@ -11,6 +21,16 @@ export async function authorize(username, password) {
       username,
       password,
     }),
+  });
+}
+
+export async function getIDA(ida) {
+  return fetch(`${process.env.AUTH_API_URI}/user/${ida}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   });
 }
 

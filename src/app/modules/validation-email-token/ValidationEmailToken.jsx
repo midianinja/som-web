@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import Store from '../../store/Store';
 import { validateToken } from './repository';
+import { fetch } from './controller';
 
 function ValidationEmailToken(props) {
+  const { dispatch } = useContext(Store);
   const { history, match } = props;
   const { ida } = match.params;
   const token = history.location.search.split('=')[1];
@@ -14,8 +17,19 @@ function ValidationEmailToken(props) {
     } catch (err) {
       throw err;
     }
-    const { data, error } = await promise.json();
-    console.log(data, error);
+
+    const { error } = await promise.json();
+    if (error) {
+      window.localStorage.setItem('som@ida', '');
+      window.localStorage.setItem('som@token', '');
+
+      dispatch({ type: 'SET_AUTH', auth: null });
+      dispatch({ type: 'SET_USER', user: null });
+
+      history.push('/welcome');
+    }
+
+    fetch(ida, history, dispatch);
   };
 
   useEffect(() => {
