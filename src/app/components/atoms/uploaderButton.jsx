@@ -5,6 +5,7 @@ import InputGroup from '../molecules/InputGroup';
 import { white, purple, green, gray } from '../../settings/colors';
 
 const Button = styled.label`
+  display: inline-block;
   background-color: ${purple};
   color: ${white};
   font-size: 13px;

@@ -1,5 +1,6 @@
 export const verifyAuth = async (token) => {
   try {
+    console.log('process.env: ', process.env);
     const verification = await fetch(`${process.env.AUTH_API_URI}/validate-token`, {
       method: 'POST',
       headers: {

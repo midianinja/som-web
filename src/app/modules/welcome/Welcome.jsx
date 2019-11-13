@@ -56,6 +56,7 @@ const Footer = styled.footer`
 function Welcome(props) {
   const store = useContext(Store);
   const { history } = props;
+  if (!store.state.auth) return null;
   return (
     <Wrapper>
       <Title>Seja bem vinda ao Som,</Title>

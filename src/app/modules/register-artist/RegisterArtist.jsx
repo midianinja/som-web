@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useContext } from 'react';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Store from '../../store/Store';
 import StepFormHeader from '../../components/organisms/stepFormHeader.organism';
@@ -207,13 +208,14 @@ const renderFiles = ({ visibles, artist }) => {
 };
 
 const renderUploadSongs = ({
-  songs, setSongs, authId, visibles,
+  songs, setSongs, authId,
+  visibles,
 }) => {
   if (!visibles.files || !authId) return null;
   return <UploadSongs authId={authId} songs={songs} setSongs={setSongs} />;
 };
 
-const RegisterArtist = () => {
+const RegisterArtist = ({ history }) => {
   const store = useContext(Store);
   const [artistStepErrors, setArtistStepErrors] = useState({});
   const [contactStepErrors, setContactStepErrors] = useState({});
@@ -232,10 +234,10 @@ const RegisterArtist = () => {
   const [musicalStyle, setMusicalStyle] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [facebook, setFacebook] = useState('');
-  const [instagram, setInstagram] = useState('');
-  const [twitter, setTwitter] = useState('');
-  const [youtube, setYoutube] = useState('');
+  const [facebook, setFacebook] = useState('https://www.facebook.com/');
+  const [instagram, setInstagram] = useState('https://www.instagram.com/');
+  const [twitter, setTwitter] = useState('https://twitter.com/');
+  const [youtube, setYoutube] = useState('https://www.youtube.com/');
   const [songs, setSongs] = useState([
     /* { ...initialSong } */
   ]);
@@ -331,7 +333,7 @@ const RegisterArtist = () => {
           musicalStyle, phone, email, facebook, instagram,
           twitter, youtube, visibles, setVisibles,
           setArtistStepErrors, setContactStepErrors,
-          songs, setSongs, store,
+          songs, setSongs, store, history,
         })}
         customStyle={visibles.files && id ? `background-color: ${white}` : ''}
         skipAction={() => skipAction(setVisibles, visibles)}
@@ -340,4 +342,4 @@ const RegisterArtist = () => {
   );
 };
 
-export default RegisterArtist;
+export default withRouter(RegisterArtist);

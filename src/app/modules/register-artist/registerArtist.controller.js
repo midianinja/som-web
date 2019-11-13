@@ -106,7 +106,7 @@ export const nextAction = async ({
   avatar, musicalStyles,
   musicalStylePredict, musicalStyle,
   visibles, setVisibles, setArtistStepErrors,
-  phone, email, facebook, instagram,
+  phone, email, facebook, instagram, history,
   twitter, youtube, songs, setSongs, store,
 }) => {
   const artistValidation = validateArtistForm({
@@ -161,6 +161,10 @@ export const nextAction = async ({
     }
 
     const updatedArtist = await updateArtist(artistToApi, id || preRegister.id);
+    if (visibles.artist && visibles.contact && visibles.social && visibles.files) {
+      console.log('history: ', history);
+      history.push(`/artist/${id || preRegister.id}`);
+    }
     setSongs(updatedArtist.songs || []);
     setId(preRegister.id || id);
     setVisibles({
