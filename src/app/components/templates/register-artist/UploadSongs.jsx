@@ -20,6 +20,7 @@ const SongsWrapper = styled.div`
 
 const songCardStyle = `
   max-width: 350px;
+  width: 100%;
 `;
 
 const Title = styled.h2`

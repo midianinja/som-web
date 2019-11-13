@@ -54,17 +54,15 @@ const Footer = styled.footer`
 `;
 
 function Welcome(props) {
-  console.log('props: ', props);
   const store = useContext(Store);
-  console.log('store: ', store);
   const { history } = props;
   return (
     <Wrapper>
       <Title>Seja bem vinda ao Som,</Title>
       <Name>{store.state.auth.username}</Name>
       <Footer>
-        <Text>Agora é só se inscrever nos eventos que quiser tocar</Text>
-        <PrimaryButton onClick={() => history.push('/register-artist')} color="orange">Inscrever agora!</PrimaryButton>
+        <Text>Conheça os eventos e inscreva-se</Text>
+        <PrimaryButton onClick={() => history.push('/register-artist')} color="orange">Ver eventos!</PrimaryButton>
       </Footer>
     </Wrapper>
   );
