@@ -13,6 +13,7 @@ export async function getUser(ida) {
 export async function authorize(username, password) {
   return fetch(`${process.env.AUTH_API_URI}/login`, {
     method: 'POST',
+    // mode: 'no-cors', // no-cors, *cors, same-origin
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
