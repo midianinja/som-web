@@ -123,10 +123,15 @@ const ForgetPasswordLink = styled.a`
   font-weight: 300;
   margin-top: 10px;
   margin-left: 5px;
+  cursor: pointer;
 `;
 
 function registerAction(dispatch) {
   dispatch({ type: 'SHOW_REGISTER_MODAL' });
+}
+
+function forgetPasswordAction(dispatch) {
+  dispatch({ type: 'SHOW_FORGET_PASSWORD_MODAL' });
 }
 
 function Login({ history }) {
@@ -179,7 +184,14 @@ function Login({ history }) {
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
-            <ForgetPasswordLink>Esqueci minha senha</ForgetPasswordLink>
+            <ForgetPasswordLink
+              onClick={(e) => {
+                e.preventDefault();
+                forgetPasswordAction(dispatch);
+              }}
+            >
+              Esqueci minha senha
+            </ForgetPasswordLink>
           </InputGroup>
           <Actions>
             <CircularButton
