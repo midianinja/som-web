@@ -27,6 +27,7 @@ export async function authorize(username, password) {
 export async function getIDA(ida) {
   return fetch(`${process.env.AUTH_API_URI}/user/${ida}`, {
     method: 'GET',
+    mode: 'no-cors', // no-cors, *cors, same-origin
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
