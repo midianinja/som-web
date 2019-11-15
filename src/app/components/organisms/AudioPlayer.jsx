@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import PlayPauseButton from '../atoms/PlayPauseButton';
@@ -10,7 +10,6 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
-  display: 100%;
   padding-left: 45px;
   padding-right: 45px;
   text-align: left;
@@ -21,6 +20,7 @@ const Info = styled.div`
   vertical-align: middle;
   padding-left: 10px;
   padding-right: 10px;
+  max-width: calc(100% - 70px);
 `;
 
 const Title = styled.h3`
@@ -86,14 +86,19 @@ const TrackLikedIcon = styled.img`
   margin-top: -2px;
 `;
 
-function secondToMinute(seconds) {
-  const minutes = (seconds / 60).toFixed(2).toString();
-  return minutes.replace('.', ':');
+const TrackHeaderWrapper = styled.div`
+  display: block;
+`;
+
+function secondToMinute(time) {
+  const minutes = parseInt(time / 60, 10);
+  const seconds = parseInt(time % 60, 10);
+  return `${minutes}:${seconds}`;
 }
 
-function renderTracks(tracks) {
+function renderTracks(tracks, handleClick) {
   return tracks.map(({ title, liked, time }, index) => (
-    <Track>
+    <Track onClick={() => handleClick(tracks[index])}>
       <TrackText>{title || `Faixa ${index + 1}`}</TrackText>
       <TrackInfo>
         <TrackLikedIcon src={liked ? '/icons/star_outlined.svg' : '/icons/star.svg'} />
@@ -103,84 +108,102 @@ function renderTracks(tracks) {
   ));
 }
 
-const handlePlayPause = (e, setPlay, play, audio) => {
+const handlePlayPause = (setPlay, play, audio) => {
   if (play) audio.pause();
   else audio.play();
 
   setPlay(!play);
 };
 
-const handleInputRange = (e, setRange, setNewTime, duration) => {
-  setRange(e.target.value);
-  setNewTime((e.target.value * duration) / 1000);
-};
-
-const handleTimeUpdate = (audio, setCurrentTime) => {
-  setCurrentTime(audio.currentTime);
-};
-
-const renderAudio = (audioUrl, audio, setCurrentTime) => (
-  <audio id='player' onTimeUpdate={() => handleTimeUpdate(audio, setCurrentTime)}>
-    <source src={audioUrl} />
-  </audio>
-);
-
 function AudioPlayer({ tracks }) {
   const [play, setPlay] = useState(false);
-  const [audioUrl, setAudioUrl] = useState(
-    'https://som-dev-storage.s3.us-west-2.amazonaws.com/songs/5d24bcb872410a1543299a6a/mp3/1562688715576.mp3',
-  );
+  const [songs, setSongs] = useState([]);
+  const [selectSong, setSelectSong] = useState({});
   const [audio, setAudio] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(1);
-  const [range, setRange] = useState(0);
-  const [newTime, setNewTime] = useState(0);
 
   useEffect(() => {
-    setAudio(document.getElementById('player'));
-    setDuration(audio.duration);
-  });
+  }, []);
 
   useEffect(() => {
-    if (audio) {
-      setRange(1000 * (currentTime / duration));
-    }
-  }, [currentTime]);
+    const audioElement = new Audio();
+
+    audioElement.onloadstart = () => {
+      setAudio(audioElement);
+    };
+
+    audioElement.ontimeupdate = (event) => {
+      setCurrentTime(event.target.currentTime);
+    };
+
+    audioElement.src = selectSong.url;
+    audioElement.load();
+  }, [selectSong]);
 
   useEffect(() => {
-    if (audio) {
-      audio.currentTime = newTime;
-      setCurrentTime(newTime);
-    }
-  }, [newTime]);
+    const mapSongs = async () => {
+      const songsDataPromise = track => new Promise((resolve) => {
+        const audioElement = new Audio();
+        audioElement.onloadedmetadata = (data) => {
+          const metadata = {
+            url: track.url,
+            title: track.title,
+            time: data.target.duration,
+            liked: false,
+            algum: '-',
+          };
+
+          resolve(metadata);
+        };
+
+        audioElement.src = track.url;
+        audioElement.load();
+      });
+
+      const promises = tracks.map(songsDataPromise);
+      const newSongs = await Promise.all(promises);
+      setSelectSong(newSongs[0]);
+      setSongs(newSongs);
+    };
+
+    mapSongs();
+  }, [tracks]);
+
+  const currentRangeValue = currentTime && audio.duration
+    ? Math.floor(currentTime / audio.duration * 1000) : 0;
 
   return (
     <Wrapper>
       <Header>
-        {renderAudio(audioUrl, audio, setCurrentTime)}
-        <PlayPauseButton ket={play} shouldPlay={play} onClick={(e) => handlePlayPause(e, setPlay, play, audio)} />
-        <Info>
-          <Title>{tracks[0].title}</Title>
-          <Album>{tracks[0].album}</Album>
-        </Info>
+        <TrackHeaderWrapper>
+          <PlayPauseButton
+            ket={play}
+            shouldPlay={play}
+            onClick={() => handlePlayPause(setPlay, play, audio)}
+          />
+          <Info>
+            <Title>{selectSong.title}</Title>
+            <Album>{selectSong.album}</Album>
+          </Info>
+        </TrackHeaderWrapper>
         <AudioSlider
-          value={range}
-          defaultValue='0'
-          onChange={(e) => handleInputRange(e, setRange, setNewTime, duration)}
-          min='0'
-          max='1000'
+          id="audio-slider"
+          value={currentRangeValue}
+          defaultValue="0"
+          onChange={() => null}
+          min="0"
+          max="1000"
         />
       </Header>
-      <List>{renderTracks(tracks)}</List>
+      <List>{renderTracks(songs, setSelectSong)}</List>
     </Wrapper>
   );
 }
 
 const trackShape = {
-  title: PropTypes.string,
-  album: PropTypes.string,
-  time: PropTypes.number,
-  liked: PropTypes.bool,
+  id: PropTypes.string,
+  url: PropTypes.string,
+  title: PropTypes.number,
 };
 
 AudioPlayer.propTypes = {
@@ -188,38 +211,7 @@ AudioPlayer.propTypes = {
 };
 
 AudioPlayer.defaultProps = {
-  tracks: [
-    {
-      title: 'Terra Barravento',
-      album: 'TMJNT',
-      time: 340,
-      liked: false,
-    },
-    {
-      title: 'Lua em Gêmeos',
-      album: 'TMJNT',
-      time: 204,
-      liked: true,
-    },
-    {
-      title: 'Reunião',
-      album: 'TMJNT',
-      time: 354,
-      liked: false,
-    },
-    {
-      title: 'Agradeço ao povo brasileiro',
-      album: 'TMJNT',
-      time: 340,
-      liked: false,
-    },
-    {
-      title: 'Reunião',
-      album: 'TMJNT',
-      time: 420,
-      liked: true,
-    },
-  ],
+  tracks: [],
 };
 
 export default AudioPlayer;

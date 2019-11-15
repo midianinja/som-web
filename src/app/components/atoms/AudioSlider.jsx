@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { white, orange, orange50 } from '../../settings/colors';
+import {
+  white, orange, orange15, orange50, yellow,
+} from '../../settings/colors';
 
 const AudioSlider = styled.input.attrs({ type: 'range' })`
   -webkit-appearance: none;
@@ -11,11 +13,11 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
     content: '';
     position: absolute;
     display: inline-block;
-    height: 10px;
-    width: 10px;
-    bottom: -3.5px;
+    height: 8px;
+    width: 8px;
+    bottom: -3px;
     border-radius: 50%;
-    background: ${white};
+    background: ${orange};
     cursor: pointer;
     z-index: 1;
   }
@@ -24,9 +26,9 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
     content: '';
     position: absolute;
     display: inline-block;
-    height: 10px;
-    width: 10px;
-    bottom: -3.5px;
+    height: 8px;
+    width: 8px;
+    bottom: -3px;
     right: 0px;
     border-radius: 50%;
     background: ${white};
@@ -47,25 +49,22 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
   }
 
   ::-webkit-slider-thumb {
+    box-sizing: content-box;
     -webkit-appearance: none;
-    height: 10px;
+    height: 8px;
     border-radius: 50%;
-    width: 10px;
+    width: 8px;
     background: ${orange};
     cursor: pointer;
-    margin-top: -4px;
-    box-shadow: 0px 0px 0px 8px ${orange50};
+    margin-left: -4px
+    margin-top: -7px;
+    box-shadow: 0px 0px 0px 6px ${orange15};
     position: relative;
+    border: solid 4px ${orange50};
+    -moz-background-clip: content;
+    -webkit-background-clip: content;
+    background-clip: content-box;
     z-index: 2;
-  }
-
-  ::-webkit-slider-thumb:after {
-    content: '';
-    position: absolute;
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    background-color: green;
   }
 
   ::-moz-range-thumb {
@@ -80,13 +79,20 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
   }
 
   ::-ms-thumb {
+    box-sizing: content-box;
+    -webkit-appearance: none;
     height: 10px;
     border-radius: 50%;
     width: 10px;
-    margin-left: -2;
-    border-radius: 50%;
     background: ${orange};
     cursor: pointer;
+    margin-top: -8px;
+    box-shadow: 0px 0px 0px 4px ${orange15};
+    position: relative;
+    border: solid 4px ${orange50};
+    -moz-background-clip: content;
+    -webkit-background-clip: content;
+    background-clip: content-box;
     z-index: 2;
   }
 
@@ -96,6 +102,8 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
     border-radius: 2px;
     cursor: pointer;
     background: ${white};
+    background: 
+      linear-gradient(90deg, ${orange} ${props => props.value / 10}%, ${white} ${props => props.value / 10}%);
   }
 
   :active::-webkit-slider-runnable-track {
@@ -106,32 +114,36 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
     width: 100%;
     height: 2px;
     cursor: pointer;
-    background: ${white};
+    background: ${orange};
   }
 
   ::-ms-track {
     width: 100%;
     height: 2px;
     cursor: pointer;
-    background: ${white}sparent;
+    background: transparent;
     border-color: transparent;
     color: transparent;
   }
 
+  ::-webkit-progress-value {
+    background-color: ${orange}; 
+  }
+
+  ::-moz-range-progress {
+    background-color: ${orange}; 
+  }
+
+  ::-moz-range-track {  
+    background-color: ${white};
+  }
+
   ::-ms-fill-lower {
-    background: #ccc;
+    background-color: ${orange}; 
   }
 
-  :focus::-ms-fill-lower {
-    background: ${orange};
-  }
-
-  ::-ms-fill-upper {
-    background: #ccc;
-  }
-
-  :focus::-ms-fill-upper {
-    background: ${orange};
+  ::-ms-fill-upper {  
+    background-color: ${white};
   }
 `;
 

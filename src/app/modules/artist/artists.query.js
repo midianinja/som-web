@@ -1,13 +1,33 @@
 import gql from 'graphql-tag';
 
 const oneArtistQuery = gql`
-  query($artist: ArtistInput){
-    oneArtist( artist: $artist) {
+  query($id: ID!){
+    oneArtist(id: $id) {
+      id
       name
-      hometown
-      instagram_id
+      avatar_image {
+        mimified
+        thumbnail
+      }
+      facebook
+      twitter
+      instagram
+      youtube
     }
   }
 `;
 
-export default { oneArtistQuery };
+const allSongsQuery = gql`
+  query($song: SongInput) {
+    allSongs(song: $song) {
+      id
+      url
+      title
+      image {
+        mimified
+      }
+    }
+  }
+`;
+
+export default { oneArtistQuery, allSongsQuery };
