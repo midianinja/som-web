@@ -66,6 +66,8 @@ const ColumnWrapper = styled.div`
 function ArtistPage({ match }) {
   const [artistLoading, setArtistLoading] = useState(false);
   const [artist, setArtist] = useState({});
+  const [instagramPhotos, setInstagramPhotos] = useState(false);
+  const [instagramPhotosLoading, setInstagramPhotoLoading] = useState(false);
   const [songs, setSongs] = useState([]);
 
   const { id } = match.params;
@@ -75,6 +77,12 @@ function ArtistPage({ match }) {
     };
     fetchArtist();
   }, []);
+
+  useEffect(() => {
+    if (artist.instagram) {
+      fetchArtistInstaImages(artist.instagram, setInstagramPhotos, setInstagramPhotoLoading);
+    }
+  }, [artist]);
 
   if (artistLoading) return null;
   if (!artist.id) return null;
@@ -101,7 +109,14 @@ function ArtistPage({ match }) {
         />
         <ColumnWrapper>
           <AudioPlayer tracks={songs} />
-          <InstagramMedia images={[]} />
+          <InstagramMedia
+            images={instagramPhotos}
+            navigateToInstagram={() => {
+              if (artist.instagram) {
+                window.open(artist.instagram, '_blank');
+              }
+            }}
+          />
           <MoreArtist artists={[]} />
         </ColumnWrapper>
       </Content>

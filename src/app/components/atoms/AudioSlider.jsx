@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {
-  white, orange, orange15, orange50, yellow,
+  white, orange, orange15, orange50,
 } from '../../settings/colors';
 
 const AudioSlider = styled.input.attrs({ type: 'range' })`
@@ -38,6 +38,7 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
 
   :focus {
     outline: none;
+    margin-top: 20px;
   }
 
   ::-ms-track {
@@ -106,8 +107,11 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
       linear-gradient(90deg, ${orange} ${props => props.value / 10}%, ${white} ${props => props.value / 10}%);
   }
 
+  :focus::-webkit-slider-runnable-track,
   :active::-webkit-slider-runnable-track {
-    background: #d6d6d6;
+    background: ${white};
+    background: 
+      linear-gradient(90deg, ${orange} ${props => props.value / 10}%, ${white} ${props => props.value / 10}%);
   }
 
   ::-moz-range-track {

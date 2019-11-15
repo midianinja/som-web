@@ -8,7 +8,9 @@ const fetchSongs = artist => apollo.query({
   variables: { song: { artist } },
 });
 
-export const fetchArtistData = async (id, setArtist, setArtistLoading, setSongs) => {
+export const fetchArtistData = async (
+  id, setArtist, setArtistLoading, setSongs,
+) => {
   setArtistLoading(true);
 
   let promise;
@@ -40,13 +42,12 @@ export const fetchArtistInstaImages = async (instaUri, setInstaPics, setInstagra
 
   const instaname = instaUri.split('/').reverse()[0];
   try {
-    promise = await fetch(`http://localhost:8082/insta/media/${instaname}`);
+    promise = await fetch(`${process.env.INSTAGRAM_API_URI}/photos/${instaname}`);
   } catch (e) {
     throw e;
   }
 
   const { data } = await promise.json();
-  console.log(data);
   setInstaPics(data);
   setInstagramLoading(false);
 };

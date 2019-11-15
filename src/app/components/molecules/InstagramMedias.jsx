@@ -40,7 +40,7 @@ const Title = styled.h3`
   margin-bottom: 20px;
 `;
 
-const InstagramMedia = ({ images }) => (
+const InstagramMedia = ({ images, navigateToInstagram }) => (
   <Container>
     <Title> Instagram </Title>
     <Row>
@@ -58,12 +58,13 @@ const InstagramMedia = ({ images }) => (
       <ProgresiveImage src={images[7]} customStyle={imgStyle} />
       <ProgresiveImage src={images[8]} customStyle={imgStyle} />
     </MobileRow>
-    <LinkButton color='white'> Abrir Instagram </LinkButton>
+    <LinkButton onClick={navigateToInstagram} color="white"> Abrir Instagram </LinkButton>
   </Container>
 );
 
 InstagramMedia.propTypes = {
   images: PropTypes.arrayOf(PropTypes.string.required),
+  navigateToInstagram: PropTypes.func.isRequired,
 };
 
 InstagramMedia.defaultProps = {

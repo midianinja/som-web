@@ -120,12 +120,11 @@ function AudioPlayer({ tracks }) {
   const [songs, setSongs] = useState([]);
   const [selectSong, setSelectSong] = useState({});
   const [audio, setAudio] = useState(false);
+  const [audioStatus, setAudioStatus] = useState('stopped');
   const [currentTime, setCurrentTime] = useState(0);
 
-  useEffect(() => {
-  }, []);
-
-  useEffect(() => {
+  const loadingSong = () => {
+    setAudioStatus('loading');
     const audioElement = new Audio();
 
     audioElement.onloadstart = () => {
@@ -134,10 +133,15 @@ function AudioPlayer({ tracks }) {
 
     audioElement.ontimeupdate = (event) => {
       setCurrentTime(event.target.currentTime);
+      setAudioStatus('loadded');
     };
 
     audioElement.src = selectSong.url;
     audioElement.load();
+  };
+
+  useEffect(() => {
+    loadingSong();
   }, [selectSong]);
 
   useEffect(() => {
@@ -190,7 +194,14 @@ function AudioPlayer({ tracks }) {
           id="audio-slider"
           value={currentRangeValue}
           defaultValue="0"
-          onChange={() => null}
+          onChange={(e) => {
+            const time = e.target.value / 1000 * audio.duration;
+            setCurrentTime(time);
+
+            audio.currentTime = time;
+            audio.play();
+            setPlay(true);
+          }}
           min="0"
           max="1000"
         />
