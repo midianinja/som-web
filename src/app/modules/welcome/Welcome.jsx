@@ -56,6 +56,7 @@ const Footer = styled.footer`
 function Welcome(props) {
   const store = useContext(Store);
   const { history } = props;
+
   if (!store.state.auth) return null;
   return (
     <Wrapper>
@@ -63,7 +64,14 @@ function Welcome(props) {
       <Name>{store.state.auth.username}</Name>
       <Footer>
         <Text>Conheça os eventos e inscreva-se</Text>
-        <PrimaryButton onClick={() => history.push('/register-artist')} color="orange">Ver eventos!</PrimaryButton>
+        <PrimaryButton
+          onClick={() => {
+            history.push('/event/5d3a31e9dd3e02dd26be4fd2');
+          }}
+          color="orange"
+        >
+          Ver eventos!
+        </PrimaryButton>
       </Footer>
     </Wrapper>
   );

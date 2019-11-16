@@ -1,6 +1,7 @@
 import apollo from '../../apollo';
 import { getOneEventQuery } from './event.queries';
 import { subscribeEvent, unsubscribeEvent } from './EventRepository';
+import { allowBodyScroll } from '../../utilities/scroll';
 
 export const loadingStatus = {
   LOADDED: 0,
@@ -84,8 +85,14 @@ export const subscribeAction = async (
       description: 'Para se escrever em eventos, você precisa preencher os dados obrigatórios.',
       agreeText: 'Cadastrar',
       disagreeText: 'Voltar',
-      confirmAction: () => history.push('/register-artist'),
-      disagreeAction: () => setDialog(null),
+      confirmAction: () => {
+        allowBodyScroll();
+        history.push('/register-artist');
+      },
+      disagreeAction: () => {
+        allowBodyScroll();
+        setDialog(null);
+      },
     });
     return;
   }
@@ -101,7 +108,10 @@ export const subscribeAction = async (
     icon: '/icons/yeah.svg',
     description: `Você está inscrito no festival ${event.name}. Fique ligado no SOM para receber novas informações.`,
     disagreeText: 'Voltar para a home',
-    disagreeAction: () => history.push('/'),
+    disagreeAction: () => {
+      allowBodyScroll();
+      history.push('/');
+    },
   });
 
   const subs = [...event.subscribers];

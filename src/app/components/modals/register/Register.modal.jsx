@@ -140,7 +140,7 @@ function Register({ history }) {
     if (inputCode.length === 6) {
       validatePhoneCodeSubmit({
         ida, code: inputCode, setError, navigationTo: history.push, token,
-        closeModal,
+        closeModal, dispatch,
       });
     }
 
@@ -153,6 +153,7 @@ function Register({ history }) {
         step === 'account' ? createAccountFieldset(
           username, handleUsernameChange, password, handlePasswordChange, error,
         ) : null),
+      prev: null,
       next: 'methods',
       validation: () => (
         usernameValidation(username) && passwordValidation(password)
@@ -163,17 +164,20 @@ function Register({ history }) {
       render: () => emailFieldset(email, setEmail, error),
       validation: () => emailValidation(email),
       submit: sendConfirmationEmail,
+      prev: 'methods',
       next: 'sentEmail',
     },
     phone: {
       render: () => phoneFieldset(phone, handlePhoneChange, error),
       validation: () => phoneValidation(phone),
       next: 'sentPhone',
+      prev: 'methods',
       submit: generatePhoneCodeSubmit,
     },
     methods: {
       render: () => selectConfirmationMathodFieldset(method, setMethod, error),
       validation: () => true,
+      prev: 'account',
       next: method === 'phone' ? 'phone' : 'email',
     },
     sentEmail: {
@@ -183,6 +187,7 @@ function Register({ history }) {
     sentPhone: {
       render: () => sentPhoneFieldset(code, handleCodeChange, () => setStep('phone'), error),
       validation: () => code.length === 6,
+      prev: 'phone',
       submit: validatePhoneCodeSubmit,
     },
   };
@@ -190,23 +195,36 @@ function Register({ history }) {
   const data = {
     ida, step, username, password, email, phone, code, method, error,
     setIDA, setStep, setUsername, setPassword, setEmail, setPhone, setCode, setMethod, setError,
-    token, setToken,
+    token, setToken, dispatch,
   };
   const field = fields[step];
   return (
     <RegisterWrapper id="register" isOpen={state.modals.register}>
       <Container>
         <ExitWrapper>
-          <ExitIcon onClick={closeModal} src="/icons/arrow_forward_left.svg" />
+          <ExitIcon
+            onClick={() => {
+              if (field.prev) setStep(field.prev);
+              else closeModal();
+            }}
+            src="/icons/arrow_forward_left.svg"
+          />
         </ExitWrapper>
-        <Form autoComplete="off">
+        <Form
+          autoComplete="off"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const { submit, next } = field;
+            return submit ? submit(data) : setStep(next);
+          }}
+        >
           <Fieldset>
             {field.render()}
           </Fieldset>
           <Actions hide={!field.next}>
             <PrimaryButton
               color="white"
-              type="button"
+              type="submit"
               disabled={!field.validation()}
               onClick={() => {
                 const { submit, next } = field;

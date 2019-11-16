@@ -62,6 +62,7 @@ function SentPhoneFieldset(code, setCode, resendClick, error) {
           id="code"
           type="text"
           placeholder=""
+          autoFocus
           customStyle={inputStyle}
           value={code}
           onChange={e => setCode(e.target.value)}
