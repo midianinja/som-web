@@ -1,35 +1,53 @@
 import apollo from '../../apollo';
 import queries from './artists.query';
 
-const { oneArtistQuery } = queries;
+const { oneArtistQuery, allSongsQuery } = queries;
 
-export const fetchArtistData = async (id, setArtistName, setHeaderLoading, setInstaUsername) => {
+const fetchSongs = artist => apollo.query({
+  query: allSongsQuery,
+  variables: { song: { artist } },
+});
+
+export const fetchArtistData = async (
+  id, setArtist, setArtistLoading, setSongs,
+) => {
+  setArtistLoading(true);
+
   let promise;
-  setHeaderLoading(true);
   try {
     promise = await apollo.query({
       query: oneArtistQuery,
       variables: { id },
     });
-  } catch (e) {
-    throw e;
+  } catch (err) {
+    throw err;
   }
 
-  setArtistName(promise.data.oneArtist.name);
-  setInstaUsername(promise.data.oneArtist.instagram_id);
-  setHeaderLoading(false);
+  let songsPromise;
+  try {
+    songsPromise = await fetchSongs(promise.data.oneArtist.id);
+  } catch (err) {
+    console.log([err]);
+    throw err;
+  }
+
+  setSongs(songsPromise.data.allSongs);
+  setArtist(promise.data.oneArtist);
+  setArtistLoading(false);
 };
 
-export const fetchArtistInsta = async (instaname, setInstaPics, setInstagramLoading) => {
+export const fetchArtistInstaImages = async (instaUri, setInstaPics, setInstagramLoading) => {
   let promise;
   setInstagramLoading(true);
 
+  const instaname = instaUri.split('/').reverse()[0];
   try {
-    promise = await fetch(`http://localhost:8082/insta/media/${instaname}`);
+    promise = await fetch(`${process.env.INSTAGRAM_API_URI}/photos/${instaname}`);
   } catch (e) {
     throw e;
   }
-  const data = await promise.json();
-  setInstaPics(data.data);
+
+  const { data } = await promise.json();
+  setInstaPics(data);
   setInstagramLoading(false);
 };

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
@@ -142,8 +142,13 @@ function Login({ history }) {
     dispatch({ type: 'CLOSE_MODAL' });
   };
 
-  if (state.modals.login && (!ida && !token)) blockBodyScroll();
-  if (state.modals.login && ida) history.push('/event/5d3a31e9dd3e02dd26be4fd2');
+  useEffect(() => {
+    if (state.modals.login && (!ida && !token)) blockBodyScroll();
+    if (state.modals.login && ida) {
+      allowBodyScroll();
+      history.push('/welcome');
+    }
+  }, [state]);
 
   return (
     <LoginWrapper id="login" isOpen={state.modals.login && (!ida && !token)}>

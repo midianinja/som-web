@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Store from '../../store/Store';
 import {
@@ -97,7 +98,7 @@ function renderLinks() {
   ));
 }
 
-function Navigation() {
+function Navigation({ history }) {
   const { state, dispatch } = useContext(Store);
 
   return (
@@ -111,10 +112,39 @@ function Navigation() {
           }}
         />
         {renderLinks()}
-        <Logout>Sair</Logout>
+        <Logout
+          onClick={() => {
+            window.localStorage.setItem('som@ida', '');
+            window.localStorage.setItem('som@token', '');
+
+            dispatch({
+              type: 'SET_USER',
+              user: null,
+            });
+
+            dispatch({
+              type: 'SET_AUTH',
+              auth: null,
+            });
+
+            allowBodyScroll();
+            dispatch({ type: 'CLOSE_MODAL' });
+            history.push('/');
+          }}
+        >
+          Sair
+        </Logout>
       </Nav>
     </Wrapper>
   );
 }
 
-export default Navigation;
+const historyShape = {
+  push: PropTypes.func.isRequired,
+};
+
+Navigation.propTypes = {
+  history: PropTypes.shape(historyShape).isRequired,
+};
+
+export default withRouter(Navigation);

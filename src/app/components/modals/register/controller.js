@@ -1,6 +1,6 @@
 import {
   createIDA, createUserSOM, generatePhoneCode, validatePhoneCode,
-  sendValidationEmail,
+  sendValidationEmail, getIDA, getUser,
 } from './repository';
 
 export async function createAccount({
@@ -36,6 +36,7 @@ export async function createAccount({
 export async function generatePhoneCodeSubmit({
   phone, ida, setStep,
 }) {
+  console.log(ida);
   try {
     await generatePhoneCode(ida, phone);
   } catch (error) {
@@ -47,6 +48,7 @@ export async function generatePhoneCodeSubmit({
 
 export async function validatePhoneCodeSubmit({
   ida, token, code, setError, navigationTo, closeModal,
+  dispatch,
 }) {
   let promise;
 
@@ -63,6 +65,34 @@ export async function validatePhoneCodeSubmit({
   } else {
     window.localStorage.setItem('som@ida', ida);
     window.localStorage.setItem('som@token', token);
+
+    let userIDAPromise;
+    try {
+      userIDAPromise = await getIDA(ida);
+    } catch (err) {
+      throw err;
+    }
+
+    const userIDAResult = await userIDAPromise.json();
+    if (userIDAPromise.error) throw userIDAPromise.error;
+
+    dispatch({
+      type: 'SET_AUTH',
+      auth: userIDAResult.data.user,
+    });
+
+    let userResult;
+    try {
+      userResult = await getUser(ida);
+    } catch (err) {
+      throw err;
+    }
+
+    dispatch({
+      type: 'SET_USER',
+      user: userResult.data.oneUser,
+    });
+
 
     closeModal();
     navigationTo('/welcome');

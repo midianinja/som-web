@@ -86,11 +86,9 @@ const EventPage = ({ match, history }) => {
   const [dialog, setDialog] = useState(null);
 
   useEffect(() => {
-    if (loading.event === loadingStatus.TO_LOAD) {
-      fetchEventData(
-        match.params.id, setEvent, loading, setLoading, setDialog, history,
-      );
-    }
+    fetchEventData(
+      match.params.id, setEvent, loading, setLoading, setDialog, history,
+    );
   }, []);
 
   if (!event) {
