@@ -11,17 +11,6 @@ const Card = styled.div`
 `;
 const LabelWrapper = styled.div`
   position: relative;
-
-  :before {
-    content: '';
-    position: absolute;
-    display: inline-block;
-    width: 100vw;
-    height: 1px;
-    background-color: ${white};
-    left: -30px;
-    top: 7px;
-  }
 `;
 
 const Label = styled.label`

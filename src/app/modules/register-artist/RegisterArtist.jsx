@@ -11,13 +11,9 @@ import SocialsFieldset from '../../components/templates/register-artist/SocialsF
 import { black, white } from '../../settings/colors';
 import StepFormFooter from '../../components/organisms/StepFormFooter.organism';
 import {
-  handleACMusicalStyle,
-  steps,
-  handleMusicalStyleSelect,
-  fetchMusicalStyleOptions,
-  nextAction,
-  skipAction,
-  uploadDocumentFile,
+  handleACMusicalStyle, steps, handleMusicalStyleSelect,
+  fetchMusicalStyleOptions, nextAction, skipAction, uploadDocumentFile,
+  fetchLocations,
 } from './registerArtist.controller';
 import UploadSongs from '../../components/templates/register-artist/UploadSongs';
 import {
@@ -221,7 +217,7 @@ const RegisterArtist = ({ history }) => {
   const [contactStepErrors, setContactStepErrors] = useState({});
   const [socialMediaStepErrors, setSocialMediaStepErrors] = useState({});
   const [about, setAbout] = useState('');
-  const [id, setId] = useState('');
+  const [id, setId] = useState('asd');
   const [city, setCity] = useState('');
   const [integrants, setIntegrants] = useState('');
   const [country, setCountry] = useState({});
@@ -241,6 +237,9 @@ const RegisterArtist = ({ history }) => {
   const [songs, setSongs] = useState([
     /* { ...initialSong } */
   ]);
+  const [contries, setContries] = useState([]);
+  const [states, setStates] = useState([]);
+
   const [visibles, setVisibles] = useState({
     artist: true,
     music: false,
@@ -252,6 +251,10 @@ const RegisterArtist = ({ history }) => {
 
   useEffect(() => {
     if (!musicalStylesOptions.length) {
+      fetchMusicalStyleOptions(setMusicalStylesOptions);
+    }
+    if (!contries.length && !states.length) {
+      fetchLocations({ setContries, setStates });
       fetchMusicalStyleOptions(setMusicalStylesOptions);
     }
   }, [musicalStylesOptions]);
@@ -335,7 +338,7 @@ const RegisterArtist = ({ history }) => {
           setArtistStepErrors, setContactStepErrors,
           songs, setSongs, store, history,
         })}
-        customStyle={visibles.files && id ? `background-color: ${white}` : ''}
+        customStyle={visibles.files && id ? `background-color: ${white};` : ''}
         skipAction={() => skipAction(setVisibles, visibles)}
       />
     </Form>

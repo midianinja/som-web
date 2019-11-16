@@ -16,6 +16,11 @@ const Footer = styled.div`
   ${props => props.customStyle}
 `;
 
+const Wrapper = styled.div`
+  width: 100%;
+  ${props => props.customStyle}
+`;
+
 const Icon = styled.img`
   width: 13px;
   height: 13px;
@@ -25,19 +30,21 @@ const Icon = styled.img`
 
 const StepFormFooter = ({ nextAction, skipAction, customStyle }) => {
   return (
-    <Footer customStyle={customStyle}>
-      <PrimaryButton onClick={nextAction} customStyle='padding: 20px 0; height: auto; letter-spacing: 3px;'>
-        CONTINUAR
-      </PrimaryButton>
-      <PrimaryButton
-        onClick={skipAction}
-        color='transparent'
-        customStyle={`padding: 20px 0; height: auto; color: ${gray}`}
-      >
-        Pular etapa
-        <Icon src='/icons/right_arrow.svg' />
-      </PrimaryButton>
-    </Footer>
+    <Wrapper customStyle={customStyle}>
+      <Footer customStyle={customStyle}>
+        <PrimaryButton onClick={nextAction} customStyle="padding: 20px 0; height: auto; letter-spacing: 3px;">
+          CONTINUAR
+        </PrimaryButton>
+        <PrimaryButton
+          onClick={skipAction}
+          color="transparent"
+          customStyle={`padding: 20px 0; height: auto; color: ${gray}`}
+        >
+          Pular etapa
+          <Icon src="/icons/right_arrow.svg" />
+        </PrimaryButton>
+      </Footer>
+    </Wrapper>
   );
 };
 

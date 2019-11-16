@@ -30,11 +30,15 @@ export async function login(username, password, setError, closeModal, history, d
   let userIDAPromise;
   try {
     userIDAPromise = await getIDA(data.ida);
+    console.log('TCL: login -> userIDAPromise', userIDAPromise);
   } catch (err) {
+    console.log('TCL: login -> err', err);
     throw err;
   }
 
+  console.log('TCL: login -> userIDAPromise', userIDAPromise.body);
   const userIDAResult = await userIDAPromise.json();
+  console.log('TCL: login -> userIDAResult', userIDAResult);
   if (userIDAPromise.error) throw userIDAPromise.error;
 
   dispatch({

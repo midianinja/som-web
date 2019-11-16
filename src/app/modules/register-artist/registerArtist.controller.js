@@ -24,6 +24,14 @@ const mapArtist = (artist, user) => ({
   youtube: artist.youtube,
 });
 
+export const fetchLocations = async ({ setContries, setStates }) => {
+  console.log('TCL: fetchLocations -> setStates', setStates);
+  console.log('TCL: fetchLocations -> setContries', setContries);
+
+  setContries([123]);
+  setStates([123]);
+};
+
 export const uploadDocumentFile = async ({ target }, id, artist) => {
   try {
     const file = target.files[0];
