@@ -69,10 +69,10 @@ const ColumnWrapper = styled.div`
 function ArtistPage({ match }) {
   const { state, dispatch } = useContext(Store);
   const [artistLoading, setArtistLoading] = useState(false);
+  const [instagramPhotosLoading, setInstagramPhotoLoading] = useState(false);
   const [artist, setArtist] = useState({});
   const [instagramPhotos, setInstagramPhotos] = useState(false);
   const [follows, setFollows] = useState([]);
-  const [instagramPhotosLoading, setInstagramPhotoLoading] = useState(false);
   const [songs, setSongs] = useState([]);
 
   const { id } = match.params;
