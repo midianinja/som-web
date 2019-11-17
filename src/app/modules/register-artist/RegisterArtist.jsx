@@ -106,6 +106,7 @@ const renderArtistInfos = ({
   setName,
   setCountry,
   setState,
+  countries,
   musicalStylesOptions,
   musicalStyles,
   setMusicalStyle,
@@ -116,6 +117,7 @@ const renderArtistInfos = ({
   <BasicInformationFieldset
     artistStepErrors={artistStepErrors}
     values={values}
+    countries={countries}
     handleAvatarChange={({ target }) => setAvatar({
       url: URL.createObjectURL(target.files[0]),
       file: target.files[0],
@@ -237,7 +239,7 @@ const RegisterArtist = ({ history }) => {
   const [songs, setSongs] = useState([
     /* { ...initialSong } */
   ]);
-  const [contries, setContries] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
 
   const [visibles, setVisibles] = useState({
@@ -253,8 +255,8 @@ const RegisterArtist = ({ history }) => {
     if (!musicalStylesOptions.length) {
       fetchMusicalStyleOptions(setMusicalStylesOptions);
     }
-    if (!contries.length && !states.length) {
-      fetchLocations({ setContries, setStates });
+    if (!countries.length && !states.length) {
+      fetchLocations({ setCountries, setStates });
       fetchMusicalStyleOptions(setMusicalStylesOptions);
     }
   }, [musicalStylesOptions]);
@@ -283,6 +285,7 @@ const RegisterArtist = ({ history }) => {
           setCity,
           setIntegrants,
           setName,
+          countries,
           setCountry,
           setState,
           handleACMusicalStyle,
