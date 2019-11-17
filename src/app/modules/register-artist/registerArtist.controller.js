@@ -4,6 +4,7 @@ import { createArtistMutation, upadteArtistMutation } from '../../mutations/arti
 import { getBase64, uploadImageToStorage, uploadPdfDocumentToStorage } from '../../utilities/file.utils';
 import { validateArtistForm } from './registerArtist.validate';
 import { createSongMutation } from './songs.mutation';
+import { allCountriesQuery } from './registerArtist.queries';
 
 const mapArtist = (artist, user) => ({
   user,
@@ -23,6 +24,19 @@ const mapArtist = (artist, user) => ({
   twitter: artist.twitter,
   youtube: artist.youtube,
 });
+
+export const fetchLocations = async ({ setCountries, setStates }) => {
+  const countries = await apollo.query({
+    query: allCountriesQuery,
+    variables: {},
+  });
+  const myCountrires = countries.data.allCountries.map(c => ({
+    label: c.name,
+    id: c.id,
+  }));
+  setCountries(myCountrires);
+  setStates([123]);
+};
 
 export const uploadDocumentFile = async ({ target }, id, artist) => {
   try {

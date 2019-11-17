@@ -11,13 +11,9 @@ import SocialsFieldset from '../../components/templates/register-artist/SocialsF
 import { black, white } from '../../settings/colors';
 import StepFormFooter from '../../components/organisms/StepFormFooter.organism';
 import {
-  handleACMusicalStyle,
-  steps,
-  handleMusicalStyleSelect,
-  fetchMusicalStyleOptions,
-  nextAction,
-  skipAction,
-  uploadDocumentFile,
+  handleACMusicalStyle, steps, handleMusicalStyleSelect,
+  fetchMusicalStyleOptions, nextAction, skipAction, uploadDocumentFile,
+  fetchLocations,
 } from './registerArtist.controller';
 import UploadSongs from '../../components/templates/register-artist/UploadSongs';
 import {
@@ -110,6 +106,7 @@ const renderArtistInfos = ({
   setName,
   setCountry,
   setState,
+  countries,
   musicalStylesOptions,
   musicalStyles,
   setMusicalStyle,
@@ -120,6 +117,7 @@ const renderArtistInfos = ({
   <BasicInformationFieldset
     artistStepErrors={artistStepErrors}
     values={values}
+    countries={countries}
     handleAvatarChange={({ target }) => setAvatar({
       url: URL.createObjectURL(target.files[0]),
       file: target.files[0],
@@ -221,7 +219,7 @@ const RegisterArtist = ({ history }) => {
   const [contactStepErrors, setContactStepErrors] = useState({});
   const [socialMediaStepErrors, setSocialMediaStepErrors] = useState({});
   const [about, setAbout] = useState('');
-  const [id, setId] = useState('');
+  const [id, setId] = useState('asd');
   const [city, setCity] = useState('');
   const [integrants, setIntegrants] = useState('');
   const [country, setCountry] = useState({});
@@ -241,6 +239,9 @@ const RegisterArtist = ({ history }) => {
   const [songs, setSongs] = useState([
     /* { ...initialSong } */
   ]);
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+
   const [visibles, setVisibles] = useState({
     artist: true,
     music: false,
@@ -252,6 +253,10 @@ const RegisterArtist = ({ history }) => {
 
   useEffect(() => {
     if (!musicalStylesOptions.length) {
+      fetchMusicalStyleOptions(setMusicalStylesOptions);
+    }
+    if (!countries.length && !states.length) {
+      fetchLocations({ setCountries, setStates });
       fetchMusicalStyleOptions(setMusicalStylesOptions);
     }
   }, [musicalStylesOptions]);
@@ -280,6 +285,7 @@ const RegisterArtist = ({ history }) => {
           setCity,
           setIntegrants,
           setName,
+          countries,
           setCountry,
           setState,
           handleACMusicalStyle,
@@ -335,7 +341,7 @@ const RegisterArtist = ({ history }) => {
           setArtistStepErrors, setContactStepErrors,
           songs, setSongs, store, history,
         })}
-        customStyle={visibles.files && id ? `background-color: ${white}` : ''}
+        customStyle={visibles.files && id ? `background-color: ${white};` : ''}
         skipAction={() => skipAction(setVisibles, visibles)}
       />
     </Form>

@@ -66,6 +66,7 @@ const inputGroupStyle = `
 
 function BasicInformationFieldset(props) {
   const {
+    countries,
     handleNameChange,
     handleIntegrantsChange,
     handleCountrySelect,
@@ -133,7 +134,7 @@ function BasicInformationFieldset(props) {
           label={values.country.value ? 'País' : ''}
           error={artistStepErrors.country}
         >
-          <Select id="country" placeholder="País" value={values.country} onSelect={handleCountrySelect} />
+          <Select id="country" placeholder="País" options={countries} value={values.country} onSelect={handleCountrySelect} />
         </InputGroup>
         <InputGroup
           customStyle={inputGroupStyle}
