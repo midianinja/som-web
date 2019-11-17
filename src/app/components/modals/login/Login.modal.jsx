@@ -190,7 +190,7 @@ function Login({ history }) {
             <CircularButton
               onClick={(e) => {
                 e.preventDefault();
-                login(username, password, setError, closeModal, history, dispatch);
+                login(username, password, setError, closeModal, history, dispatch, state);
               }}
               disabled={!username || !password}
             >

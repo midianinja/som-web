@@ -13,6 +13,11 @@ const oneArtistQuery = gql`
       twitter
       instagram
       youtube
+      follows {
+        user {
+          id
+        }
+      }
     }
   }
 `;

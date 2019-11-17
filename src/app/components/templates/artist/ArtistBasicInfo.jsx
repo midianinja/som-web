@@ -5,7 +5,7 @@ import Avatar from '../../atoms/Avatar.atom';
 import Socials from '../../organisms/Socials';
 import PrimaryButton from '../../atoms/PrimaryButton';
 import LinkButton from '../../atoms/LinkButton';
-import { white, white30 } from '../../../settings/colors';
+import { white, white30, purple } from '../../../settings/colors';
 
 const Wrapper = styled.section`
   display: inline-block;
@@ -52,6 +52,14 @@ const buttonCustomStyled = `
   margin-right: 15px;
 `;
 
+const followButtonCustomStyled = `
+  width: 150px;
+  margin-right: 15px;
+  border: solid 1px ${purple};
+  color: ${purple};
+  background-color: transparent;
+`;
+
 const avatarCustomStyled = `
   width: 140px;
   height: 140px;
@@ -93,7 +101,10 @@ function ArtistBasicInfo(props) {
   const {
     name, avatar, followers, following,
     about, facebook, instagram, twitter,
+    followToggle, isFollowing,
   } = props;
+
+  console.log(isFollowing);
 
   return (
     <Wrapper id="infos">
@@ -113,7 +124,17 @@ function ArtistBasicInfo(props) {
       </TitleAndFollowWrapper>
       <About>{about}</About>
       <ActionWrapper>
-        <PrimaryButton customStyle={buttonCustomStyled}>Seguir</PrimaryButton>
+        {
+          isFollowing ? (
+            <PrimaryButton onClick={followToggle} customStyle={followButtonCustomStyled}>
+              Deixar de seguir
+            </PrimaryButton>
+          ) : (
+            <PrimaryButton onClick={followToggle} customStyle={buttonCustomStyled}>
+              Seguir
+            </PrimaryButton>
+          )
+        }
         <LinkButton color="white">Ler release</LinkButton>
       </ActionWrapper>
       <Socials
@@ -134,6 +155,8 @@ ArtistBasicInfo.propTypes = {
   followers: PropTypes.number.isRequired,
   following: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
+  followToggle: PropTypes.func.isRequired,
+  isFollowing: PropTypes.bool.isRequired,
 };
 
 export default ArtistBasicInfo;

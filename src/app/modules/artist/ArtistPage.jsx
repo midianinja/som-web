@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,7 +9,10 @@ import MoreArtist from '../../components/templates/artist/MoreArtist';
 import Cover from '../../components/atoms/Cover';
 import Header from '../../components/organisms/Header';
 import InstagramMedia from '../../components/molecules/InstagramMedias';
-import { fetchArtistData, fetchArtistInstaImages } from './ArtistController';
+import Store from '../../store/Store';
+import {
+  fetchArtistData, fetchArtistInstaImages, follow, unfollow,
+} from './ArtistController';
 
 const ArtistWrapper = styled.div`
   width: 100%;
@@ -64,9 +67,11 @@ const ColumnWrapper = styled.div`
 `;
 
 function ArtistPage({ match }) {
+  const { state, dispatch } = useContext(Store);
   const [artistLoading, setArtistLoading] = useState(false);
   const [artist, setArtist] = useState({});
   const [instagramPhotos, setInstagramPhotos] = useState(false);
+  const [follows, setFollows] = useState([]);
   const [instagramPhotosLoading, setInstagramPhotoLoading] = useState(false);
   const [songs, setSongs] = useState([]);
 
@@ -82,10 +87,33 @@ function ArtistPage({ match }) {
     if (artist.instagram) {
       fetchArtistInstaImages(artist.instagram, setInstagramPhotos, setInstagramPhotoLoading);
     }
+
+    if (artist.follows) {
+      console.log(artist.follows);
+      setFollows(artist.follows.map(({ user }) => user.id));
+    }
   }, [artist]);
 
   if (artistLoading) return null;
   if (!artist.id) return null;
+
+  const handleFollow = () => {
+    if (!state.user) {
+      dispatch({
+        type: 'SHOW_LOGIN_MODAL',
+        data: { redirect: false },
+      });
+
+      dispatch({
+        type: 'SET_MODAL_LOGIN',
+        status: true,
+      });
+    } else if (state.user && follows.indexOf(state.user.id) !== -1) {
+      unfollow(artist.id, state.user.id, setFollows, follows);
+    } else {
+      follow(artist.id, state.user.id, setFollows, follows);
+    }
+  };
 
   return (
     <ArtistWrapper>
@@ -103,9 +131,14 @@ function ArtistPage({ match }) {
           facebook={artist.facebook}
           twitter={artist.twitter}
           instagram={artist.instagram}
-          followers={0}
+          followers={follows.length}
           following={0}
-          isFollowing={false}
+          isFollowing={
+            state.user && artist.follows
+              ? follows.indexOf(state.user.id) !== -1
+              : false
+          }
+          followToggle={handleFollow}
         />
         <ColumnWrapper>
           <AudioPlayer tracks={songs} />

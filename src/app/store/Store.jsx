@@ -6,6 +6,7 @@ const Store = React.createContext();
 const initialState = {
   auth: null,
   user: null,
+  modalLogin: false,
   loading: {
     auth: false,
     verify: true,
@@ -39,6 +40,8 @@ const reducer = (state, action) => {
       return { ...state, auth: null };
     case 'CLOSE_MODAL':
       return { ...state, modals: { ...initialState.modals } };
+    case 'SET_MODAL_LOGIN':
+      return { ...state, modalLogin: action.status };
     default:
       return state;
   }

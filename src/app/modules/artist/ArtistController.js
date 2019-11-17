@@ -1,6 +1,8 @@
 import apollo from '../../apollo';
 import queries from './artists.query';
+import mutations from './artists.mutations';
 
+const { followMutation, unfollowMutation } = mutations;
 const { oneArtistQuery, allSongsQuery } = queries;
 
 const fetchSongs = artist => apollo.query({
@@ -50,4 +52,35 @@ export const fetchArtistInstaImages = async (instaUri, setInstaPics, setInstagra
   const { data } = await promise.json();
   setInstaPics(data);
   setInstagramLoading(false);
+};
+
+export const follow = async (artist, user, setFollows, follows) => {
+  const newFollows = [...follows];
+  newFollows.push(user);
+  setFollows(newFollows);
+
+  try {
+    await apollo.mutate({
+      mutation: followMutation,
+      variables: { artist, user },
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const unfollow = async (artist, user, setFollows, follows) => {
+  const newFollows = [...follows];
+  newFollows.splice(follows.indexOf(user), 1);
+  setFollows(newFollows);
+
+  try {
+    await apollo.mutate({
+      mutation: unfollowMutation,
+      variables: { artist, user },
+    });
+  } catch (err) {
+    console.log([err]);
+    throw err;
+  }
 };

@@ -1,7 +1,7 @@
 import { authorize, getUser, getIDA } from './repository';
 import { allowBodyScroll } from '../../../utilities/scroll';
 
-export async function login(username, password, setError, closeModal, history, dispatch) {
+export async function login(username, password, setError, closeModal, history, dispatch, state) {
   let promise;
   try {
     promise = await authorize(username, password);
@@ -54,9 +54,18 @@ export async function login(username, password, setError, closeModal, history, d
   window.localStorage.setItem('som@ida', data.ida);
   window.localStorage.setItem('som@token', data.token);
 
-  allowBodyScroll();
-  closeModal();
-  history.push('/welcome');
+  if (!state.modalLogin) {
+    history.push('/welcome');
+    allowBodyScroll();
+    closeModal();
+  } else {
+    allowBodyScroll();
+  }
+
+  dispatch({
+    type: 'SET_MODAL_LOGIN',
+    status: false,
+  });
 }
 
 export const ignore = null;
