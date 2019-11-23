@@ -1,7 +1,7 @@
 import apollo from '../../apollo';
 import { allMusicalStyleOptionsQuery } from '../../queries/musicalGenres.query';
 import { createArtistMutation, upadteArtistMutation } from '../../mutations/artist.mutation';
-import { getBase64, uploadPdfDocumentToStorage } from '../../utilities/file.utils';
+import { getBase64, uploadPdfDocumentToStorage, uploadImageToStorage } from '../../utilities/file.utils';
 import { validateArtistForm } from './registerArtist.validate';
 import { createSongMutation } from './songs.mutation';
 import { allCountriesQuery, allStateQuery } from './registerArtist.queries';
@@ -55,7 +55,6 @@ export const fetchLocations = async ({ setCountries }) => {
     label: c.name,
     id: c.id,
   }));
-  console.log('myCountrires:', myCountrires);
   setCountries(myCountrires);
 };
 
@@ -173,16 +172,15 @@ export const nextAction = async ({
 
   try {
     let preRegister = {};
-    console.log('TCL: artistToApi', artistToApi);
     if (!id) preRegister = await createArtist(artistToApi, store.state.user.id);
 
-    // const base64 = await getBase64(avatar.file);
-    // const newImage = await uploadImageToStorage({
-    //   file: base64,
-    //   id: id || preRegister.id,
-    // });
-    // const images = newImage.data.urls;
-    // artistToApi.avatar = images;
+    const base64 = await getBase64(avatar.file);
+    const newImage = await uploadImageToStorage({
+      file: base64,
+      id: id || preRegister.id,
+    });
+    const images = newImage.data.urls;
+    artistToApi.avatar = images;
     artistToApi.avatar = {};
 
     if (songs.length) {
