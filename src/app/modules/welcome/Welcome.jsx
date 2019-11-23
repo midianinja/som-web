@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Store from '../../store/Store';
 import PrimaryButton from '../../components/atoms/PrimaryButton';
 import { white, purple } from '../../settings/colors';
+import { allowBodyScroll } from '../../utilities/scroll';
 
 const Wrapper = styled.section`
   position: relative;
@@ -66,6 +67,7 @@ function Welcome(props) {
         <Text>Conheça os eventos e inscreva-se</Text>
         <PrimaryButton
           onClick={() => {
+            allowBodyScroll();
             history.push('/event/5d3a31e9dd3e02dd26be4fd2');
           }}
           color="orange"

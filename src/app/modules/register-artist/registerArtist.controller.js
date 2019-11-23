@@ -1,19 +1,19 @@
 import apollo from '../../apollo';
 import { allMusicalStyleOptionsQuery } from '../../queries/musicalGenres.query';
 import { createArtistMutation, upadteArtistMutation } from '../../mutations/artist.mutation';
-import { getBase64, uploadImageToStorage, uploadPdfDocumentToStorage } from '../../utilities/file.utils';
+import { getBase64, uploadPdfDocumentToStorage } from '../../utilities/file.utils';
 import { validateArtistForm } from './registerArtist.validate';
 import { createSongMutation } from './songs.mutation';
-import { allCountriesQuery } from './registerArtist.queries';
+import { allCountriesQuery, allStateQuery } from './registerArtist.queries';
 
 const mapArtist = (artist, user) => ({
   user,
   name: artist.name,
+  country: artist.country,
+  state: artist.state,
   members_number: parseInt(artist.integrants, 10),
   avatar_image: artist.avatar,
   about: artist.about,
-  country: '',
-  state: '',
   songs: artist.songs,
   city: artist.city,
   musical_styles: artist.musicalStyles.map(m => m.id),
@@ -25,7 +25,28 @@ const mapArtist = (artist, user) => ({
   youtube: artist.youtube,
 });
 
-export const fetchLocations = async ({ setCountries, setStates }) => {
+export const handleCountrySelect = async ({ data, setStates, setCountry }) => {
+  const countries = await apollo.query({
+    query: allStateQuery,
+    variables: {
+      state: {
+        country: data.id,
+      },
+    },
+  });
+  const myCountrires = countries.data.allStates.map(c => ({
+    label: c.name,
+    id: c.id,
+  }));
+  setStates(myCountrires);
+  setCountry(data);
+};
+
+export const handleStateSelect = async ({ data, setState }) => {
+  setState(data);
+};
+
+export const fetchLocations = async ({ setCountries }) => {
   const countries = await apollo.query({
     query: allCountriesQuery,
     variables: {},
@@ -34,8 +55,8 @@ export const fetchLocations = async ({ setCountries, setStates }) => {
     label: c.name,
     id: c.id,
   }));
+  console.log('myCountrires:', myCountrires);
   setCountries(myCountrires);
-  setStates([123]);
 };
 
 export const uploadDocumentFile = async ({ target }, id, artist) => {
@@ -61,14 +82,13 @@ export const uploadDocumentFile = async ({ target }, id, artist) => {
 
     artistToApi[doc] = uploadedFile.data.link;
 
-    const updatedPromise = await apollo.mutate({
+    await apollo.mutate({
       mutation: upadteArtistMutation,
       variables: {
         artist_id: artist,
         artist: artistToApi,
       },
     });
-    console.log('updatedPromise.data: ', updatedPromise.data);
   } catch (err) {
     throw err;
   }
@@ -142,26 +162,28 @@ export const nextAction = async ({
 
   const artistToApi = {
     about, city, integrants,
-    country, state, name,
+    country: country.label,
+    state: state.label,
+    name,
     musicalStyles,
     phone, email, facebook,
     instagram, twitter, youtube,
     songs: songs.map(s => s.id).filter(e => e),
   };
 
-  console.log('user', store.state.user.id);
-
   try {
     let preRegister = {};
+    console.log('TCL: artistToApi', artistToApi);
     if (!id) preRegister = await createArtist(artistToApi, store.state.user.id);
 
-    const base64 = await getBase64(avatar.file);
-    const newImage = await uploadImageToStorage({
-      file: base64,
-      id: id || preRegister.id,
-    });
-    const images = newImage.data.urls;
-    artistToApi.avatar = images;
+    // const base64 = await getBase64(avatar.file);
+    // const newImage = await uploadImageToStorage({
+    //   file: base64,
+    //   id: id || preRegister.id,
+    // });
+    // const images = newImage.data.urls;
+    // artistToApi.avatar = images;
+    artistToApi.avatar = {};
 
     if (songs.length) {
       const songsToUpload = songs.filter(s => !(s.id));
@@ -176,7 +198,6 @@ export const nextAction = async ({
 
     const updatedArtist = await updateArtist(artistToApi, id || preRegister.id);
     if (visibles.artist && visibles.contact && visibles.social && visibles.files) {
-      console.log('history: ', history);
       history.push(`/artist/${id || preRegister.id}`);
     }
     setSongs(updatedArtist.songs || []);

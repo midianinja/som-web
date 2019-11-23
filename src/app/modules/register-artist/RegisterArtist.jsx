@@ -13,7 +13,7 @@ import StepFormFooter from '../../components/organisms/StepFormFooter.organism';
 import {
   handleACMusicalStyle, steps, handleMusicalStyleSelect,
   fetchMusicalStyleOptions, nextAction, skipAction, uploadDocumentFile,
-  fetchLocations,
+  fetchLocations, handleCountrySelect, handleStateSelect,
 } from './registerArtist.controller';
 import UploadSongs from '../../components/templates/register-artist/UploadSongs';
 import {
@@ -101,7 +101,9 @@ const renderArtistInfos = ({
   setAvatar,
   setAbout,
   artistStepErrors,
+  country,
   setCity,
+  states,
   setIntegrants,
   setName,
   setCountry,
@@ -110,18 +112,25 @@ const renderArtistInfos = ({
   musicalStylesOptions,
   musicalStyles,
   setMusicalStyle,
+  state,
   setMusicalStylePredict,
   setMusicalStyles,
   setArtistStepErrors,
+  setStates,
 }) => (
   <BasicInformationFieldset
     artistStepErrors={artistStepErrors}
     values={values}
     countries={countries}
+    states={states}
     handleAvatarChange={({ target }) => setAvatar({
       url: URL.createObjectURL(target.files[0]),
       file: target.files[0],
     })}
+    country={country}
+    state={state}
+    handleCountrySelect={data => handleCountrySelect({ data, setStates, setCountry })}
+    handleStateSelect={data => handleStateSelect({ data, setState })}
     setArtistStepErrors={setArtistStepErrors}
     handleAboutChange={({ target }) => setAbout(target.value)}
     handleCityChange={({ target }) => setCity(target.value)}
@@ -285,9 +294,10 @@ const RegisterArtist = ({ history }) => {
           setCity,
           setIntegrants,
           setName,
+          country,
           countries,
-          setCountry,
           setState,
+          state,
           handleACMusicalStyle,
           handleMusicalStyleSelect,
           musicalStylesOptions,
@@ -295,6 +305,9 @@ const RegisterArtist = ({ history }) => {
           setMusicalStyle,
           setMusicalStylePredict,
           setMusicalStyles,
+          states,
+          setStates,
+          setCountry,
           setArtistStepErrors,
         })}
         {renderContacts({
