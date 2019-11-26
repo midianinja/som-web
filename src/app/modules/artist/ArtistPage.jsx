@@ -10,6 +10,7 @@ import Cover from '../../components/atoms/Cover';
 import Header from '../../components/organisms/Header';
 import InstagramMedia from '../../components/molecules/InstagramMedias';
 import { fetchArtistData, fetchArtistInstaImages } from './ArtistController';
+import DialogModal from '../../components/modals/Dialog.modal';
 
 const ArtistWrapper = styled.div`
   width: 100%;
@@ -68,12 +69,23 @@ function ArtistPage({ match }) {
   const [artist, setArtist] = useState({});
   const [instagramPhotos, setInstagramPhotos] = useState(false);
   const [instagramPhotosLoading, setInstagramPhotoLoading] = useState(false);
+  const [alertModal, setAlertModal] = useState({
+    title: '',
+    icon: '',
+    description: '',
+    agreeText: '',
+    disagreeText: '',
+    confirmAction: '',
+    disagreeAction: '',
+    isOpen: false,
+  });
   const [songs, setSongs] = useState([]);
+  console.log('alertModal:', alertModal);
 
   const { id } = match.params;
   useEffect(() => {
     const fetchArtist = async () => {
-      await fetchArtistData(id, setArtist, setArtistLoading, setSongs);
+      await fetchArtistData(id, setArtist, setArtistLoading, setSongs, setAlertModal);
     };
     fetchArtist();
   }, []);
@@ -84,9 +96,22 @@ function ArtistPage({ match }) {
     }
   }, [artist]);
 
+  console.log('artistLoading:', artistLoading);
   if (artistLoading) return null;
-  if (!artist.id) return null;
-
+  if (alertModal.isOpen) {
+    return (
+      <DialogModal
+        title={alertModal.title}
+        description={alertModal.description}
+        agreeText={alertModal.agreeText}
+        disagreeText={alertModal.disagreeText}
+        confirmAction={alertModal.confirmAction}
+        disagreeAction={alertModal.disagreeAction}
+        isOpen={alertModal.isOpen}
+      />
+    );
+  }
+console.log('não loga isso:')
   return (
     <ArtistWrapper>
       <Header />

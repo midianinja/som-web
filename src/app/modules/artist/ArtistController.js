@@ -9,7 +9,7 @@ const fetchSongs = artist => apollo.query({
 });
 
 export const fetchArtistData = async (
-  id, setArtist, setArtistLoading, setSongs,
+  id, setArtist, setArtistLoading, setSongs, setAlertModal,
 ) => {
   setArtistLoading(true);
 
@@ -17,17 +17,36 @@ export const fetchArtistData = async (
   try {
     promise = await apollo.query({
       query: oneArtistQuery,
-      variables: { id },
+      variables: { artist: { id } },
     });
   } catch (err) {
+    setArtistLoading(false);
     throw err;
+  }
+
+  if (!promise.data.oneArtist) {
+    setArtistLoading(false);
+    setAlertModal({
+      title: 'Ops!',
+      icon: '',
+      description: 'Artista não encontrado',
+      agreeText: 'OK',
+      disagreeText: '',
+      confirmAction: () => setAlertModal({}),
+      disagreeAction: undefined,
+      isOpen: true,
+    });
+    return;
   }
 
   let songsPromise;
   try {
+    console.log('promise.data.oneArtist.id:', promise.data.oneArtist.id);
     songsPromise = await fetchSongs(promise.data.oneArtist.id);
+    console.log('songsPromise:', songsPromise);
   } catch (err) {
     console.log([err]);
+    setArtistLoading(false);
     throw err;
   }
 

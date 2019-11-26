@@ -42,6 +42,7 @@ export async function login(username, password, setError, closeModal, history, d
   let userResult;
   try {
     userResult = await getUser(data.ida);
+    console.log('userResult:', userResult);
   } catch (err) {
     throw err;
   }

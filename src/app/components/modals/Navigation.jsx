@@ -8,13 +8,13 @@ import {
 } from '../../settings/colors';
 import { allowBodyScroll } from '../../utilities/scroll';
 
-const links = [
+const getLinks = artist => [
   {
     href: '/',
     label: 'Início',
   },
   {
-    href: '/me',
+    href: artist.id ? `/artist/${artist.id}` : '/register-artist',
     label: 'Meu perfil',
   },
   {
@@ -74,6 +74,7 @@ const Logout = styled.a`
   display: block;
   margin-top: 40px;
   color: ${black};
+  cursor: pointer;
 
   &:hover {
     color: ${purple}; 
@@ -92,15 +93,16 @@ const ExitButton = styled.img`
   }
 `;
 
-function renderLinks() {
-  return links.map(({ href, label }) => (
+function renderLinks(artist = {}) {
+  return getLinks(artist).map(({ href, label }) => (
     <Link href={href}>{label}</Link>
   ));
 }
 
 function Navigation({ history }) {
   const { state, dispatch } = useContext(Store);
-
+  console.log('state:', state);
+  if (!state.user) return null;
   return (
     <Wrapper isOpen={state.modals.navigation}>
       <Nav>
@@ -111,7 +113,7 @@ function Navigation({ history }) {
             dispatch({ type: 'CLOSE_MODAL' });
           }}
         />
-        {renderLinks()}
+        {renderLinks(state.user.artist)}
         <Logout
           onClick={() => {
             window.localStorage.setItem('som@ida', '');
