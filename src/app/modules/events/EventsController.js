@@ -1,6 +1,6 @@
 import apollo from '../../apollo';
-import { getOneEventQuery } from './event.queries';
-import { subscribeEvent, unsubscribeEvent } from './EventRepository';
+import { getAllEventsQuery } from './events.queries';
+import { subscribeEvent, unsubscribeEvent } from './EventsRepository';
 import { allowBodyScroll } from '../../utilities/scroll';
 
 export const loadingStatus = {
@@ -34,14 +34,14 @@ export const initialEvent = {
   },
 };
 
-export const fetchEventData = async (id, setEvent, loading, setLoading, setDialog, history) => {
+export const fetchEventsData = async (setEvent, loading, setLoading, setDialog, history) => {
   setLoading({ ...loading, event: loadingStatus.LOADING });
   let eventData;
 
   try {
     eventData = await apollo.query({
-      query: getOneEventQuery,
-      variables: { id },
+      query: getAllEventsQuery,
+      variables: {},
     });
   } catch (err) {
     // tratar esse erro
@@ -50,7 +50,8 @@ export const fetchEventData = async (id, setEvent, loading, setLoading, setDialo
     throw err;
   }
 
-  if (!eventData.data.oneEvent) {
+  console.log('eventData:', eventData)
+  if (!eventData.data.allEvents) {
     setDialog({
       title: 'Evento não encontrado',
       icon: '/icons/guita-error.svg',
@@ -61,7 +62,7 @@ export const fetchEventData = async (id, setEvent, loading, setLoading, setDialo
     return;
   }
 
-  setEvent(eventData.data.oneEvent || { ...initialEvent });
+  setEvent(eventData.data.allEvents || { ...initialEvent });
   setLoading({ ...loading, event: loadingStatus.LOADDED });
 };
 
@@ -108,10 +109,10 @@ export const subscribeAction = async (
     title: 'Pronto!',
     icon: '/icons/yeah.svg',
     description: `Você está inscrito no festival ${event.name}. Fique ligado no SOM para receber novas informações.`,
-    disagreeText: 'Ver mais eventos',
+    disagreeText: 'Voltar para a home',
     disagreeAction: () => {
       allowBodyScroll();
-      history.push('/events');
+      history.push('/');
     },
   });
 

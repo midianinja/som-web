@@ -98,6 +98,7 @@ const EventPage = ({ match, history }) => {
           <Dialog
             isOpen
             title={dialog.title}
+            icon={dialog.icon}
             description={dialog.description}
             agreeText={dialog.agreeText}
             disagreeText={dialog.disagreeText}
@@ -123,10 +124,11 @@ const EventPage = ({ match, history }) => {
   };
 
   const isSubscribed = (u, e) => {
+    console.log('e:', e);
     let subscribed = false;
 
-    if (u && u.artists && u.artists.length > 0) {
-      if (e.subscribers.find(({ id }) => u.artists[0].id === id)) {
+    if (u && u.artist) {
+      if (e.subscribers.find(({ id }) => u.artist.id === id)) {
         subscribed = true;
       }
     }
@@ -171,6 +173,7 @@ const EventPage = ({ match, history }) => {
             <Dialog
               isOpen
               title={dialog.title}
+              icon={dialog.icon}
               description={dialog.description}
               agreeText={dialog.agreeText}
               disagreeText={dialog.disagreeText}

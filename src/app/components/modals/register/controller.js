@@ -36,7 +36,6 @@ export async function createAccount({
 export async function generatePhoneCodeSubmit({
   phone, ida, setStep,
 }) {
-  console.log(ida);
   try {
     await generatePhoneCode(ida, phone);
   } catch (error) {

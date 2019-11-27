@@ -5,14 +5,11 @@ export async function login(username, password, setError, closeModal, history, d
   let promise;
   try {
     promise = await authorize(username, password);
-    console.log('promise: ', promise);
   } catch (err) {
     throw err;
   }
 
   const { data, error } = await promise.json();
-  console.log('error: ', error);
-  console.log('data: ', data);
   const dataError = {};
 
   if (error && error === 'user/not-found') {
@@ -30,15 +27,11 @@ export async function login(username, password, setError, closeModal, history, d
   let userIDAPromise;
   try {
     userIDAPromise = await getIDA(data.ida);
-    console.log('TCL: login -> userIDAPromise', userIDAPromise);
   } catch (err) {
-    console.log('TCL: login -> err', err);
     throw err;
   }
 
-  console.log('TCL: login -> userIDAPromise', userIDAPromise.body);
   const userIDAResult = await userIDAPromise.json();
-  console.log('TCL: login -> userIDAResult', userIDAResult);
   if (userIDAPromise.error) throw userIDAPromise.error;
 
   dispatch({
@@ -49,6 +42,7 @@ export async function login(username, password, setError, closeModal, history, d
   let userResult;
   try {
     userResult = await getUser(data.ida);
+    console.log('userResult:', userResult);
   } catch (err) {
     throw err;
   }

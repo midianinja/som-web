@@ -9,10 +9,15 @@ import MoreArtist from '../../components/templates/artist/MoreArtist';
 import Cover from '../../components/atoms/Cover';
 import Header from '../../components/organisms/Header';
 import InstagramMedia from '../../components/molecules/InstagramMedias';
+<<<<<<< HEAD
 import Store from '../../store/Store';
 import {
   fetchArtistData, fetchArtistInstaImages, follow, unfollow,
 } from './ArtistController';
+=======
+import { fetchArtistData, fetchArtistInstaImages } from './ArtistController';
+import DialogModal from '../../components/modals/Dialog.modal';
+>>>>>>> 9cf57f6742e7b5653c44e0b03137c8516c193a20
 
 const ArtistWrapper = styled.div`
   width: 100%;
@@ -73,12 +78,24 @@ function ArtistPage({ match }) {
   const [artist, setArtist] = useState({});
   const [instagramPhotos, setInstagramPhotos] = useState(false);
   const [follows, setFollows] = useState([]);
+  const [instagramPhotosLoading, setInstagramPhotoLoading] = useState(false);
+  const [alertModal, setAlertModal] = useState({
+    title: '',
+    icon: '',
+    description: '',
+    agreeText: '',
+    disagreeText: '',
+    confirmAction: '',
+    disagreeAction: '',
+    isOpen: false,
+  });
   const [songs, setSongs] = useState([]);
+  console.log('alertModal:', alertModal);
 
   const { id } = match.params;
   useEffect(() => {
     const fetchArtist = async () => {
-      await fetchArtistData(id, setArtist, setArtistLoading, setSongs);
+      await fetchArtistData(id, setArtist, setArtistLoading, setSongs, setAlertModal);
     };
     fetchArtist();
   }, []);
@@ -94,6 +111,7 @@ function ArtistPage({ match }) {
     }
   }, [artist]);
 
+  console.log('artistLoading:', artistLoading);
   if (artistLoading) return null;
   if (!artist.id) return null;
 
@@ -115,6 +133,19 @@ function ArtistPage({ match }) {
     }
   };
 
+  if (alertModal.isOpen) {
+    return (
+      <DialogModal
+        title={alertModal.title}
+        description={alertModal.description}
+        agreeText={alertModal.agreeText}
+        disagreeText={alertModal.disagreeText}
+        confirmAction={alertModal.confirmAction}
+        disagreeAction={alertModal.disagreeAction}
+        isOpen={alertModal.isOpen}
+      />
+    );
+  }
   return (
     <ArtistWrapper>
       <Header />

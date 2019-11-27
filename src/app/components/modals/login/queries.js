@@ -8,6 +8,15 @@ export const oneUserQuery = gql`
       type
       artist {
         id
+        name
+        avatar_image {
+          mimified
+          thumbnail
+        }
+        facebook
+        twitter
+        instagram
+        youtube
       }
     }
   }
