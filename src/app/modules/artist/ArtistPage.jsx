@@ -74,7 +74,6 @@ function ArtistPage({ match }) {
   const [artist, setArtist] = useState({});
   const [instagramPhotos, setInstagramPhotos] = useState(false);
   const [follows, setFollows] = useState([]);
-  const [instagramPhotosLoading, setInstagramPhotoLoading] = useState(false);
   const [alertModal, setAlertModal] = useState({
     title: '',
     icon: '',
