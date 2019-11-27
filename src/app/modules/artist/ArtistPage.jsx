@@ -13,7 +13,6 @@ import Store from '../../store/Store';
 import {
   fetchArtistData, fetchArtistInstaImages, follow, unfollow,
 } from './ArtistController';
-import { fetchArtistData, fetchArtistInstaImages } from './ArtistController';
 import DialogModal from '../../components/modals/Dialog.modal';
 
 const ArtistWrapper = styled.div`
