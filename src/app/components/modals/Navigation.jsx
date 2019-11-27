@@ -14,7 +14,7 @@ const getLinks = artist => [
     label: 'Início',
   },
   {
-    href: artist.id ? `/artist/${artist.id}` : '/register-artist',
+    href: artist ? `/artist/${artist.id}` : '/register-artist',
     label: 'Meu perfil',
   },
   {
