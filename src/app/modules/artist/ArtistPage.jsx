@@ -9,15 +9,12 @@ import MoreArtist from '../../components/templates/artist/MoreArtist';
 import Cover from '../../components/atoms/Cover';
 import Header from '../../components/organisms/Header';
 import InstagramMedia from '../../components/molecules/InstagramMedias';
-<<<<<<< HEAD
 import Store from '../../store/Store';
 import {
   fetchArtistData, fetchArtistInstaImages, follow, unfollow,
 } from './ArtistController';
-=======
 import { fetchArtistData, fetchArtistInstaImages } from './ArtistController';
 import DialogModal from '../../components/modals/Dialog.modal';
->>>>>>> 9cf57f6742e7b5653c44e0b03137c8516c193a20
 
 const ArtistWrapper = styled.div`
   width: 100%;
