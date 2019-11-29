@@ -10,10 +10,13 @@ export async function createAccount({
   try {
     promise = await createIDA(username, password);
   } catch (error) {
+    console.log('error:', error);
     throw error;
   }
 
+  console.log('promise:', promise);
   const { data, error } = await promise.json();
+  console.log('await promise.json():', await promise.json());
   const dataError = {};
   if (error && error === 'auth/duplicated-user') {
     dataError.username = 'Nome de usuário já em uso';
