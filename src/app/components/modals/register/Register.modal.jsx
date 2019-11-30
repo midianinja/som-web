@@ -20,6 +20,7 @@ import {
 import { purple, black50 } from '../../../settings/colors';
 import Store from '../../../store/Store';
 import { allowBodyScroll } from '../../../utilities/scroll';
+import Loading from '../../atoms/Loading.atom';
 
 const RegisterWrapper = styled.section`
   display: ${(props) => {
@@ -91,6 +92,7 @@ function Register({ history }) {
   const [code, setCode] = useState('');
   const [method, setMethod] = useState('');
   const [error, setError] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -140,7 +142,7 @@ function Register({ history }) {
     if (inputCode.length === 6) {
       validatePhoneCodeSubmit({
         ida, code: inputCode, setError, navigationTo: history.push, token,
-        closeModal, dispatch,
+        closeModal, dispatch, setLoading,
       });
     }
 
@@ -185,7 +187,7 @@ function Register({ history }) {
       validation: () => true,
     },
     sentPhone: {
-      render: () => sentPhoneFieldset(code, handleCodeChange, () => setStep('phone'), error),
+      render: () => sentPhoneFieldset(code, handleCodeChange, () => setStep('phone'), error, loading),
       validation: () => code.length === 6,
       prev: 'phone',
       submit: validatePhoneCodeSubmit,
@@ -195,7 +197,7 @@ function Register({ history }) {
   const data = {
     ida, step, username, password, email, phone, code, method, error,
     setIDA, setStep, setUsername, setPassword, setEmail, setPhone, setCode, setMethod, setError,
-    token, setToken, dispatch,
+    token, setToken, dispatch, loading, setLoading,
   };
   const field = fields[step];
   return (
@@ -222,13 +224,19 @@ function Register({ history }) {
             {field.render()}
           </Fieldset>
           <Actions hide={!field.next}>
-            <PrimaryButton
-              color="white"
-              type="submit"
-              disabled={!field.validation()}
-            >
-              Próximo
-            </PrimaryButton>
+            {
+              loading ? (
+                <Loading />
+              ) : (
+                <PrimaryButton
+                  color="white"
+                  type="submit"
+                  disabled={!field.validation()}
+                >
+                  Próximo
+                </PrimaryButton>
+              )
+            }
           </Actions>
         </Form>
       </Container>
