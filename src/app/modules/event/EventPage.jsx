@@ -140,7 +140,12 @@ const EventPage = ({ match, history }) => {
     <Store.Consumer>
       {({ state, dispatch }) => (
         <Container>
-          <Header />
+          <Header
+            logged={() => {
+              console.log(state);
+              return !!state.user;
+            }} 
+          />
           <CoverWrapper>
             <Cover cover={event.cover}>
               <EventImage src={event.cover} alt="Cover do Evento" />

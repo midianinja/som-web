@@ -30,8 +30,7 @@ export async function login(username, password, setError, closeModal, history, d
     throw err;
   }
 
-  const userIDAResult = await userIDAPromise.json();
-  if (userIDAPromise.error) throw userIDAPromise.error;
+  const userIDAResult = userIDAPromise.data;
 
   dispatch({
     type: 'SET_AUTH',
