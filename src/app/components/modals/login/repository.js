@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import axios from 'axios';
 import apollo from '../../../apollo';
 import { oneUserQuery } from './queries';
