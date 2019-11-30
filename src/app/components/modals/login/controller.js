@@ -1,7 +1,11 @@
 import { authorize, getUser, getIDA } from './repository';
 import { allowBodyScroll } from '../../../utilities/scroll';
 
-export async function login(username, password, setError, closeModal, history, dispatch, state) {
+export async function login(
+  username, password, setError, closeModal,
+  history, dispatch, state, setLoading,
+) {
+  setLoading(true);
   let promise;
   try {
     promise = await authorize(username, password);
@@ -12,11 +16,13 @@ export async function login(username, password, setError, closeModal, history, d
     if (error && error === 'user/not-found') {
       dataError.username = 'Usuário não encontrado.';
       setError(dataError);
+      setLoading(false);
     }
 
     if (error && error === 'user/wrong-password') {
       dataError.password = 'Senha errada.';
       setError(dataError);
+      setLoading(false);
     }
 
     throw err;
@@ -27,6 +33,7 @@ export async function login(username, password, setError, closeModal, history, d
   try {
     userIDAPromise = await getIDA(data.ida);
   } catch (err) {
+    setLoading(false);
     throw err;
   }
 
@@ -42,6 +49,7 @@ export async function login(username, password, setError, closeModal, history, d
     userResult = await getUser(data.ida);
     console.log('userResult:', userResult);
   } catch (err) {
+    setLoading(false);
     throw err;
   }
 
@@ -61,6 +69,7 @@ export async function login(username, password, setError, closeModal, history, d
     allowBodyScroll();
   }
 
+  setLoading(false);
   dispatch({
     type: 'SET_MODAL_LOGIN',
     status: false,
