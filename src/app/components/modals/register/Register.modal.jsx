@@ -226,10 +226,6 @@ function Register({ history }) {
               color="white"
               type="submit"
               disabled={!field.validation()}
-              onClick={() => {
-                const { submit, next } = field;
-                return submit ? submit(data) : setStep(next);
-              }}
             >
               Próximo
             </PrimaryButton>

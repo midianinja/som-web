@@ -11,7 +11,6 @@ export const verify = async (dispatch, setIDA) => {
   }
 
   let verified;
-  console.log('hereeeeex');
   try {
     verified = await verifyAuth(token);
   } catch (err) {
@@ -19,7 +18,6 @@ export const verify = async (dispatch, setIDA) => {
     throw err;
   }
 
-  console.log('heree', verified);
   if (verified && verified.ida) {
     setIDA(verified.ida);
     dispatch({

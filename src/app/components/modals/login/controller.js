@@ -23,7 +23,6 @@ export async function login(username, password, setError, closeModal, history, d
   }
 
   const { data } = promise.data;
-  console.log(promise);
   let userIDAPromise;
   try {
     userIDAPromise = await getIDA(data.ida);

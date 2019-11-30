@@ -158,12 +158,12 @@ const Home = () => {
           <Instructions />
         </FiguresContent>
       </FiguresContainer>
-      <PurpleWrapper>
+      {/* <PurpleWrapper>
         <About />
         <WhoIsSom />
-      </PurpleWrapper>
+      </PurpleWrapper> */}
       <OpenSource />
-      <Newsletter />
+      {/* <Newsletter /> */}
     </Page>
   );
 };
