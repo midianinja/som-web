@@ -194,7 +194,9 @@ export const nextAction = async ({
       artistToApi.songs = uploadedSongs.concat(songs).map(s => s.id).filter(n => n);
     }
 
+    console.log('artistToApi:', artistToApi);
     const updatedArtist = await updateArtist(artistToApi, id || preRegister.id);
+    console.log('updatedArtist:', updatedArtist);
     if (visibles.artist && visibles.contact && visibles.social && visibles.files) {
       history.push(`/artist/${id || preRegister.id}`);
     }
