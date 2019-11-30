@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import SlimButton from '../../components/atoms/SlimButton';
-import About from './components/About';
+// import About from './components/About';
 import Apresentation from './components/Apresentation';
 import HowItsWork from './components/HowItsWork';
 import Instructions from './components/Instructions';
-import WhoIsSom from './components/WhoIsSom';
+// import WhoIsSom from './components/WhoIsSom';
 import OpenSource from './components/OpenSource';
-import Newsletter from './components/Newsletter';
+// import Newsletter from './components/Newsletter';
 import Store from '../../store/Store';
-import { purple } from '../../settings/colors';
+// import { purple } from '../../settings/colors';
 import { blockBodyScroll } from '../../utilities/scroll';
 
 const Page = styled.div`
@@ -46,12 +46,12 @@ const loginButtonStyle = `
   float: right;
 `;
 
-const PurpleWrapper = styled.div`
-  width: 100%;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  background-color: ${purple};
-`;
+// const PurpleWrapper = styled.div`
+//   width: 100%;
+//   padding-top: 30px;
+//   padding-bottom: 30px;
+//   background-color: ${purple};
+// `;
 
 const FiguresContainer = styled.div`
   width: 100%;
