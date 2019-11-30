@@ -9,25 +9,23 @@ export async function createAccount({
   let promise;
   try {
     promise = await createIDA(username, password);
-  } catch (error) {
-    console.log('error:', error);
-    throw error;
-  }
+  } catch (err) {
+    const { error } = err.response.data;
+    const dataError = {};
 
-  console.log('promise:', promise);
-  const { data, error } = await promise.json();
-  console.log('await promise.json():', await promise.json());
-  const dataError = {};
-  if (error && error === 'auth/duplicated-user') {
-    dataError.username = 'Nome de usuário já em uso';
-    setError(dataError);
-    return;
+    if (error && error === 'auth/duplicated-user') {
+      dataError.username = 'Nome de usuário já em uso';
+      setError(dataError);
+      return;
+    }
+
+    throw err;
   }
+  const { data } = promise.data;
 
   try {
-    promise = await createUserSOM(data.ida);
+    await createUserSOM(data.ida);
   } catch (err) {
-    console.log([err]);
     throw err;
   }
 
@@ -52,71 +50,60 @@ export async function validatePhoneCodeSubmit({
   ida, token, code, setError, navigationTo, closeModal,
   dispatch,
 }) {
-  let promise;
-
   try {
-    promise = await validatePhoneCode(ida, code);
+    await validatePhoneCode(ida, code);
   } catch (error) {
+    const dataError = {};
+    setError({ ...dataError, code: 'Código inválido' });
     throw error;
   }
 
-  const { error } = await promise.json();
-  if (error) {
-    const dataError = {};
-    setError({ ...dataError, code: 'Código inválido' });
-  } else {
-    window.localStorage.setItem('som@ida', ida);
-    window.localStorage.setItem('som@token', token);
+  window.localStorage.setItem('som@ida', ida);
+  window.localStorage.setItem('som@token', token);
 
-    let userIDAPromise;
-    try {
-      userIDAPromise = await getIDA(ida);
-    } catch (err) {
-      throw err;
-    }
-
-    const userIDAResult = await userIDAPromise.json();
-    if (userIDAPromise.error) throw userIDAPromise.error;
-
-    dispatch({
-      type: 'SET_AUTH',
-      auth: userIDAResult.data.user,
-    });
-
-    let userResult;
-    try {
-      userResult = await getUser(ida);
-    } catch (err) {
-      throw err;
-    }
-
-    dispatch({
-      type: 'SET_USER',
-      user: userResult.data.oneUser,
-    });
-
-
-    closeModal();
-    navigationTo('/welcome');
+  let userIDAPromise;
+  try {
+    userIDAPromise = await getIDA(ida);
+  } catch (err) {
+    throw err;
   }
+  const { data } = userIDAPromise.data;
+  dispatch({
+    type: 'SET_AUTH',
+    auth: data.user,
+  });
+
+  let userResult;
+  try {
+    userResult = await getUser(ida);
+  } catch (err) {
+    throw err;
+  }
+
+  dispatch({
+    type: 'SET_USER',
+    user: userResult.data.oneUser,
+  });
+
+
+  closeModal();
+  navigationTo('/welcome');
 }
 
 export async function sendConfirmationEmail({
   ida, email, setError, setStep,
 }) {
-  let promise;
   try {
-    promise = await sendValidationEmail(ida, email);
+    await sendValidationEmail(ida, email);
   } catch (err) {
-    throw err;
-  }
+    const { error } = err.response.data;
+    const dataError = {};
+    if (error && error === 'email/invalid-email') {
+      dataError.email = 'Email inválido';
+      setError(dataError);
+    }
 
-  const { error } = await promise.json();
-  const dataError = {};
-  if (error && error === 'email/invalid-email') {
-    dataError.email = 'Email inválido';
-    setError(dataError);
-    return;
+    throw err;
   }
 
   setStep('sentEmail');
