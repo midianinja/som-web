@@ -182,7 +182,6 @@ export const nextAction = async ({
     console.log('newImage:', newImage);
     const images = newImage.data.urls;
     artistToApi.avatar = images;
-    artistToApi.avatar = {};
 
     if (songs.length) {
       const songsToUpload = songs.filter(s => !(s.id));
