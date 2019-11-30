@@ -87,7 +87,7 @@ function BasicInformationFieldset(props) {
 
   return (
     <Fieldset>
-      <Title>Informaçoões do artista</Title>
+      <Title>Informações do artista</Title>
       <MainInformationWrapper>
         <InputGroup
           error={artistStepErrors.avatar}

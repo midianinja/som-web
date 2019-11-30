@@ -75,7 +75,13 @@ const OpenSource = () => (
         <Title>O Som é Software Livre</Title>
       </TextWrapper>
     </Header>
-    <PrimaryButton customStyle={buttonStyle} color="darkGray">
+    <PrimaryButton
+      onClick={() => {
+        window.open('https://github.com/midianinja/som-web', '_blank');
+      }}
+      customStyle={buttonStyle}
+      color="darkGray"
+    >
       Contribuir
       <GitHubIcon src="/icons/github.svg" />
     </PrimaryButton>
