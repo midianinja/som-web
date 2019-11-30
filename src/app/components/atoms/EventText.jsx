@@ -31,6 +31,10 @@ const Text = styled.p`
   font-weight: 300;
   padding-bottom: 40px;
   border-bottom: solid 1px ${gray04};
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
 `;
 
 function EventText({ text }) {

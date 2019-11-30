@@ -12,7 +12,7 @@ import SubscribedArtists from '../../components/templates/event/SubscribedArtist
 import Dialog from '../../components/modals/Dialog.modal';
 import Store from '../../store/Store';
 import {
-  fetchEventData, initialLoading, loadingStatus, subscribeAction,
+  fetchEventData, initialLoading, subscribeAction,
   unsubscribeAction,
 } from './EventController';
 import { black } from '../../settings/colors';
@@ -47,7 +47,7 @@ const CoverWrapper = styled.div`
 
 const HeaderWrapper = styled.div`
   width: 100%;
-  min-height: 60vh;
+  min-height: 45vh;
 `;
 
 const Content = styled.div`
