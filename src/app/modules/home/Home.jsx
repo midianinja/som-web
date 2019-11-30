@@ -7,7 +7,7 @@ import HowItsWork from './components/HowItsWork';
 import Instructions from './components/Instructions';
 // import WhoIsSom from './components/WhoIsSom';
 import OpenSource from './components/OpenSource';
-// import Newsletter from './components/Newsletter';
+import Newsletter from './components/Newsletter';
 import Store from '../../store/Store';
 // import { purple } from '../../settings/colors';
 import { blockBodyScroll } from '../../utilities/scroll';
@@ -163,7 +163,7 @@ const Home = () => {
         <WhoIsSom />
       </PurpleWrapper> */}
       <OpenSource />
-      {/* <Newsletter /> */}
+      <Newsletter />
     </Page>
   );
 };
