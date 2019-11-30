@@ -95,6 +95,7 @@ const ArtistName = styled.h4`
 
 function renderArtists(artists) {
   return artists.map((artist) => {
+    console.log('artist:', artist);
     const src = artist && artist.avatar_image ? artist.avatar_image.mimified : '';
     return (
       <Card>
