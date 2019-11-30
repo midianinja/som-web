@@ -6,24 +6,24 @@ export async function login(username, password, setError, closeModal, history, d
   try {
     promise = await authorize(username, password);
   } catch (err) {
+    const { error } = err.response.data;
+    const dataError = {};
+
+    if (error && error === 'user/not-found') {
+      dataError.username = 'Usuário não encontrado.';
+      setError(dataError);
+    }
+
+    if (error && error === 'user/wrong-password') {
+      dataError.password = 'Senha errada.';
+      setError(dataError);
+    }
+
     throw err;
   }
 
-  const { data, error } = await promise.json();
-  const dataError = {};
-
-  if (error && error === 'user/not-found') {
-    dataError.username = 'Usuário não encontrado.';
-    setError(dataError);
-    return;
-  }
-
-  if (error && error === 'user/wrong-password') {
-    dataError.password = 'Senha errada.';
-    setError(dataError);
-    return;
-  }
-
+  const { data } = promise.data;
+  console.log(promise);
   let userIDAPromise;
   try {
     userIDAPromise = await getIDA(data.ida);

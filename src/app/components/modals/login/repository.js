@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import axios from 'axios';
 import apollo from '../../../apollo';
 import { oneUserQuery } from './queries';
 
@@ -12,28 +13,11 @@ export async function getUser(ida) {
 }
 
 export async function authorize(username, password) {
-  return fetch(`${process.env.AUTH_API_URI}/login`, {
-    method: 'POST',
-    // mode: 'no-cors', // no-cors, *cors, same-origin
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      username,
-      password,
-    }),
-  });
+  return axios.post(`${process.env.AUTH_API_URI}/login`, { username, password });
 }
 
 export async function getIDA(ida) {
-  return fetch(`${process.env.AUTH_API_URI}/user/${ida}`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  });
+  return axios.get(`${process.env.AUTH_API_URI}/user/${ida}`);
 }
 
 export const ignore = null;
