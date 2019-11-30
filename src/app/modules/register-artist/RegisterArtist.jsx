@@ -228,7 +228,7 @@ const RegisterArtist = ({ history }) => {
   const [contactStepErrors, setContactStepErrors] = useState({});
   const [socialMediaStepErrors, setSocialMediaStepErrors] = useState({});
   const [about, setAbout] = useState('');
-  const [id, setId] = useState('asd');
+  const [id, setId] = useState('');
   const [city, setCity] = useState('');
   const [integrants, setIntegrants] = useState('');
   const [country, setCountry] = useState({});
