@@ -58,20 +58,21 @@ export const fetchArtistData = async (
   setArtistLoading(false);
 };
 
-export const fetchArtistInstaImages = async (instaUri, setInstaPics, setInstagramLoading) => {
+export const fetchArtistInstaImages = async (instaUri, setInstaPics/* , setInstagramLoading */) => {
   let promise;
-  setInstagramLoading(true);
+  // setInstagramLoading(true);
 
   const instaname = instaUri.split('/').reverse()[0];
+
   try {
-    promise = await fetch(`${process.env.INSTAGRAM_API_URI}/photos/${instaname}`);
+    promise = await fetch(`${process.env.STORAGE_API_URI}/insta/photos/${instaname}`);
   } catch (e) {
     throw e;
   }
 
   const { data } = await promise.json();
   setInstaPics(data);
-  setInstagramLoading(false);
+  // setInstagramLoading(false);
 };
 
 export const follow = async (artist, user, setFollows, follows) => {

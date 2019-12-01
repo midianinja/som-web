@@ -82,7 +82,7 @@ const OpenSource = () => (
       customStyle={buttonStyle}
       color="darkGray"
     >
-      Contribuir
+      Colabore
       <GitHubIcon src="/icons/github.svg" />
     </PrimaryButton>
   </Container>
