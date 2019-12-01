@@ -79,13 +79,13 @@ const OpenSource = () => (
       /> */}
       <SocialList>
         <Social href="https://www.facebook.com/sompontovc">
-          <SocialIcon src="/icons/facebook-white.svg" alt="Acesse o Sistema Operacional da Música no Facebook" />
+          <SocialIcon src="/icons/facebook-purple.svg" alt="Acesse o Sistema Operacional da Música no Facebook" />
         </Social>
         <Social href="https://www.instagram.com/som.vc">
-          <SocialIcon src="/icons/instagram-white.svg" alt="Acesse o Sistema Operacional da Música no Instagram" />
+          <SocialIcon src="/icons/instagram-purple.svg" alt="Acesse o Sistema Operacional da Música no Instagram" />
         </Social>
         <Social href="https://twitter.com/sompontovc">
-          <SocialIcon src="/icons/twitter-white.svg" alt="Acesse o Sistema Operacional da Música no Twitter" />
+          <SocialIcon src="/icons/twitter-purple.svg" alt="Acesse o Sistema Operacional da Música no Twitter" />
         </Social>
       </SocialList>
     </Content>
