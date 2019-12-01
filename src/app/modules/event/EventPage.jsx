@@ -171,7 +171,7 @@ const EventPage = ({ match, history }) => {
               <ProductorCardWrapper>
                 <ProductorCard productor={event.productor} />
               </ProductorCardWrapper>
-              <SubscribedArtists artists={event.subscribers} />
+              <SubscribedArtists artistClick={artistId => history.push(`/artist/${artistId}`)} artists={event.subscribers} />
             </ColumnWrapper>
           </Content>
           {dialog.title ? (
