@@ -8,15 +8,15 @@ import {
 } from '../../settings/colors';
 import { allowBodyScroll } from '../../utilities/scroll';
 
-const getLinks = () => [
+const getLinks = artist => [
   {
     href: '/',
     label: 'Início',
   },
-  // {
-  //   href: artist ? `/artist/${artist.id}` : '/register-artist',
-  //   label: 'Meu perfil',
-  // },
+  {
+    href: artist ? `/artist/${artist.id}` : '/register-artist',
+    label: 'Meu perfil',
+  },
   // {
   //   href: '/settings',
   //   label: 'Configurações',
