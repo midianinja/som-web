@@ -11,7 +11,7 @@ import Instructions from './components/Instructions';
 import OpenSource from './components/OpenSource';
 import Newsletter from './components/Newsletter';
 import Store from '../../store/Store';
-// import { purple } from '../../settings/colors';
+import { purple, white, secondaryBlack, darkGray } from '../../settings/colors';
 import { blockBodyScroll } from '../../utilities/scroll';
 
 const Page = styled.div`
@@ -78,6 +78,28 @@ const RedEllipse = styled.img`
   
   @media (min-width: 768px) {
     left: 0px;
+  }
+`;
+
+const TermsWrapper = styled.div`
+  width: 100%;
+  padding: 20px;
+  background-color: ${secondaryBlack};
+  text-align: center;
+`;
+
+const Terms = styled.a`
+  width: 100%;
+  font-size: 1em;
+  line-height: 1em;
+  font-weight: 300;
+  text-decoration: underline;
+  display: block;
+  color: ${darkGray};
+  cursor: pointer;
+
+  &:hover {
+    color: ${purple}; 
   }
 `;
 
@@ -174,6 +196,18 @@ const Home = ({ history }) => {
       </PurpleWrapper> */}
       <OpenSource />
       <Newsletter />
+      <TermsWrapper>
+        <Terms
+          onClick={() => {
+            window.open(
+              'https://s3-sa-east-1.amazonaws.com/festivalninja.org/img/termos-de-use-e-politicas-de-privacidade-som.pdf',
+              '_blank',
+            );
+          }}
+        >
+          Termos de uso e políticas de privacidade
+        </Terms>
+      </TermsWrapper>
     </Page>
   );
 };
