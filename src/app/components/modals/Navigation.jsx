@@ -8,19 +8,19 @@ import {
 } from '../../settings/colors';
 import { allowBodyScroll } from '../../utilities/scroll';
 
-const getLinks = artist => [
+const getLinks = () => [
   {
     href: '/',
     label: 'Início',
   },
-  {
-    href: artist ? `/artist/${artist.id}` : '/register-artist',
-    label: 'Meu perfil',
-  },
-  {
-    href: '/settings',
-    label: 'Configurações',
-  },
+  // {
+  //   href: artist ? `/artist/${artist.id}` : '/register-artist',
+  //   label: 'Meu perfil',
+  // },
+  // {
+  //   href: '/settings',
+  //   label: 'Configurações',
+  // },
 ];
 
 const Wrapper = styled.div`

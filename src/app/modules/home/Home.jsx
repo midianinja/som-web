@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 import SlimButton from '../../components/atoms/SlimButton';
 // import About from './components/About';
 import Apresentation from './components/Apresentation';
@@ -133,8 +135,8 @@ const showRegister = (dispatch) => {
   dispatch({ type: 'SHOW_REGISTER_MODAL' });
 };
 
-const Home = () => {
-  const { dispatch } = useContext(Store);
+const Home = ({ history }) => {
+  const { state, dispatch } = useContext(Store);
   return (
     <Page>
       <LoginButtonContainer>
@@ -146,7 +148,15 @@ const Home = () => {
           Fazer login
         </SlimButton>
       </LoginButtonContainer>
-      <Apresentation onClick={() => showRegister(dispatch)} />
+      <Apresentation
+        onClick={() => {
+          if (state.auth) {
+            history.push('/event/5d3a31e9dd3e02dd26be4fd2');
+          } else {
+            showRegister(dispatch);
+          }
+        }}
+      />
       <FiguresContainer>
         <RedEllipse src="/icons/red-ellipse.svg" />
         <YellowPolygon src="/icons/yellow-polygon.svg" />
@@ -168,4 +178,12 @@ const Home = () => {
   );
 };
 
-export default Home;
+const historyShape = {
+  push: PropTypes.func.isRequired,
+};
+
+Home.propTypes = {
+  history: PropTypes.shape(historyShape).isRequired,
+};
+
+export default withRouter(Home);
