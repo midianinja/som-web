@@ -13,7 +13,7 @@ import StepFormFooter from '../../components/organisms/StepFormFooter.organism';
 import {
   handleACMusicalStyle, steps, handleMusicalStyleSelect,
   fetchMusicalStyleOptions, nextAction, skipAction, uploadDocumentFile,
-  fetchLocations, handleCountrySelect, handleStateSelect,
+  fetchLocations, handleCountrySelect, handleStateSelect, deleteTag,
 } from './registerArtist.controller';
 import UploadSongs from '../../components/templates/register-artist/UploadSongs';
 import {
@@ -103,6 +103,7 @@ const renderArtistInfos = ({
   artistStepErrors,
   country,
   setCity,
+  deleteTag,
   states,
   setIntegrants,
   setName,
@@ -121,6 +122,7 @@ const renderArtistInfos = ({
   <BasicInformationFieldset
     artistStepErrors={artistStepErrors}
     values={values}
+    deleteTag={deleteTag}
     countries={countries}
     states={states}
     handleAvatarChange={({ target }) => setAvatar({
@@ -291,6 +293,11 @@ const RegisterArtist = ({ history }) => {
         {renderArtistInfos({
           values,
           setAvatar,
+          deleteTag: id => deleteTag({
+            id,
+            tags: musicalStyles,
+            setTag: setMusicalStyles,
+          }),
           setAbout,
           artistStepErrors,
           setCity,

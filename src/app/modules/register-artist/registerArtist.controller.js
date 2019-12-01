@@ -25,6 +25,11 @@ const mapArtist = (artist, user) => ({
   youtube: artist.youtube,
 });
 
+export const deleteTag = ({ id, tags, setTag }) => {
+  const myTags = tags.filter(tag => tag.id !== id);
+  setTag(myTags);
+};
+
 export const handleCountrySelect = async ({ data, setStates, setCountry }) => {
   const countries = await apollo.query({
     query: allStateQuery,

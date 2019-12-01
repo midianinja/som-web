@@ -76,6 +76,7 @@ function BasicInformationFieldset(props) {
     state,
     states,
     handleAboutChange,
+    deleteTag,
     handleAvatarChange,
     handleMusicalStyleChange,
     handleMusicalStyleSelect,
@@ -127,7 +128,7 @@ function BasicInformationFieldset(props) {
               handleChange={handleMusicalStyleChange}
               handleSelect={handleMusicalStyleSelect}
             />
-            <TagList data={values.musicalStyles} customStyle={musicalGenresCustomStyle} />
+            <TagList handleClose={deleteTag} data={values.musicalStyles} customStyle={musicalGenresCustomStyle} />
           </InputGroup>
         </TextInpustWrapper>
       </MainInformationWrapper>
@@ -205,6 +206,7 @@ BasicInformationFieldset.defaultProps = {
 BasicInformationFieldset.propTypes = {
   countries: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleAboutChange: PropTypes.func.isRequired,
+  deleteTag: PropTypes.func.isRequired,
   handleAvatarChange: PropTypes.func.isRequired,
   handleCityChange: PropTypes.func.isRequired,
   handleCountrySelect: PropTypes.func.isRequired,
