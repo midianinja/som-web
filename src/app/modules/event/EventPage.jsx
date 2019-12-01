@@ -83,7 +83,7 @@ const EventImage = styled.img`
 const EventPage = ({ match, history }) => {
   const [loading, setLoading] = useState({ ...initialLoading });
   const [event, setEvent] = useState(null);
-  const [dialog, setDialog] = useState(null);
+  const [dialog, setDialog] = useState({});
 
   useEffect(() => {
     fetchEventData(
@@ -94,7 +94,7 @@ const EventPage = ({ match, history }) => {
   if (!event) {
     return (
       <Container>
-        {dialog ? (
+        {dialog.title ? (
           <Dialog
             isOpen
             title={dialog.title}
@@ -144,7 +144,7 @@ const EventPage = ({ match, history }) => {
             logged={() => {
               console.log(state);
               return !!state.user;
-            }} 
+            }}
           />
           <CoverWrapper>
             <Cover cover={event.cover}>
@@ -174,9 +174,10 @@ const EventPage = ({ match, history }) => {
               <SubscribedArtists artists={event.subscribers} />
             </ColumnWrapper>
           </Content>
-          {dialog ? (
+          {dialog.title ? (
             <Dialog
-              isOpen={true}
+              closeAction={() => setDialog({})}
+              isOpen
               title={dialog.title}
               icon={dialog.icon}
               description={dialog.description}
