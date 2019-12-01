@@ -39,12 +39,10 @@ export const uploadSongToStorage = ({ file, id, updateProgress }) => axios({
   method: 'POST',
   url: `${process.env.STORAGE_API_URI}/song/upload/`,
   headers: {},
-  data: {
-    data: JSON.stringify({
-      file,
-      id,
-    }),
-  },
+  data: JSON.stringify({
+    file,
+    id,
+  }),
   // `onUploadProgress` allows handling of progress events for uploads
   onUploadProgress: updateProgress,
 });
