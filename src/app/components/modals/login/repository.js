@@ -1,17 +1,22 @@
-import fetch from 'node-fetch';
+import axios from 'axios';
+import apollo from '../../../apollo';
+import { oneUserQuery } from './queries';
+
+export async function getUser(ida) {
+  return apollo.query({
+    query: oneUserQuery,
+    variables: {
+      ida,
+    },
+  });
+}
 
 export async function authorize(username, password) {
-  return fetch(`${process.env.AUTH_API_URI}/login`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      username,
-      password,
-    }),
-  });
+  return axios.post(`${process.env.AUTH_API_URI}/login`, { username, password });
+}
+
+export async function getIDA(ida) {
+  return axios.get(`${process.env.AUTH_API_URI}/user/${ida}`);
 }
 
 export const ignore = null;

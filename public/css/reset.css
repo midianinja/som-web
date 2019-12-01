@@ -1,7 +1,8 @@
 *{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	outline: none;
 }
 
 html, body, header, main, nav, footer, article, blockquote, 

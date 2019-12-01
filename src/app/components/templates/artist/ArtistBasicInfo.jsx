@@ -5,7 +5,7 @@ import Avatar from '../../atoms/Avatar.atom';
 import Socials from '../../organisms/Socials';
 import PrimaryButton from '../../atoms/PrimaryButton';
 import LinkButton from '../../atoms/LinkButton';
-import { white, white30 } from '../../../settings/colors';
+import { white, white30, purple } from '../../../settings/colors';
 
 const Wrapper = styled.section`
   display: inline-block;
@@ -14,7 +14,9 @@ const Wrapper = styled.section`
   padding-bottom: 40px;
 
   @media (min-width: 1024px) {
-    position: fixed;
+    position: sticky;
+    top: 150px;
+    align-self: flex-start;
   }
 `;
 
@@ -31,6 +33,7 @@ const Title = styled.h1`
     padding-left: 10px;
     padding-right: 0px;
     margin-top: 0;
+    max-width: 200px;
   }
 `;
 
@@ -47,6 +50,14 @@ const ConnectionsWrapper = styled.div``;
 const buttonCustomStyled = `
   width: 150px;
   margin-right: 15px;
+`;
+
+const followButtonCustomStyled = `
+  width: 150px;
+  margin-right: 15px;
+  border: solid 1px ${purple};
+  color: ${purple};
+  background-color: transparent;
 `;
 
 const avatarCustomStyled = `
@@ -87,10 +98,16 @@ const ActionWrapper = styled.div`
 `;
 
 function ArtistBasicInfo(props) {
-  const { name, avatar, followers, following, isFollowing, about } = props;
+  const {
+    name, avatar, followers, following,
+    about, facebook, instagram, twitter,
+    followToggle, isFollowing,
+  } = props;
+
+  console.log(isFollowing);
 
   return (
-    <Wrapper id='infos'>
+    <Wrapper id="infos">
       <Avatar customStyle={avatarCustomStyled} src={avatar} alt={name} />
       <TitleAndFollowWrapper>
         <Title>{name}</Title>
@@ -107,10 +124,24 @@ function ArtistBasicInfo(props) {
       </TitleAndFollowWrapper>
       <About>{about}</About>
       <ActionWrapper>
-        <PrimaryButton customStyle={buttonCustomStyled}>Seguir</PrimaryButton>
-        <LinkButton color='white'>Ler release</LinkButton>
+        {
+          isFollowing ? (
+            <PrimaryButton onClick={followToggle} customStyle={followButtonCustomStyled}>
+              Deixar de seguir
+            </PrimaryButton>
+          ) : (
+            <PrimaryButton onClick={followToggle} customStyle={buttonCustomStyled}>
+              Seguir
+            </PrimaryButton>
+          )
+        }
+        <LinkButton color="white">Ler release</LinkButton>
       </ActionWrapper>
-      <Socials />
+      <Socials
+        facebook={facebook}
+        instagram={instagram}
+        twitter={twitter}
+      />
     </Wrapper>
   );
 }
@@ -118,10 +149,14 @@ function ArtistBasicInfo(props) {
 ArtistBasicInfo.propTypes = {
   about: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
+  facebook: PropTypes.string.isRequired,
+  instagram: PropTypes.string.isRequired,
+  twitter: PropTypes.string.isRequired,
   followers: PropTypes.number.isRequired,
   following: PropTypes.number.isRequired,
-  isFollowing: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
+  followToggle: PropTypes.func.isRequired,
+  isFollowing: PropTypes.bool.isRequired,
 };
 
 export default ArtistBasicInfo;

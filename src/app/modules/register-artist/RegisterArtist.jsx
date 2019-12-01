@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-
+import Store from '../../store/Store';
 import StepFormHeader from '../../components/organisms/stepFormHeader.organism';
 import BasicInformationFieldset from '../../components/templates/register-artist/BasicInformationFieldset';
 import ContactAndSongsFieldset from '../../components/templates/register-artist/ContactAndSongsFieldset';
@@ -10,13 +11,9 @@ import SocialsFieldset from '../../components/templates/register-artist/SocialsF
 import { black, white } from '../../settings/colors';
 import StepFormFooter from '../../components/organisms/StepFormFooter.organism';
 import {
-  handleACMusicalStyle,
-  steps,
-  handleMusicalStyleSelect,
-  fetchMusicalStyleOptions,
-  nextAction,
-  skipAction,
-  uploadDocumentFile,
+  handleACMusicalStyle, steps, handleMusicalStyleSelect,
+  fetchMusicalStyleOptions, nextAction, skipAction, uploadDocumentFile,
+  fetchLocations, handleCountrySelect, handleStateSelect, deleteTag,
 } from './registerArtist.controller';
 import UploadSongs from '../../components/templates/register-artist/UploadSongs';
 import {
@@ -104,25 +101,39 @@ const renderArtistInfos = ({
   setAvatar,
   setAbout,
   artistStepErrors,
+  country,
   setCity,
+  deleteTag,
+  states,
   setIntegrants,
   setName,
   setCountry,
   setState,
+  countries,
   musicalStylesOptions,
   musicalStyles,
   setMusicalStyle,
+  state,
   setMusicalStylePredict,
   setMusicalStyles,
   setArtistStepErrors,
+  setStates,
 }) => (
   <BasicInformationFieldset
     artistStepErrors={artistStepErrors}
     values={values}
+    deleteTag={deleteTag}
+    countries={countries}
+    states={states}
     handleAvatarChange={({ target }) => setAvatar({
       url: URL.createObjectURL(target.files[0]),
+      urls: null,
       file: target.files[0],
     })}
+    country={country}
+    state={state}
+    handleCountrySelect={data => handleCountrySelect({ data, setStates, setCountry })}
+    handleStateSelect={data => handleStateSelect({ data, setState })}
     setArtistStepErrors={setArtistStepErrors}
     handleAboutChange={({ target }) => setAbout(target.value)}
     handleCityChange={({ target }) => setCity(target.value)}
@@ -178,6 +189,8 @@ const renderSocialMedia = ({
   instagram,
   twitter,
   youtube,
+  setSpotify,
+  spotify,
   setSocialMediaStepErrors,
   socialMediaStepErrors,
 }) => {
@@ -191,11 +204,13 @@ const renderSocialMedia = ({
       handleInstagramChange={({ target }) => setInstagram(target.value)}
       handleTwitterChange={({ target }) => setTwitter(target.value)}
       handleYoutubeChange={({ target }) => setYoutube(target.value)}
+      handleSpotifyChange={({ target }) => setSpotify(target.value)}
       values={{
         facebook,
         instagram,
         twitter,
         youtube,
+        spotify,
       }}
     />
   );
@@ -207,13 +222,15 @@ const renderFiles = ({ visibles, artist }) => {
 };
 
 const renderUploadSongs = ({
-  songs, setSongs, authId, visibles,
+  songs, setSongs, authId,
+  visibles,
 }) => {
   if (!visibles.files || !authId) return null;
   return <UploadSongs authId={authId} songs={songs} setSongs={setSongs} />;
 };
 
-const RegisterArtist = () => {
+const RegisterArtist = ({ history }) => {
+  const store = useContext(Store);
   const [artistStepErrors, setArtistStepErrors] = useState({});
   const [contactStepErrors, setContactStepErrors] = useState({});
   const [socialMediaStepErrors, setSocialMediaStepErrors] = useState({});
@@ -231,13 +248,18 @@ const RegisterArtist = () => {
   const [musicalStyle, setMusicalStyle] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [facebook, setFacebook] = useState('');
-  const [instagram, setInstagram] = useState('');
-  const [twitter, setTwitter] = useState('');
-  const [youtube, setYoutube] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [facebook, setFacebook] = useState('https://www.facebook.com/');
+  const [instagram, setInstagram] = useState('https://www.instagram.com/');
+  const [twitter, setTwitter] = useState('https://twitter.com/');
+  const [spotify, setSpotify] = useState('');
+  const [youtube, setYoutube] = useState('https://www.youtube.com/');
   const [songs, setSongs] = useState([
     /* { ...initialSong } */
   ]);
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+
   const [visibles, setVisibles] = useState({
     artist: true,
     music: false,
@@ -249,6 +271,10 @@ const RegisterArtist = () => {
 
   useEffect(() => {
     if (!musicalStylesOptions.length) {
+      fetchMusicalStyleOptions(setMusicalStylesOptions);
+    }
+    if (!countries.length && !states.length) {
+      fetchLocations({ setCountries, setStates });
       fetchMusicalStyleOptions(setMusicalStylesOptions);
     }
   }, [musicalStylesOptions]);
@@ -272,13 +298,20 @@ const RegisterArtist = () => {
         {renderArtistInfos({
           values,
           setAvatar,
+          deleteTag: id => deleteTag({
+            id,
+            tags: musicalStyles,
+            setTag: setMusicalStyles,
+          }),
           setAbout,
           artistStepErrors,
           setCity,
           setIntegrants,
           setName,
-          setCountry,
+          country,
+          countries,
           setState,
+          state,
           handleACMusicalStyle,
           handleMusicalStyleSelect,
           musicalStylesOptions,
@@ -286,6 +319,9 @@ const RegisterArtist = () => {
           setMusicalStyle,
           setMusicalStylePredict,
           setMusicalStyles,
+          states,
+          setStates,
+          setCountry,
           setArtistStepErrors,
         })}
         {renderContacts({
@@ -303,10 +339,12 @@ const RegisterArtist = () => {
           setInstagram,
           setTwitter,
           setYoutube,
+          setSpotify,
           facebook,
           instagram,
           twitter,
           youtube,
+          spotify,
           setSocialMediaStepErrors,
           socialMediaStepErrors,
         })}
@@ -330,13 +368,14 @@ const RegisterArtist = () => {
           musicalStyle, phone, email, facebook, instagram,
           twitter, youtube, visibles, setVisibles,
           setArtistStepErrors, setContactStepErrors,
-          songs, setSongs,
+          songs, setSongs, store, history, setLoading, spotify, setAvatar,
         })}
-        customStyle={visibles.files && id ? `background-color: ${white}` : ''}
+        loading={loading}
+        customStyle={visibles.files && id ? `background-color: ${white};` : ''}
         skipAction={() => skipAction(setVisibles, visibles)}
       />
     </Form>
   );
 };
 
-export default RegisterArtist;
+export default withRouter(RegisterArtist);

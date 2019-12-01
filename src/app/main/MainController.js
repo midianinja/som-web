@@ -3,9 +3,7 @@ import { getUser } from './MainRepository';
 
 export const verify = async (dispatch, setIDA) => {
   const ida = window.localStorage.getItem('som@ida');
-  console.log('ida: ', ida);
   const token = window.localStorage.getItem('som@token');
-  console.log('token: ', token);
 
   if (!ida || !token) {
     window.localStorage.setItem('som@ida', '');
@@ -13,10 +11,8 @@ export const verify = async (dispatch, setIDA) => {
   }
 
   let verified;
-
   try {
     verified = await verifyAuth(token);
-    console.log('verified: ', verified);
   } catch (err) {
     dispatch({ type: 'STOP_VERIFY_LOADING' });
     throw err;
@@ -44,9 +40,8 @@ export const fetchLoggedUser = async (ida, dispatch) => {
 
   try {
     response = await getUser(ida);
-    console.log('response: ', response);
   } catch (err) {
-    console.log('err: ', {err});
+    console.log('err: ', { err });
     throw err;
   }
 

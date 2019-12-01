@@ -11,14 +11,16 @@ import sentEmailFieldset from './components/SentEmailFieldset';
 import sentPhoneFieldset from './components/SentPhoneFieldset';
 import {
   usernameValidation, passwordValidation, getPasswordPoint,
-  phoneValidation,
+  phoneValidation, emailValidation,
 } from './validations';
 import {
   createAccount, generatePhoneCodeSubmit, validatePhoneCodeSubmit,
+  sendConfirmationEmail,
 } from './controller';
 import { purple, black50 } from '../../../settings/colors';
 import Store from '../../../store/Store';
 import { allowBodyScroll } from '../../../utilities/scroll';
+import Loading from '../../atoms/Loading.atom';
 
 const RegisterWrapper = styled.section`
   display: ${(props) => {
@@ -90,6 +92,7 @@ function Register({ history }) {
   const [code, setCode] = useState('');
   const [method, setMethod] = useState('');
   const [error, setError] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -139,7 +142,7 @@ function Register({ history }) {
     if (inputCode.length === 6) {
       validatePhoneCodeSubmit({
         ida, code: inputCode, setError, navigationTo: history.push, token,
-        closeModal,
+        closeModal, dispatch, setLoading,
       });
     }
 
@@ -152,6 +155,7 @@ function Register({ history }) {
         step === 'account' ? createAccountFieldset(
           username, handleUsernameChange, password, handlePasswordChange, error,
         ) : null),
+      prev: null,
       next: 'methods',
       validation: () => (
         usernameValidation(username) && passwordValidation(password)
@@ -160,26 +164,32 @@ function Register({ history }) {
     },
     email: {
       render: () => emailFieldset(email, setEmail, error),
-      validation: () => true,
+      validation: () => emailValidation(email),
+      submit: sendConfirmationEmail,
+      prev: 'methods',
       next: 'sentEmail',
     },
     phone: {
       render: () => phoneFieldset(phone, handlePhoneChange, error),
       validation: () => phoneValidation(phone),
       next: 'sentPhone',
+      prev: 'methods',
       submit: generatePhoneCodeSubmit,
     },
     methods: {
       render: () => selectConfirmationMathodFieldset(method, setMethod, error),
       validation: () => true,
+      prev: 'account',
       next: method === 'phone' ? 'phone' : 'email',
     },
     sentEmail: {
-      render: () => sentEmailFieldset(() => setStep('email')),
+      render: () => sentEmailFieldset(() => setStep('email'), closeModal),
+      validation: () => true,
     },
     sentPhone: {
-      render: () => sentPhoneFieldset(code, handleCodeChange, () => setStep('phone'), error),
+      render: () => sentPhoneFieldset(code, handleCodeChange, () => setStep('phone'), error, loading),
       validation: () => code.length === 6,
+      prev: 'phone',
       submit: validatePhoneCodeSubmit,
     },
   };
@@ -187,31 +197,46 @@ function Register({ history }) {
   const data = {
     ida, step, username, password, email, phone, code, method, error,
     setIDA, setStep, setUsername, setPassword, setEmail, setPhone, setCode, setMethod, setError,
-    token, setToken,
+    token, setToken, dispatch, loading, setLoading,
   };
   const field = fields[step];
   return (
     <RegisterWrapper id="register" isOpen={state.modals.register}>
       <Container>
         <ExitWrapper>
-          <ExitIcon onClick={closeModal} src="/icons/arrow_forward_left.svg" />
+          <ExitIcon
+            onClick={() => {
+              if (field.prev) setStep(field.prev);
+              else closeModal();
+            }}
+            src="/icons/arrow_forward_left.svg"
+          />
         </ExitWrapper>
-        <Form autoComplete="off">
+        <Form
+          autoComplete="off"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const { submit, next } = field;
+            return submit ? submit(data) : setStep(next);
+          }}
+        >
           <Fieldset>
             {field.render()}
           </Fieldset>
           <Actions hide={!field.next}>
-            <PrimaryButton
-              color="white"
-              type="button"
-              disabled={!field.validation()}
-              onClick={() => {
-                const { submit, next } = field;
-                return submit ? submit(data) : setStep(next);
-              }}
-            >
-              Próximo
-            </PrimaryButton>
+            {
+              loading ? (
+                <Loading />
+              ) : (
+                <PrimaryButton
+                  color="white"
+                  type="submit"
+                  disabled={!field.validation()}
+                >
+                  Próximo
+                </PrimaryButton>
+              )
+            }
           </Actions>
         </Form>
       </Container>

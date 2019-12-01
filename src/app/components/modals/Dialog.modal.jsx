@@ -72,29 +72,55 @@ const BackButton = styled.a`
   color: ${purple};
 `;
 
+const CloseIcon = styled.img`
+  width: 22px;
+  height: 22px;
+  margin-top: 5px;
+  margin-top: 20px;
+  margin-right: 20px;
+  float: right;
+  cursor pointer;
+`;
 
 const DialogModal = ({
-  title, description, confirmAction, disagreeAction, agreeText, disagreeText, isOpen,
+  title, description, confirmAction,
+  disagreeAction, agreeText, disagreeText,
+  isOpen, closeAction,
   icon,
-}) => (
-  <ModalWrapper isOpen={isOpen}>
-    <Modal>
-      <IconWrapper>
-        <Icon src={icon} alt={title} />
-      </IconWrapper>
-      <Content>
-        <Title>{title}</Title>
-        <Message>
-          {description}
-        </Message>
-        <Actions>
-          {disagreeAction ? <BackButton type="button" onClick={disagreeAction}>{disagreeText}</BackButton> : null}
-          {confirmAction ? <PrimaryButton type="button" onClick={confirmAction}>{agreeText}</PrimaryButton> : null}
-        </Actions>
-      </Content>
-    </Modal>
-  </ModalWrapper>
-);
+}) => {
+  console.log('closeAction:', closeAction);
+  return (
+    <ModalWrapper isOpen={isOpen}>
+      <Modal>
+        {
+          closeAction
+            ? (
+              <CloseIcon
+                color="#000"
+                src="/icons/x.svg"
+                alt="botão de cancelar"
+                onClick={() => closeAction()}
+              />
+            )
+            : null
+        }
+        <IconWrapper>
+          <Icon src={icon} alt={title} />
+        </IconWrapper>
+        <Content>
+          <Title>{title}</Title>
+          <Message>
+            {description}
+          </Message>
+          <Actions>
+            {disagreeAction ? <BackButton type="button" onClick={disagreeAction}>{disagreeText}</BackButton> : null}
+            {confirmAction ? <PrimaryButton type="button" onClick={confirmAction}>{agreeText}</PrimaryButton> : null}
+          </Actions>
+        </Content>
+      </Modal>
+    </ModalWrapper>
+  )
+};
 
 DialogModal.propTypes = {
   title: PropTypes.string,
@@ -103,6 +129,7 @@ DialogModal.propTypes = {
   agreeText: PropTypes.string,
   disagreeText: PropTypes.string,
   confirmAction: PropTypes.func.isRequired,
+  closeAction: PropTypes.func.isRequired,
   disagreeAction: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
 };

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Store from '../../store/Store';
 import {
@@ -7,19 +8,19 @@ import {
 } from '../../settings/colors';
 import { allowBodyScroll } from '../../utilities/scroll';
 
-const links = [
+const getLinks = artist => [
   {
-    href: '/',
+    href: '/event/5d3a31e9dd3e02dd26be4fd2',
     label: 'Início',
   },
   {
-    href: '/me',
+    href: artist ? `/artist/${artist.id}` : '/register-artist',
     label: 'Meu perfil',
   },
-  {
-    href: '/settings',
-    label: 'Configurações',
-  },
+  // {
+  //   href: '/settings',
+  //   label: 'Configurações',
+  // },
 ];
 
 const Wrapper = styled.div`
@@ -73,6 +74,7 @@ const Logout = styled.a`
   display: block;
   margin-top: 40px;
   color: ${black};
+  cursor: pointer;
 
   &:hover {
     color: ${purple}; 
@@ -91,15 +93,16 @@ const ExitButton = styled.img`
   }
 `;
 
-function renderLinks() {
-  return links.map(({ href, label }) => (
+function renderLinks(artist = {}) {
+  return getLinks(artist).map(({ href, label }) => (
     <Link href={href}>{label}</Link>
   ));
 }
 
-function Navigation() {
+function Navigation({ history }) {
   const { state, dispatch } = useContext(Store);
-
+  console.log('state:', state);
+  if (!state.user) return null;
   return (
     <Wrapper isOpen={state.modals.navigation}>
       <Nav>
@@ -110,11 +113,40 @@ function Navigation() {
             dispatch({ type: 'CLOSE_MODAL' });
           }}
         />
-        {renderLinks()}
-        <Logout>Sair</Logout>
+        {renderLinks(state.user.artist)}
+        <Logout
+          onClick={() => {
+            window.localStorage.setItem('som@ida', '');
+            window.localStorage.setItem('som@token', '');
+
+            dispatch({
+              type: 'SET_USER',
+              user: null,
+            });
+
+            dispatch({
+              type: 'SET_AUTH',
+              auth: null,
+            });
+
+            allowBodyScroll();
+            dispatch({ type: 'CLOSE_MODAL' });
+            history.push('/');
+          }}
+        >
+          Sair
+        </Logout>
       </Nav>
     </Wrapper>
   );
 }
 
-export default Navigation;
+const historyShape = {
+  push: PropTypes.func.isRequired,
+};
+
+Navigation.propTypes = {
+  history: PropTypes.shape(historyShape).isRequired,
+};
+
+export default withRouter(Navigation);

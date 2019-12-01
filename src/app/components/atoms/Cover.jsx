@@ -19,6 +19,7 @@ const Cover = styled.div`
       const { cover } = props;
       return cover ? `background-image: url('${cover}');` : '';
     }}
+    background-position: center;
     background-size: cover;
     top: 0;
     left: 0;

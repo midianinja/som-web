@@ -48,6 +48,11 @@ const Logo = styled.img`
 const BurgerButton = styled.div`
   width: 22px;
   cursor: pointer;
+  
+  ${(props) => {
+    const { hide } = props;
+    return hide ? 'display: none;' : '';
+  }}
 `;
 
 const Line = styled.span`
@@ -62,13 +67,14 @@ const Line = styled.span`
 `;
 
 function Header({ customStyle }) {
-  const { dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
 
   return (
     <HeaderComponent customStyle={customStyle}>
       <Wrapper>
         <Logo src="/images/logo.svg" alt="SOM - Sistema Operacional da Música" />
         <BurgerButton
+          hide={!state.auth}
           onClick={() => {
             blockBodyScroll();
             dispatch({ type: 'SHOW_NAVIGATION_MODAL' });
@@ -84,6 +90,7 @@ function Header({ customStyle }) {
 }
 Header.propTypes = {
   customStyle: PropTypes.string.isRequired,
+  logged: PropTypes.bool.isRequired,
 };
 
 export default Header;

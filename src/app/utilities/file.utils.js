@@ -37,7 +37,7 @@ export const uploadPdfDocumentToStorage = ({ file, id, fileName }) => axios({
 
 export const uploadSongToStorage = ({ file, id, updateProgress }) => axios({
   method: 'POST',
-  url: 'http://192.168.1.13:3000/song/upload/',
+  url: `${process.env.STORAGE_API_URI}/song/upload/`,
   headers: {},
   data: {
     file,

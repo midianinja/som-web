@@ -20,6 +20,7 @@ const SongsWrapper = styled.div`
 
 const songCardStyle = `
   max-width: 350px;
+  width: 100%;
 `;
 
 const Title = styled.h2`
@@ -58,7 +59,6 @@ const renderSongs = (songs, setSongs, authId, titleBlurAction) => {
 
     try {
       const file64 = await getBase64(file);
-      // console.log('file64: ', file64);
       const uploadedSong = await uploadSongToStorage({ file: file64, id: authId, updateProgress });
       copySong.file = file;
       copySong.title = file.name.replace('.mp3', '').replace('_', ' ');
@@ -85,7 +85,6 @@ const renderSongs = (songs, setSongs, authId, titleBlurAction) => {
 
   return songs.map((song, key) => {
     const index = key;
-    console.log('loadings: ', loadings);
     return (
       <MySongCard
         customStyle={songCardStyle}
@@ -101,7 +100,10 @@ const renderSongs = (songs, setSongs, authId, titleBlurAction) => {
   });
 };
 
-const UploadSongs = ({ songs, setSongs, authId, titleBlurAction }) => {
+const UploadSongs = ({
+  songs, setSongs, authId,
+  titleBlurAction,
+}) => {
   const handleAddSong = () => {
     const copySongs = [...songs];
     copySongs.push({ ...initialSong });

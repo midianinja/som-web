@@ -8,7 +8,7 @@ const List = styled.div`
   overflow-y: auto;
   flex-wrap: wrap;
 
-  ${(props) => props.customStyle}
+  ${props => props.customStyle}
 `;
 
 /**
@@ -17,7 +17,9 @@ const List = styled.div`
  * @returns React Component array
  */
 function getItems(data, handleClose) {
-  return data.map(({ color, text, id }) => <Tag text={text} id={id} color={color} handleClose={handleClose} />);
+  return data.map(
+    ({ color, text, id }) => <Tag text={text} id={id} color={color} handleClose={handleClose} />
+  );
 }
 
 /**

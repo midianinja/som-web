@@ -1,22 +1,18 @@
+import axios from 'axios';
+
 export const verifyAuth = async (token) => {
+  let verification;
   try {
-    const verification = await fetch(`${process.env.AUTH_API_URI}/validate-token`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        token,
-      }),
-    }).then(res => res.json());
-    if (verification.error) throw new Error(JSON.stringify({ error: verification.error }));
-    return verification;
+    verification = await axios.post(`${process.env.AUTH_API_URI}/validate-token`, {
+      token,
+    });
   } catch (err) {
     window.localStorage.setItem('som@ida', '');
     window.localStorage.setItem('som@token', '');
-    return undefined;
+    return err.response.error;
   }
+
+  return verification.data;
 };
 
 export default verifyAuth;

@@ -1,6 +1,7 @@
 import apollo from '../../apollo';
 import { getOneEventQuery } from './event.queries';
 import { subscribeEvent, unsubscribeEvent } from './EventRepository';
+import { allowBodyScroll } from '../../utilities/scroll';
 
 export const loadingStatus = {
   LOADDED: 0,
@@ -77,21 +78,28 @@ export const subscribeAction = async (
     return;
   }
 
-  if (!user.artists || user.artists.length === 0) {
+  if (!user.artist) {
     setDialog({
       title: 'Cadastro incompleto',
       icon: '/icons/guita-error.svg',
       description: 'Para se escrever em eventos, você precisa preencher os dados obrigatórios.',
       agreeText: 'Cadastrar',
       disagreeText: 'Voltar',
-      confirmAction: () => history.push('/register-artist'),
-      disagreeAction: () => setDialog(null),
+      confirmAction: () => {
+        allowBodyScroll();
+        history.push('/register-artist');
+      },
+      disagreeAction: () => {
+        allowBodyScroll();
+        setDialog(null);
+      },
     });
     return;
   }
 
   try {
-    await subscribeEvent(event.id, user.artists[0].id);
+    const resp = await subscribeEvent(event.id, user.artist.id);
+    console.log('resp:', resp);
   } catch (err) {
     throw err;
   }
@@ -100,26 +108,31 @@ export const subscribeAction = async (
     title: 'Pronto!',
     icon: '/icons/yeah.svg',
     description: `Você está inscrito no festival ${event.name}. Fique ligado no SOM para receber novas informações.`,
-    disagreeText: 'Voltar para a home',
-    disagreeAction: () => history.push('/'),
+    disagreeText: 'Ver mais eventos',
+    disagreeAction: () => {
+      allowBodyScroll();
+      setDialog({});
+    },
   });
 
   const subs = [...event.subscribers];
+  console.log('user.artists[0].id:', user.artists);
   subs.push(user.artists[0].id);
   const newEvent = { ...event };
   newEvent.subscribers = subs;
+  console.log('newEvent:', newEvent);
   setEvent(newEvent);
 };
 
 export const unsubscribeAction = async (user, event, setEvent) => {
   try {
-    await unsubscribeEvent(event.id, user.artists[0].id);
+    await unsubscribeEvent(event.id, user.artist.id);
   } catch (err) {
     throw err;
   }
 
   const index = event.subscribers
-    .findIndex(sub => sub === user.artists[0].id);
+    .findIndex(sub => sub === user.artist.id);
 
   const subs = [...event.subscribers];
   subs.splice(index, 1);

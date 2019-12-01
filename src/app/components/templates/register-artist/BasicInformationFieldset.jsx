@@ -26,7 +26,7 @@ const LocationWrapper = styled.div`
   @media (min-width: 1024px) {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
   }
 `;
 
@@ -66,12 +66,17 @@ const inputGroupStyle = `
 
 function BasicInformationFieldset(props) {
   const {
+    countries,
     handleNameChange,
     handleIntegrantsChange,
     handleCountrySelect,
     handleStateSelect,
     handleCityChange,
+    country,
+    state,
+    states,
     handleAboutChange,
+    deleteTag,
     handleAvatarChange,
     handleMusicalStyleChange,
     handleMusicalStyleSelect,
@@ -83,7 +88,7 @@ function BasicInformationFieldset(props) {
 
   return (
     <Fieldset>
-      <Title>Informaçoões do artista</Title>
+      <Title>Informações do artista</Title>
       <MainInformationWrapper>
         <InputGroup
           error={artistStepErrors.avatar}
@@ -123,7 +128,7 @@ function BasicInformationFieldset(props) {
               handleChange={handleMusicalStyleChange}
               handleSelect={handleMusicalStyleSelect}
             />
-            <TagList data={values.musicalStyles} customStyle={musicalGenresCustomStyle} />
+            <TagList handleClose={deleteTag} data={values.musicalStyles} customStyle={musicalGenresCustomStyle} />
           </InputGroup>
         </TextInpustWrapper>
       </MainInformationWrapper>
@@ -133,14 +138,14 @@ function BasicInformationFieldset(props) {
           label={values.country.value ? 'País' : ''}
           error={artistStepErrors.country}
         >
-          <Select id="country" placeholder="País" value={values.country} onSelect={handleCountrySelect} />
+          <Select id="country" placeholder="País" options={countries} selected={country} value={values.country} onSelect={handleCountrySelect} />
         </InputGroup>
         <InputGroup
           customStyle={inputGroupStyle}
           label={values.state.value ? 'Estado' : ''}
           error={artistStepErrors.state}
         >
-          <Select id="state" placeholder="Estado" value={values.state} onSelect={handleStateSelect} />
+          <Select id="state" placeholder="Estado" value={values.state} selected={state} options={states} onSelect={handleStateSelect} />
         </InputGroup>
         <InputGroup
           customStyle={inputGroupStyle}
@@ -199,7 +204,9 @@ BasicInformationFieldset.defaultProps = {
 };
 
 BasicInformationFieldset.propTypes = {
+  countries: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleAboutChange: PropTypes.func.isRequired,
+  deleteTag: PropTypes.func.isRequired,
   handleAvatarChange: PropTypes.func.isRequired,
   handleCityChange: PropTypes.func.isRequired,
   handleCountrySelect: PropTypes.func.isRequired,

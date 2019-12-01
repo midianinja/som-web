@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { black } from '../../settings/colors';
 import ArtistBasicInfo from '../../components/templates/artist/ArtistBasicInfo';
@@ -7,7 +9,11 @@ import MoreArtist from '../../components/templates/artist/MoreArtist';
 import Cover from '../../components/atoms/Cover';
 import Header from '../../components/organisms/Header';
 import InstagramMedia from '../../components/molecules/InstagramMedias';
-import { fetchArtistData, fetchArtistInsta } from './ArtistController';
+import Store from '../../store/Store';
+import {
+  fetchArtistData, fetchArtistInstaImages, follow, unfollow,
+} from './ArtistController';
+import DialogModal from '../../components/modals/Dialog.modal';
 
 const ArtistWrapper = styled.div`
   width: 100%;
@@ -46,6 +52,8 @@ const Content = styled.div`
 
   @media (min-width: 1024px) {
     padding-top: 150px;
+    display: inline-flex;
+    justify-content: space-between;
   }
 `;
 
@@ -53,93 +61,153 @@ const ColumnWrapper = styled.div`
   display: inline-block;
   width: 100%;
   vertical-align: top;
+
   @media (min-width: 1024px) {
     max-width: calc(100% - 454px);
-    margin-left: 484px;
   }
 `;
 
-const artistObj = {
-  avatar:
-    'https://f001.backblazeb2.com/file/heloisatolipan/imagens/2016/04/12973601_1099945353403569_5156213399083618245_o.jpg',
-  about: 'jhsjh aksjhdaoieu a;ld ashsuhawi idhcc  suh i ihioh oi hihu i ihhlkj kh hjhiu lk jh. j hj klhlih a.',
-  fs: 4,
-  fg: 0,
-  cover: '/images/temp-cover.png',
-  isFollowing: false,
-};
+function ArtistPage({ match }) {
+  const { state, dispatch } = useContext(Store);
+  const [artistLoading, setArtistLoading] = useState(false);
+  // const [instagramPhotoLoading, setInstagramPhotoLoading] = useState(false);
+  const [artist, setArtist] = useState({});
+  const [instagramPhotos, setInstagramPhotos] = useState(false);
+  const [follows, setFollows] = useState([]);
+  const [alertModal, setAlertModal] = useState({
+    title: '',
+    icon: '',
+    description: '',
+    agreeText: '',
+    disagreeText: '',
+    confirmAction: '',
+    disagreeAction: '',
+    isOpen: false,
+  });
+  const [songs, setSongs] = useState([]);
+  console.log('alertModal:', alertModal);
 
-const loadingComponents = {
-  artistInfo: false,
-  artistMedia: false,
-  artistInsta: false,
-};
-
-const DUMMY_ARTISTS = [
-  {
-    avatar: 'https://correioderondonia.com/wp-content/uploads/2018/12/Amy-Winehouse.jpg',
-    name: 'Amy',
-  },
-  {
-    avatar: 'https://statig0.akamaized.net/bancodeimagens/4f/xo/s2/4fxos2kg7q78ghtzkkbag7s2d.jpg',
-    name: 'Pink Floyd',
-  },
-  {
-    avatar: 'https://studiosol-a.akamaihd.net/uploadfile/letras/fotos/0/e/a/a/0eaa830937157f7cdb325f0591a56fd5.jpg',
-    name: 'Led Zeppelin',
-  },
-  {
-    avatar:
-      'https://followthecolours.com.br/wp-content/uploads/2016/06/follow-the-colours-the-beatles-experience-exposicao-sao-paulo-02.jpg',
-    name: 'Beatles',
-  },
-  {
-    avatar: 'https://cdns-images.dzcdn.net/images/artist/45227e89713b0c240f00c4ab33cadf2d/500x500.jpg',
-    name: 'Raul Seixas',
-  },
-];
-
-function ArtistPage({ id }) {
-  const [headerLoading, setHeaderLoading] = useState(false);
-  const [instaLoading, setInstagramLoading] = useState(false);
-  const [artistName, setArtistName] = useState('');
-  const [instaUsername, setInstaUsername] = useState(null);
-  const [artistHeaderInfo, setHeaderInfo] = useState(artistObj);
-  const [instaPics, setInstaPics] = useState([]);
-
-  useEffect((id) => {
+  const { id } = match.params;
+  useEffect(() => {
     const fetchArtist = async () => {
-      await fetchArtistData(id, setArtistName, setHeaderLoading, setInstaUsername);
-      await fetchArtistInsta('midianinja', setInstaPics, setInstagramLoading);
+      await fetchArtistData(id, setArtist, setArtistLoading, setSongs, setAlertModal);
     };
     fetchArtist();
   }, []);
+
+  useEffect(() => {
+    if (artist.instagram) {
+      fetchArtistInstaImages(artist.instagram, setInstagramPhotos);
+    }
+
+    if (artist.follows) {
+      console.log(artist.follows);
+      setFollows(artist.follows.map(({ user }) => user.id));
+    }
+  }, [artist]);
+
+  if (artistLoading) return null;
+  if (!artist.id) return null;
+
+  const handleFollow = () => {
+    if (!state.user) {
+      dispatch({
+        type: 'SHOW_LOGIN_MODAL',
+        data: { redirect: false },
+      });
+
+      dispatch({
+        type: 'SET_MODAL_LOGIN',
+        status: true,
+      });
+    } else if (state.user && follows.indexOf(state.user.id) !== -1) {
+      unfollow(artist.id, state.user.id, setFollows, follows);
+    } else {
+      follow(artist.id, state.user.id, setFollows, follows);
+    }
+  };
+
+  if (alertModal.isOpen) {
+    return (
+      <DialogModal
+        title={alertModal.title}
+        description={alertModal.description}
+        agreeText={alertModal.agreeText}
+        disagreeText={alertModal.disagreeText}
+        confirmAction={alertModal.confirmAction}
+        disagreeAction={alertModal.disagreeAction}
+        isOpen={alertModal.isOpen}
+      />
+    );
+  }
 
   return (
     <ArtistWrapper>
       <Header />
       <CoverWrapper>
-        <Cover cover={artistHeaderInfo.cover}>
+        <Cover cover={artist.cover}>
           <HeaderWrapper />
         </Cover>
       </CoverWrapper>
       <Content>
         <ArtistBasicInfo
-          avatar={artistHeaderInfo.avatar}
-          about={artistHeaderInfo.about}
-          name={artistName}
-          followers={artistHeaderInfo.fs}
-          following={artistHeaderInfo.fg}
-          isFollowing={artistHeaderInfo.isFollowing}
+          avatar={artist.avatar_image ? artist.avatar_image.mimified : null}
+          about={artist.about}
+          name={artist.name}
+          facebook={artist.facebook}
+          twitter={artist.twitter}
+          instagram={artist.instagram}
+          followers={follows.length}
+          following={0}
+          isFollowing={
+            state.user && artist.follows
+              ? follows.indexOf(state.user.id) !== -1
+              : false
+          }
+          followToggle={handleFollow}
         />
         <ColumnWrapper>
-          <AudioPlayer />
-          <InstagramMedia images={instaPics} />
-          <MoreArtist artists={DUMMY_ARTISTS} />
+          <AudioPlayer tracks={songs} />
+          <InstagramMedia
+            images={instagramPhotos}
+            navigateToInstagram={() => {
+              if (artist.instagram) {
+                window.open(artist.instagram, '_blank');
+              }
+            }}
+          />
+          {/* {
+            artist.spotify_artist_link ? (
+              <iframe
+                src={artist.spotify_artist_link}
+                width="100%"
+                height="200px"
+                title="spotify"
+                frameBorder="0"
+                allowTransparency="true"
+                allow="encrypted-media"
+              />
+            ) : (
+              null
+            )
+          } */}
+          <MoreArtist artists={[]} />
         </ColumnWrapper>
       </Content>
     </ArtistWrapper>
   );
 }
 
-export default ArtistPage;
+const paramsShape = {
+  id: PropTypes.string,
+};
+
+const matchShape = {
+  params: PropTypes.shape(paramsShape).isRequired,
+};
+
+ArtistPage.propTypes = {
+  match: PropTypes.shape(matchShape).isRequired,
+};
+
+export default withRouter(ArtistPage);

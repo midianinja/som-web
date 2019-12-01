@@ -1,17 +1,19 @@
 import apollo from '../../apollo';
 import { allMusicalStyleOptionsQuery } from '../../queries/musicalGenres.query';
 import { createArtistMutation, upadteArtistMutation } from '../../mutations/artist.mutation';
-import { getBase64, uploadImageToStorage, uploadPdfDocumentToStorage } from '../../utilities/file.utils';
+import { getBase64, uploadPdfDocumentToStorage, uploadImageToStorage } from '../../utilities/file.utils';
 import { validateArtistForm } from './registerArtist.validate';
 import { createSongMutation } from './songs.mutation';
+import { allCountriesQuery, allStateQuery } from './registerArtist.queries';
 
-const mapArtist = artist => ({
+const mapArtist = (artist, user) => ({
+  user,
   name: artist.name,
+  country: artist.country,
+  state: artist.state,
   members_number: parseInt(artist.integrants, 10),
   avatar_image: artist.avatar,
   about: artist.about,
-  country: '',
-  state: '',
   songs: artist.songs,
   city: artist.city,
   musical_styles: artist.musicalStyles.map(m => m.id),
@@ -21,7 +23,46 @@ const mapArtist = artist => ({
   instagram: artist.instagram,
   twitter: artist.twitter,
   youtube: artist.youtube,
+  spotify_artist_link: artist.spotify_artist_link,
 });
+
+export const deleteTag = ({ id, tags, setTag }) => {
+  const myTags = tags.filter(tag => tag.id !== id);
+  setTag(myTags);
+};
+
+export const handleCountrySelect = async ({ data, setStates, setCountry }) => {
+  const countries = await apollo.query({
+    query: allStateQuery,
+    variables: {
+      state: {
+        country: data.id,
+      },
+    },
+  });
+  const myCountrires = countries.data.allStates.map(c => ({
+    label: c.name,
+    id: c.id,
+  }));
+  setStates(myCountrires);
+  setCountry(data);
+};
+
+export const handleStateSelect = async ({ data, setState }) => {
+  setState(data);
+};
+
+export const fetchLocations = async ({ setCountries }) => {
+  const countries = await apollo.query({
+    query: allCountriesQuery,
+    variables: {},
+  });
+  const myCountrires = countries.data.allCountries.map(c => ({
+    label: c.name,
+    id: c.id,
+  }));
+  setCountries(myCountrires);
+};
 
 export const uploadDocumentFile = async ({ target }, id, artist) => {
   try {
@@ -46,21 +87,20 @@ export const uploadDocumentFile = async ({ target }, id, artist) => {
 
     artistToApi[doc] = uploadedFile.data.link;
 
-    const updatedPromise = await apollo.mutate({
+    await apollo.mutate({
       mutation: upadteArtistMutation,
       variables: {
         artist_id: artist,
         artist: artistToApi,
       },
     });
-    console.log('updatedPromise.data: ', updatedPromise.data);
   } catch (err) {
     throw err;
   }
 };
 
-const createArtist = async (artist) => {
-  const artistToApi = mapArtist(artist);
+const createArtist = async (artist, userId) => {
+  const artistToApi = mapArtist(artist, userId);
   const artistPromise = await apollo.mutate({
     mutation: createArtistMutation,
     variables: {
@@ -104,16 +144,17 @@ export const nextAction = async ({
   country, state, name, setId,
   avatar, musicalStyles,
   musicalStylePredict, musicalStyle,
-  visibles, setVisibles, setArtistStepErrors,
-  phone, email, facebook, instagram,
-  twitter, youtube, songs, setSongs,
+  visibles, setVisibles, setArtistStepErrors, phone,
+  email, facebook, instagram, history, twitter, youtube,
+  songs, setSongs, store, setLoading, spotify, setAvatar,
 }) => {
+  setLoading(true);
   const artistValidation = validateArtistForm({
     avatar, name, integrants, about,
     country, state, city, musicalStyles,
     musicalStylePredict, musicalStyle, setVisibles,
     setArtistStepErrors, visibles, facebook, instagram,
-    twitter, youtube, phone, email, songs,
+    twitter, youtube, phone, email, songs, spotify,
   });
 
   if (artistValidation.error) {
@@ -122,29 +163,38 @@ export const nextAction = async ({
       errors[e.attribute] = 'Valor inválido ou campo obrigatório';
     });
     setArtistStepErrors(errors);
+    setLoading(false);
     return;
   }
 
-  const artistToApi = {
+  let artistToApi = {
     about, city, integrants,
-    country, state, name,
+    country: country.label,
+    state: state.label,
+    name,
     musicalStyles,
     phone, email, facebook,
-    instagram, twitter, youtube,
+    instagram, twitter, youtube, spotify_artist_link: spotify,
     songs: songs.map(s => s.id).filter(e => e),
   };
 
   try {
     let preRegister = {};
-    if (!id) preRegister = await createArtist(artistToApi);
+    if (!id) preRegister = await createArtist(artistToApi, store.state.user.id);
 
-    const base64 = await getBase64(avatar.file);
-    const newImage = await uploadImageToStorage({
-      file: base64,
-      id: id || preRegister.id,
-    });
-    const images = newImage.data.urls;
-    artistToApi.avatar = images;
+    if (!avatar.urls) {
+      const base64 = await getBase64(avatar.file);
+      const newImage = await uploadImageToStorage({
+        file: base64,
+        id: id || preRegister.id,
+      });
+      console.log('newImage:', newImage);
+      const images = newImage.data.urls;
+      artistToApi.avatar = images;
+    } else {
+      artistToApi.avatar = undefined;
+      artistToApi = JSON.parse(JSON.stringify(artistToApi));
+    }
 
     if (songs.length) {
       const songsToUpload = songs.filter(s => !(s.id));
@@ -157,8 +207,17 @@ export const nextAction = async ({
       artistToApi.songs = uploadedSongs.concat(songs).map(s => s.id).filter(n => n);
     }
 
+    console.log('artistToApi:', artistToApi);
     const updatedArtist = await updateArtist(artistToApi, id || preRegister.id);
+    console.log('updatedArtist:', updatedArtist);
+    if (visibles.artist && visibles.contact && visibles.social && visibles.files) {
+      history.push(`/artist/${id || preRegister.id}`);
+    }
     setSongs(updatedArtist.songs || []);
+    setAvatar({
+      ...avatar,
+      urls: updatedArtist.avatar_image,
+    });
     setId(preRegister.id || id);
     setVisibles({
       artist: true,
@@ -167,8 +226,11 @@ export const nextAction = async ({
       files: visibles.social,
     });
   } catch (err) {
+    setLoading(false);
     throw err;
   }
+
+  setLoading(false);
 };
 
 export const skipAction = (setVisibles, visibles) => setVisibles({

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import InputGroup from '../../../molecules/InputGroup';
 import Input from '../../../atoms/Input';
+import Loading from '../../../atoms/Loading.atom';
 import { white, green } from '../../../../settings/colors';
 
 const Title = styled.h2`
@@ -32,6 +33,12 @@ const Bold = styled.strong`
   margin-left: 5px;
 `;
 
+const LoadingWrapper = styled.div`
+  width: 100%;
+  padding-top: 45px;
+  text-align: center;
+`;
+
 const inputGroupStyle = `
   margin-bottom: 20px;
 `;
@@ -48,7 +55,7 @@ const inputStyle = `
   }
 `;
 
-function SentPhoneFieldset(code, setCode, resendClick, error) {
+function SentPhoneFieldset(code, setCode, resendClick, error, loading) {
   return (
     <Fragment>
       <Title>Confirmação enviada</Title>
@@ -58,14 +65,23 @@ function SentPhoneFieldset(code, setCode, resendClick, error) {
         <Bold>Reenviar SMS</Bold>
       </Resend>
       <InputGroup customStyle={inputGroupStyle} error={error.code}>
-        <Input
-          id="code"
-          type="text"
-          placeholder=""
-          customStyle={inputStyle}
-          value={code}
-          onChange={e => setCode(e.target.value)}
-        />
+        {
+          loading ? (
+            <LoadingWrapper>
+              <Loading />
+            </LoadingWrapper>
+          ) : (
+            <Input
+              id="code"
+              type="text"
+              placeholder=""
+              autoFocus
+              customStyle={inputStyle}
+              value={code}
+              onChange={e => setCode(e.target.value)}
+            />
+          )
+        }
       </InputGroup>
     </Fragment>
   );

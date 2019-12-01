@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import styled from 'styled-components';
 import { white } from '../../settings/colors';
 
@@ -52,14 +53,13 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const unixTime = unixtime => new Date(+unixtime).toISOString().slice(0, 19)
-  .replace('T', ' ');
+const unixTime = unixtime => new Date(+unixtime).toISOString().slice(0, 19);
 
 const EventInfo = ({
   name, date, place, subscribers, subscribeAction, subscribed,
   unsubscribeAction,
 }) => {
-  const dateInstance = new Date(unixTime(date));
+  const dateInstance = moment(new Date(unixTime(date)));
   const [hover, setHover] = useState(false);
 
   return (
@@ -67,9 +67,9 @@ const EventInfo = ({
       <Title>{name}</Title>
       <Space />
       <EventDate
-        day={dateInstance.getDate()}
-        month={dateInstance.getMonth() + 1}
-        year={dateInstance.getFullYear()}
+        day={dateInstance.date()}
+        month={dateInstance.month() + 1}
+        year={dateInstance.year()}
       />
       <SubSpace />
       <EventPlace

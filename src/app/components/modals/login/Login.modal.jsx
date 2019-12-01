@@ -1,4 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, {
+  useState, useContext, useEffect, Fragment,
+} from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,6 +9,7 @@ import InputGroup from '../../molecules/InputGroup';
 import Input from '../../atoms/Input';
 import CircularButton from '../../atoms/CircularButton';
 import LinkButton from '../../atoms/LinkButton';
+import Loading from '../../atoms/Loading.atom';
 import { black, gray, white } from '../../../settings/colors';
 import { login } from './controller';
 import { blockBodyScroll, allowBodyScroll } from '../../../utilities/scroll';
@@ -138,6 +141,7 @@ function Login({ history }) {
   const { state, dispatch } = useContext(Store);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
   const ida = window.localStorage.getItem('som@ida');
   const token = window.localStorage.getItem('som@token');
@@ -147,8 +151,13 @@ function Login({ history }) {
     dispatch({ type: 'CLOSE_MODAL' });
   };
 
-  if (state.modals.login && (!ida && !token)) blockBodyScroll();
-  if (state.modals.login && ida) history.push('/event/5d3a31e9dd3e02dd26be4fd2');
+  useEffect(() => {
+    if (state.modals.login && (!ida && !token)) blockBodyScroll();
+    if (state.modals.login && ida) {
+      allowBodyScroll();
+      history.push('/welcome');
+    }
+  }, [state]);
 
   return (
     <LoginWrapper id="login" isOpen={state.modals.login && (!ida && !token)}>
@@ -194,18 +203,29 @@ function Login({ history }) {
             </ForgetPasswordLink>
           </InputGroup>
           <Actions>
-            <CircularButton
-              onClick={(e) => {
-                e.preventDefault();
-                login(username, password, setError, closeModal, history);
-              }}
-              disabled={!username || !password}
-            >
-              <Arrow src="/icons/arrow_forward_right.svg" />
-            </CircularButton>
-            <LinkButton color="white" type="button" onClick={() => registerAction(dispatch)}>
-              Criar conta
-            </LinkButton>
+            {
+              loading ? (
+                <Loading />
+              ) : (
+                <Fragment>
+                  <CircularButton
+                    onClick={(e) => {
+                      e.preventDefault();
+                      login(
+                        username, password, setError, closeModal,
+                        history, dispatch, state, setLoading,
+                      );
+                    }}
+                    disabled={!username || !password}
+                  >
+                    <Arrow src="/icons/arrow_forward_right.svg" />
+                  </CircularButton>
+                  <LinkButton color="white" type="button" onClick={() => registerAction(dispatch)}>
+                    Criar conta
+                  </LinkButton>
+                </Fragment>
+              )
+            }
           </Actions>
         </Form>
       </Container>

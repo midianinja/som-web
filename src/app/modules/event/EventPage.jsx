@@ -12,7 +12,7 @@ import SubscribedArtists from '../../components/templates/event/SubscribedArtist
 import Dialog from '../../components/modals/Dialog.modal';
 import Store from '../../store/Store';
 import {
-  fetchEventData, initialLoading, loadingStatus, subscribeAction,
+  fetchEventData, initialLoading, subscribeAction,
   unsubscribeAction,
 } from './EventController';
 import { black } from '../../settings/colors';
@@ -47,7 +47,7 @@ const CoverWrapper = styled.div`
 
 const HeaderWrapper = styled.div`
   width: 100%;
-  min-height: 60vh;
+  min-height: 45vh;
 `;
 
 const Content = styled.div`
@@ -83,23 +83,22 @@ const EventImage = styled.img`
 const EventPage = ({ match, history }) => {
   const [loading, setLoading] = useState({ ...initialLoading });
   const [event, setEvent] = useState(null);
-  const [dialog, setDialog] = useState(null);
+  const [dialog, setDialog] = useState({});
 
   useEffect(() => {
-    if (loading.event === loadingStatus.TO_LOAD) {
-      fetchEventData(
-        match.params.id, setEvent, loading, setLoading, setDialog, history,
-      );
-    }
+    fetchEventData(
+      match.params.id, setEvent, loading, setLoading, setDialog, history,
+    );
   }, []);
 
   if (!event) {
     return (
       <Container>
-        {dialog ? (
+        {dialog.title ? (
           <Dialog
             isOpen
             title={dialog.title}
+            icon={dialog.icon}
             description={dialog.description}
             agreeText={dialog.agreeText}
             disagreeText={dialog.disagreeText}
@@ -125,10 +124,11 @@ const EventPage = ({ match, history }) => {
   };
 
   const isSubscribed = (u, e) => {
+    console.log('e:', e);
     let subscribed = false;
 
-    if (u && u.artists && u.artists.length > 0) {
-      if (e.subscribers.find(({ id }) => u.artists[0].id === id)) {
+    if (u && u.artist) {
+      if (e.subscribers.find(({ id }) => u.artist.id === id)) {
         subscribed = true;
       }
     }
@@ -140,7 +140,12 @@ const EventPage = ({ match, history }) => {
     <Store.Consumer>
       {({ state, dispatch }) => (
         <Container>
-          <Header />
+          <Header
+            logged={() => {
+              console.log(state);
+              return !!state.user;
+            }}
+          />
           <CoverWrapper>
             <Cover cover={event.cover}>
               <EventImage src={event.cover} alt="Cover do Evento" />
@@ -166,13 +171,15 @@ const EventPage = ({ match, history }) => {
               <ProductorCardWrapper>
                 <ProductorCard productor={event.productor} />
               </ProductorCardWrapper>
-              <SubscribedArtists artists={event.subscribers} />
+              <SubscribedArtists artistClick={artistId => history.push(`/artist/${artistId}`)} artists={event.subscribers} />
             </ColumnWrapper>
           </Content>
-          {dialog ? (
+          {dialog.title ? (
             <Dialog
+              closeAction={() => setDialog({})}
               isOpen
               title={dialog.title}
+              icon={dialog.icon}
               description={dialog.description}
               agreeText={dialog.agreeText}
               disagreeText={dialog.disagreeText}

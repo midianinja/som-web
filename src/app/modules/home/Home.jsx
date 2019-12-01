@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 import SlimButton from '../../components/atoms/SlimButton';
-import About from './components/About';
+// import About from './components/About';
 import Apresentation from './components/Apresentation';
 import HowItsWork from './components/HowItsWork';
 import Instructions from './components/Instructions';
-import WhoIsSom from './components/WhoIsSom';
+// import WhoIsSom from './components/WhoIsSom';
 import OpenSource from './components/OpenSource';
 import Newsletter from './components/Newsletter';
 import Store from '../../store/Store';
-import { purple } from '../../settings/colors';
+// import { purple } from '../../settings/colors';
 import { blockBodyScroll } from '../../utilities/scroll';
 
 const Page = styled.div`
@@ -46,12 +48,12 @@ const loginButtonStyle = `
   float: right;
 `;
 
-const PurpleWrapper = styled.div`
-  width: 100%;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  background-color: ${purple};
-`;
+// const PurpleWrapper = styled.div`
+//   width: 100%;
+//   padding-top: 30px;
+//   padding-bottom: 30px;
+//   background-color: ${purple};
+// `;
 
 const FiguresContainer = styled.div`
   width: 100%;
@@ -133,8 +135,8 @@ const showRegister = (dispatch) => {
   dispatch({ type: 'SHOW_REGISTER_MODAL' });
 };
 
-const Home = () => {
-  const { dispatch } = useContext(Store);
+const Home = ({ history }) => {
+  const { state, dispatch } = useContext(Store);
   return (
     <Page>
       <LoginButtonContainer>
@@ -146,7 +148,15 @@ const Home = () => {
           Fazer login
         </SlimButton>
       </LoginButtonContainer>
-      <Apresentation onClick={() => showRegister(dispatch)} />
+      <Apresentation
+        onClick={() => {
+          if (state.auth) {
+            history.push('/event/5d3a31e9dd3e02dd26be4fd2');
+          } else {
+            showRegister(dispatch);
+          }
+        }}
+      />
       <FiguresContainer>
         <RedEllipse src="/icons/red-ellipse.svg" />
         <YellowPolygon src="/icons/yellow-polygon.svg" />
@@ -158,14 +168,22 @@ const Home = () => {
           <Instructions />
         </FiguresContent>
       </FiguresContainer>
-      <PurpleWrapper>
+      {/* <PurpleWrapper>
         <About />
         <WhoIsSom />
-      </PurpleWrapper>
+      </PurpleWrapper> */}
       <OpenSource />
       <Newsletter />
     </Page>
   );
 };
 
-export default Home;
+const historyShape = {
+  push: PropTypes.func.isRequired,
+};
+
+Home.propTypes = {
+  history: PropTypes.shape(historyShape).isRequired,
+};
+
+export default withRouter(Home);

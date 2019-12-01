@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Store from '../../store/Store';
 import PrimaryButton from '../../components/atoms/PrimaryButton';
 import { white, purple } from '../../settings/colors';
+import { allowBodyScroll } from '../../utilities/scroll';
 
 const Wrapper = styled.section`
   position: relative;
@@ -54,17 +55,25 @@ const Footer = styled.footer`
 `;
 
 function Welcome(props) {
-  console.log('props: ', props);
   const store = useContext(Store);
-  console.log('store: ', store);
   const { history } = props;
+
+  if (!store.state.auth) return null;
   return (
     <Wrapper>
-      <Title>Seja bem vinda ao Som,</Title>
+      <Title>Seja bem vindx ao Som,</Title>
       <Name>{store.state.auth.username}</Name>
       <Footer>
-        <Text>Agora é só se inscrever nos eventos que quiser tocar</Text>
-        <PrimaryButton onClick={() => history.push('/register-artist')} color="orange">Inscrever agora!</PrimaryButton>
+        <Text>Conheça os eventos e inscreva-se</Text>
+        <PrimaryButton
+          onClick={() => {
+            allowBodyScroll();
+            history.push('/event/5d3a31e9dd3e02dd26be4fd2');
+          }}
+          color="orange"
+        >
+          Ver eventos!
+        </PrimaryButton>
       </Footer>
     </Wrapper>
   );

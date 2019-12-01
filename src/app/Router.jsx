@@ -5,7 +5,9 @@ import { createBrowserHistory } from 'history';
 import Welcome from './modules/welcome/Welcome';
 import RegisterArtist from './modules/register-artist';
 import EventPage from './modules/event/EventPage';
+import Events from './modules/events/EventsPage';
 import ArtistPage from './modules/artist/ArtistPage';
+import ValidationEmailToken from './modules/validation-email-token/ValidationEmailToken';
 import Home from './modules/home/Home';
 import Private from './Private';
 import Main from './main/Main';
@@ -19,8 +21,10 @@ const AppRouter = ({ children }) => (
         <Route exact path="/" component={() => <Home />} />
         <Route path="/reset-password" component={() => <Home />} />
         <Route path="/welcome" component={() => <Welcome />} />
+        <Route path="/events" component={() => <Events />} />
         <Route path="/event/:id" component={() => <EventPage />} />
         <Route path="/artist/:id" component={() => <ArtistPage />} />
+        <Route path="/ativacao/:ida" component={() => <ValidationEmailToken />} />
         <Private>
           <Switch>
             <Route path="/register-artist" component={() => <RegisterArtist />} />
