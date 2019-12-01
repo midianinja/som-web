@@ -156,6 +156,7 @@ function ArtistPage({ match }) {
           name={artist.name}
           facebook={artist.facebook}
           twitter={artist.twitter}
+          spotify={artist.spotify_artist_link}
           instagram={artist.instagram}
           followers={follows.length}
           following={0}

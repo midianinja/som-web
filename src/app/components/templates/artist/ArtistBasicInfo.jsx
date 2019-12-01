@@ -141,6 +141,7 @@ function ArtistBasicInfo(props) {
         facebook={facebook}
         instagram={instagram}
         twitter={twitter}
+        spotify={spotify}
       />
     </Wrapper>
   );
