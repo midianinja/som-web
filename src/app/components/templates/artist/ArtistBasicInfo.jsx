@@ -101,7 +101,7 @@ function ArtistBasicInfo(props) {
   const {
     name, avatar, followers, following,
     about, facebook, instagram, twitter,
-    followToggle, isFollowing,
+    followToggle, isFollowing, spotify,
   } = props;
 
   console.log(isFollowing);
@@ -141,6 +141,7 @@ function ArtistBasicInfo(props) {
         facebook={facebook}
         instagram={instagram}
         twitter={twitter}
+        spotify={spotify}
       />
     </Wrapper>
   );

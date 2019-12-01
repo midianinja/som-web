@@ -18,7 +18,7 @@ const Social = styled.img`
   height: 30px;
 `;
 
-function Socials({ facebook, instagram, twitter }) {
+function Socials({ facebook, instagram, twitter, spotify }) {
   return (
     <Wrapper>
       <a href={facebook} target="_blank" rel="noopener noreferrer">
@@ -30,6 +30,9 @@ function Socials({ facebook, instagram, twitter }) {
       <a href={twitter} target="_blank" rel="noopener noreferrer">
         <Social src="/icons/twitter-white.svg" alt={twitter} />
       </a>
+      <a href={spotify} target="_blank" rel="noopener noreferrer">
+        <Social src="/icons/spotify-black.svg" alt={spotify} />
+      </a>
     </Wrapper>
   );
 }
@@ -38,6 +41,7 @@ Socials.propTypes = {
   facebook: PropTypes.string,
   instagram: PropTypes.string,
   twitter: PropTypes.string,
+  spotify: PropTypes.string,
 };
 
 Socials.defaultProps = {
