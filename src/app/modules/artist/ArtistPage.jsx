@@ -176,7 +176,7 @@ function ArtistPage({ match }) {
               }
             }}
           />
-          {
+          {/* {
             artist.spotify_artist_link ? (
               <iframe
                 src={artist.spotify_artist_link}
@@ -190,7 +190,7 @@ function ArtistPage({ match }) {
             ) : (
               null
             )
-          }
+          } */}
           <MoreArtist artists={[]} />
         </ColumnWrapper>
       </Content>
