@@ -91,7 +91,7 @@ const EventPage = ({ match, history }) => {
     );
   }, []);
 
-  if (!event) {
+  if (false) {
     return (
       <Container>
         {dialog ? (
@@ -176,7 +176,7 @@ const EventPage = ({ match, history }) => {
           </Content>
           {dialog ? (
             <Dialog
-              isOpen
+              isOpen={true}
               title={dialog.title}
               icon={dialog.icon}
               description={dialog.description}

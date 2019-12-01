@@ -72,12 +72,31 @@ const BackButton = styled.a`
   color: ${purple};
 `;
 
+const CloseIcon = styled.img`
+  width: 22px;
+  height: 22px;
+  margin-right: 5px;
+`;
 
 const DialogModal = ({
-  title, description, confirmAction, disagreeAction, agreeText, disagreeText, isOpen,
+  title, description, confirmAction,
+  disagreeAction, agreeText, disagreeText,
+  isOpen, closeAction,
   icon,
 }) => (
   <ModalWrapper isOpen={isOpen}>
+    {
+      closeAction
+        ? (
+          <CloseIcon
+            color={"#000"}
+            src="/icons/cancel_outlined.svg"
+            alt="botão de cancelar"
+            onClick={() => closeAction()}
+          />
+        )
+        : null
+    }
     <Modal>
       <IconWrapper>
         <Icon src={icon} alt={title} />
@@ -103,6 +122,7 @@ DialogModal.propTypes = {
   agreeText: PropTypes.string,
   disagreeText: PropTypes.string,
   confirmAction: PropTypes.func.isRequired,
+  closeAction: PropTypes.func.isRequired,
   disagreeAction: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
 };
