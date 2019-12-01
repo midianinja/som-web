@@ -91,7 +91,7 @@ const EventPage = ({ match, history }) => {
     );
   }, []);
 
-  if (false) {
+  if (!event) {
     return (
       <Container>
         {dialog ? (
