@@ -67,7 +67,23 @@ const Link = styled.a`
 
 const Logout = styled.a`
   width: 100%;
-  font-size: 1.125em;
+  font-size: 1em;
+  line-height: 1em;
+  font-weight: 300;
+  text-decoration: none;
+  display: block;
+  margin-top: 20px;
+  color: ${black};
+  cursor: pointer;
+
+  &:hover {
+    color: ${purple}; 
+  }
+`;
+
+const Terms = styled.a`
+  width: 100%;
+  font-size: 1em;
   line-height: 1em;
   font-weight: 300;
   text-decoration: none;
@@ -114,6 +130,18 @@ function Navigation({ history }) {
           }}
         />
         {renderLinks(state.user.artist)}
+        <Terms
+          onClick={() => {
+            allowBodyScroll();
+            dispatch({ type: 'CLOSE_MODAL' });
+            window.open(
+              'https://s3-sa-east-1.amazonaws.com/festivalninja.org/img/termos-de-use-e-politicas-de-privacidade-som.pdf',
+              '_blank',
+            );
+          }}
+        >
+          Termos de uso
+        </Terms>
         <Logout
           onClick={() => {
             window.localStorage.setItem('som@ida', '');
