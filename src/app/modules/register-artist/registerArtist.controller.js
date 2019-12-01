@@ -85,7 +85,7 @@ export const uploadDocumentFile = async ({ target }, id, artist) => {
       default: throw new Error('ID is not mapped.');
     }
 
-    artistToApi[doc] = uploadedFile.data.link;
+    artistToApi[doc] = uploadedFile.data.data.link;
 
     await apollo.mutate({
       mutation: upadteArtistMutation,
