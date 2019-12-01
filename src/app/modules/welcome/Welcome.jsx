@@ -61,7 +61,7 @@ function Welcome(props) {
   if (!store.state.auth) return null;
   return (
     <Wrapper>
-      <Title>Seja bem vinda ao Som,</Title>
+      <Title>Seja bem vindx ao Som,</Title>
       <Name>{store.state.auth.username}</Name>
       <Footer>
         <Text>Conheça os eventos e inscreva-se</Text>

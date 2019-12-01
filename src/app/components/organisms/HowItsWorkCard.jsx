@@ -43,7 +43,7 @@ const Icon = styled.img`
 const Content = styled.div`
   position: relative;
   background-color: ${white};
-  height: 135px;
+  height: 150px;
   padding: 20px;
   padding-top: 30px;
 
