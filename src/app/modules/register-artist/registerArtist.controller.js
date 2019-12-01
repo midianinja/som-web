@@ -189,7 +189,7 @@ export const nextAction = async ({
         id: id || preRegister.id,
       });
       console.log('newImage:', newImage);
-      const images = newImage.data.urls;
+      const images = newImage.data.data.urls;
       artistToApi.avatar = images;
     } else {
       artistToApi.avatar = undefined;
