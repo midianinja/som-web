@@ -125,6 +125,7 @@ const renderArtistInfos = ({
     states={states}
     handleAvatarChange={({ target }) => setAvatar({
       url: URL.createObjectURL(target.files[0]),
+      urls: null,
       file: target.files[0],
     })}
     country={country}
@@ -353,7 +354,7 @@ const RegisterArtist = ({ history }) => {
           musicalStyle, phone, email, facebook, instagram,
           twitter, youtube, visibles, setVisibles,
           setArtistStepErrors, setContactStepErrors,
-          songs, setSongs, store, history, setLoading,
+          songs, setSongs, store, history, setLoading, setAvatar,
         })}
         loading={loading}
         customStyle={visibles.files && id ? `background-color: ${white};` : ''}

@@ -139,7 +139,7 @@ export const nextAction = async ({
   avatar, musicalStyles,
   musicalStylePredict, musicalStyle,
   visibles, setVisibles, setArtistStepErrors,
-  phone, email, facebook, instagram, history,
+  phone, email, facebook, instagram, history, setAvatar,
   twitter, youtube, songs, setSongs, store, setLoading,
 }) => {
   setLoading(true);
@@ -161,7 +161,7 @@ export const nextAction = async ({
     return;
   }
 
-  const artistToApi = {
+  let artistToApi = {
     about, city, integrants,
     country: country.label,
     state: state.label,
@@ -176,14 +176,19 @@ export const nextAction = async ({
     let preRegister = {};
     if (!id) preRegister = await createArtist(artistToApi, store.state.user.id);
 
-    const base64 = await getBase64(avatar.file);
-    const newImage = await uploadImageToStorage({
-      file: base64,
-      id: id || preRegister.id,
-    });
-    console.log('newImage:', newImage);
-    const images = newImage.data.urls;
-    artistToApi.avatar = images;
+    if (!avatar.urls) {
+      const base64 = await getBase64(avatar.file);
+      const newImage = await uploadImageToStorage({
+        file: base64,
+        id: id || preRegister.id,
+      });
+      console.log('newImage:', newImage);
+      const images = newImage.data.urls;
+      artistToApi.avatar = images;
+    } else {
+      artistToApi.avatar = undefined;
+      artistToApi = JSON.parse(JSON.stringify(artistToApi));
+    }
 
     if (songs.length) {
       const songsToUpload = songs.filter(s => !(s.id));
@@ -203,6 +208,10 @@ export const nextAction = async ({
       history.push(`/artist/${id || preRegister.id}`);
     }
     setSongs(updatedArtist.songs || []);
+    setAvatar({
+      ...avatar,
+      urls: updatedArtist.avatar_image,
+    });
     setId(preRegister.id || id);
     setVisibles({
       artist: true,
