@@ -62,7 +62,7 @@ const renderSongs = (songs, setSongs, authId, titleBlurAction) => {
       const uploadedSong = await uploadSongToStorage({ file: file64, id: authId, updateProgress });
       copySong.file = file;
       copySong.title = file.name.replace('.mp3', '').replace('_', ' ');
-      copySong.url = uploadedSong.data.link;
+      copySong.url = uploadedSong.data.data.link;
       copySongs[index] = copySong;
       setSongs(copySongs);
     } catch (err) {
