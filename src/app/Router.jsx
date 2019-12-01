@@ -17,6 +17,7 @@ const AppRouter = ({ children }) => (
     <Main>
       <Switch>
         <Route exact path="/" component={() => <Home />} />
+        <Route path="/reset-password" component={() => <Home />} />
         <Route path="/welcome" component={() => <Welcome />} />
         <Route path="/event/:id" component={() => <EventPage />} />
         <Route path="/artist/:id" component={() => <ArtistPage />} />

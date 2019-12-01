@@ -14,6 +14,7 @@ const initialState = {
     login: false,
     register: false,
     navigation: false,
+    forgetPassword: false,
   },
 };
 
