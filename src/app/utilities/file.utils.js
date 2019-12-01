@@ -18,21 +18,21 @@ export const uploadImageToStorage = ({ file, id }) => axios({
   method: 'POST',
   url: `${process.env.STORAGE_API_URI}/image/upload/`,
   headers: {},
-  data: {
+  data: JSON.stringify({
     file,
     id,
-  },
+  }),
 });
 
 export const uploadPdfDocumentToStorage = ({ file, id, fileName }) => axios({
   method: 'POST',
   url: `${process.env.STORAGE_API_URI}/document/upload/`,
   headers: {},
-  data: {
+  data: JSON.stringify({
     file,
     id,
     fileName,
-  },
+  }),
 });
 
 export const uploadSongToStorage = ({ file, id, updateProgress }) => axios({
