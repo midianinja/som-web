@@ -31,7 +31,7 @@ export async function validateToken(token) {
     throw (error);
   }
   // se tem data, token válido
-  const { data, error } = await promise.json();
+  const { data } = await promise.json();
   return data;
 }
 
@@ -44,7 +44,6 @@ export async function sendNewPassword(token, password) {
     throw (error);
   }
   // se tem data, token válido
-  const { data, error } = await promise.json();
-
+  const { data } = await promise.json();
   return data;
 }
