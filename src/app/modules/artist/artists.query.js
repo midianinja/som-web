@@ -18,6 +18,7 @@ const oneArtistQuery = gql`
           id
         }
       }
+      spotify_artist_link
     }
   }
 `;

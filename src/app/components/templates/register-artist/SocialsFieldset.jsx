@@ -37,6 +37,7 @@ function SocialsFielset(props) {
     handleTwitterChange,
     handleInstagramChange,
     handleYoutubeChange,
+    handleSpotifyChange,
     values,
     setStepErrors,
     stepErrors,
@@ -109,6 +110,21 @@ function SocialsFielset(props) {
             onBlur={e => handleBlurChange(e, 'youtubeUrl', setStepErrors, stepErrors)}
           />
         </InputGroup>
+        <InputGroup
+          customStyle={inputGroupStyle}
+          label={values.spotify ? 'Spotify link' : ''}
+          info="O link deve conter https://"
+          error={stepErrors.spotify}
+        >
+          <Input
+            id="spotify"
+            placeholder="Spotify"
+            value={values.spotify}
+            type="url"
+            onChange={handleSpotifyChange}
+            onBlur={e => handleBlurChange(e, 'spotifyUrl', setStepErrors, stepErrors)}
+          />
+        </InputGroup>
       </InputsWrapper>
     </Fieldset>
   );
@@ -119,6 +135,7 @@ const valuesShape = {
   instagram: PropTypes.string.isRequired,
   twiiter: PropTypes.string.isRequired,
   youtube: PropTypes.string.isRequired,
+  spotify: PropTypes.string.isRequired,
 };
 
 SocialsFielset.propTypes = {
@@ -127,6 +144,7 @@ SocialsFielset.propTypes = {
   handleTwitterChange: PropTypes.func.isRequired,
   handleYoutubeChange: PropTypes.func.isRequired,
   handleBlurChange: PropTypes.func.isRequired,
+  handleSpotifyChange: PropTypes.func.isRequired,
   setStepErrors: PropTypes.func.isRequired,
   stepErrors: PropTypes.shape(valuesShape).isRequired,
   values: PropTypes.shape(valuesShape).isRequired,

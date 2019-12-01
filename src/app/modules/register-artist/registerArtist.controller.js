@@ -23,6 +23,7 @@ const mapArtist = (artist, user) => ({
   instagram: artist.instagram,
   twitter: artist.twitter,
   youtube: artist.youtube,
+  spotify_artist_link: artist.spotify_artist_link,
 });
 
 export const handleCountrySelect = async ({ data, setStates, setCountry }) => {
@@ -140,7 +141,7 @@ export const nextAction = async ({
   musicalStylePredict, musicalStyle,
   visibles, setVisibles, setArtistStepErrors,
   phone, email, facebook, instagram, history,
-  twitter, youtube, songs, setSongs, store, setLoading,
+  twitter, youtube, songs, setSongs, store, setLoading, spotify,
 }) => {
   setLoading(true);
   const artistValidation = validateArtistForm({
@@ -148,7 +149,7 @@ export const nextAction = async ({
     country, state, city, musicalStyles,
     musicalStylePredict, musicalStyle, setVisibles,
     setArtistStepErrors, visibles, facebook, instagram,
-    twitter, youtube, phone, email, songs,
+    twitter, youtube, phone, email, songs, spotify,
   });
 
   if (artistValidation.error) {
@@ -161,6 +162,8 @@ export const nextAction = async ({
     return;
   }
 
+  console.log('spotify', spotify);
+
   const artistToApi = {
     about, city, integrants,
     country: country.label,
@@ -168,7 +171,7 @@ export const nextAction = async ({
     name,
     musicalStyles,
     phone, email, facebook,
-    instagram, twitter, youtube,
+    instagram, twitter, youtube, spotify_artist_link: spotify,
     songs: songs.map(s => s.id).filter(e => e),
   };
 

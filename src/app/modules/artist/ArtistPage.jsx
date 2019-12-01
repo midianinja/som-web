@@ -70,7 +70,7 @@ const ColumnWrapper = styled.div`
 function ArtistPage({ match }) {
   const { state, dispatch } = useContext(Store);
   const [artistLoading, setArtistLoading] = useState(false);
-  const [instagramPhotosLoading, setInstagramPhotoLoading] = useState(false);
+  const [setInstagramPhotoLoading] = useState(false);
   const [artist, setArtist] = useState({});
   const [instagramPhotos, setInstagramPhotos] = useState(false);
   const [follows, setFollows] = useState([]);
@@ -106,7 +106,6 @@ function ArtistPage({ match }) {
     }
   }, [artist]);
 
-  console.log('artistLoading:', artistLoading);
   if (artistLoading) return null;
   if (!artist.id) return null;
 
@@ -141,6 +140,7 @@ function ArtistPage({ match }) {
       />
     );
   }
+
   return (
     <ArtistWrapper>
       <Header />
@@ -176,6 +176,21 @@ function ArtistPage({ match }) {
               }
             }}
           />
+          {
+            artist.spotify_artist_link ? (
+              <iframe
+                src={artist.spotify_artist_link}
+                width="100%"
+                height="200px"
+                title="spotify"
+                frameBorder="0"
+                allowTransparency="true"
+                allow="encrypted-media"
+              />
+            ) : (
+              null
+            )
+          }
           <MoreArtist artists={[]} />
         </ColumnWrapper>
       </Content>

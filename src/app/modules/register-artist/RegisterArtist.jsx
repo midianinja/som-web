@@ -186,6 +186,8 @@ const renderSocialMedia = ({
   instagram,
   twitter,
   youtube,
+  setSpotify,
+  spotify,
   setSocialMediaStepErrors,
   socialMediaStepErrors,
 }) => {
@@ -199,11 +201,13 @@ const renderSocialMedia = ({
       handleInstagramChange={({ target }) => setInstagram(target.value)}
       handleTwitterChange={({ target }) => setTwitter(target.value)}
       handleYoutubeChange={({ target }) => setYoutube(target.value)}
+      handleSpotifyChange={({ target }) => setSpotify(target.value)}
       values={{
         facebook,
         instagram,
         twitter,
         youtube,
+        spotify,
       }}
     />
   );
@@ -245,6 +249,7 @@ const RegisterArtist = ({ history }) => {
   const [facebook, setFacebook] = useState('https://www.facebook.com/');
   const [instagram, setInstagram] = useState('https://www.instagram.com/');
   const [twitter, setTwitter] = useState('https://twitter.com/');
+  const [spotify, setSpotify] = useState('');
   const [youtube, setYoutube] = useState('https://www.youtube.com/');
   const [songs, setSongs] = useState([
     /* { ...initialSong } */
@@ -326,10 +331,12 @@ const RegisterArtist = ({ history }) => {
           setInstagram,
           setTwitter,
           setYoutube,
+          setSpotify,
           facebook,
           instagram,
           twitter,
           youtube,
+          spotify,
           setSocialMediaStepErrors,
           socialMediaStepErrors,
         })}
@@ -353,7 +360,7 @@ const RegisterArtist = ({ history }) => {
           musicalStyle, phone, email, facebook, instagram,
           twitter, youtube, visibles, setVisibles,
           setArtistStepErrors, setContactStepErrors,
-          songs, setSongs, store, history, setLoading,
+          songs, setSongs, store, history, setLoading, spotify,
         })}
         loading={loading}
         customStyle={visibles.files && id ? `background-color: ${white};` : ''}
