@@ -93,12 +93,11 @@ const ArtistName = styled.h4`
   white-space: normal;
 `;
 
-function renderArtists(artists) {
+function renderArtists(artists, artistClick) {
   return artists.map((artist) => {
-    console.log('artist:', artist);
     const src = artist && artist.avatar_image ? artist.avatar_image.mimified : '';
     return (
-      <Card>
+      <Card onClick={() => artistClick(artist.id)}>
         <Avatar src={src} customStyle={avatarCustomStyle} />
         <ArtistName>{artist.name}</ArtistName>
       </Card>
@@ -106,11 +105,11 @@ function renderArtists(artists) {
   });
 }
 
-function SubscribedArtists({ artists }) {
+function SubscribedArtists({ artists, artistClick }) {
   return (
     <Wrapper>
       <Title>Artistas Inscritos</Title>
-      <ListWrapper>{renderArtists(artists)}</ListWrapper>
+      <ListWrapper>{renderArtists(artists, artistClick)}</ListWrapper>
     </Wrapper>
   );
 }

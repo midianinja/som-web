@@ -13,7 +13,7 @@ import StepFormFooter from '../../components/organisms/StepFormFooter.organism';
 import {
   handleACMusicalStyle, steps, handleMusicalStyleSelect,
   fetchMusicalStyleOptions, nextAction, skipAction, uploadDocumentFile,
-  fetchLocations, handleCountrySelect, handleStateSelect,
+  fetchLocations, handleCountrySelect, handleStateSelect, deleteTag,
 } from './registerArtist.controller';
 import UploadSongs from '../../components/templates/register-artist/UploadSongs';
 import {
@@ -103,6 +103,7 @@ const renderArtistInfos = ({
   artistStepErrors,
   country,
   setCity,
+  deleteTag,
   states,
   setIntegrants,
   setName,
@@ -121,10 +122,12 @@ const renderArtistInfos = ({
   <BasicInformationFieldset
     artistStepErrors={artistStepErrors}
     values={values}
+    deleteTag={deleteTag}
     countries={countries}
     states={states}
     handleAvatarChange={({ target }) => setAvatar({
       url: URL.createObjectURL(target.files[0]),
+      urls: null,
       file: target.files[0],
     })}
     country={country}
@@ -295,6 +298,11 @@ const RegisterArtist = ({ history }) => {
         {renderArtistInfos({
           values,
           setAvatar,
+          deleteTag: id => deleteTag({
+            id,
+            tags: musicalStyles,
+            setTag: setMusicalStyles,
+          }),
           setAbout,
           artistStepErrors,
           setCity,
@@ -360,7 +368,11 @@ const RegisterArtist = ({ history }) => {
           musicalStyle, phone, email, facebook, instagram,
           twitter, youtube, visibles, setVisibles,
           setArtistStepErrors, setContactStepErrors,
+<<<<<<< HEAD
           songs, setSongs, store, history, setLoading, spotify,
+=======
+          songs, setSongs, store, history, setLoading, setAvatar,
+>>>>>>> 58d81fc56a30fc92ffa39548b11a3ab43a4c8343
         })}
         loading={loading}
         customStyle={visibles.files && id ? `background-color: ${white};` : ''}

@@ -111,14 +111,16 @@ export const subscribeAction = async (
     disagreeText: 'Ver mais eventos',
     disagreeAction: () => {
       allowBodyScroll();
-      setDialog({})
+      setDialog({});
     },
   });
 
   const subs = [...event.subscribers];
+  console.log('user.artists[0].id:', user.artists);
   subs.push(user.artists[0].id);
   const newEvent = { ...event };
   newEvent.subscribers = subs;
+  console.log('newEvent:', newEvent);
   setEvent(newEvent);
 };
 
