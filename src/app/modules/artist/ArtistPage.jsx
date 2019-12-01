@@ -70,7 +70,7 @@ const ColumnWrapper = styled.div`
 function ArtistPage({ match }) {
   const { state, dispatch } = useContext(Store);
   const [artistLoading, setArtistLoading] = useState(false);
-  const [setInstagramPhotoLoading] = useState(false);
+  // const [instagramPhotoLoading, setInstagramPhotoLoading] = useState(false);
   const [artist, setArtist] = useState({});
   const [instagramPhotos, setInstagramPhotos] = useState(false);
   const [follows, setFollows] = useState([]);
@@ -97,7 +97,7 @@ function ArtistPage({ match }) {
 
   useEffect(() => {
     if (artist.instagram) {
-      fetchArtistInstaImages(artist.instagram, setInstagramPhotos, setInstagramPhotoLoading);
+      fetchArtistInstaImages(artist.instagram, setInstagramPhotos);
     }
 
     if (artist.follows) {
