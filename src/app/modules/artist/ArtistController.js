@@ -19,9 +19,10 @@ export const fetchArtistData = async (
   try {
     promise = await apollo.query({
       query: oneArtistQuery,
-      variables: { artist: { id } },
+      variables: { id },
     });
   } catch (err) {
+    console.log([err]);
     setArtistLoading(false);
     throw err;
   }

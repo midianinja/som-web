@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const oneArtistQuery = gql`
-  query($artist: ArtistInput!){
-    oneArtist(artist: $artist) {
+  query($id: ID!){
+    oneArtist(id: $id) {
       id
       name
       avatar_image {

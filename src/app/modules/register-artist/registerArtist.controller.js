@@ -140,8 +140,9 @@ export const nextAction = async ({
   musicalStylePredict, musicalStyle,
   visibles, setVisibles, setArtistStepErrors,
   phone, email, facebook, instagram, history,
-  twitter, youtube, songs, setSongs, store,
+  twitter, youtube, songs, setSongs, store, setLoading,
 }) => {
+  setLoading(true);
   const artistValidation = validateArtistForm({
     avatar, name, integrants, about,
     country, state, city, musicalStyles,
@@ -156,6 +157,7 @@ export const nextAction = async ({
       errors[e.attribute] = 'Valor inválido ou campo obrigatório';
     });
     setArtistStepErrors(errors);
+    setLoading(false);
     return;
   }
 
@@ -209,8 +211,11 @@ export const nextAction = async ({
       files: visibles.social,
     });
   } catch (err) {
+    setLoading(false);
     throw err;
   }
+
+  setLoading(false);
 };
 
 export const skipAction = (setVisibles, visibles) => setVisibles({
