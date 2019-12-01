@@ -368,11 +368,7 @@ const RegisterArtist = ({ history }) => {
           musicalStyle, phone, email, facebook, instagram,
           twitter, youtube, visibles, setVisibles,
           setArtistStepErrors, setContactStepErrors,
-<<<<<<< HEAD
-          songs, setSongs, store, history, setLoading, spotify,
-=======
-          songs, setSongs, store, history, setLoading, setAvatar,
->>>>>>> 58d81fc56a30fc92ffa39548b11a3ab43a4c8343
+          songs, setSongs, store, history, setLoading, spotify, setAvatar,
         })}
         loading={loading}
         customStyle={visibles.files && id ? `background-color: ${white};` : ''}
