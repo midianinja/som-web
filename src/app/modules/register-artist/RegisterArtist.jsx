@@ -241,6 +241,7 @@ const RegisterArtist = ({ history }) => {
   const [musicalStyle, setMusicalStyle] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
   const [facebook, setFacebook] = useState('https://www.facebook.com/');
   const [instagram, setInstagram] = useState('https://www.instagram.com/');
   const [twitter, setTwitter] = useState('https://twitter.com/');
@@ -352,8 +353,9 @@ const RegisterArtist = ({ history }) => {
           musicalStyle, phone, email, facebook, instagram,
           twitter, youtube, visibles, setVisibles,
           setArtistStepErrors, setContactStepErrors,
-          songs, setSongs, store, history,
+          songs, setSongs, store, history, setLoading,
         })}
+        loading={loading}
         customStyle={visibles.files && id ? `background-color: ${white};` : ''}
         skipAction={() => skipAction(setVisibles, visibles)}
       />
