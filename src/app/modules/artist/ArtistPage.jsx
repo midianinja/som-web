@@ -167,7 +167,9 @@ function ArtistPage({ match }) {
           followToggle={handleFollow}
         />
         <ColumnWrapper>
-          <AudioPlayer tracks={songs} />
+          {
+            songs.length ? <AudioPlayer tracks={songs} /> : null
+          }
           <InstagramMedia
             images={instagramPhotos}
             navigateToInstagram={() => {

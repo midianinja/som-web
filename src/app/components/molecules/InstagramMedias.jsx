@@ -28,7 +28,7 @@ const MobileRow = styled.div`
   display: flex;
 
   @media (min-width: 1024px) {
-    display: none;
+    // display: none;
   }
 `;
 
@@ -48,11 +48,11 @@ const InstagramMedia = ({ images, navigateToInstagram }) => (
       <ProgresiveImage src={images[1]} customStyle={imgStyle} />
       <ProgresiveImage src={images[2]} customStyle={imgStyle} />
     </Row>
-    <MobileRow>
+    <Row>
       <ProgresiveImage src={images[3]} customStyle={imgStyle} />
       <ProgresiveImage src={images[4]} customStyle={imgStyle} />
       <ProgresiveImage src={images[5]} customStyle={imgStyle} />
-    </MobileRow>
+    </Row>
     <MobileRow>
       <ProgresiveImage src={images[6]} customStyle={imgStyle} />
       <ProgresiveImage src={images[7]} customStyle={imgStyle} />
