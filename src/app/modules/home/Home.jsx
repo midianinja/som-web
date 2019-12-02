@@ -159,6 +159,7 @@ const showRegister = (dispatch) => {
 
 const Home = ({ history }) => {
   const { state, dispatch } = useContext(Store);
+  console.log('state:', state);
   return (
     <Page>
       <LoginButtonContainer>

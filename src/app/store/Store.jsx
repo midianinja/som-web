@@ -37,7 +37,7 @@ const reducer = (state, action) => {
     case 'SET_USER':
       return { ...state, user: { ...(state.user || {}), ...action.user } };
     case 'RESET_AUTH':
-      return { ...state, auth: null };
+      return { ...state, auth: null, user: null };
     case 'CLOSE_MODAL':
       return { ...state, modals: { ...initialState.modals } };
     case 'SET_MODAL_LOGIN':
