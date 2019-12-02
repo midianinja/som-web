@@ -31,8 +31,8 @@ const Card = styled.div`
   vertical-align: top;
   flex-direction: column;
   align-items: center;
-  padding: 15px;
-  width: 100px;
+  width: 110px;
+  padding: 15px 7px;
   background-color: ${secondaryBlack};
   border-radius: 15px;
   text-align: center;
@@ -43,7 +43,7 @@ const Card = styled.div`
   }
 
   @media (min-width: 1024px) {
-    padding: 15px 60px;
+    padding: 15px 7px;
   }
 `;
 
@@ -77,20 +77,32 @@ const avatarCustomStyle = `
   height: 60px;
 
   @media (min-width: 1024px) {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
   }
 `;
 
-const ArtistName = styled.h4`
+const ArtistNameWrapper = styled.h4`
   display: flex;
-  height: 30px;
+  height: 25px;
+  align-items: center;
+`;
+
+const ArtistName = styled.h4`
+  display: -webkit-box;
+  width: 100%;
   align-items: center;
   text-align: center;
-  font-size: 0.7142857143em;
+  font-size: 0.6875em;
+  line-height: 1.1em;
   font-weight: 400;
   margin-top: 10px;
+  overflow: hidden;
   white-space: normal;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 25px;
 `;
 
 function renderArtists(artists, artistClick) {
@@ -99,7 +111,9 @@ function renderArtists(artists, artistClick) {
     return (
       <Card onClick={() => artistClick(artist.id)}>
         <Avatar src={src} customStyle={avatarCustomStyle} />
-        <ArtistName>{artist.name}</ArtistName>
+        <ArtistNameWrapper>
+          <ArtistName>{artist.name}</ArtistName>
+        </ArtistNameWrapper>
       </Card>
     );
   });
