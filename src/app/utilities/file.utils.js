@@ -28,21 +28,21 @@ export const uploadPdfDocumentToStorage = ({ file, id, fileName }) => axios({
   method: 'POST',
   url: `${process.env.STORAGE_API_URI}/document/upload/`,
   headers: {},
-  data: JSON.stringify({
+  data: {
     file,
     id,
     fileName,
-  }),
+  },
 });
 
 export const uploadSongToStorage = ({ file, id, updateProgress }) => axios({
   method: 'POST',
   url: `${process.env.STORAGE_API_URI}/song/upload/`,
   headers: {},
-  data: JSON.stringify({
+  data: {
     file,
     id,
-  }),
+  },
   // `onUploadProgress` allows handling of progress events for uploads
   onUploadProgress: updateProgress,
 });
