@@ -18,10 +18,10 @@ export const uploadImageToStorage = ({ file, id }) => axios({
   method: 'POST',
   url: `${process.env.STORAGE_API_URI}/image/upload/`,
   headers: {},
-  data: JSON.stringify({
-    file,
+  data: {
+    file: JSON.stringify({ data: file }),
     id,
-  }),
+  },
 });
 
 export const uploadPdfDocumentToStorage = ({ file, id, fileName }) => axios({
