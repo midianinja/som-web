@@ -278,6 +278,7 @@ const RegisterArtist = ({ history }) => {
       fetchMusicalStyleOptions(setMusicalStylesOptions);
     }
   }, [musicalStylesOptions]);
+
   const values = {
     avatar: avatar.url,
     name,

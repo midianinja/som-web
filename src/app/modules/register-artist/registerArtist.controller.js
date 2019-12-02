@@ -182,7 +182,7 @@ export const nextAction = async ({
     let preRegister = {};
     if (!id) preRegister = await createArtist(artistToApi, store.state.user.id);
 
-    if (!avatar.urls) {
+    if (!avatar.urls && avatar && avatar.file) {
       const base64 = await getBase64(avatar.file);
       const newImage = await uploadImageToStorage({
         file: base64,
