@@ -151,10 +151,8 @@ function Navigation({ history }) {
               type: 'SET_USER',
               user: null,
             });
-
             dispatch({
-              type: 'SET_AUTH',
-              auth: null,
+              type: 'RESET_AUTH',
             });
 
             allowBodyScroll();

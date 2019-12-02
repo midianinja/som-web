@@ -116,7 +116,8 @@ export const subscribeAction = async (
   });
 
   const subs = [...event.subscribers];
-  subs.push(user.artist.id);
+  console.log('subs:', subs);
+  subs.push(user.artist);
   const newEvent = { ...event };
   newEvent.subscribers = subs;
   console.log('newEvent:', newEvent);
