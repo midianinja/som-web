@@ -97,47 +97,33 @@ export const subscribeAction = async (
     return;
   }
 
+
   try {
     const resp = await subscribeEvent(event.id, user.artist.id);
-    console.log('resp:', resp);
+    console.log('resp:', resp.data.subscribeEvent);
+
+    setDialog({
+      title: 'Pronto!',
+      icon: '/icons/yeah.svg',
+      description: `Você está inscrito no festival ${event.name}. Fique ligado no SOM para receber novas informações.`,
+      disagreeText: 'Ver mais eventos',
+      disagreeAction: () => {
+        allowBodyScroll();
+        setDialog({});
+      },
+    });
+    setEvent(resp.data.subscribeEvent);
   } catch (err) {
     throw err;
   }
-
-  setDialog({
-    title: 'Pronto!',
-    icon: '/icons/yeah.svg',
-    description: `Você está inscrito no festival ${event.name}. Fique ligado no SOM para receber novas informações.`,
-    disagreeText: 'Ver mais eventos',
-    disagreeAction: () => {
-      allowBodyScroll();
-      setDialog({});
-    },
-  });
-
-  const subs = [...event.subscribers];
-  console.log('subs:', subs);
-  subs.push(user.artist);
-  const newEvent = { ...event };
-  newEvent.subscribers = subs;
-  console.log('newEvent:', newEvent);
-  setEvent(newEvent);
 };
 
 export const unsubscribeAction = async (user, event, setEvent) => {
   try {
-    await unsubscribeEvent(event.id, user.artist.id);
+    const myEvent = await unsubscribeEvent(event.id, user.artist.id);
+    console.log('myEvent:', myEvent);
+    setEvent(myEvent.data.unsubscribeEvent);
   } catch (err) {
     throw err;
   }
-
-  const index = event.subscribers
-    .findIndex(sub => sub === user.artist.id);
-
-  const subs = [...event.subscribers];
-  subs.splice(index, 1);
-
-  const newEvent = { ...event };
-  newEvent.subscribers = subs;
-  setEvent(newEvent);
 };
