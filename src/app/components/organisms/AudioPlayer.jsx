@@ -184,6 +184,7 @@ function AudioPlayer({ tracks }) {
 
       const promises = tracks.map(songsDataPromise);
       const newSongs = await Promise.all(promises);
+
       setSongs(newSongs);
       setSelectSong(newSongs[0]);
     };
