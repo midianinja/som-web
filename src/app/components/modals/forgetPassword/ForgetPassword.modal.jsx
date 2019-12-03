@@ -1,13 +1,18 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import qs from 'query-string';
 import Store from '../../../store/Store';
-import InputGroup from '../../molecules/InputGroup';
-import { black, white, white10 } from '../../../settings/colors';
-import { sentEmail } from './repository';
+import { black } from '../../../settings/colors';
 import { blockBodyScroll, allowBodyScroll } from '../../../utilities/scroll';
-import InputWithTransparency from '../../atoms/InputWithTransparency';
+import FormSendResetRequest from './components/FormSendResetRequest';
+import FormSentResetRequest from './components/FormSentResetRequest';
+import FormResetPassword from './components/FormResetPassword';
+import FormInvalidToken from './components/FormInvalidToken';
+import FormPasswordReseted from './components/FormPasswordReseted';
+import { phoneMask } from './validations';
+import { validateToken } from './controller';
 
 const ForgetPasswordWrapper = styled.section`
   display: ${(props) => {
@@ -23,7 +28,6 @@ const ForgetPasswordWrapper = styled.section`
   z-index: 30;
   background-color: ${black};
 `;
-
 const Container = styled.div`
   position: relative;
   width: 100%;
@@ -41,155 +45,106 @@ const Container = styled.div`
   }
 `;
 
-const Icon = styled.img`
-  width: 100%;
-  max-width: 230px;
-  display: block;
-  position: relative;
-  right: -40px;
-  margin-left: auto;
-  margin-right: auto;
-
-  @media (min-width: 768px) {
-    display: inline-block;
-    max-width: 400px;
-    vertical-align: middle;
-    right: 0px;
-  }
-`;
-
-const Arrow = styled.img`
-  width: 36px;
-`;
-
-const ExitArrow = styled.img`
-  width: 22px;
-  position: absolute;
-  top: 15px;
-  right: 30px;
-  cursor: pointer;
-
-  @media (min-width: 768px) {
-    top: 30px;
-  }
-`;
-
-const inputGroupStyle = `
-  margin-top: 30px;
-  margim-bottom: 0px;
-`;
-
-const inputWithTransparencyStyle = `
-  margim-bottom: 0px;
-  padding: 2px;
-`;
-
-const Form = styled.form`
-  width: 100%;
-  @media (min-width: 768px) {
-    display: inline-block;
-    width: calc(100% - 404px);
-    max-width: 400;
-    vertical-align: middle;
-  }
-`;
-
-const Title = styled.h1`
-  color: ${white};
-  font-size: 3em;
-  line-height: 1.20833333333em;
-  font-weight: 400;
-  max-width: 230px;
-  margin-top: -60px;
-  margin-bottom: 30px;
-`;
-
-const Instructions = styled.p`
-  color: ${white};
-  font-size: 0.8em;
-  font-weight: 200;
-  max-width: 230px;
-  display: block;
-
-  @media (max-width: 768px) {
-    max-width: 100%;
-  }
-`;
-
-const ButtonWithIcon = styled.button`
-  margin: 0 auto;
-  color: ${white}
-  height: 70px;
-  width: 90%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 30px;
-  background-color: ${white10};
-  border-radius: 50px;
-  padding: 0 10px 0 30px;
-  cursor: pointer;
-
-  @media (min-width: 768px) {
-    margin-top: 60px;
-  }
-`;
-
-const LinkToModal = styled.a`
-  text-decoration: none;
-  color: ${white};
-  font-size: 0.7142857143em;
-  font-weight: 300;
-  cursor: pointer;
-`;
-
 function backToLogin(dispatch) {
   dispatch({ type: 'SHOW_LOGIN_MODAL' });
 }
 
-function ForgetPassword({ history }) {
+function showForgetPasswordModal(dispatch) {
+  dispatch({ type: 'SHOW_FORGET_PASSWORD_MODAL' });
+}
+
+function ForgetPassword({ history, location }) {
+  const initialInputDevice = {
+    currentOption: 'mail',
+    currentInput: '',
+    options: ['mail', 'phone'],
+    devices: {
+      mail: {
+        placeholder: 'Informe o e-mail',
+        inputFunction: arg => arg,
+        maxLength: 50,
+      },
+      phone: {
+        placeholder: 'Informe o celular',
+        inputFunction: phoneMask,
+        maxLength: 15,
+      },
+    },
+  };
+  const initialNewPassword = {
+    password: { value: '', error: '', errorColor: '' },
+    confirmPassword: { value: '', error: '', errorColor: '' },
+  };
+
   const { state, dispatch } = useContext(Store);
-  const [email, setEmail] = useState('');
+  const [currentStep, setCurrentStep] = useState('step1');
+  const [inputDevice, setInputDevice] = useState(initialInputDevice);
   const [error, setError] = useState('');
+  const [newPassword, setNewPassword] = useState(initialNewPassword);
   const ida = window.localStorage.getItem('som@ida');
   const token = window.localStorage.getItem('som@token');
+  const resetPasswordToken = qs.parse(location.search).token;
 
   const closeModal = () => {
     allowBodyScroll();
     dispatch({ type: 'CLOSE_MODAL' });
   };
 
-  const handleEmail = (event) => {
-    setEmail(event.target.value);
+  const FormSteps = {
+    step1: {
+      render: () => FormSendResetRequest(
+        () => backToLogin(dispatch), closeModal,
+        inputDevice, error, setInputDevice, setError, () => setCurrentStep('step2'),
+      ),
+    },
+    step2: {
+      render: () => FormSentResetRequest(() => { closeModal(); setCurrentStep('step1'); }),
+    },
+    step3: {
+      render: () => FormResetPassword(
+        newPassword, setNewPassword, resetPasswordToken, setCurrentStep,
+      ),
+    },
+    step4: {
+      render: () => FormInvalidToken(() => { closeModal(); setCurrentStep('step1'); }),
+    },
+    step5: {
+      render: () => FormPasswordReseted(() => { closeModal(); setCurrentStep('step1'); }),
+    },
   };
 
-  if (state.modals.forgetPassword && (!ida && !token)) blockBodyScroll();
-  if (state.modals.forgetPassword && ida) history.push('/event/5d3a31e9dd3e02dd26be4fd2');
+  useEffect(() => {
+    setInputDevice({
+      ...inputDevice,
+      currentInput:
+        inputDevice.devices[inputDevice.currentOption].inputFunction(inputDevice.currentInput),
+    });
+  }, [inputDevice.currentOption]);
 
+  useEffect(() => {
+    async function isValidToken() {
+      const validation = await validateToken(resetPasswordToken);
+      return validation;
+    }
+
+    if (location.pathname === '/reset-password' && resetPasswordToken) {
+      isValidToken().then(
+        (result) => {
+          const nextStep = result ? 'step3' : 'step4';
+          setCurrentStep(nextStep);
+          showForgetPasswordModal(dispatch);
+        },
+      );
+    }
+  }, []);
+
+  if (state.modals.forgetPassword && (!ida && !token)) blockBodyScroll();
+  // if (true && (!ida && !token)) blockBodyScroll();
+  if (state.modals.forgetPassword && ida) history.push('/event/5d3a31e9dd3e02dd26be4fd2');
   return (
     <ForgetPasswordWrapper id="forgetPassword" isOpen={state.modals.forgetPassword && (!ida && !token)}>
       <Container>
-        <ExitArrow onClick={closeModal} src="/icons/arrow_forward_left.svg" />
-        <Icon src="/icons/login.svg" />
-        <Form>
-          <Title>Recuperar senha!</Title>
-          <Instructions>
-            Insira o seu e-mail cadastrado no SOM.
-          </Instructions>
-          <Instructions>
-            Vamos te enviar um link para gerar uma nova senha
-          </Instructions>
-          <InputGroup customStyle={inputGroupStyle} label=" " error={error}>
-            <InputWithTransparency placeholder="Senha" onChange={event => handleEmail(event)} customStyle={inputWithTransparencyStyle} />
-          </InputGroup>
-          <LinkToModal onClick={(e) => { e.preventDefault(); backToLogin(dispatch); }}>
-            Lembrei! Voltar ao login
-          </LinkToModal>
-          <ButtonWithIcon onClick={(e) => { e.preventDefault(); sentEmail(email, setError); return false; }}>
-            Enviar e-mail
-            <Arrow src="/icons/arrow_forward_right.svg" />
-          </ButtonWithIcon>
-        </Form>
+        {FormSteps[currentStep].render()}
       </Container>
     </ForgetPasswordWrapper>
   );
@@ -199,8 +154,14 @@ const historyShape = {
   push: PropTypes.func,
 };
 
+const routerParamsShape = {
+  pathname: PropTypes.string,
+  search: PropTypes.string,
+};
+
 ForgetPassword.propTypes = {
   history: PropTypes.shape(historyShape).isRequired,
+  location: PropTypes.shape(routerParamsShape).isRequired,
 };
 
 export default withRouter(ForgetPassword);
