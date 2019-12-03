@@ -86,13 +86,19 @@ const TrackLikedIcon = styled.img`
   margin-top: -2px;
 `;
 
+let AUDIO_ELEMENT = null;
+
 const TrackHeaderWrapper = styled.div`
   display: block;
 `;
 
 function secondToMinute(time) {
-  const minutes = parseInt(time / 60, 10);
-  const seconds = parseInt(time % 60, 10);
+  let minutes = parseInt(time / 60, 10);
+  let seconds = parseInt(time % 60, 10);
+
+  minutes = minutes < 10 ? `0${minutes}` : minutes;
+  seconds = seconds < 10 ? `0${seconds}` : seconds;
+
   return `${minutes}:${seconds}`;
 }
 
@@ -108,47 +114,59 @@ function renderTracks(tracks, handleClick) {
   ));
 }
 
-const handlePlayPause = (setPlay, play, audio) => {
-  if (play) audio.pause();
-  else audio.play();
-
-  setPlay(!play);
+const handlePlayPause = (setPlay, play) => {
+  if (play) {
+    AUDIO_ELEMENT.pause();
+    setPlay(false);
+  } else {
+    AUDIO_ELEMENT.play();
+    setPlay(!play);
+  }
 };
 
 function AudioPlayer({ tracks }) {
   const [play, setPlay] = useState(false);
   const [songs, setSongs] = useState([]);
-  const [selectSong, setSelectSong] = useState({});
-  const [audio, setAudio] = useState(false);
+  const [selectSong, setSelectSong] = useState(null);
   const [audioStatus, setAudioStatus] = useState('stopped');
   const [currentTime, setCurrentTime] = useState(0);
 
-  const loadingSong = () => {
+  const loadingSong = (cb) => {
     setAudioStatus('loading');
-    const audioElement = new Audio();
-
-    audioElement.onloadstart = () => {
-      setAudio(audioElement);
-    };
-
-    audioElement.ontimeupdate = (event) => {
-      setCurrentTime(event.target.currentTime);
+    AUDIO_ELEMENT = new Audio();
+    AUDIO_ELEMENT.onloadstart = () => {
       setAudioStatus('loadded');
+      cb();
     };
 
-    audioElement.src = selectSong.url;
-    audioElement.load();
+    AUDIO_ELEMENT.ontimeupdate = (event) => {
+      setCurrentTime(event.target.currentTime);
+    };
+
+    AUDIO_ELEMENT.src = selectSong.url;
+    AUDIO_ELEMENT.load();
   };
 
   useEffect(() => {
-    loadingSong();
+    const isAudio = !!AUDIO_ELEMENT;
+    const cb = () => {
+      setPlay(true);
+      AUDIO_ELEMENT.play();
+    };
+
+    if (isAudio) {
+      setPlay(false);
+      AUDIO_ELEMENT.pause();
+    }
+
+    if (selectSong) loadingSong(isAudio ? cb : () => null);
   }, [selectSong]);
 
   useEffect(() => {
     const mapSongs = async () => {
       const songsDataPromise = track => new Promise((resolve) => {
-        const audioElement = new Audio();
-        audioElement.onloadedmetadata = (data) => {
+        const audioFakeElement = new Audio();
+        audioFakeElement.onloadedmetadata = (data) => {
           const metadata = {
             url: track.url,
             title: track.title,
@@ -160,22 +178,28 @@ function AudioPlayer({ tracks }) {
           resolve(metadata);
         };
 
-        audioElement.src = track.url;
-        audioElement.load();
+        audioFakeElement.src = track.url;
+        audioFakeElement.load();
       });
 
       const promises = tracks.map(songsDataPromise);
       const newSongs = await Promise.all(promises);
-      setSelectSong(newSongs[0] || {});
       setSongs(newSongs);
+      setSelectSong(newSongs[0]);
     };
 
     mapSongs();
   }, [tracks]);
 
-  const currentRangeValue = currentTime && audio.duration
-    ? Math.floor(currentTime / audio.duration * 1000) : 0;
+  const currentRangeValue = currentTime && AUDIO_ELEMENT && AUDIO_ELEMENT.duration
+    ? Math.floor(currentTime / AUDIO_ELEMENT.duration * 1000) : 0;
 
+  const song = {
+    title: 'Nenhuma seleção.',
+    album: 'Sem albúm.',
+    url: '',
+    ...(selectSong || {}),
+  };
   return (
     <Wrapper>
       <Header>
@@ -183,11 +207,11 @@ function AudioPlayer({ tracks }) {
           <PlayPauseButton
             ket={play}
             shouldPlay={play}
-            onClick={() => handlePlayPause(setPlay, play, audio)}
+            onClick={() => handlePlayPause(setPlay, play)}
           />
           <Info>
-            <Title>{selectSong.title}</Title>
-            <Album>{selectSong.album}</Album>
+            <Title>{song.title}</Title>
+            <Album>{song.album}</Album>
           </Info>
         </TrackHeaderWrapper>
         <AudioSlider
@@ -195,11 +219,13 @@ function AudioPlayer({ tracks }) {
           value={currentRangeValue}
           defaultValue="0"
           onChange={(e) => {
-            const time = e.target.value / 1000 * audio.duration;
+            if (!AUDIO_ELEMENT) return;
+
+            const time = e.target.value / 1000 * AUDIO_ELEMENT.duration;
             setCurrentTime(time);
 
-            audio.currentTime = time;
-            audio.play();
+            AUDIO_ELEMENT.currentTime = time;
+            AUDIO_ELEMENT.play();
             setPlay(true);
           }}
           min="0"
