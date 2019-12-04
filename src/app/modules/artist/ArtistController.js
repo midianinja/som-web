@@ -22,7 +22,6 @@ export const fetchArtistData = async (
       variables: { id },
     });
   } catch (err) {
-    console.log([err]);
     setArtistLoading(false);
     throw err;
   }
