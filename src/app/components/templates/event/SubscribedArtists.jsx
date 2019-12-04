@@ -108,7 +108,10 @@ const ArtistName = styled.h4`
 `;
 
 const ApprovedTag = styled.label`
-  display: block;
+  display: ${(props) => {
+    const { show } = props;
+    return show ? 'block' : 'none';
+  }}
   position: absolute;
   top: 0px;
   width: 100%;
