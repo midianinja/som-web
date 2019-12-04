@@ -159,10 +159,10 @@ const getState = (store) => {
   const [states, setStates] = useState([]);
   const [visibles, setVisibles] = useState({
     artist: true,
-    music: true,
-    contact: true,
-    social: true,
-    files: true,
+    music: false,
+    contact: false,
+    social: false,
+    files: false,
   });
   const [step, setStep] = useState(2);
 
