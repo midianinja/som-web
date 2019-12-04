@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import moment from 'moment';
 import Cover from '../../components/atoms/Cover';
 import EventText from '../../components/atoms/EventText';
 import EventInfo from '../../components/molecules/EventInfo';
@@ -80,6 +81,8 @@ const EventImage = styled.img`
   visibility: hidden;
 `;
 
+const unixTime = unixtime => new Date(+unixtime).toISOString().slice(0, 19);
+
 const EventPage = ({ match, history }) => {
   const [loading, setLoading] = useState({ ...initialLoading });
   const [event, setEvent] = useState(null);
@@ -123,8 +126,13 @@ const EventPage = ({ match, history }) => {
     has_food: event.has_food,
   };
 
+  const closingDateInstance = moment(new Date(unixTime(event.subscribe_closing_date)));
+  const todayInstance = moment();
+
+  const closingDiffDays = Math.ceil(closingDateInstance.diff(todayInstance, 'days', true));
+  
+  const isClosingSubscribe = closingDiffDays <= 0;
   const isSubscribed = (u, e) => {
-    console.log('e:', e);
     let subscribed = false;
 
     if (u && u.artist) {
@@ -158,6 +166,8 @@ const EventPage = ({ match, history }) => {
               name={event.name}
               date={event.event_date}
               place={eventPlace}
+              isClosingSubscribe={isClosingSubscribe}
+              diffDays={closingDiffDays}
               subscribers={event.subscribers.length}
               subscribeAction={() => subscribeAction(
                 state.auth, state.user, event, dispatch, setDialog,
@@ -171,7 +181,11 @@ const EventPage = ({ match, history }) => {
               <ProductorCardWrapper>
                 <ProductorCard productor={event.productor} />
               </ProductorCardWrapper>
-              <SubscribedArtists artistClick={artistId => history.push(`/artist/${artistId}`)} artists={event.subscribers} />
+              <SubscribedArtists
+                artistClick={artistId => history.push(`/artist/${artistId}`)}
+                artists={event.subscribers}
+                approveds={event.approved_artists}
+              />
             </ColumnWrapper>
           </Content>
           {dialog.title ? (
