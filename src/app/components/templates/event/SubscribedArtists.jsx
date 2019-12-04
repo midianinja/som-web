@@ -121,6 +121,7 @@ const ApprovedTag = styled.label`
   padding: 7px 5px;
   font-weight: 200;
   letter-spacing: 3px;
+  z-index: 2;
 `;
 
 function renderArtists(artists, artistClick, approveds) {
