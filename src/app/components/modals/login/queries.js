@@ -8,6 +8,23 @@ export const oneUserQuery = gql`
       type
       artist {
         id
+        members_number
+        about
+        country
+        state
+        city
+        musical_styles {
+          name
+          id
+        }
+        phone
+        email
+        songs {
+          title
+          url
+        }
+        spotify_id
+        id
         name
         avatar_image {
           mimified

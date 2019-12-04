@@ -99,6 +99,8 @@ export const subscribeAction = async (
 
 
   try {
+    console.log('event.id:', event.id);
+    console.log('user.artist.id:', user.artist.id);
     const resp = await subscribeEvent(event.id, user.artist.id);
     console.log('resp:', resp.data.subscribeEvent);
 
