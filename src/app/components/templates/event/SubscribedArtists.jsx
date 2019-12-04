@@ -120,7 +120,7 @@ const ApprovedTag = styled.label`
   font-size: 0.625em;
   padding: 7px 5px;
   font-weight: 200;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   z-index: 2;
 `;
 
@@ -129,7 +129,7 @@ function renderArtists(artists, artistClick, approveds) {
     const src = artist && artist.avatar_image ? artist.avatar_image.mimified : '';
     return (
       <Card onClick={() => artistClick(artist.id)}>
-        <ApprovedTag show={approveds.findIndex(({ id }) => artist.id === id) !== -1}>APROVADO</ApprovedTag>
+        <ApprovedTag show={approveds.findIndex(({ id }) => artist.id === id) !== -1}>SELECIONADO</ApprovedTag>
         <Avatar src={src} customStyle={avatarCustomStyle} />
         <ArtistNameWrapper>
           <ArtistName>{artist.name}</ArtistName>

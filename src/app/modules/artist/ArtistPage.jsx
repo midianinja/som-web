@@ -85,7 +85,6 @@ function ArtistPage({ match }) {
     isOpen: false,
   });
   const [songs, setSongs] = useState([]);
-  console.log('alertModal:', alertModal);
 
   const { id } = match.params;
   useEffect(() => {
@@ -101,7 +100,6 @@ function ArtistPage({ match }) {
     }
 
     if (artist.follows) {
-      console.log(artist.follows);
       setFollows(artist.follows.map(({ user }) => user.id));
     }
   }, [artist]);
