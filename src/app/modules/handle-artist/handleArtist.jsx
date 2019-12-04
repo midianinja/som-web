@@ -85,12 +85,12 @@ const renderContacts = ({ state }) => {
     <ContactAndSongsFieldset
       setErrors={state.contactStepErrors.update}
       handleBlurChange={handleBlurChange}
-      stepErrors={state.contactStepErrorsvalue}
+      stepErrors={state.contactStepErrors.value}
       handlePhoneChange={({ target }) => state.phone.update(target.value)}
       handleEmailChange={({ target }) => state.email.update(target.value)}
       values={{
-        phone: state.phone,
-        email: state.email,
+        phone: state.phone.value,
+        email: state.email.value,
         songs: [],
       }}
     />
@@ -105,7 +105,7 @@ const renderSocialMedia = ({ state }) => {
       setStepErrors={state.socialMediaStepErrors.update}
       stepErrors={state.socialMediaStepErrors.value}
       handleFacebookChange={({ target }) => state.facebook.update(target.value)}
-      handleInstagramChange={({ target }) => state.intagram.update(target.value)}
+      handleInstagramChange={({ target }) => state.instagram.update(target.value)}
       handleTwitterChange={({ target }) => state.twitter.update(target.value)}
       handleYoutubeChange={({ target }) => state.youtube.update(target.value)}
       handleSpotifyChange={({ target }) => state.spotify.update(target.value)}
@@ -159,10 +159,10 @@ const getState = (store) => {
   const [states, setStates] = useState([]);
   const [visibles, setVisibles] = useState({
     artist: true,
-    music: false,
-    contact: false,
-    social: false,
-    files: false,
+    music: true,
+    contact: true,
+    social: true,
+    files: true,
   });
   const [step, setStep] = useState(2);
 
@@ -235,6 +235,12 @@ const RegisterArtist = ({ history }) => {
       state.state.update(oldArtist.state);
       state.musicalStyles.update(oldArtist.musicalStyles);
       state.artist.update(store.state.user.artist);
+      state.phone.update(oldArtist.phone);
+      state.email.update(oldArtist.email);
+      state.instagram.update(oldArtist.instagram);
+      state.twitter.update(oldArtist.twitter);
+      state.spotify.update(oldArtist.spotify);
+      state.youtube.update(oldArtist.youtube);
     }
     if (!state.countries.value.length && !state.states.value.length) {
       fetchLocations({ state });
@@ -282,7 +288,7 @@ const RegisterArtist = ({ history }) => {
       <StepFormFooter
         nextAction={() => nextAction({ store, state, history })}
         loading={state.loading.value}
-        customStyle={state.visibles.value.files && state.id.value ? `background-color: ${white};` : ''}
+        customStyle={state.visibles.value.files && state.artist.value.id ? `background-color: ${white};` : ''}
         skipAction={() => skipAction(state)}
       />
     </Form>

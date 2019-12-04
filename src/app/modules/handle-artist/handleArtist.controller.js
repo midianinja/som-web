@@ -19,7 +19,6 @@ const colors = [
   'yellow',
 ];
 
-
 const mapArtist = (artist, user) => ({
   user,
   name: artist.name,
@@ -192,6 +191,7 @@ const mapSong = (song, artist) => ({
 });
 
 export const mapArtistToState = (artist, state) => {
+  console.log('artist:', artist);
   let country = {};
   if (state && !state.country.value.label && state.countries.value.length) {
     [country] = state.countries.value.filter(ctry => (artist.country === ctry.label));
@@ -390,13 +390,6 @@ export const steps = [
 
 export const handleMusicalStyleSelect = ({ value, state }) => {
   state.musicalStyle.update(value);
-  const colors = [
-    'purple',
-    'green',
-    'orange',
-    'magenta',
-    'yellow',
-  ];
   const style = state.musicalStylesOptions.value.filter(o => (o.name.toLowerCase() === value))[0];
   const newMusicalStyles = state.musicalStyles.value
     .filter(o => (o.text.toLowerCase() !== value))
