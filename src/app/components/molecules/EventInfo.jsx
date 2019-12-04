@@ -73,20 +73,23 @@ const unixTime = unixtime => new Date(+unixtime).toISOString().slice(0, 19);
 
 const EventInfo = ({
   name, date, place, subscribers, subscribeAction, subscribed,
-  unsubscribeAction, isClosingSubscribe, diffDays,
+  unsubscribeAction, isClosingSubscribe, diffDays, diffHours,
 }) => {
   const newDate = new Date(unixTime(date));
   const dateInstance = moment(newDate);
   const [hover, setHover] = useState(false);
   const dayLabel = diffDays === 1 ? 'dia' : 'dias';
+  const hourLabel = diffHours === 1 ? 'hora' : 'horas';
+
+  let label = 'Inscrições encerradas';
+  if (diffHours > 0) label = `${diffHours} ${hourLabel} para o fim das inscrições`;
+  if (diffDays > 0) label = `${diffDays} ${dayLabel} para o fim das inscrições`;
 
   return (
     <Container>
       <ClosingDateTimer>
         <ClockIcon src="/icons/clock.svg" alt="icone de um relógio" />
-        { diffDays > 0
-          ? `${diffDays} ${dayLabel} para o fim das inscrições` : 'Inscrições encerradas'
-        }
+        {label}
       </ClosingDateTimer>
       <Title>{name}</Title>
       <Space />
@@ -159,6 +162,7 @@ EventInfo.propTypes = {
   date: PropTypes.string,
   subscribers: PropTypes.number,
   diffDays: PropTypes.number,
+  diffHours: PropTypes.number,
   subscribed: PropTypes.bool,
   isClosingSubscribe: PropTypes.bool,
   place: PropTypes.shape(placeShape),

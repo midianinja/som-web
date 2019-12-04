@@ -129,9 +129,10 @@ const EventPage = ({ match, history }) => {
   const closingDateInstance = moment(new Date(unixTime(event.subscribe_closing_date)));
   const todayInstance = moment();
 
-  const closingDiffDays = Math.ceil(closingDateInstance.diff(todayInstance, 'days', true));
-  
-  const isClosingSubscribe = closingDiffDays <= 0;
+  const closingDiffDays = Math.floor(closingDateInstance.diff(todayInstance, 'days', true));
+  const closingDiffHours = Math.ceil(closingDateInstance.diff(todayInstance, 'hours', true));
+
+  const isClosingSubscribe = closingDiffDays <= 0 && closingDiffHours <= 0;
   const isSubscribed = (u, e) => {
     let subscribed = false;
 
@@ -149,10 +150,7 @@ const EventPage = ({ match, history }) => {
       {({ state, dispatch }) => (
         <Container>
           <Header
-            logged={() => {
-              console.log(state);
-              return !!state.user;
-            }}
+            logged={!!state.user}
           />
           <CoverWrapper>
             <Cover cover={event.cover}>
@@ -168,6 +166,7 @@ const EventPage = ({ match, history }) => {
               place={eventPlace}
               isClosingSubscribe={isClosingSubscribe}
               diffDays={closingDiffDays}
+              diffHours={closingDiffHours}
               subscribers={event.subscribers.length}
               subscribeAction={() => subscribeAction(
                 state.auth, state.user, event, dispatch, setDialog,
