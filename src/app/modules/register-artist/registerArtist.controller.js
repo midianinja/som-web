@@ -197,14 +197,14 @@ export const nextAction = async ({
     }
 
     if (songs.length) {
-      // const songsToUpload = songs.filter(s => !(s.id));
-      // const promises = songsToUpload.map(song => new Promise((res, rej) => {
-      //   createSong(song, id || preRegister.id)
-      //     .then(data => res(data))
-      //     .catch(err => rej(err));
-      // }));
-      // const uploadedSongs = await Promise.all(promises);
-      // artistToApi.songs = uploadedSongs.concat(songs).map(s => s.id).filter(n => n);
+      const songsToUpload = songs.filter(s => !(s.id));
+      const promises = songsToUpload.map(song => new Promise((res, rej) => {
+        createSong(song, id || preRegister.id)
+          .then(data => res(data))
+          .catch(err => rej(err));
+      }));
+      const uploadedSongs = await Promise.all(promises);
+      artistToApi.songs = uploadedSongs.concat(songs).map(s => s.id).filter(n => n);
     }
 
     console.log('artistToApi:', artistToApi);
