@@ -214,10 +214,12 @@ const RegisterArtist = ({ history }) => {
   const state = getState(store);
   console.log('store:', store);
   console.log('state:', state);
-  const oldArtist = store.state.user && store.state.user.artist
+  console.log('store.state.user && store.state.user.artist:', !!(store.state.user && store.state.user.artist));
+  const oldArtist = (!!store.state.user && !!store.state.user.artist)
     ? mapArtistToState(store.state.user.artist, state) : {
       country: {},
       state: {},
+      avatar: {},
       musicalStyles: [],
     };
 

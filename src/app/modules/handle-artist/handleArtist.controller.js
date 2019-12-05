@@ -192,6 +192,14 @@ const mapSong = (song, artist) => ({
 
 export const mapArtistToState = (artist, state) => {
   console.log('artist:', artist);
+  if (!artist) {
+    return ({
+      country: {},
+      state: {},
+      avatar: {},
+      musicalStyles: [],
+    });
+  }
   let country = {};
   if (state && !state.country.value.label && state.countries.value.length) {
     [country] = state.countries.value.filter(ctry => (artist.country === ctry.label));
