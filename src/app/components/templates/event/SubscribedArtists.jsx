@@ -125,10 +125,15 @@ const ApprovedTag = styled.label`
 `;
 
 function renderArtists(artists, artistClick, approveds) {
-  return artists.map((artist) => {
+  const sortedArtists = artists.sort((artist) => {
+    const { id } = artist;
+    return approveds.findIndex(approved => approved.id === id) !== -1 ? -1 : 1;
+  });
+
+  return sortedArtists.map((artist) => {
     const src = artist && artist.avatar_image ? artist.avatar_image.mimified : '';
     return (
-      <Card onClick={() => artistClick(artist.id)}>
+      <Card key={artist.id} id={artist.id} onClick={() => artistClick(artist.id)}>
         <ApprovedTag show={approveds.findIndex(({ id }) => artist.id === id) !== -1}>SELECIONADO</ApprovedTag>
         <Avatar src={src} customStyle={avatarCustomStyle} />
         <ArtistNameWrapper>
