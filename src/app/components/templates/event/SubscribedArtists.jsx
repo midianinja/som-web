@@ -133,7 +133,7 @@ function renderArtists(artists, artistClick, approveds) {
   return sortedArtists.map((artist) => {
     const src = artist && artist.avatar_image ? artist.avatar_image.mimified : '';
     return (
-      <Card onClick={() => artistClick(artist.id)}>
+      <Card key={artist.id} id={artist.id} onClick={() => artistClick(artist.id)}>
         <ApprovedTag show={approveds.findIndex(({ id }) => artist.id === id) !== -1}>SELECIONADO</ApprovedTag>
         <Avatar src={src} customStyle={avatarCustomStyle} />
         <ArtistNameWrapper>
