@@ -112,7 +112,7 @@ const StepFormHeader = (props) => {
   return (
     <Header {...props}>
       <CommonHeader />
-      <IndexContainer>{renderBall(props)}</IndexContainer>
+      {/* <IndexContainer>{renderBall(props)}</IndexContainer> */}
       <Body>
         <Title>{items[index].title}</Title>
         <Text small={small}>{items[index].description}</Text>

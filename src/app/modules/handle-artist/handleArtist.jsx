@@ -53,7 +53,7 @@ const renderArtistInfos = ({
     countries={state.countries.value}
     states={state.states.value}
     handleAvatarChange={({ target }) => state.avatar.update({
-      url: URL.createObjectURL(target.files[0]),
+      url: { url: URL.createObjectURL(target.files[0]) },
       urls: null,
       file: target.files[0],
     })}

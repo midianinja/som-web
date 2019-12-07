@@ -85,6 +85,7 @@ function BasicInformationFieldset(props) {
     artistStepErrors,
     values,
   } = props;
+  console.log('values:', values);
 
   return (
     <Fieldset>
@@ -102,7 +103,7 @@ function BasicInformationFieldset(props) {
           />
         </InputGroup>
         <TextInpustWrapper>
-          <InputGroup label={values.name ? 'Nome da banda' : ''} error={artistStepErrors.name}>
+          <InputGroup label={values.name ? 'Nome da banda/artista' : ''} error={artistStepErrors.name}>
             <Input
               id="name"
               placeholder="Nome da banda"
