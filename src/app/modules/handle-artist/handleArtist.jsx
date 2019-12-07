@@ -129,7 +129,6 @@ const getState = (store) => {
   const [artist, setArtist] = useState(store.state.user ? store.state.user.artist : {});
   const myArtist = store.state.user ? mapArtistToState(artist) : {};
 
-  console.log('myArtist:', myArtist);
   const [artistStepErrors, setArtistStepErrors] = useState({});
   const [contactStepErrors, setContactStepErrors] = useState({});
   const [socialMediaStepErrors, setSocialMediaStepErrors] = useState({});
@@ -212,9 +211,6 @@ const renderUploadSongs = ({ state }) => {
 const RegisterArtist = ({ history }) => {
   const store = useContext(Store);
   const state = getState(store);
-  console.log('store:', store);
-  console.log('state:', state);
-  console.log('store.state.user && store.state.user.artist:', !!(store.state.user && store.state.user.artist));
   const oldArtist = (!!store.state.user && !!store.state.user.artist)
     ? mapArtistToState(store.state.user.artist, state) : {
       country: {},
@@ -227,7 +223,6 @@ const RegisterArtist = ({ history }) => {
     if (!state.musicalStylesOptions.value.length) {
       fetchMusicalStyleOptions(state.musicalStylesOptions.update);
     }
-    console.log('state.artist.value:', state.artist.value);
     if (state.artist.value && !state.artist.value.id && store.state.user) {
       state.avatar.update(oldArtist.avatar);
       state.name.update(oldArtist.name);
@@ -250,21 +245,25 @@ const RegisterArtist = ({ history }) => {
       fetchMusicalStyleOptions(state.musicalStylesOptions.update);
     }
   }, [state.musicalStylesOptions.value, store.state.user]);
-  console.log('oldArtist:', oldArtist);
 
   const values = {
-    avatar: state.avatar.value.url || oldArtist.avatar,
+    avatar: state.avatar.value || oldArtist.avatar,
     name: state.name.value || oldArtist.name,
     integrants: state.integrants.value || oldArtist.integrants,
     about: state.about.value || oldArtist.about,
     city: state.city.value || oldArtist.city,
     musicalStylePredict: state.musicalStylePredict.value,
     musicalStyle: state.musicalStyle.value,
-    country: state.country.value && state.country.value.value ? state.country.value : oldArtist.country,
-    state: state.state.value && state.state.value.value ? state.state.value : oldArtist.state,
-    musicalStyles: state.musicalStyles.value && state.musicalStyles.value.length ? state.musicalStyles.value : oldArtist.musicalStyles,
+    country: state.country.value
+      && state.country.value.value
+      ? state.country.value : oldArtist.country,
+    state: state.state.value
+      && state.state.value.value
+      ? state.state.value : oldArtist.state,
+    musicalStyles: state.musicalStyles.value
+      && state.musicalStyles.value.length
+      ? state.musicalStyles.value : oldArtist.musicalStyles,
   };
-  console.log('values:', values);
   const deleteTagAction = id => deleteTag({
     id,
     musicalStyles: state.musicalStyles,

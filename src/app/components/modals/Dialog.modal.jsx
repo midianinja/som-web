@@ -87,40 +87,37 @@ const DialogModal = ({
   disagreeAction, agreeText, disagreeText,
   isOpen, closeAction,
   icon,
-}) => {
-  console.log('closeAction:', closeAction);
-  return (
-    <ModalWrapper isOpen={isOpen}>
-      <Modal>
-        {
-          closeAction
-            ? (
-              <CloseIcon
-                color="#000"
-                src="/icons/x.svg"
-                alt="botão de cancelar"
-                onClick={() => closeAction()}
-              />
-            )
-            : null
-        }
-        <IconWrapper>
-          <Icon src={icon} alt={title} />
-        </IconWrapper>
-        <Content>
-          <Title>{title}</Title>
-          <Message>
-            {description}
-          </Message>
-          <Actions>
-            {disagreeAction ? <BackButton type="button" onClick={disagreeAction}>{disagreeText}</BackButton> : null}
-            {confirmAction ? <PrimaryButton type="button" onClick={confirmAction}>{agreeText}</PrimaryButton> : null}
-          </Actions>
-        </Content>
-      </Modal>
-    </ModalWrapper>
-  )
-};
+}) => (
+  <ModalWrapper isOpen={isOpen}>
+    <Modal>
+      {
+        closeAction
+          ? (
+            <CloseIcon
+              color="#000"
+              src="/icons/x.svg"
+              alt="botão de cancelar"
+              onClick={() => closeAction()}
+            />
+          )
+          : null
+      }
+      <IconWrapper>
+        <Icon src={icon} alt={title} />
+      </IconWrapper>
+      <Content>
+        <Title>{title}</Title>
+        <Message>
+          {description}
+        </Message>
+        <Actions>
+          {disagreeAction ? <BackButton type="button" onClick={disagreeAction}>{disagreeText}</BackButton> : null}
+          {confirmAction ? <PrimaryButton type="button" onClick={confirmAction}>{agreeText}</PrimaryButton> : null}
+        </Actions>
+      </Content>
+    </Modal>
+  </ModalWrapper>
+);
 
 DialogModal.propTypes = {
   title: PropTypes.string,

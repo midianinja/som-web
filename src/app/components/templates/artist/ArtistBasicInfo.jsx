@@ -104,8 +104,6 @@ function ArtistBasicInfo(props) {
     followToggle, isFollowing, spotify,
   } = props;
 
-  console.log(isFollowing);
-
   return (
     <Wrapper id="infos">
       <Avatar customStyle={avatarCustomStyled} src={avatar} alt={name} />

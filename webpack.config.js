@@ -1,4 +1,4 @@
-const { DefinePlugin } = require('webpack');
+const { DefinePlugin, optimize } = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -23,9 +23,7 @@ plugins.push(new DefinePlugin({
 if (analyze) {
   plugins.push(new BundleAnalyzerPlugin());
 }
-if (env !== 'local') {
-  plugins.push(new CompressionPlugin());
-}
+plugins.push(new CompressionPlugin());
 
 // 404, 237, 83
 // 396, 312

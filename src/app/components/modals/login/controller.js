@@ -48,7 +48,6 @@ export async function login(
   let userResult;
   try {
     userResult = await getUser(data.ida);
-    console.log('userResult:', userResult);
   } catch (err) {
     setLoading(false);
     throw err;

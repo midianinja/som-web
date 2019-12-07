@@ -99,10 +99,7 @@ export const subscribeAction = async (
 
 
   try {
-    console.log('event.id:', event.id);
-    console.log('user.artist.id:', user.artist.id);
     const resp = await subscribeEvent(event.id, user.artist.id);
-    console.log('resp:', resp.data.subscribeEvent);
 
     setDialog({
       title: 'Pronto!',
@@ -123,7 +120,6 @@ export const subscribeAction = async (
 export const unsubscribeAction = async (user, event, setEvent) => {
   try {
     const myEvent = await unsubscribeEvent(event.id, user.artist.id);
-    console.log('myEvent:', myEvent);
     setEvent(myEvent.data.unsubscribeEvent);
   } catch (err) {
     throw err;

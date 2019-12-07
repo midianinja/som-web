@@ -107,10 +107,7 @@ export const handleCountrySelect = async ({ data, state, myState }) => {
   }));
   state.country.update(data);
   state.states.update(myStates);
-  console.log('myStates:', myStates);
-  console.log('myState:', myState);
   const [mySelectedState] = myStates.filter(stt => stt.label === myState);
-  console.log('mySelectedState:', mySelectedState);
   handleStateSelect({ data: mySelectedState, state });
 };
 
@@ -191,7 +188,6 @@ const mapSong = (song, artist) => ({
 });
 
 export const mapArtistToState = (artist, state) => {
-  console.log('artist:', artist);
   if (!artist) {
     return ({
       country: {},

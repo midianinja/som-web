@@ -85,7 +85,6 @@ function BasicInformationFieldset(props) {
     artistStepErrors,
     values,
   } = props;
-  console.log('values:', values);
 
   return (
     <Fieldset>

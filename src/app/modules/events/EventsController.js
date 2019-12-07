@@ -50,7 +50,6 @@ export const fetchEventsData = async (setEvent, loading, setLoading, setDialog, 
     throw err;
   }
 
-  console.log('eventData:', eventData);
   if (!eventData.data.allEvents) {
     setDialog({
       title: 'Evento não encontrado',
