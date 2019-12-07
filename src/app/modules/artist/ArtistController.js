@@ -22,7 +22,6 @@ export const fetchArtistData = async (
       variables: { id },
     });
   } catch (err) {
-    console.log([err]);
     setArtistLoading(false);
     throw err;
   }
@@ -44,11 +43,8 @@ export const fetchArtistData = async (
 
   let songsPromise;
   try {
-    console.log('promise.data.oneArtist.id:', promise.data.oneArtist.id);
     songsPromise = await fetchSongs(promise.data.oneArtist.id);
-    console.log('songsPromise:', songsPromise);
   } catch (err) {
-    console.log([err]);
     setArtistLoading(false);
     throw err;
   }

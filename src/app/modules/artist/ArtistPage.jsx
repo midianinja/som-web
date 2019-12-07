@@ -85,7 +85,6 @@ function ArtistPage({ match }) {
     isOpen: false,
   });
   const [songs, setSongs] = useState([]);
-  console.log('alertModal:', alertModal);
 
   const { id } = match.params;
   useEffect(() => {
@@ -101,7 +100,6 @@ function ArtistPage({ match }) {
     }
 
     if (artist.follows) {
-      console.log(artist.follows);
       setFollows(artist.follows.map(({ user }) => user.id));
     }
   }, [artist]);
@@ -156,6 +154,7 @@ function ArtistPage({ match }) {
           name={artist.name}
           facebook={artist.facebook}
           twitter={artist.twitter}
+          spotify={artist.spotify_artist_link}
           instagram={artist.instagram}
           followers={follows.length}
           following={0}
@@ -167,7 +166,9 @@ function ArtistPage({ match }) {
           followToggle={handleFollow}
         />
         <ColumnWrapper>
-          <AudioPlayer tracks={songs} />
+          {
+            songs.length ? <AudioPlayer tracks={songs} /> : null
+          }
           <InstagramMedia
             images={instagramPhotos}
             navigateToInstagram={() => {

@@ -30,6 +30,7 @@ export const getOneEventQuery = gql`
       approved_artists {
         id
       }
+      subscribe_closing_date
       cover
       photo
       productor {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Avatar from '../../atoms/Avatar.atom';
-import { white, secondaryBlack } from '../../../settings/colors';
+import { white, secondaryBlack, orange } from '../../../settings/colors';
 
 const Wrapper = styled.section`
   padding-left: 15px;
@@ -27,15 +27,17 @@ const Wrapper = styled.section`
 `;
 
 const Card = styled.div`
+  position: relative;
   display: inline-flex;
   vertical-align: top;
   flex-direction: column;
   align-items: center;
-  padding: 15px;
-  width: 100px;
+  width: 110px;
+  padding: 15px 12px;
   background-color: ${secondaryBlack};
   border-radius: 15px;
   text-align: center;
+  overflow: hidden;
   cursor: pointer;
 
   & + & {
@@ -43,7 +45,7 @@ const Card = styled.div`
   }
 
   @media (min-width: 1024px) {
-    padding: 15px 60px;
+    padding: 15px 7px;
   }
 `;
 
@@ -77,39 +79,76 @@ const avatarCustomStyle = `
   height: 60px;
 
   @media (min-width: 1024px) {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
   }
 `;
 
-const ArtistName = styled.h4`
+const ArtistNameWrapper = styled.h4`
   display: flex;
-  height: 30px;
+  height: 25px;
   align-items: center;
-  text-align: center;
-  font-size: 0.7142857143em;
-  font-weight: 400;
-  margin-top: 10px;
-  white-space: normal;
 `;
 
-function renderArtists(artists, artistClick) {
-  return artists.map((artist) => {
+const ArtistName = styled.h4`
+  display: -webkit-box;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  font-size: 0.6875em;
+  line-height: 1.1em;
+  font-weight: 400;
+  margin-top: 10px;
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 25px;
+`;
+
+const ApprovedTag = styled.label`
+  display: ${(props) => {
+    const { show } = props;
+    return show ? 'block' : 'none';
+  }}
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  background-color: ${orange};
+  color: ${white};
+  font-size: 0.625em;
+  padding: 7px 5px;
+  font-weight: 200;
+  letter-spacing: 2px;
+  z-index: 2;
+`;
+
+function renderArtists(artists, artistClick, approveds) {
+  const sortedArtists = artists.sort((artist) => {
+    const { id } = artist;
+    return approveds.findIndex(approved => approved.id === id) !== -1 ? -1 : 1;
+  });
+
+  return sortedArtists.map((artist) => {
     const src = artist && artist.avatar_image ? artist.avatar_image.mimified : '';
     return (
-      <Card onClick={() => artistClick(artist.id)}>
+      <Card key={artist.id} id={artist.id} onClick={() => artistClick(artist.id)}>
+        <ApprovedTag show={approveds.findIndex(({ id }) => artist.id === id) !== -1}>SELECIONADO</ApprovedTag>
         <Avatar src={src} customStyle={avatarCustomStyle} />
-        <ArtistName>{artist.name}</ArtistName>
+        <ArtistNameWrapper>
+          <ArtistName>{artist.name}</ArtistName>
+        </ArtistNameWrapper>
       </Card>
     );
   });
 }
 
-function SubscribedArtists({ artists, artistClick }) {
+function SubscribedArtists({ artists, artistClick, approveds }) {
   return (
     <Wrapper>
       <Title>Artistas Inscritos</Title>
-      <ListWrapper>{renderArtists(artists, artistClick)}</ListWrapper>
+      <ListWrapper>{renderArtists(artists, artistClick, approveds)}</ListWrapper>
     </Wrapper>
   );
 }
@@ -123,12 +162,19 @@ const artistShape = {
   name: PropTypes.string,
 };
 
+const approvedsShape = {
+  _id: PropTypes.string.isRequired,
+};
+
 SubscribedArtists.propTypes = {
   artists: PropTypes.arrayOf(PropTypes.shape(artistShape)),
+  artistClick: PropTypes.func.isRequired,
+  approveds: PropTypes.arrayOf(PropTypes.shape(approvedsShape)),
 };
 
 SubscribedArtists.defaultProps = {
   artists: [],
+  approveds: [],
 };
 
 export default SubscribedArtists;

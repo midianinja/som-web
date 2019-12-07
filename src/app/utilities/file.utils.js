@@ -19,7 +19,7 @@ export const uploadImageToStorage = ({ file, id }) => axios({
   url: `${process.env.STORAGE_API_URI}/image/upload/`,
   headers: {},
   data: {
-    file,
+    file: JSON.stringify({ data: file }),
     id,
   },
 });

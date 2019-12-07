@@ -85,7 +85,7 @@ export const uploadDocumentFile = async ({ target }, id, artist) => {
       default: throw new Error('ID is not mapped.');
     }
 
-    artistToApi[doc] = uploadedFile.data.link;
+    artistToApi[doc] = uploadedFile.data.data.link;
 
     await apollo.mutate({
       mutation: upadteArtistMutation,
@@ -182,14 +182,14 @@ export const nextAction = async ({
     let preRegister = {};
     if (!id) preRegister = await createArtist(artistToApi, store.state.user.id);
 
-    if (!avatar.urls) {
+    if (!avatar.urls && avatar && avatar.file) {
       const base64 = await getBase64(avatar.file);
       const newImage = await uploadImageToStorage({
         file: base64,
         id: id || preRegister.id,
       });
       console.log('newImage:', newImage);
-      const images = newImage.data.urls;
+      const images = newImage.data.data.urls;
       artistToApi.avatar = images;
     } else {
       artistToApi.avatar = undefined;

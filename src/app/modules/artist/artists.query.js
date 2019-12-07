@@ -5,6 +5,7 @@ const oneArtistQuery = gql`
     oneArtist(id: $id) {
       id
       name
+      about
       avatar_image {
         mimified
         thumbnail

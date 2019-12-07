@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Store from '../../store/Store';
 import {
   black50, black, white, purple,
@@ -17,11 +17,37 @@ const getLinks = artist => [
     href: artist ? `/artist/${artist.id}` : '/register-artist',
     label: 'Meu perfil',
   },
+  {
+    href: '/register-artist',
+    label: 'Editar Perfil',
+  },
   // {
   //   href: '/settings',
   //   label: 'Configurações',
   // },
 ];
+
+const openModalKeyframes = keyframes`
+    from {
+        opacity: 0;
+        -webkit-transform: translateX(320px);
+        -o-transform: translateX(320px);
+        transform: translateX(320px);
+    } to {
+      opacity: 1;
+      -webkit-transform: translateX(0px);
+      -o-transform: translateX(0px);
+      transform: translateX(0px);
+    }
+`;
+
+const openMObileModalKeyframes = keyframes`
+    from {
+        opacity: 0;
+    } to {
+      opacity: 1;
+    }
+`;
 
 const Wrapper = styled.div`
   position: fixed;
@@ -48,6 +74,13 @@ const Nav = styled.nav`
   height: 100%;
   padding: 30px;
   background-color: ${white};
+  animation: ${openMObileModalKeyframes} 0.2s linear;
+  -webkit-animation: ${openMObileModalKeyframes} 0.2s linear;
+
+  @media (min-width: 1024px) {
+    animation: ${openModalKeyframes} 0.1s linear;
+    -webkit-animation: ${openModalKeyframes} 0.1s linear;
+  }
 `;
 
 const Link = styled.a`
@@ -67,7 +100,23 @@ const Link = styled.a`
 
 const Logout = styled.a`
   width: 100%;
-  font-size: 1.125em;
+  font-size: 1em;
+  line-height: 1em;
+  font-weight: 300;
+  text-decoration: none;
+  display: block;
+  margin-top: 20px;
+  color: ${black};
+  cursor: pointer;
+
+  &:hover {
+    color: ${purple}; 
+  }
+`;
+
+const Terms = styled.a`
+  width: 100%;
+  font-size: 1em;
   line-height: 1em;
   font-weight: 300;
   text-decoration: none;
@@ -101,7 +150,6 @@ function renderLinks(artist = {}) {
 
 function Navigation({ history }) {
   const { state, dispatch } = useContext(Store);
-  console.log('state:', state);
   if (!state.user) return null;
   return (
     <Wrapper isOpen={state.modals.navigation}>
@@ -114,6 +162,18 @@ function Navigation({ history }) {
           }}
         />
         {renderLinks(state.user.artist)}
+        <Terms
+          onClick={() => {
+            allowBodyScroll();
+            dispatch({ type: 'CLOSE_MODAL' });
+            window.open(
+              'https://s3-sa-east-1.amazonaws.com/festivalninja.org/img/termos-de-use-e-politicas-de-privacidade-som.pdf',
+              '_blank',
+            );
+          }}
+        >
+          Termos de uso
+        </Terms>
         <Logout
           onClick={() => {
             window.localStorage.setItem('som@ida', '');
@@ -123,10 +183,8 @@ function Navigation({ history }) {
               type: 'SET_USER',
               user: null,
             });
-
             dispatch({
-              type: 'SET_AUTH',
-              auth: null,
+              type: 'RESET_AUTH',
             });
 
             allowBodyScroll();

@@ -218,7 +218,7 @@ const renderSocialMedia = ({
 
 const renderFiles = ({ visibles, artist }) => {
   if (!visibles.files || !artist) return null;
-  return <FilesFieldset handleFileChange={uploadDocumentFile} artist={artist} />;
+  return null; // <FilesFieldset handleFileChange={uploadDocumentFile} artist={artist} />;
 };
 
 const renderUploadSongs = ({
@@ -278,6 +278,7 @@ const RegisterArtist = ({ history }) => {
       fetchMusicalStyleOptions(setMusicalStylesOptions);
     }
   }, [musicalStylesOptions]);
+
   const values = {
     avatar: avatar.url,
     name,

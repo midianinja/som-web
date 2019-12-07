@@ -10,6 +10,7 @@ export async function login(
   try {
     promise = await authorize(username, password);
   } catch (err) {
+    console.log('err:', err);
     const { error } = err.response.data;
     const dataError = {};
 

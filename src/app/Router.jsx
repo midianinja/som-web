@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch, Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import Welcome from './modules/welcome/Welcome';
-import RegisterArtist from './modules/register-artist';
+import HandleArtist from './modules/handle-artist';
 import EventPage from './modules/event/EventPage';
 import Events from './modules/events/EventsPage';
 import ArtistPage from './modules/artist/ArtistPage';
@@ -27,7 +27,7 @@ const AppRouter = ({ children }) => (
         <Route path="/ativacao/:ida" component={() => <ValidationEmailToken />} />
         <Private>
           <Switch>
-            <Route path="/register-artist" component={() => <RegisterArtist />} />
+            <Route path="/register-artist" component={() => <HandleArtist />} />
           </Switch>
         </Private>
       </Switch>
