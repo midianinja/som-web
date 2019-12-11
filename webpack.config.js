@@ -23,7 +23,13 @@ plugins.push(new DefinePlugin({
 if (analyze) {
   plugins.push(new BundleAnalyzerPlugin());
 }
-plugins.push(new CompressionPlugin());
+plugins.push(new CompressionPlugin({
+  filename: '[path].gz[query]',
+  algorithm: 'gzip',
+  test: /\.js$|\.css$|\.html$/,
+  threshold: 1024,
+  minRatio: 0.8,
+}));
 plugins.push(new optimize.AggressiveMergingPlugin());
 
 module.exports = {
