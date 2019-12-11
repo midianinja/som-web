@@ -24,9 +24,8 @@ if (analyze) {
   plugins.push(new BundleAnalyzerPlugin());
 }
 plugins.push(new CompressionPlugin());
+plugins.push(new optimize.AggressiveMergingPlugin());
 
-// 404, 237, 83
-// 396, 312
 module.exports = {
   devtool: 'eval-source-map',
   entry: {
