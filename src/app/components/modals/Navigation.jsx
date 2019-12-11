@@ -148,18 +148,20 @@ function renderLinks(artist = {}) {
   ));
 }
 
+const closeAction = (dispatch) => {
+  allowBodyScroll();
+  dispatch({ type: 'CLOSE_MODAL' });
+};
+
 function Navigation({ history }) {
   const { state, dispatch } = useContext(Store);
   if (!state.user) return null;
   return (
-    <Wrapper isOpen={state.modals.navigation}>
+    <Wrapper isOpen={state.modals.navigation} onClick={() => closeAction(dispatch)}>
       <Nav>
         <ExitButton
           src="/icons/close.svg"
-          onClick={() => {
-            allowBodyScroll();
-            dispatch({ type: 'CLOSE_MODAL' });
-          }}
+          onClick={() => closeAction(dispatch)}
         />
         {renderLinks(state.user.artist)}
         <Terms

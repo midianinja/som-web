@@ -224,21 +224,21 @@ const RegisterArtist = ({ history }) => {
       fetchMusicalStyleOptions(state.musicalStylesOptions.update);
     }
     if (state.artist.value && !state.artist.value.id && store.state.user) {
-      state.avatar.update(oldArtist.avatar);
-      state.name.update(oldArtist.name);
-      state.integrants.update(oldArtist.integrants);
-      state.about.update(oldArtist.about);
-      state.city.update(oldArtist.city);
-      state.country.update(oldArtist.country);
-      state.state.update(oldArtist.state);
-      state.musicalStyles.update(oldArtist.musicalStyles);
+      if (oldArtist.avatar) state.avatar.update(oldArtist.avatar);
+      if (oldArtist.name) state.name.update(oldArtist.name);
+      if (oldArtist.integrants) state.integrants.update(oldArtist.integrants);
+      if (oldArtist.about) state.about.update(oldArtist.about);
+      if (oldArtist.city) state.city.update(oldArtist.city);
+      if (oldArtist.country) state.country.update(oldArtist.country);
+      if (oldArtist.state) state.state.update(oldArtist.state);
+      if (oldArtist.musicalStyles) state.musicalStyles.update(oldArtist.musicalStyles);
       state.artist.update(store.state.user.artist);
-      state.phone.update(oldArtist.phone);
-      state.email.update(oldArtist.email);
-      state.instagram.update(oldArtist.instagram);
-      state.twitter.update(oldArtist.twitter);
-      state.spotify.update(oldArtist.spotify);
-      state.youtube.update(oldArtist.youtube);
+      if (oldArtist.phone) state.phone.update(oldArtist.phone);
+      if (oldArtist.email) state.email.update(oldArtist.email);
+      if (oldArtist.instagram) state.instagram.update(oldArtist.instagram);
+      if (oldArtist.twitter) state.twitter.update(oldArtist.twitter);
+      if (oldArtist.spotify) state.spotify.update(oldArtist.spotify);
+      if (oldArtist.youtube) state.youtube.update(oldArtist.youtube);
     }
     if (!state.countries.value.length && !state.states.value.length) {
       fetchLocations({ state });

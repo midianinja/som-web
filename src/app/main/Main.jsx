@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Store from '../store/Store';
 import { fetchLoggedUser, verify } from './MainController';
@@ -8,7 +9,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const Main = ({ children }) => {
+const Main = ({ children, history }) => {
   const { state, dispatch } = useContext(Store);
   const [ida, setIDA] = useState(null);
 
@@ -17,7 +18,7 @@ const Main = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (ida) fetchLoggedUser(ida, dispatch);
+    if (ida) fetchLoggedUser(ida, dispatch, history);
   }, [ida]);
 
   if (state.loading.auth || state.loading.verify) return null;
@@ -26,6 +27,7 @@ const Main = ({ children }) => {
 
 Main.propTypes = {
   children: PropTypes.node.isRequired,
+  history: PropTypes.node.isRequired,
 };
 
-export default Main;
+export default withRouter(Main);

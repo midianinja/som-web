@@ -105,7 +105,7 @@ function BasicInformationFieldset(props) {
           <InputGroup label={values.name ? 'Nome da banda/artista' : ''} error={artistStepErrors.name}>
             <Input
               id="name"
-              placeholder="Nome da banda"
+              placeholder="Nome da banda/artista"
               value={values.name}
               onBlur={e => handleBlurChange(e, 'common', setArtistStepErrors, artistStepErrors)}
               onChange={handleNameChange}
@@ -121,8 +121,9 @@ function BasicInformationFieldset(props) {
               onChange={handleIntegrantsChange}
             />
           </InputGroup>
-          <InputGroup label="Estilo de música" error={artistStepErrors.musicalStyles}>
+          <InputGroup label={values.musicalStyles.length ? 'Estilo de música' : ''} error={artistStepErrors.musicalStyles}>
             <AutocompleteInput
+              placeholder={values.musicalStyles.length ? '' : 'Estilo de música'}
               predict={values.musicalStylePredict}
               value={values.musicalStyle}
               handleChange={handleMusicalStyleChange}
@@ -135,14 +136,14 @@ function BasicInformationFieldset(props) {
       <LocationWrapper>
         <InputGroup
           customStyle={inputGroupStyle}
-          label={values.country.value ? 'País' : ''}
+          label={country.id ? 'País' : ''}
           error={artistStepErrors.country}
         >
           <Select id="country" placeholder="País" options={countries} selected={country} value={values.country} onSelect={handleCountrySelect} />
         </InputGroup>
         <InputGroup
           customStyle={inputGroupStyle}
-          label={values.state.value ? 'Estado' : ''}
+          label={state.id ? 'Estado' : ''}
           error={artistStepErrors.state}
         >
           <Select id="state" placeholder="Estado" value={values.state} selected={state} options={states} onSelect={handleStateSelect} />
@@ -203,7 +204,20 @@ BasicInformationFieldset.defaultProps = {
   handleBlurChange: () => '',
 };
 
+BasicInformationFieldset.defaultProps = {
+  country: {},
+  state: {},
+};
+
 BasicInformationFieldset.propTypes = {
+  country: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  }),
+  state: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  }),
   countries: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleAboutChange: PropTypes.func.isRequired,
   deleteTag: PropTypes.func.isRequired,

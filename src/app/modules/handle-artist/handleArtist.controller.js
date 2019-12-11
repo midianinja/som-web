@@ -285,7 +285,6 @@ export const nextAction = async ({
   state.loading.update(true);
   // VALIDATION
   const artistToValidate = mapToValidate(state);
-  console.log('artistToValidate:', artistToValidate);
   const artistValidation = validateArtistForm(artistToValidate);
   if (artistValidation.error) {
     const errors = {};
@@ -325,9 +324,7 @@ export const nextAction = async ({
       const uploadedSongs = await Promise.all(promises);
       artistToApi.songs = uploadedSongs.concat(state.songs.value).map(s => s.id).filter(n => n);
     }
-    console.log('artistToApi:', artistToApi);
     const updatedArtist = await updateArtist(artistToApi, preRegister.id);
-    console.log('updatedArtist:', updatedArtist);
     if (
       state.visibles.value.artist
       && state.visibles.value.contact
@@ -365,7 +362,6 @@ export const skipAction = (setVisibles, visibles) => setVisibles({
 export const handleACMusicalStyle = ({ value, state }) => {
   let match = '';
   const regex = new RegExp(`^${value.toUpperCase()}`);
-  console.log('state:', state);
   state.musicalStylesOptions.value.forEach((style) => {
     const isMatch = regex.test(style.name.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
     if (isMatch && !match && value) {
