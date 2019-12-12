@@ -64,35 +64,38 @@ const ArtistName = styled.h4`
   margin-top: 10px;
 `;
 
-function renderArtists(artists) {
-  return artists.map(({ name, avatar }) => (
-    <Card>
-      <Avatar src={avatar} customStyle={avatarCustomStyle} />
-      <ArtistName>{name}</ArtistName>
+function renderArtists(artists, history) {
+  return artists.map(art => (
+    <Card onClick={() => { console.log('art:', art); history.push(`/artist/${art.id}`); }}>
+      <Avatar src={art.avatar_image.mimified} customStyle={avatarCustomStyle} />
+      <ArtistName>{art.name}</ArtistName>
     </Card>
   ));
 }
 
-function MoreArtist({ artists }) {
+function MoreArtist({ artists, history }) {
   return (
     <Wrapper>
       <Title>Bandas Relacionadas</Title>
-      <ListWrapper>{renderArtists(artists)}</ListWrapper>
+      <ListWrapper>{renderArtists(artists, history)}</ListWrapper>
     </Wrapper>
   );
 }
 
 const artistShape = {
-  avatar: PropTypes.string,
+  avatar_image: PropTypes.object,
   name: PropTypes.string,
 };
 
 MoreArtist.propTypes = {
   artists: PropTypes.arrayOf(PropTypes.shape(artistShape)),
+  // eslint-disable-next-line react/forbid-prop-types
+  history: PropTypes.object,
 };
 
 MoreArtist.defaultProps = {
   artists: [],
+  history: {},
 };
 
 export default MoreArtist;
