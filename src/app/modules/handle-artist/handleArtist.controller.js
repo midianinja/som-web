@@ -107,10 +107,7 @@ export const handleCountrySelect = async ({ data, state, myState }) => {
   }));
   state.country.update(data);
   state.states.update(myStates);
-  console.log('myStates:', myStates);
-  console.log('myState:', myState);
   const [mySelectedState] = myStates.filter(stt => stt.label === myState);
-  console.log('mySelectedState:', mySelectedState);
   handleStateSelect({ data: mySelectedState, state });
 };
 
@@ -191,7 +188,6 @@ const mapSong = (song, artist) => ({
 });
 
 export const mapArtistToState = (artist, state) => {
-  console.log('artist:', artist);
   if (!artist) {
     return ({
       country: {},
@@ -289,7 +285,6 @@ export const nextAction = async ({
   state.loading.update(true);
   // VALIDATION
   const artistToValidate = mapToValidate(state);
-  console.log('artistToValidate:', artistToValidate);
   const artistValidation = validateArtistForm(artistToValidate);
   if (artistValidation.error) {
     const errors = {};
@@ -329,9 +324,7 @@ export const nextAction = async ({
       const uploadedSongs = await Promise.all(promises);
       artistToApi.songs = uploadedSongs.concat(state.songs.value).map(s => s.id).filter(n => n);
     }
-    console.log('artistToApi:', artistToApi);
     const updatedArtist = await updateArtist(artistToApi, preRegister.id);
-    console.log('updatedArtist:', updatedArtist);
     if (
       state.visibles.value.artist
       && state.visibles.value.contact
@@ -340,6 +333,7 @@ export const nextAction = async ({
     ) {
       history.push(`/artist/${preRegister.id}`);
     }
+    state.artist.update(updatedArtist)
     state.songs.update(updatedArtist.songs || []);
     state.avatar.update({
       ...state.avatar.value,
@@ -369,7 +363,6 @@ export const skipAction = (setVisibles, visibles) => setVisibles({
 export const handleACMusicalStyle = ({ value, state }) => {
   let match = '';
   const regex = new RegExp(`^${value.toUpperCase()}`);
-  console.log('state:', state);
   state.musicalStylesOptions.value.forEach((style) => {
     const isMatch = regex.test(style.name.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
     if (isMatch && !match && value) {

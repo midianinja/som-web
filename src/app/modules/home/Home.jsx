@@ -11,7 +11,7 @@ import Instructions from './components/Instructions';
 import OpenSource from './components/OpenSource';
 import Newsletter from './components/Newsletter';
 import Store from '../../store/Store';
-import { purple, white, secondaryBlack, darkGray } from '../../settings/colors';
+import { purple, secondaryBlack, darkGray } from '../../settings/colors';
 import { blockBodyScroll } from '../../utilities/scroll';
 
 const Page = styled.div`
@@ -159,7 +159,6 @@ const showRegister = (dispatch) => {
 
 const Home = ({ history }) => {
   const { state, dispatch } = useContext(Store);
-  console.log('state:', state);
   return (
     <Page>
       <LoginButtonContainer>

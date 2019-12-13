@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Avatar from '../../atoms/Avatar.atom';
-import { white, secondaryBlack, orange } from '../../../settings/colors';
+import { white, secondaryBlack, purple } from '../../../settings/colors';
 
 const Wrapper = styled.section`
   padding-left: 15px;
@@ -64,6 +64,7 @@ const ListWrapper = styled.div`
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
+  padding: 10px 0;
 `;
 
 const Title = styled.h3`
@@ -115,7 +116,7 @@ const ApprovedTag = styled.label`
   position: absolute;
   top: 0px;
   width: 100%;
-  background-color: ${orange};
+  background-color: ${purple};
   color: ${white};
   font-size: 0.625em;
   padding: 7px 5px;
@@ -134,7 +135,11 @@ function renderArtists(artists, artistClick, approveds) {
     const src = artist && artist.avatar_image ? artist.avatar_image.mimified : '';
     return (
       <Card key={artist.id} id={artist.id} onClick={() => artistClick(artist.id)}>
-        <ApprovedTag show={approveds.findIndex(({ id }) => artist.id === id) !== -1}>SELECIONADO</ApprovedTag>
+        <ApprovedTag
+          show={approveds.findIndex(({ id }) => artist.id === id) !== -1}
+        >
+          APROVADO
+        </ApprovedTag>
         <Avatar src={src} customStyle={avatarCustomStyle} />
         <ArtistNameWrapper>
           <ArtistName>{artist.name}</ArtistName>

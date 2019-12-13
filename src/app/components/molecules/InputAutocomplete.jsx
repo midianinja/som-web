@@ -19,7 +19,7 @@ const Input = styled.input`
     padding-left: 14px;
     padding-right: 14px;
   }
-  ${(props) => props.customStyle}
+  ${props => props.customStyle}
 `;
 
 const Wrapper = styled.div`
@@ -27,29 +27,37 @@ const Wrapper = styled.div`
   height: 38px;
 `;
 
-const AutocompleteInput = ({ value, predict, handleChange, handleSelect }) => (
+const AutocompleteInput = ({
+  value, predict, handleChange, handleSelect, placeholder,
+}) => (
   <Wrapper>
     <Input
-      type='search'
-      customStyle='z-index: 2;'
+      type="search"
+      customStyle="z-index: 2;"
       onChange={handleChange}
       keyn
-      onKeyDown={(e) => (e.keyCode === 13 ? e.preventDefault() : null)}
+      onKeyDown={e => (e.keyCode === 13 ? e.preventDefault() : null)}
       value={value}
-      onKeyUp={(e) => (e.keyCode === 13 && predict ? handleSelect(predict) : null)}
+      onKeyUp={e => (e.keyCode === 13 && predict ? handleSelect(predict) : null)}
     />
     <Input
-      type='text'
+      type="text"
       disabled
+      placeholder={placeholder}
       value={predict}
       customStyle={`z-index: 1; background-color: ${white10}; color: ${gray02};`}
     />
   </Wrapper>
 );
 
+AutocompleteInput.defaultProps = {
+  placeholder: '',
+};
+
 AutocompleteInput.propTypes = {
   value: PropTypes.string.isRequired,
   predict: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
 };

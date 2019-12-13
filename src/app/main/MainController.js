@@ -35,7 +35,7 @@ export const verify = async (dispatch, setIDA) => {
   dispatch({ type: 'STOP_VERIFY_LOADING' });
 };
 
-export const fetchLoggedUser = async (ida, dispatch) => {
+export const fetchLoggedUser = async (ida, dispatch, history) => {
   let response;
 
   try {
@@ -49,4 +49,7 @@ export const fetchLoggedUser = async (ida, dispatch) => {
     type: 'SET_USER',
     user: response.data.oneUser,
   });
+  if (history.location.pathname === '/') {
+    history.push('/welcome');
+  }
 };

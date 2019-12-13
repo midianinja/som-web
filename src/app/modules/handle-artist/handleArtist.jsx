@@ -53,7 +53,7 @@ const renderArtistInfos = ({
     countries={state.countries.value}
     states={state.states.value}
     handleAvatarChange={({ target }) => state.avatar.update({
-      url: URL.createObjectURL(target.files[0]),
+      url: { url: URL.createObjectURL(target.files[0]) },
       urls: null,
       file: target.files[0],
     })}
@@ -129,7 +129,6 @@ const getState = (store) => {
   const [artist, setArtist] = useState(store.state.user ? store.state.user.artist : {});
   const myArtist = store.state.user ? mapArtistToState(artist) : {};
 
-  console.log('myArtist:', myArtist);
   const [artistStepErrors, setArtistStepErrors] = useState({});
   const [contactStepErrors, setContactStepErrors] = useState({});
   const [socialMediaStepErrors, setSocialMediaStepErrors] = useState({});
@@ -212,9 +211,6 @@ const renderUploadSongs = ({ state }) => {
 const RegisterArtist = ({ history }) => {
   const store = useContext(Store);
   const state = getState(store);
-  console.log('store:', store);
-  console.log('state:', state);
-  console.log('store.state.user && store.state.user.artist:', !!(store.state.user && store.state.user.artist));
   const oldArtist = (!!store.state.user && !!store.state.user.artist)
     ? mapArtistToState(store.state.user.artist, state) : {
       country: {},
@@ -227,44 +223,47 @@ const RegisterArtist = ({ history }) => {
     if (!state.musicalStylesOptions.value.length) {
       fetchMusicalStyleOptions(state.musicalStylesOptions.update);
     }
-    console.log('state.artist.value:', state.artist.value);
     if (state.artist.value && !state.artist.value.id && store.state.user) {
-      state.avatar.update(oldArtist.avatar);
-      state.name.update(oldArtist.name);
-      state.integrants.update(oldArtist.integrants);
-      state.about.update(oldArtist.about);
-      state.city.update(oldArtist.city);
-      state.country.update(oldArtist.country);
-      state.state.update(oldArtist.state);
-      state.musicalStyles.update(oldArtist.musicalStyles);
+      if (oldArtist.avatar) state.avatar.update(oldArtist.avatar);
+      if (oldArtist.name) state.name.update(oldArtist.name);
+      if (oldArtist.integrants) state.integrants.update(oldArtist.integrants);
+      if (oldArtist.about) state.about.update(oldArtist.about);
+      if (oldArtist.city) state.city.update(oldArtist.city);
+      if (oldArtist.country) state.country.update(oldArtist.country);
+      if (oldArtist.state) state.state.update(oldArtist.state);
+      if (oldArtist.musicalStyles) state.musicalStyles.update(oldArtist.musicalStyles);
       state.artist.update(store.state.user.artist);
-      state.phone.update(oldArtist.phone);
-      state.email.update(oldArtist.email);
-      state.instagram.update(oldArtist.instagram);
-      state.twitter.update(oldArtist.twitter);
-      state.spotify.update(oldArtist.spotify);
-      state.youtube.update(oldArtist.youtube);
+      if (oldArtist.phone) state.phone.update(oldArtist.phone);
+      if (oldArtist.email) state.email.update(oldArtist.email);
+      if (oldArtist.instagram) state.instagram.update(oldArtist.instagram);
+      if (oldArtist.twitter) state.twitter.update(oldArtist.twitter);
+      if (oldArtist.spotify) state.spotify.update(oldArtist.spotify);
+      if (oldArtist.youtube) state.youtube.update(oldArtist.youtube);
     }
-    if (!state.countries.value.length && !state.states.value.length) {
+    if (!state.countries.value.length) {
       fetchLocations({ state });
       fetchMusicalStyleOptions(state.musicalStylesOptions.update);
     }
-  }, [state.musicalStylesOptions.value, store.state.user]);
-  console.log('oldArtist:', oldArtist);
+  }, [state.musicalStylesOptions.value, state.countries.value, store.state.user]);
 
   const values = {
-    avatar: state.avatar.value.url || oldArtist.avatar,
+    avatar: state.avatar.value || oldArtist.avatar || {},
     name: state.name.value || oldArtist.name,
     integrants: state.integrants.value || oldArtist.integrants,
     about: state.about.value || oldArtist.about,
     city: state.city.value || oldArtist.city,
     musicalStylePredict: state.musicalStylePredict.value,
     musicalStyle: state.musicalStyle.value,
-    country: state.country.value && state.country.value.value ? state.country.value : oldArtist.country,
-    state: state.state.value && state.state.value.value ? state.state.value : oldArtist.state,
-    musicalStyles: state.musicalStyles.value && state.musicalStyles.value.length ? state.musicalStyles.value : oldArtist.musicalStyles,
+    country: state.country.value
+      && state.country.value.value
+      ? state.country.value : oldArtist.country,
+    state: state.state.value
+      && state.state.value.value
+      ? state.state.value : oldArtist.state,
+    musicalStyles: state.musicalStyles.value
+      && state.musicalStyles.value.length
+      ? state.musicalStyles.value : oldArtist.musicalStyles,
   };
-  console.log('values:', values);
   const deleteTagAction = id => deleteTag({
     id,
     musicalStyles: state.musicalStyles,

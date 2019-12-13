@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Avatar from '../../atoms/Avatar.atom';
@@ -50,14 +50,23 @@ const ConnectionsWrapper = styled.div``;
 const buttonCustomStyled = `
   width: 150px;
   margin-right: 15px;
+  vertical-align: middle;
+`;
+
+const EditIcon = styled.img`
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+  margin-right: 5px;
 `;
 
 const followButtonCustomStyled = `
   width: 150px;
   margin-right: 15px;
   border: solid 1px ${purple};
-  color: ${purple};
+  color: ${white};
   background-color: transparent;
+  vertical-align: middle;
 `;
 
 const avatarCustomStyled = `
@@ -97,14 +106,40 @@ const ActionWrapper = styled.div`
   text-align: left;
 `;
 
+function renderSubiscribeActions(isFollowing, followToggle) {
+  return (
+    <Fragment>
+      {
+        isFollowing ? (
+          <PrimaryButton onClick={followToggle} customStyle={followButtonCustomStyled}>
+            Deixar de seguir
+          </PrimaryButton>
+        ) : (
+          <PrimaryButton onClick={followToggle} customStyle={buttonCustomStyled}>
+            Seguir
+          </PrimaryButton>
+        )
+      }
+    </Fragment>
+  );
+}
+
+function renderEditAction(onClick) {
+  return (
+    <PrimaryButton onClick={onClick} customStyle={followButtonCustomStyled}>
+      <EditIcon src="/icons/edit-white.svg" />
+      Editar
+    </PrimaryButton>
+  );
+}
+
 function ArtistBasicInfo(props) {
   const {
     name, avatar, followers, following,
     about, facebook, instagram, twitter,
     followToggle, isFollowing, spotify,
+    isUserArtist, editAction,
   } = props;
-
-  console.log(isFollowing);
 
   return (
     <Wrapper id="infos">
@@ -125,15 +160,9 @@ function ArtistBasicInfo(props) {
       <About>{about}</About>
       <ActionWrapper>
         {
-          isFollowing ? (
-            <PrimaryButton onClick={followToggle} customStyle={followButtonCustomStyled}>
-              Deixar de seguir
-            </PrimaryButton>
-          ) : (
-            <PrimaryButton onClick={followToggle} customStyle={buttonCustomStyled}>
-              Seguir
-            </PrimaryButton>
-          )
+          !isUserArtist
+            ? renderSubiscribeActions(isFollowing, followToggle)
+            : renderEditAction(editAction)
         }
         <LinkButton color="white">Ler release</LinkButton>
       </ActionWrapper>
@@ -150,6 +179,7 @@ function ArtistBasicInfo(props) {
 ArtistBasicInfo.propTypes = {
   about: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
+  spotify: PropTypes.string.isRequired,
   facebook: PropTypes.string.isRequired,
   instagram: PropTypes.string.isRequired,
   twitter: PropTypes.string.isRequired,
@@ -157,7 +187,9 @@ ArtistBasicInfo.propTypes = {
   following: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   followToggle: PropTypes.func.isRequired,
+  editAction: PropTypes.func.isRequired,
   isFollowing: PropTypes.bool.isRequired,
+  isUserArtist: PropTypes.bool.isRequired,
 };
 
 export default ArtistBasicInfo;

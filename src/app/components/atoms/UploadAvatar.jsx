@@ -61,7 +61,7 @@ function UploadAvatar({
   const [loaddedSrc, setLoaddedSrc] = useState(null);
 
   useEffect(() => {
-    load(src, setLoaddedSrc);
+    load(src.url, setLoaddedSrc);
   });
 
   const emptyImage = <Icon src="/icons/add_a_photo.png" />;
@@ -70,7 +70,7 @@ function UploadAvatar({
   return (
     <Fragment>
       <Uploader onChange={handleChange} htmlFor="uploader-avatar-artist-form-input">
-        {src ? image : emptyImage}
+        {src.url ? image : emptyImage}
       </Uploader>
       <Input onChange={handleChange} type="file" id="uploader-avatar-artist-form-input" />
     </Fragment>
