@@ -71,7 +71,6 @@ const ColumnWrapper = styled.div`
 function ArtistPage({ match, history }) {
   const { state, dispatch } = useContext(Store);
   const [artistLoading, setArtistLoading] = useState(false);
-  // const [instagramPhotoLoading, setInstagramPhotoLoading] = useState(false);
   const [artist, setArtist] = useState({});
   const [relatedArtsts, setRelatedArtsts] = useState([]);
   const [instagramPhotos, setInstagramPhotos] = useState(false);
@@ -210,6 +209,7 @@ function ArtistPage({ match, history }) {
 
 const paramsShape = {
   id: PropTypes.string,
+  history: PropTypes.shape().isRequired,
 };
 
 const matchShape = {

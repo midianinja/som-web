@@ -98,7 +98,7 @@ function BasicInformationFieldset(props) {
             alt="botão para subir imagem"
             title="avatar image"
             handleChange={handleAvatarChange}
-            src={values.avatar || ''}
+            src={values.avatar.url && values.avatar.url.url ? values.avatar.url : values.avatar}
           />
         </InputGroup>
         <TextInpustWrapper>

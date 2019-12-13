@@ -240,14 +240,14 @@ const RegisterArtist = ({ history }) => {
       if (oldArtist.spotify) state.spotify.update(oldArtist.spotify);
       if (oldArtist.youtube) state.youtube.update(oldArtist.youtube);
     }
-    if (!state.countries.value.length && !state.states.value.length) {
+    if (!state.countries.value.length) {
       fetchLocations({ state });
       fetchMusicalStyleOptions(state.musicalStylesOptions.update);
     }
-  }, [state.musicalStylesOptions.value, store.state.user]);
+  }, [state.musicalStylesOptions.value, state.countries.value, store.state.user]);
 
   const values = {
-    avatar: state.avatar.value || oldArtist.avatar,
+    avatar: state.avatar.value || oldArtist.avatar || {},
     name: state.name.value || oldArtist.name,
     integrants: state.integrants.value || oldArtist.integrants,
     about: state.about.value || oldArtist.about,

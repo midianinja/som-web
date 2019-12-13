@@ -64,6 +64,7 @@ const ListWrapper = styled.div`
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
+  padding: 10px 0;
 `;
 
 const Title = styled.h3`
