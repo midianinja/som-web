@@ -88,7 +88,6 @@ function ArtistPage({ match, history }) {
   const [songs, setSongs] = useState([]);
 
   const { id } = match.params;
-  console.log('id:', id);
   useEffect(() => {
     if (id !== artist.id) {
       const fetchArtist = async () => {
@@ -97,7 +96,6 @@ function ArtistPage({ match, history }) {
       fetchArtist();
     }
   }, [match.params]);
-  console.log('relatedArtsts:', relatedArtsts);
 
   useEffect(() => {
     if (artist.instagram) {
@@ -157,6 +155,7 @@ function ArtistPage({ match, history }) {
       </CoverWrapper>
       <Content>
         <ArtistBasicInfo
+          isUserArtist={state.auth && state.auth.artist && state.auth.artist.id === artist.id}
           avatar={artist.avatar_image ? artist.avatar_image.mimified : null}
           about={artist.about}
           name={artist.name}
@@ -172,6 +171,7 @@ function ArtistPage({ match, history }) {
               : false
           }
           followToggle={handleFollow}
+          editAction={() => history.push('/register-artist')}
         />
         <ColumnWrapper>
           {
@@ -209,7 +209,10 @@ function ArtistPage({ match, history }) {
 
 const paramsShape = {
   id: PropTypes.string,
-  history: PropTypes.shape().isRequired,
+};
+
+const historyShape = {
+  push: PropTypes.func.isRequired,
 };
 
 const matchShape = {
@@ -217,6 +220,7 @@ const matchShape = {
 };
 
 ArtistPage.propTypes = {
+  history: PropTypes.shape(historyShape).isRequired,
   match: PropTypes.shape(matchShape).isRequired,
 };
 
