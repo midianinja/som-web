@@ -155,7 +155,7 @@ function ArtistPage({ match, history }) {
       </CoverWrapper>
       <Content>
         <ArtistBasicInfo
-          isUserArtist={state.auth && state.auth.artist && state.auth.artist.id === artist.id}
+          isUserArtist={state.user && state.user.artist && state.user.artist.id === id}
           avatar={artist.avatar_image ? artist.avatar_image.mimified : null}
           about={artist.about}
           name={artist.name}

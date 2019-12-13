@@ -160,7 +160,7 @@ function ArtistBasicInfo(props) {
       <About>{about}</About>
       <ActionWrapper>
         {
-          isUserArtist
+          !isUserArtist
             ? renderSubiscribeActions(isFollowing, followToggle)
             : renderEditAction(editAction)
         }
