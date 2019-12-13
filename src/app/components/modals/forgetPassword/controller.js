@@ -45,5 +45,6 @@ export async function sendNewPassword(token, password) {
   }
   // se tem data, token válido
   const { data } = await promise.json();
+
   return data;
 }
