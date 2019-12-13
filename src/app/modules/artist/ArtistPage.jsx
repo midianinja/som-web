@@ -11,7 +11,8 @@ import Header from '../../components/organisms/Header';
 import InstagramMedia from '../../components/molecules/InstagramMedias';
 import Store from '../../store/Store';
 import {
-  fetchArtistData, fetchArtistInstaImages, follow, unfollow,
+  fetchArtistData, fetchArtistInstaImages,
+  fetchRelatedArtsts, follow, unfollow,
 } from './ArtistController';
 import DialogModal from '../../components/modals/Dialog.modal';
 
@@ -67,11 +68,11 @@ const ColumnWrapper = styled.div`
   }
 `;
 
-function ArtistPage({ match }) {
+function ArtistPage({ match, history }) {
   const { state, dispatch } = useContext(Store);
   const [artistLoading, setArtistLoading] = useState(false);
-  // const [instagramPhotoLoading, setInstagramPhotoLoading] = useState(false);
   const [artist, setArtist] = useState({});
+  const [relatedArtsts, setRelatedArtsts] = useState([]);
   const [instagramPhotos, setInstagramPhotos] = useState(false);
   const [follows, setFollows] = useState([]);
   const [alertModal, setAlertModal] = useState({
@@ -87,16 +88,23 @@ function ArtistPage({ match }) {
   const [songs, setSongs] = useState([]);
 
   const { id } = match.params;
+  console.log('id:', id);
   useEffect(() => {
-    const fetchArtist = async () => {
-      await fetchArtistData(id, setArtist, setArtistLoading, setSongs, setAlertModal);
-    };
-    fetchArtist();
-  }, []);
+    if (id !== artist.id) {
+      const fetchArtist = async () => {
+        await fetchArtistData(id, setArtist, setArtistLoading, setSongs, setAlertModal);
+      };
+      fetchArtist();
+    }
+  }, [match.params]);
+  console.log('relatedArtsts:', relatedArtsts);
 
   useEffect(() => {
     if (artist.instagram) {
       fetchArtistInstaImages(artist.instagram, setInstagramPhotos);
+    }
+    if (!relatedArtsts.length) {
+      fetchRelatedArtsts(artist, setRelatedArtsts);
     }
 
     if (artist.follows) {
@@ -192,7 +200,7 @@ function ArtistPage({ match }) {
               null
             )
           } */}
-          <MoreArtist artists={[]} />
+          <MoreArtist history={history} artists={relatedArtsts} />
         </ColumnWrapper>
       </Content>
     </ArtistWrapper>
@@ -201,6 +209,7 @@ function ArtistPage({ match }) {
 
 const paramsShape = {
   id: PropTypes.string,
+  history: PropTypes.shape().isRequired,
 };
 
 const matchShape = {

@@ -12,6 +12,10 @@ const oneArtistQuery = gql`
       }
       facebook
       twitter
+      musical_styles {
+        id
+        name
+      }
       instagram
       youtube
       follows {

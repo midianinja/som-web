@@ -50,6 +50,7 @@ const ConnectionsWrapper = styled.div``;
 const buttonCustomStyled = `
   width: 150px;
   margin-right: 15px;
+  vertical-align: middle;
 `;
 
 const followButtonCustomStyled = `
@@ -58,6 +59,7 @@ const followButtonCustomStyled = `
   border: solid 1px ${purple};
   color: ${purple};
   background-color: transparent;
+  vertical-align: middle;
 `;
 
 const avatarCustomStyled = `
@@ -148,6 +150,7 @@ function ArtistBasicInfo(props) {
 ArtistBasicInfo.propTypes = {
   about: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
+  spotify: PropTypes.string.isRequired,
   facebook: PropTypes.string.isRequired,
   instagram: PropTypes.string.isRequired,
   twitter: PropTypes.string.isRequired,
