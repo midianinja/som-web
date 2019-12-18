@@ -36,6 +36,7 @@ export const fetchRelatedArtsts = async (artist, setArtsts) => {
     variables: {
       artist: {
         musical_styles: { $in: artist.musical_styles.map(m => m.id) },
+        _id: { $ne: [artist.id] },
       },
       paginator: {
         limit: 10,

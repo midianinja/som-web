@@ -15,6 +15,7 @@ import {
   fetchRelatedArtsts, follow, unfollow,
 } from './ArtistController';
 import DialogModal from '../../components/modals/Dialog.modal';
+import ApprovedEvents from '../../components/templates/artist/ApprovedEvents';
 
 const ArtistWrapper = styled.div`
   width: 100%;
@@ -200,6 +201,10 @@ function ArtistPage({ match, history }) {
               null
             )
           } */}
+          <ApprovedEvents
+            eventClick={evtId => history.push(`/event/${evtId}`)}
+            events={artist.approved_events}
+          />
           <MoreArtist history={history} artists={relatedArtsts} />
         </ColumnWrapper>
       </Content>

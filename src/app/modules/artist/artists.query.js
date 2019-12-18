@@ -6,6 +6,12 @@ const oneArtistQuery = gql`
       id
       name
       about
+      approved_events {
+        id
+        name
+        cover
+        event_date
+      }
       avatar_image {
         mimified
         thumbnail
