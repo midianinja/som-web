@@ -15,10 +15,13 @@ const Container = styled.div`
 
 const FormContainer = styled.form`
   width: 100%;
+  margin-top: -90px;
+
   @media (min-width: 768px) {
     display: inline-block;
     width: calc(100% - 404px);
     max-width: 400;
+    margin-top: 0px;
     vertical-align: middle;
   }
 `;
@@ -29,16 +32,21 @@ const Title = styled.h1`
   line-height: 1.20833333333em;
   font-weight: 400;
   max-width: 230px;
-  margin-top: -60px;
+  margin-top: 30px;
   margin-bottom: 30px;
 `;
 
 const Instructions = styled.p`
   color: ${white};
   font-size: 0.8em;
-  font-weight: 200;
-  max-width: 230px;
-  display: block;
+  font-weight: 300;
+  line-height: 1.em;
+  width: 100%;
+  display: inline;
+
+  & + & {
+    margin-left: 4px;
+  }
 
   @media (max-width: 768px) {
     max-width: 100%;

@@ -139,7 +139,6 @@ function ForgetPassword({ history, location }) {
   }, []);
 
   if (state.modals.forgetPassword && (!ida && !token)) blockBodyScroll();
-  // if (true && (!ida && !token)) blockBodyScroll();
   if (state.modals.forgetPassword && ida) history.push('/event/5d3a31e9dd3e02dd26be4fd2');
   return (
     <ForgetPasswordWrapper id="forgetPassword" isOpen={state.modals.forgetPassword && (!ida && !token)}>

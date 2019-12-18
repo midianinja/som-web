@@ -1,41 +1,20 @@
-import fetch from 'node-fetch';
+import axios from 'axios';
 
 export async function requestResetPassword(input) {
-  return fetch(`${process.env.AUTH_API_URI}/request-reset-password`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      input,
-    }),
+  return axios.post(`${process.env.AUTH_API_URI}/request-reset-password`, {
+    input,
   });
 }
 
 export async function validateResetPasswordToken(token) {
-  return fetch(`${process.env.AUTH_API_URI}/validate-reset-password-token`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      token,
-    }),
+  return axios.post(`${process.env.AUTH_API_URI}/validate-reset-password-token`, {
+    token,
   });
 }
 
 export async function resetPassword(token, password) {
-  return fetch(`${process.env.AUTH_API_URI}/reset-password`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      token,
-      password,
-    }),
+  return axios.post(`${process.env.AUTH_API_URI}/reset-password`, {
+    token,
+    password,
   });
 }

@@ -13,8 +13,11 @@ export function phoneMask(input) {
 }
 
 export function isPhone(input) {
+  const inputWithoutChars = input.replace(/\W/g, '');
+  const inputPhoneFormatted = `+55${inputWithoutChars}`;
+  console.log(inputPhoneFormatted);
   const regexPhone = /^\+[0-9]{9,}$/;
-  return regexPhone.test(input);
+  return regexPhone.test(inputPhoneFormatted);
 }
 
 export function isEmail(input) {
@@ -27,7 +30,6 @@ export default function inputValidation(input) {
   // const regexW3C = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]
   // +@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9]
   // (?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-
   const validation = (!isEmail(input) && !isPhone(input)) ? 'Formato de email ou telefone inválido' : '';
   return validation;
 }

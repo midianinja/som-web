@@ -333,7 +333,7 @@ export const nextAction = async ({
     ) {
       history.push(`/artist/${preRegister.id}`);
     }
-    state.artist.update(updatedArtist)
+    state.artist.update(updatedArtist);
     state.songs.update(updatedArtist.songs || []);
     state.avatar.update({
       ...state.avatar.value,

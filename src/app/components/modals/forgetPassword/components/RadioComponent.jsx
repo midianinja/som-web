@@ -4,26 +4,23 @@ import styled from 'styled-components';
 import { white, purple, secondaryPurple } from '../../../../settings/colors';
 
 const RadioContainer = styled.div`
-  margin-top: 20px;
-  font-size: 0.8em;
-  font-weight: 200;
+  width: 100%;
+  height: 38px;
+  overflow: hidden;
   color: ${white};
-`;
-
-const Legend = styled.p`
-  margin-bottom: 20px;
+  font-size: 0.875em;
 `;
 
 const RadioButton = styled.input`
-    display: none;
-    &:checked + label {
-        cursor: default;
-        color: ${white};
-        transition: color 200ms;
-        &:after{
-            left: 0;
-        }
-      }
+  display: none;
+  &:checked + label {
+    cursor: default;
+    color: ${white};
+    transition: color 200ms;
+    &:after{
+        left: 0;
+    }
+  }
 `;
 
 const RadioLabelRight = styled.label`
@@ -31,6 +28,7 @@ const RadioLabelRight = styled.label`
   &::after{
     left: -100%;
   }
+  border-radius: 0px 30px 30px 0px;
   ${props => props.customStyle}
 `;
 
@@ -39,24 +37,27 @@ const RadioLabelLeft = styled.label`
   &::after{
     left: 100%;
   }
+  border-radius: 30px 0px 0px 30px;
   ${props => props.customStyle}
 `;
 
 const RadioLabelStyle = `
+  overflow: hidden;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
   border: 3px solid ${secondaryPurple};
-  display: inline-block;
-  padding: 10px;
   position: relative;
-  text-align: center;
-  transition: background 600ms ease, color 600ms ease;
+  transition: background 400ms ease, color 600ms ease;
   cursor: pointer;
-  min-width: 90px;
 
   &:hover{
-      background: none;
-      color: ${purple};
-   }
-   &::after{
+    background: none;
+    color: ${purple};
+  }
+  &::after{
     background: ${secondaryPurple};
     content: "";
     height: 100%;
@@ -71,7 +72,6 @@ const RadioLabelStyle = `
 function RadioComponent({ handleClick, checked }) {
   return (
     <RadioContainer>
-      <Legend>Enviar link por: </Legend>
       <RadioButton id="toggle-on" onChange={handleClick} name="device" value="email" type="radio" checked={checked} />
       <RadioLabelLeft customStyle={RadioLabelStyle} htmlFor="toggle-on">E-mail</RadioLabelLeft>
       <RadioButton id="toggle-off" onChange={handleClick} name="device" value="fone" type="radio" checked={!checked} />

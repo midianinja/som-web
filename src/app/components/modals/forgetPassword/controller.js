@@ -7,19 +7,23 @@ export async function sendLink(input) {
     return { result: false, message: validation };
   }
 
+  const inputWithoutChars = input.replace(/\W/g, '');
+  const inputPhoneFormatted = `+55${inputWithoutChars}`;
+  const inputFormatted = isPhone(input) ? inputPhoneFormatted : input;
   let promise;
-  const inputFormatted = isPhone(input) ? `+55${input}` : input;
+
   try {
     promise = await requestResetPassword(inputFormatted);
   } catch (error) {
-    throw (error);
+    console.log([error]);
+    const errorCode = error.response.data.error;
+    if (errorCode === 'reset-password/user-not-found') {
+      const message = 'e-mail ou número não encontrado';
+      return { result: false, message };
+    }
   }
 
-  const { data, error } = await promise.json();
-  const message = error ? 'e-mail ou número não encontrado' : '';
-  if (error) return { result: false, message };
-
-
+  const { data } = promise.data;
   return { result: true, message: 'link enviado', data };
 }
 
@@ -31,20 +35,19 @@ export async function validateToken(token) {
     throw (error);
   }
   // se tem data, token válido
-  const { data } = await promise.json();
+  const { data } = promise.data;
   return data;
 }
 
 export async function sendNewPassword(token, password) {
   let promise;
-  console.log(password, token);
   try {
     promise = await resetPassword(token, password);
   } catch (error) {
     throw (error);
   }
   // se tem data, token válido
-  const { data } = await promise.json();
+  const { data } = promise.data;
 
   return data;
 }

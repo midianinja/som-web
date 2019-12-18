@@ -9,12 +9,12 @@ import { sendLink } from '../controller';
 
 
 const Arrow = styled.img`
-  width: 36px;
+  width: 24px;
 `;
 
 const inputGroupStyle = `
-  margin-top: 30px;
   margim-bottom: 0px;
+  margin-top: 10px;
 `;
 
 const inputWithTransparencyStyle = `
@@ -22,17 +22,20 @@ const inputWithTransparencyStyle = `
   padding: 2px;
 `;
 
+const Wrapper = styled.div`
+  margin-top: 30px;
+`;
+
 const ButtonWithIcon = styled.button`
-  margin: 0 auto;
   color: ${white}
-  height: 70px;
-  width: 90%;
+  height: 50px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 30px;
   background-color: ${white10};
-  border-radius: 50px;
+  border-radius: 60px;
   padding: 0 10px 0 30px;
   cursor: pointer;
 
@@ -50,8 +53,10 @@ const LinkToModal = styled.a`
 `;
 
 const title = 'Recuperar senha!';
-const instructions = ['Insira o seu e-mail ou número do celular cadastrado no SOM.', 'Vamos te enviar um link para gerar uma nova senha.'];
-
+const instructions = [
+  'Insira o seu e-mail ou número do celular cadastrado no SOM.',
+  'Vamos te enviar um link para gerar uma nova senha.',
+];
 
 function FormSendResetRequest(
   backToLogin, closeModal,
@@ -59,6 +64,7 @@ function FormSendResetRequest(
 ) {
   function handleInputChange(event) {
     const v = event.target.value;
+    setError('');
     setInputDevice({
       ...inputDevice,
       currentInput: inputDevice.devices[inputDevice.currentOption].inputFunction(v),
@@ -66,10 +72,11 @@ function FormSendResetRequest(
   }
 
   function handleRadioClick() {
-    const { options } = inputDevice;
+    const { options, devices } = inputDevice;
     setInputDevice({
       ...inputDevice,
       options: [options[1], options[0]],
+      currentInput: devices[inputDevice.currentOption].inputFunction(''),
       currentOption: options[1],
     });
   }
@@ -84,31 +91,30 @@ function FormSendResetRequest(
 
   return (
     <Form title={title} instructions={instructions}>
-      <RadioComponent handleClick={handleRadioClick} checked={inputDevice.currentOption === 'mail'} />
-      <InputGroup customStyle={inputGroupStyle} label=" " error={error}>
-        <InputWithTransparency
-          type="text"
-          value={inputDevice.currentInput}
-          placeholder={inputDevice.devices[inputDevice.currentOption].placeholder}
-          onChange={event => handleInputChange(event)}
-          customStyle={inputWithTransparencyStyle}
-          maxLength={inputDevice.devices[inputDevice.currentOption].maxLength}
-          autoComplete="off"
-        />
-      </InputGroup>
-      {
-        // e.preventDefault(); backToLogin();
-      }
-      <LinkToModal onClick={backToLogin}>
-        Lembrei! Voltar ao login
-      </LinkToModal>
-      <ButtonWithIcon onClick={(e) => {
-        handleSendLinkClick(e);
-      }}
-      >
-        Enviar link
-        <Arrow src="/icons/arrow_forward_right.svg" />
-      </ButtonWithIcon>
+      <Wrapper>
+        <RadioComponent handleClick={handleRadioClick} checked={inputDevice.currentOption === 'mail'} />
+        <InputGroup customStyle={inputGroupStyle} label=" " error={error}>
+          <InputWithTransparency
+            type="text"
+            value={inputDevice.currentInput}
+            placeholder={inputDevice.devices[inputDevice.currentOption].placeholder}
+            onChange={event => handleInputChange(event)}
+            customStyle={inputWithTransparencyStyle}
+            maxLength={inputDevice.devices[inputDevice.currentOption].maxLength}
+            autoComplete="off"
+          />
+        </InputGroup>
+        <LinkToModal onClick={backToLogin}>
+          Lembrei! Voltar ao login
+        </LinkToModal>
+        <ButtonWithIcon onClick={(e) => {
+          handleSendLinkClick(e);
+        }}
+        >
+          Enviar link
+          <Arrow src="/icons/arrow_forward_right.svg" />
+        </ButtonWithIcon>
+      </Wrapper>
     </Form>
   );
 }
