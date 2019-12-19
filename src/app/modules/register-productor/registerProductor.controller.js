@@ -1,9 +1,9 @@
 import apollo from '../../apollo';
-import { createProductor } from './registerProductor.repository';
+import { createProductor, updateProductor } from './registerProductor.repository';
 import { basicInformationIsValid } from './productor.validate';
 import { allMusicalStyleOptionsQuery } from '../../queries/musicalGenres.query';
 import { allCountriesQuery, allStateQuery } from './registerProduct.queries';
-import { getBase64, uploadPdfDocumentToStorage, uploadImageToStorage } from '../../utilities/file.utils';
+import { getBase64, uploadImageToStorage } from '../../utilities/file.utils';
 
 export const deleteTag = ({ id, tags, setTag }) => {
   const myTags = tags.filter(tag => tag.id !== id);
@@ -135,7 +135,7 @@ export const fetchMusicalStyleOptions = (setMusicalStylesOptions) => {
 
 const mapProductorToApi = (values, userId) => ({
   user: userId,
-  photo: values.avatar,
+  photo: values.avatar && values.avatar.url ? values.avatar.url : values.avatar,
   name: values.name,
   description: values.about,
   cpf: values.cpf,
@@ -164,7 +164,7 @@ export const handleCreateProductor = async (values, userId, setLoading) => {
   }
 
   let promise;
-  const data = mapProductorToApi(values, userId);
+  const data = mapProductorToApi(productor, userId);
   try {
     promise = await createProductor(data);
   } catch (err) {
@@ -173,5 +173,37 @@ export const handleCreateProductor = async (values, userId, setLoading) => {
   }
 
   console.log(promise);
+  setLoading(false);
+};
+
+export const handleEditProductor = async (values, productorId, userId, setLoading) => {
+  setLoading(true);
+  const productor = { ...values };
+  let newImage = null;
+
+  if (productor.avatar && productor.avatar.file) {
+    try {
+      const base64 = await getBase64(productor.avatar.file);
+      newImage = await uploadImageToStorage({
+        file: base64,
+        id: userId,
+      });
+    } catch (err) {
+      // try
+    }
+
+    productor.avatar = newImage.data.data.urls.mimified;
+  }
+
+  let promise;
+  const data = mapProductorToApi(productor, userId);
+  try {
+    promise = await updateProductor(productorId, data);
+  } catch (err) {
+    setLoading(false);
+    throw err;
+  }
+
+  console.log('edited', promise);
   setLoading(false);
 };

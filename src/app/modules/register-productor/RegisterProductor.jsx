@@ -8,7 +8,7 @@ import StepFormFooter from '../../components/organisms/StepFormFooter.organism';
 import { black, purple } from '../../settings/colors';
 import {
   fetchMusicalStyleOptions, handleACMusicalStyle, handleMusicalStyleSelect,
-  deleteTag, handleCreateProductor, mapMusicalStyles,
+  deleteTag, handleCreateProductor, mapMusicalStyles, handleEditProductor,
 } from './registerProductor.controller';
 import BasicInformationFieldset from '../../components/organisms/register-productor/BasicInformationFieldset';
 
@@ -138,7 +138,13 @@ const RegisterProductor = () => {
       <StepFormFooter
         nextAction={() => {
           if (!id) {
-            handleCreateProductor(values, state.user.id, setLoading, dispatch);
+            handleCreateProductor(
+              values, state.user.id, setLoading, dispatch,
+            );
+          } else {
+            handleEditProductor(
+              values, id, state.user.id, setLoading, dispatch,
+            );
           }
         }}
         loading={loading}
