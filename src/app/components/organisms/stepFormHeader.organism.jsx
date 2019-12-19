@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import CommonHeader from './Header';
-import { magenta, white, white30 } from '../../settings/colors';
+import { magenta, white } from '../../settings/colors';
 
 const Header = styled.div`
   position: sticky;
@@ -11,54 +11,58 @@ const Header = styled.div`
   width: 100%;
   flex-direction: column;
   padding: 15px;
-  background-color: ${magenta};
+  background-color: ${({ color }) => color};
   z-index: 10;
   max-height: 400px;
 `;
 
-const IndexContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  color: ${white30};
-  margin-top: 45px;
-`;
+// const IndexContainer = styled.div`
+//   display: flex;
+//   width: 100%;
+//   justify-content: center;
+//   align-items: center;
+//   color: ${white30};
+//   margin-top: 45px;
+// `;
 
-const BigBall = styled.div`
-  width: 12px;
-  height: 12px;
-  background-color: ${white};
-  margin: 0 5px;
-  border-radius: 50%;
-  ${props => props.customStyle}
-`;
+// const BigBall = styled.div`
+//   width: 12px;
+//   height: 12px;
+//   background-color: ${white};
+//   margin: 0 5px;
+//   border-radius: 50%;
+//   ${props => props.customStyle}
+// `;
 
-const MidBall = styled.div`
-  width: 6px;
-  height: 6px;
-  background-color: ${white};
-  margin: 0 5px;
-  border-radius: 50%;
-  ${props => props.customStyle}
-`;
+// const MidBall = styled.div`
+//   width: 6px;
+//   height: 6px;
+//   background-color: ${white};
+//   margin: 0 5px;
+//   border-radius: 50%;
+//   ${props => props.customStyle}
+// `;
 
-const SmallBall = styled.div`
-  width: 4px;
-  height: 4px;
-  background-color: ${white};
-  margin: 0 5px;
-  border-radius: 50%;
-  ${props => props.customStyle}
-`;
+// const SmallBall = styled.div`
+//   width: 4px;
+//   height: 4px;
+//   background-color: ${white};
+//   margin: 0 5px;
+//   border-radius: 50%;
+//   ${props => props.customStyle}
+// `;
 
 const Title = styled.h1`
   font-size: 1.25em;
   line-height: 1.1818181818em;
-  margin-top: 22px;
+  margin-top: 52px;
   font-weight: 400;
-  color: ${white};
   letter-spacing: 0.16px;
+
+  @media (min-width: 768px) {
+    margin-top: 72px;
+  }
+
   ${props => props.customStyle}
 `;
 
@@ -83,6 +87,10 @@ const Text = styled.h3`
     const { small } = props;
     return !small ? '12px' : '0px';
   }};
+  margin-bottom: ${(props) => {
+    const { small } = props;
+    return !small ? '15px' : '0px';
+  }};
   width: 100%;
   color: ${white};
   font-size: 0.8125em;
@@ -93,11 +101,11 @@ const Text = styled.h3`
   will-change: height;
 `;
 
-const renderBall = ({ items, index, small }) => items.map((e, i) => {
-  if (index === i) return <BigBall small={small} />;
-  if (index + 1 === i || index - 1 === i) return <MidBall small={small} />;
-  return <SmallBall small={small} />;
-});
+// const renderBall = ({ items, index, small }) => items.map((e, i) => {
+//   if (index === i) return <BigBall small={small} />;
+//   if (index + 1 === i || index - 1 === i) return <MidBall small={small} />;
+//   return <SmallBall small={small} />;
+// });
 
 const StepFormHeader = (props) => {
   const [small, setSmall] = useState(0);
@@ -131,6 +139,11 @@ StepFormHeader.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape(itemShape)).isRequired,
   index: PropTypes.string.isRequired,
   customStyle: PropTypes.string.isRequired,
+  color: PropTypes.string,
+};
+
+StepFormHeader.defaultProps = {
+  color: magenta,
 };
 
 export default StepFormHeader;

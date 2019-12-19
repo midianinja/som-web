@@ -35,6 +35,19 @@ export const oneUserQuery = gql`
         instagram
         youtube
       }
+      productor {
+        id
+        name
+        photo
+        musical_styles {
+          id
+          name
+        }
+        description
+        status
+        cpf
+        cnpj
+      }
     }
   }
 `;

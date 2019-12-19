@@ -15,7 +15,6 @@ export async function sendLink(input) {
   try {
     promise = await requestResetPassword(inputFormatted);
   } catch (error) {
-    console.log([error]);
     const errorCode = error.response.data.error;
     if (errorCode === 'reset-password/user-not-found') {
       const message = 'e-mail ou número não encontrado';

@@ -6,7 +6,6 @@ export const oneUserQuery = gql`
       id
       ida
       type
-      
       artist {
         id
         members_number
@@ -35,6 +34,19 @@ export const oneUserQuery = gql`
         twitter
         instagram
         youtube
+      }
+      productor {
+        id
+        name
+        photo
+        musical_styles {
+          id
+          name
+        }
+        description
+        status
+        cpf
+        cnpj
       }
     }
   }
