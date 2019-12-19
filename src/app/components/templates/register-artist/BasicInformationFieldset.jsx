@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Select from '../../atoms/Select.atom';
 import Input from '../../atoms/Input';
 import TextArea from '../../atoms/TextArea';
 import InputGroup from '../../molecules/InputGroup';
 import TagList from '../../molecules/TagList';
 import { white } from '../../../settings/colors';
 import UploadAvatar from '../../atoms/UploadAvatar';
-import AutocompleteInput from '../../molecules/InputAutocomplete';
+import ListInput from '../../molecules/ListInput.molecule';
 
 const Fieldset = styled.fieldset`
   padding: 30px 15px;
@@ -77,8 +76,8 @@ function BasicInformationFieldset(props) {
     states,
     handleAboutChange,
     deleteTag,
+    memoryState,
     handleAvatarChange,
-    handleMusicalStyleChange,
     handleMusicalStyleSelect,
     handleBlurChange,
     setArtistStepErrors,
@@ -122,14 +121,20 @@ function BasicInformationFieldset(props) {
             />
           </InputGroup>
           <InputGroup label={values.musicalStyles.length ? 'Estilo de música' : ''} error={artistStepErrors.musicalStyles}>
-            <AutocompleteInput
-              placeholder={values.musicalStyles.length ? '' : 'Estilo de música'}
-              predict={values.musicalStylePredict}
-              value={values.musicalStyle}
-              handleChange={handleMusicalStyleChange}
-              handleSelect={handleMusicalStyleSelect}
+            <ListInput
+              id="musical_style"
+              placeholder="Estilo de música"
+              options={memoryState.musicalStylesOptions.value.map(op => ({
+                label: op.name,
+                id: op.id,
+              }))}
+              onSelect={data => handleMusicalStyleSelect({ value: data, state: memoryState })}
             />
-            <TagList handleClose={deleteTag} data={values.musicalStyles} customStyle={musicalGenresCustomStyle} />
+            <TagList
+              handleClose={deleteTag}
+              data={values.musicalStyles}
+              customStyle={musicalGenresCustomStyle}
+            />
           </InputGroup>
         </TextInpustWrapper>
       </MainInformationWrapper>
@@ -139,14 +144,28 @@ function BasicInformationFieldset(props) {
           label={country.id ? 'País' : ''}
           error={artistStepErrors.country}
         >
-          <Select id="country" placeholder="País" options={countries} selected={country} value={values.country} onSelect={handleCountrySelect} />
+          <ListInput
+            id="country"
+            placeholder="País"
+            options={countries}
+            selected={country}
+            value={values.country}
+            onSelect={handleCountrySelect}
+          />
         </InputGroup>
         <InputGroup
           customStyle={inputGroupStyle}
           label={state.id ? 'Estado' : ''}
           error={artistStepErrors.state}
         >
-          <Select id="state" placeholder="Estado" value={values.state} selected={state} options={states} onSelect={handleStateSelect} />
+          <ListInput
+            id="state"
+            placeholder="Estado"
+            value={values.state}
+            selected={state}
+            options={states}
+            onSelect={handleStateSelect}
+          />
         </InputGroup>
         <InputGroup
           customStyle={inputGroupStyle}
@@ -207,6 +226,9 @@ BasicInformationFieldset.defaultProps = {
 BasicInformationFieldset.defaultProps = {
   country: {},
   state: {},
+  memoryState: {
+    musicalStylesOptions: [],
+  },
 };
 
 BasicInformationFieldset.propTypes = {
@@ -214,18 +236,21 @@ BasicInformationFieldset.propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   }),
+  memoryState: PropTypes.shape({
+    musicalStylesOptions: PropTypes.arrayOf(PropTypes.object),
+  }),
   state: PropTypes.shape({
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   }),
   countries: PropTypes.arrayOf(PropTypes.object).isRequired,
+  states: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleAboutChange: PropTypes.func.isRequired,
   deleteTag: PropTypes.func.isRequired,
   handleAvatarChange: PropTypes.func.isRequired,
   handleCityChange: PropTypes.func.isRequired,
   handleCountrySelect: PropTypes.func.isRequired,
   handleIntegrantsChange: PropTypes.func.isRequired,
-  handleMusicalStyleChange: PropTypes.func.isRequired,
   handleMusicalStyleSelect: PropTypes.func.isRequired,
   handleNameChange: PropTypes.func.isRequired,
   handleStateSelect: PropTypes.func.isRequired,

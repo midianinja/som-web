@@ -13,7 +13,6 @@ const fetchSongs = artist => apollo.query({
 
 export const fetchRelatedArtsts = async (artist, setArtsts) => {
   if (!artist.id) return;
-  console.log('artist:', artist);
   const artsts = await apollo.query({
     query: gql`
     query searchArtists(
@@ -36,6 +35,7 @@ export const fetchRelatedArtsts = async (artist, setArtsts) => {
     variables: {
       artist: {
         musical_styles: { $in: artist.musical_styles.map(m => m.id) },
+        _id: { $ne: [artist.id] },
       },
       paginator: {
         limit: 10,

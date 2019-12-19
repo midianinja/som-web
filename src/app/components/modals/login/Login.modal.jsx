@@ -165,7 +165,7 @@ function Login({ history }) {
         <ExitArrow onClick={closeModal} src="/icons/arrow_forward_left.svg" />
         <Icon src="/icons/login.svg" />
         <Form>
-          <Title>Bem vindx de volta!</Title>
+          <Title>Bem vinde de volta!</Title>
           <InputGroup
             customStyle={inputGroupStyle}
             customLabelStyle={inputGroupLabelStyle}

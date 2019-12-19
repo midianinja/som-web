@@ -63,11 +63,12 @@ const ArtistName = styled.h4`
   font-size: 0.8571428571em;
   font-weight: 300;
   margin-top: 10px;
+  overflow: hidden;
 `;
 
 function renderArtists(artists, history) {
   return artists.map(art => (
-    <Card onClick={() => { console.log('art:', art); history.push(`/artist/${art.id}`); }}>
+    <Card onClick={() => history.push(`/artist/${art.id}`)}>
       <Avatar src={art.avatar_image.mimified} customStyle={avatarCustomStyle} />
       <ArtistName>{art.name}</ArtistName>
     </Card>
