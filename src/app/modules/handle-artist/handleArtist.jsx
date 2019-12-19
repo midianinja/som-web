@@ -52,6 +52,7 @@ const renderArtistInfos = ({
     deleteTag={deleteTagAction}
     countries={state.countries.value}
     states={state.states.value}
+    memoryState={state}
     handleAvatarChange={({ target }) => state.avatar.update({
       url: { url: URL.createObjectURL(target.files[0]) },
       urls: null,

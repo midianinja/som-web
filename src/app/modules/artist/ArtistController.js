@@ -13,7 +13,6 @@ const fetchSongs = artist => apollo.query({
 
 export const fetchRelatedArtsts = async (artist, setArtsts) => {
   if (!artist.id) return;
-  console.log('artist:', artist);
   const artsts = await apollo.query({
     query: gql`
     query searchArtists(
