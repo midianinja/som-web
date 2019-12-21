@@ -54,11 +54,13 @@ const Row = styled.div`
 `;
 
 const inputGroup50CustomStyle = `
+  @media (min-width: 768px) {
   display: inline-block;
   width: calc(50% - 7px);
-  
+
   & + & {
     margin-left: 14px;
+  }
   }
 `;
 
@@ -72,7 +74,6 @@ function BasicInformationFieldset(props) {
     handleAvatarChange,
     handleMusicalStyleChange,
     handleMusicalStyleSelect,
-    handleBlurChange,
     productorStepErrors,
     values,
   } = props;
@@ -99,7 +100,6 @@ function BasicInformationFieldset(props) {
               type="text"
               placeholder="Nome completo"
               value={values.name}
-              onBlur={e => handleBlurChange(e, 'common', productorStepErrors, productorStepErrors)}
               onChange={handleNameChange}
             />
           </InputGroup>
@@ -114,7 +114,6 @@ function BasicInformationFieldset(props) {
                 placeholder="CPF"
                 type="tel"
                 value={VMasker.toPattern(values.cpf, '999.999.999-99')}
-                onBlur={e => handleBlurChange(e, 'common', productorStepErrors, productorStepErrors)}
                 onChange={handleCPFChange}
               />
             </InputGroup>
@@ -128,7 +127,6 @@ function BasicInformationFieldset(props) {
                 placeholder="CNPJ"
                 value={VMasker.toPattern(values.cnpj, '9/9999-99')}
                 type="tel"
-                onBlur={e => handleBlurChange(e, 'common', productorStepErrors, productorStepErrors)}
                 onChange={handleCNPJChange}
               />
             </InputGroup>
@@ -156,7 +154,6 @@ function BasicInformationFieldset(props) {
         <TextArea
           id="about"
           placeholder="Conte sobre você :)"
-          onBlur={e => handleBlurChange(e, 'description', productorStepErrors, productorStepErrors)}
           value={values.about}
           onChange={handleAboutChange}
         />
@@ -195,7 +192,6 @@ BasicInformationFieldset.propTypes = {
   handleNameChange: PropTypes.func.isRequired,
   handleCNPJChange: PropTypes.func.isRequired,
   handleCPFChange: PropTypes.func.isRequired,
-  handleBlurChange: PropTypes.func,
   values: PropTypes.shape(valuesShape).isRequired,
   productorStepErrors: PropTypes.shape(errorsShape).isRequired,
 };

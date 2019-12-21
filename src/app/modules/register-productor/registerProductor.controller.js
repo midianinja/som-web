@@ -133,6 +133,14 @@ export const fetchMusicalStyleOptions = (setMusicalStylesOptions) => {
   }).then(resp => setMusicalStylesOptions(resp.data.allMusicalStyleOptions));
 };
 
+export const nextCallback = ({ visibles, setVisibles }) => {
+  const next = Object.entries(visibles).find(item => !item[1]);
+  const newVisibles = { ...visibles };
+
+  if (next) newVisibles[next[0]] = true;
+  setVisibles(newVisibles);
+};
+
 const mapProductorToApi = (values, userId) => ({
   user: userId,
   photo: values.avatar && values.avatar.url ? values.avatar.url : values.avatar,
@@ -144,7 +152,10 @@ const mapProductorToApi = (values, userId) => ({
   status: basicInformationIsValid(values) ? 'INCOMPLETE' : 'ACTIVE',
 });
 
-export const handleCreateProductor = async (values, userId, setLoading) => {
+export const handleCreateProductor = async (
+  values, userId, setLoading, visibles,
+  setVisibles,
+) => {
   setLoading(true);
   const productor = { ...values };
   let newImage = null;
@@ -172,11 +183,15 @@ export const handleCreateProductor = async (values, userId, setLoading) => {
     throw err;
   }
 
-  console.log(promise);
+  console.log('created', promise);
+  nextCallback({ visibles, setVisibles });
   setLoading(false);
 };
 
-export const handleEditProductor = async (values, productorId, userId, setLoading) => {
+export const handleEditProductor = async (
+  values, productorId, userId, setLoading,
+  visibles, setVisibles,
+) => {
   setLoading(true);
   const productor = { ...values };
   let newImage = null;
@@ -205,5 +220,6 @@ export const handleEditProductor = async (values, productorId, userId, setLoadin
   }
 
   console.log('edited', promise);
+  nextCallback({ visibles, setVisibles });
   setLoading(false);
 };

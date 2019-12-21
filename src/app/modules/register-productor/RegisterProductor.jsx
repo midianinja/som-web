@@ -9,8 +9,11 @@ import { black, purple } from '../../settings/colors';
 import {
   fetchMusicalStyleOptions, handleACMusicalStyle, handleMusicalStyleSelect,
   deleteTag, handleCreateProductor, mapMusicalStyles, handleEditProductor,
+  nextCallback,
 } from './registerProductor.controller';
 import BasicInformationFieldset from '../../components/organisms/register-productor/BasicInformationFieldset';
+import ContactFieldset from '../../components/organisms/register-productor/ContactField';
+import SocialsFieldset from '../../components/organisms/register-productor/SocialsFieldset';
 
 const Form = styled.form`
   width: 100%;
@@ -52,7 +55,6 @@ const renderBasicInfos = ({
       urls: null,
       file: target.files[0],
     })}
-    handleBlurChange={() => null}
     handleCNPJChange={({ target }) => setCNPJ(target.value)}
     handleCPFChange={({ target }) => setCPF(target.value)}
     handleNameChange={({ target }) => setName(target.value)}
@@ -75,21 +77,69 @@ const renderBasicInfos = ({
   />
 );
 
+const renderContactFieldset = ({
+  visibles, values, setMainPhone, setSecondaryPhone,
+  setWhatsapp, setTelegram, setContactEmail, productorStepErrors,
+}) => {
+  if (!visibles.contact) return null;
+  return (
+    <ContactFieldset
+      handleMainPhone={({ target }) => setMainPhone(target.value)}
+      handleSecondaryPhoneChange={({ target }) => setSecondaryPhone(target.value)}
+      handleWhatsappChange={({ target }) => setWhatsapp(target.value)}
+      handleTelegramChange={({ target }) => setTelegram(target.value)}
+      handleContactEmailChange={({ target }) => setContactEmail(target.value)}
+      productorStepErrors={productorStepErrors}
+      values={values}
+    />
+  );
+};
+
+const renderSocialsFieldset = ({
+  visibles, values, setFacebook, setTwitter,
+  setYoutube, setInstagram, productorStepErrors,
+}) => {
+  if (!visibles.socials) return null;
+  return (
+    <SocialsFieldset
+      handleFacebookChange={({ target }) => setFacebook(target.value)}
+      handleInstagramChange={({ target }) => setInstagram(target.value)}
+      handleTwitterChange={({ target }) => setTwitter(target.value)}
+      handleYoutubeChange={({ target }) => setYoutube(target.value)}
+      stepErrors={productorStepErrors}
+      values={values}
+    />
+  );
+};
+
 const RegisterProductor = () => {
   const { state, dispatch } = useContext(Store);
-  const [id, setId] = useState('');
   const [about, setAbout] = useState('');
   const [avatar, setAvatar] = useState({ url: '' });
   const [cnpj, setCNPJ] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
   const [cpf, setCPF] = useState('');
+  const [facebook, setFacebook] = useState('');
+  const [id, setId] = useState('');
+  const [instagram, setInstagram] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [mainPhone, setMainPhone] = useState('');
   const [musicalStyles, setMusicalStyles] = useState([]);
   const [musicalStylesOptions, setMusicalStylesOptions] = useState([]);
   const [musicalStylePredict, setMusicalStylePredict] = useState('');
   const [musicalStyle, setMusicalStyle] = useState('');
   const [name, setName] = useState('');
+  const [secondaryPhone, setSecondaryPhone] = useState('');
   const [productorStepErrors, setProductorStepErrors] = useState({});
-  const [loading, setLoading] = useState(false);
   const [step] = useState(0);
+  const [telegram, setTelegram] = useState('');
+  const [twitter, setTwitter] = useState('');
+  const [visibles, setVisibles] = useState({
+    contact: false,
+    socials: false,
+  });
+  const [whatsapp, setWhatsapp] = useState('');
+  const [youtube, setYoutube] = useState('');
 
   const mapContextToState = (productor) => {
     setId(productor.id);
@@ -119,7 +169,9 @@ const RegisterProductor = () => {
 
   const values = {
     avatar, about, cpf, cnpj,
-    musicalStyles, musicalStylePredict, musicalStyle, name,
+    instagram, musicalStyles, musicalStylePredict, musicalStyle,
+    name, mainPhone, secondaryPhone, whatsapp, telegram,
+    contactEmail, facebook, youtube, twitter,
   };
 
   return (
@@ -134,21 +186,35 @@ const RegisterProductor = () => {
             setProductorStepErrors, setCNPJ, setCPF,
           })
         }
+        {
+          renderContactFieldset({
+            visibles, values, setMainPhone, setSecondaryPhone,
+            setWhatsapp, setTelegram, setContactEmail, productorStepErrors,
+          })
+        }
+        {
+          renderSocialsFieldset({
+            visibles, values, setFacebook, setInstagram,
+            setTwitter, setYoutube, productorStepErrors,
+          })
+        }
       </FormWrapper>
       <StepFormFooter
         nextAction={() => {
           if (!id) {
             handleCreateProductor(
-              values, state.user.id, setLoading, dispatch,
+              values, state.user.id, setLoading, visibles,
+              setVisibles, dispatch,
             );
           } else {
             handleEditProductor(
-              values, id, state.user.id, setLoading, dispatch,
+              values, id, state.user.id, setLoading, visibles,
+              setVisibles, dispatch,
             );
           }
         }}
         loading={loading}
-        skipAction={() => null}
+        skipAction={() => nextCallback({ visibles, setVisibles })}
       />
     </Form>
   );
