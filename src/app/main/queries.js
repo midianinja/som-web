@@ -47,6 +47,15 @@ export const oneUserQuery = gql`
         status
         cpf
         cnpj
+        main_phone
+        secondary_phone
+        whatsapp
+        telegram
+        contact_email
+        facebook
+        twitter
+        instagram
+        youtube
       }
     }
   }

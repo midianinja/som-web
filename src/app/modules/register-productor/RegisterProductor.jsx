@@ -84,7 +84,7 @@ const renderContactFieldset = ({
   if (!visibles.contact) return null;
   return (
     <ContactFieldset
-      handleMainPhone={({ target }) => setMainPhone(target.value)}
+      handleMainPhoneChange={({ target }) => setMainPhone(target.value)}
       handleSecondaryPhoneChange={({ target }) => setSecondaryPhone(target.value)}
       handleWhatsappChange={({ target }) => setWhatsapp(target.value)}
       handleTelegramChange={({ target }) => setTelegram(target.value)}
@@ -149,6 +149,15 @@ const RegisterProductor = () => {
     setCNPJ(productor.cnpj);
     setCPF(productor.cpf);
     setMusicalStyles(mapMusicalStyles(productor.musical_styles));
+    setMainPhone(productor.main_phone || '');
+    setSecondaryPhone(productor.secondary_phone || '');
+    setWhatsapp(productor.whatsapp || '');
+    setTelegram(productor.telegram || '');
+    setContactEmail(productor.contact_email || '');
+    setFacebook(productor.facebook || '');
+    setInstagram(productor.instagram || '');
+    setTwitter(productor.twitter || '');
+    setYoutube(productor.youtube || '');
   };
 
   useEffect(() => {

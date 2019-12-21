@@ -40,7 +40,6 @@ function ContactFieldset(props) {
     handleWhatsappChange,
     handleTelegramChange,
     handleContactEmailChange,
-    handleBlurChange,
     productorStepErrors,
     values,
   } = props;
@@ -59,7 +58,6 @@ function ContactFieldset(props) {
             type="text"
             placeholder="Telefone príncipal"
             value={VMasker.toPattern(values.mainPhone, '(99) 99999-9999')}
-            onBlur={e => handleBlurChange(e, 'common', productorStepErrors, productorStepErrors)}
             onChange={handleMainPhoneChange}
           />
         </InputGroup>
@@ -73,7 +71,6 @@ function ContactFieldset(props) {
             placeholder="Telefone secundário"
             type="tel"
             value={VMasker.toPattern(values.secondaryPhone, '(99) 99999-9999')}
-            onBlur={e => handleBlurChange(e, 'common', productorStepErrors, productorStepErrors)}
             onChange={handleSecondaryPhoneChange}
           />
         </InputGroup>
@@ -87,9 +84,8 @@ function ContactFieldset(props) {
           <Input
             id="whatsapp"
             placeholder="Whatsapp"
-            value={VMasker.toPattern(values.secondaryPhone, '(99) 99999-9999')}
+            value={VMasker.toPattern(values.whatsapp, '(99) 99999-9999')}
             type="tel"
-            onBlur={e => handleBlurChange(e, 'common', productorStepErrors, productorStepErrors)}
             onChange={handleWhatsappChange}
           />
         </InputGroup>
@@ -103,7 +99,6 @@ function ContactFieldset(props) {
             placeholder="Telegram"
             value={values.telegram}
             type="text"
-            onBlur={e => handleBlurChange(e, 'common', productorStepErrors, productorStepErrors)}
             onChange={handleTelegramChange}
           />
         </InputGroup>
@@ -119,7 +114,6 @@ function ContactFieldset(props) {
             placeholder="Email de contato"
             value={values.contactEmail}
             type="text"
-            onBlur={e => handleBlurChange(e, 'common', productorStepErrors, productorStepErrors)}
             onChange={handleContactEmailChange}
           />
         </InputGroup>
@@ -150,13 +144,8 @@ ContactFieldset.propTypes = {
   handleWhatsappChange: PropTypes.func.isRequired,
   handleTelegramChange: PropTypes.func.isRequired,
   handleContactEmailChange: PropTypes.func.isRequired,
-  handleBlurChange: PropTypes.func,
   values: PropTypes.shape(valuesShape).isRequired,
   productorStepErrors: PropTypes.shape(errorsShape).isRequired,
-};
-
-ContactFieldset.defaultProps = {
-  handleBlurChange: () => null,
 };
 
 export default ContactFieldset;

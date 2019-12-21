@@ -150,6 +150,15 @@ const mapProductorToApi = (values, userId) => ({
   cnpj: values.cnpj,
   musical_styles: values.musicalStyles.map(({ id }) => id),
   status: basicInformationIsValid(values) ? 'INCOMPLETE' : 'ACTIVE',
+  main_phone: values.mainPhone,
+  secondary_phone: values.secondaryPhone,
+  whatsapp: values.whatsapp,
+  telegram: values.telegram,
+  contact_email: values.contactEmail,
+  facebook: values.facebook,
+  instagram: values.instagram,
+  twitter: values.twitter,
+  youtube: values.youtube,
 });
 
 export const handleCreateProductor = async (
