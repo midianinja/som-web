@@ -43,6 +43,15 @@ export const oneUserQuery = gql`
           id
           name
         }
+        location {
+          id
+          state
+          city
+          district
+          country
+          zipcode
+          address
+        }
         description
         status
         cpf

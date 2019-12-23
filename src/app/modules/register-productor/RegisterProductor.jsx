@@ -3,16 +3,18 @@ import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Store from '../../store/Store';
+import Loading from '../../components/atoms/Loading.atom';
 import StepFormHeader from '../../components/organisms/stepFormHeader.organism';
 import StepFormFooter from '../../components/organisms/StepFormFooter.organism';
 import { black, purple } from '../../settings/colors';
 import {
   fetchMusicalStyleOptions, handleACMusicalStyle, handleMusicalStyleSelect,
   deleteTag, handleCreateProductor, mapMusicalStyles, handleEditProductor,
-  nextCallback,
+  nextCallback, fetchLocations, handleCountrySelect, handleStateSelect,
 } from './registerProductor.controller';
 import BasicInformationFieldset from '../../components/organisms/register-productor/BasicInformationFieldset';
 import ContactFieldset from '../../components/organisms/register-productor/ContactField';
+import LocationFieldset from '../../components/organisms/register-productor/LocationFieldset';
 import SocialsFieldset from '../../components/organisms/register-productor/SocialsFieldset';
 
 const Form = styled.form`
@@ -28,6 +30,14 @@ const Form = styled.form`
 const FormWrapper = styled.div`
   width: 100%;
   max-width: 768px;
+`;
+
+const LoadingWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 `;
 
 const steps = [
@@ -77,6 +87,26 @@ const renderBasicInfos = ({
   />
 );
 
+const renderLocationFieldset = ({
+  values, visibles, setCity, setState, setCountry,
+  productorStepErrors, setStates, countries, states,
+}) => {
+  if (!visibles.location) return null;
+  return (
+    <LocationFieldset
+      values={values}
+      coutry={values.country}
+      state={values.state}
+      countries={countries}
+      states={states}
+      productorStepErrors={productorStepErrors}
+      handleCityChange={({ target }) => setCity(target.value)}
+      handleCountrySelect={data => handleCountrySelect({ data, setStates, setCountry })}
+      handleStateSelect={data => handleStateSelect({ data, setState })}
+    />
+  );
+};
+
 const renderContactFieldset = ({
   visibles, values, setMainPhone, setSecondaryPhone,
   setWhatsapp, setTelegram, setContactEmail, productorStepErrors,
@@ -115,9 +145,13 @@ const renderSocialsFieldset = ({
 const RegisterProductor = () => {
   const { state, dispatch } = useContext(Store);
   const [about, setAbout] = useState('');
+  const [locationId, setLocationId] = useState('');
   const [avatar, setAvatar] = useState({ url: '' });
+  const [city, setCity] = useState('');
   const [cnpj, setCNPJ] = useState('');
   const [contactEmail, setContactEmail] = useState('');
+  const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState({});
   const [cpf, setCPF] = useState('');
   const [facebook, setFacebook] = useState('');
   const [id, setId] = useState('');
@@ -131,10 +165,13 @@ const RegisterProductor = () => {
   const [name, setName] = useState('');
   const [secondaryPhone, setSecondaryPhone] = useState('');
   const [productorStepErrors, setProductorStepErrors] = useState({});
+  const [locationState, setState] = useState({});
+  const [states, setStates] = useState([]);
   const [step] = useState(0);
   const [telegram, setTelegram] = useState('');
   const [twitter, setTwitter] = useState('');
   const [visibles, setVisibles] = useState({
+    location: false,
     contact: false,
     socials: false,
   });
@@ -158,12 +195,16 @@ const RegisterProductor = () => {
     setInstagram(productor.instagram || '');
     setTwitter(productor.twitter || '');
     setYoutube(productor.youtube || '');
+
+    if (productor.location && productor.location.id) {
+      setLocationId(productor.location.id);
+      setCity(productor.location.city);
+    }
   };
 
   useEffect(() => {
     if (state.user && state.user.productor) {
-      const { productor } = state.user;
-      mapContextToState(productor);
+      mapContextToState(state.user.productor);
     }
 
     fetchMusicalStyleOptions(setMusicalStylesOptions);
@@ -173,6 +214,10 @@ const RegisterProductor = () => {
     if (state.user && state.user.productor) {
       const { productor } = state.user;
       mapContextToState(productor);
+      fetchLocations({
+        setCountries, setStates, setState, setCity,
+        productor, setCountry,
+      });
     }
   }, [state]);
 
@@ -180,8 +225,17 @@ const RegisterProductor = () => {
     avatar, about, cpf, cnpj,
     instagram, musicalStyles, musicalStylePredict, musicalStyle,
     name, mainPhone, secondaryPhone, whatsapp, telegram,
-    contactEmail, facebook, youtube, twitter,
+    contactEmail, facebook, youtube, twitter, country, state: locationState,
+    city, locationId,
   };
+
+  if (!state.user) {
+    return (
+      <LoadingWrapper>
+        <Loading />
+      </LoadingWrapper>
+    );
+  }
 
   return (
     <Form onSubmit={e => e.preventDefault()}>
@@ -193,6 +247,13 @@ const RegisterProductor = () => {
             setMusicalStylePredict, musicalStylesOptions, setMusicalStyles,
             setMusicalStylesOptions, setName, setAvatar, productorStepErrors,
             setProductorStepErrors, setCNPJ, setCPF,
+          })
+        }
+        {
+          renderLocationFieldset({
+            visibles, values, setState, setCountry, setCity,
+            countries, states, productorStepErrors, setStates,
+            locationId, setLocationId,
           })
         }
         {
@@ -213,12 +274,13 @@ const RegisterProductor = () => {
           if (!id) {
             handleCreateProductor(
               values, state.user.id, setLoading, visibles,
-              setVisibles, dispatch,
+              setVisibles, setLocationId, dispatch, state.user,
             );
           } else {
             handleEditProductor(
-              values, id, state.user.id, setLoading, visibles,
-              setVisibles, dispatch,
+              values, id, state.user.id, setLoading,
+              visibles, setVisibles, setLocationId, dispatch,
+              state.user,
             );
           }
         }}

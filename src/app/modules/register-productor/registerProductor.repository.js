@@ -1,5 +1,8 @@
 import apollo from '../../apollo';
-import { createProductorMutation, updateProductorMutation } from './productor.mutation';
+import {
+  createProductorMutation, updateProductorMutation, createLocationMutation,
+  updateLocationMutation,
+} from './productor.mutation';
 
 export const createProductor = productor => apollo.mutate({
   mutation: createProductorMutation,
@@ -13,5 +16,20 @@ export const updateProductor = (id, productor) => apollo.mutate({
   variables: {
     productor_id: id,
     productor,
+  },
+});
+
+export const createLocation = location => apollo.mutate({
+  mutation: createLocationMutation,
+  variables: {
+    location,
+  },
+});
+
+export const updateLocation = (id, location) => apollo.mutate({
+  mutation: updateLocationMutation,
+  variables: {
+    id,
+    location,
   },
 });

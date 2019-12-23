@@ -1,5 +1,7 @@
 import apollo from '../../apollo';
-import { createProductor, updateProductor } from './registerProductor.repository';
+import {
+  createProductor, updateProductor, createLocation, updateLocation,
+} from './registerProductor.repository';
 import { basicInformationIsValid } from './productor.validate';
 import { allMusicalStyleOptionsQuery } from '../../queries/musicalGenres.query';
 import { allCountriesQuery, allStateQuery } from './registerProduct.queries';
@@ -10,7 +12,9 @@ export const deleteTag = ({ id, tags, setTag }) => {
   setTag(myTags);
 };
 
-export const handleCountrySelect = async ({ data, setStates, setCountry }) => {
+export const handleCountrySelect = async ({
+  data, setStates, setCountry, cb,
+}) => {
   const countries = await apollo.query({
     query: allStateQuery,
     variables: {
@@ -19,11 +23,14 @@ export const handleCountrySelect = async ({ data, setStates, setCountry }) => {
       },
     },
   });
-  const myCountrires = countries.data.allStates.map(c => ({
+  const states = countries.data.allStates.map(c => ({
     label: c.name,
+    short_name: c.short_name,
     id: c.id,
   }));
-  setStates(myCountrires);
+
+  if (cb) cb({ states });
+  setStates(states);
   setCountry(data);
 };
 
@@ -31,16 +38,43 @@ export const handleStateSelect = async ({ data, setState }) => {
   setState(data);
 };
 
-export const fetchLocations = async ({ setCountries }) => {
+export const fetchLocations = async ({
+  setCountries, setStates, productor, setCountry, setState,
+}) => {
   const countries = await apollo.query({
     query: allCountriesQuery,
     variables: {},
   });
-  const myCountrires = countries.data.allCountries.map(c => ({
+
+  const myCountries = countries.data.allCountries.map(c => ({
     label: c.name,
+    short_name: c.short_name,
     id: c.id,
   }));
-  setCountries(myCountrires);
+
+  if (productor.location && productor.location.country) {
+    const data = myCountries.find(
+      country => productor.location.country === country.short_name,
+    );
+
+    let cb = null;
+
+    if (productor.location.state) {
+      cb = ({ states }) => {
+        const stateData = states.find(
+          state => productor.location.state === state.short_name,
+        );
+
+        handleStateSelect({ data: stateData, setState });
+      };
+    }
+
+    handleCountrySelect({
+      data, setStates, setCountry, cb,
+    });
+  }
+
+  setCountries(myCountries);
 };
 
 export const handleACMusicalStyle = ({
@@ -141,13 +175,14 @@ export const nextCallback = ({ visibles, setVisibles }) => {
   setVisibles(newVisibles);
 };
 
-const mapProductorToApi = (values, userId) => ({
+const mapProductorToApi = (values, userId, locationId) => ({
   user: userId,
-  photo: values.avatar && values.avatar.url ? values.avatar.url : values.avatar,
+  photo: values.avatar.url,
   name: values.name,
   description: values.about,
   cpf: values.cpf,
   cnpj: values.cnpj,
+  location: locationId,
   musical_styles: values.musicalStyles.map(({ id }) => id),
   status: basicInformationIsValid(values) ? 'INCOMPLETE' : 'ACTIVE',
   main_phone: values.mainPhone,
@@ -161,9 +196,24 @@ const mapProductorToApi = (values, userId) => ({
   youtube: values.youtube,
 });
 
+const saveLocation = (id, values) => {
+  const { city, state, country } = values;
+  const location = {
+    city,
+    state: state.short_name,
+    country: country.short_name,
+  };
+
+  if (id) {
+    return updateLocation(id, location);
+  }
+
+  return createLocation(location);
+};
+
 export const handleCreateProductor = async (
   values, userId, setLoading, visibles,
-  setVisibles,
+  setVisibles, setLocationId, dispatch, user,
 ) => {
   setLoading(true);
   const productor = { ...values };
@@ -183,23 +233,29 @@ export const handleCreateProductor = async (
     productor.avatar = newImage.data.data.urls.mimified;
   }
 
+  console.log(productor);
   let promise;
   const data = mapProductorToApi(productor, userId);
   try {
     promise = await createProductor(data);
   } catch (err) {
+    console.log([err]);
     setLoading(false);
     throw err;
   }
 
-  console.log('created', promise);
+  dispatch({
+    action: 'SET_USER',
+    user: { ...user, productor: promise.data.createProductor },
+  });
   nextCallback({ visibles, setVisibles });
   setLoading(false);
 };
 
 export const handleEditProductor = async (
   values, productorId, userId, setLoading,
-  visibles, setVisibles,
+  visibles, setVisibles, setLocationId,
+  dispatch, user,
 ) => {
   setLoading(true);
   const productor = { ...values };
@@ -213,22 +269,45 @@ export const handleEditProductor = async (
         id: userId,
       });
     } catch (err) {
-      // try
+      // to be try
     }
 
-    productor.avatar = newImage.data.data.urls.mimified;
+    productor.avatar = { url: newImage.data.data.urls.mimified };
+  }
+
+  let locationId = null;
+  if (productor.city || productor.country.short_name) {
+    let locationResult;
+    try {
+      locationResult = await saveLocation(
+        values.locationId, values,
+      );
+    } catch (err) {
+      // to be try
+    }
+
+    if (values.locationId) {
+      locationId = locationResult.data.updateLocation.id;
+    } else {
+      locationId = locationResult.data.createLocation.id;
+    }
+    setLocationId(locationId);
   }
 
   let promise;
-  const data = mapProductorToApi(productor, userId);
+  const data = mapProductorToApi(productor, userId, locationId);
   try {
     promise = await updateProductor(productorId, data);
   } catch (err) {
+    console.log([err]);
     setLoading(false);
     throw err;
   }
 
-  console.log('edited', promise);
+  dispatch({
+    action: 'SET_USER',
+    user: { ...user, productor: promise.data.updateProductor },
+  });
   nextCallback({ visibles, setVisibles });
   setLoading(false);
 };

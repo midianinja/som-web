@@ -82,16 +82,19 @@ const Label = styled.label`
  * @param {function} onClick it is the function that select the option
  * @returns contains Option Component array
  */
-const renderOptions = (options, onClick) => options.map(({ id, image, label }) => (
-  <Option
-    key={id}
-    id={id}
-    onClick={() => onClick({ id, label, image })}
-  >
-    <Image src={image} visible={!!image} />
-    {label}
-  </Option>
-));
+const renderOptions = (options, onClick) => options.map((value) => {
+  const { id, label, image } = value;
+  return (
+    <Option
+      key={id}
+      id={id}
+      onClick={() => onClick(value)}
+    >
+      <Image src={image} visible={!!image} />
+      {label}
+    </Option>
+  );
+});
 
 const normalizeString = (text) => {
   let str = text;

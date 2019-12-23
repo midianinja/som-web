@@ -392,7 +392,9 @@ export const steps = [
 export const handleMusicalStyleSelect = ({ value, state }) => {
   const myValue = value.value.label;
   state.musicalStyle.update(value);
-  const style = state.musicalStylesOptions.value.find(o => (o.name.toLowerCase() === myValue.toLowerCase()));
+  const style = state.musicalStylesOptions.value.find(
+    o => (o.name.toLowerCase() === myValue.toLowerCase()),
+  );
   const newMusicalStyles = state.musicalStyles.value
     .filter(o => (o.text.toLowerCase() !== myValue))
     .concat([
