@@ -42,7 +42,7 @@ const LoadingWrapper = styled.div`
 
 const steps = [
   {
-    title: 'Crie sua página de productor',
+    title: 'Crie sua página de produtor',
     description: 'Salvamos seus dados após o continuar. Termine de completar suas informações mais tarde se quiser',
     small: false,
   },
