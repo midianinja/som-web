@@ -153,9 +153,9 @@ const RegisterProductor = () => {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState({});
   const [cpf, setCPF] = useState('');
-  const [facebook, setFacebook] = useState('');
+  const [facebook, setFacebook] = useState('https://www.facebook.com/');
   const [id, setId] = useState('');
-  const [instagram, setInstagram] = useState('');
+  const [instagram, setInstagram] = useState('https://www.instagram.com/');
   const [loading, setLoading] = useState(false);
   const [mainPhone, setMainPhone] = useState('');
   const [musicalStyles, setMusicalStyles] = useState([]);
@@ -169,14 +169,14 @@ const RegisterProductor = () => {
   const [states, setStates] = useState([]);
   const [step] = useState(0);
   const [telegram, setTelegram] = useState('');
-  const [twitter, setTwitter] = useState('');
+  const [twitter, setTwitter] = useState('https://twitter.com/');
   const [visibles, setVisibles] = useState({
     location: false,
     contact: false,
     socials: false,
   });
   const [whatsapp, setWhatsapp] = useState('');
-  const [youtube, setYoutube] = useState('');
+  const [youtube, setYoutube] = useState('https://www.youtube.com/');
 
   const mapContextToState = (productor) => {
     setId(productor.id);
@@ -191,10 +191,10 @@ const RegisterProductor = () => {
     setWhatsapp(productor.whatsapp || '');
     setTelegram(productor.telegram || '');
     setContactEmail(productor.contact_email || '');
-    setFacebook(productor.facebook || '');
-    setInstagram(productor.instagram || '');
-    setTwitter(productor.twitter || '');
-    setYoutube(productor.youtube || '');
+    setFacebook(productor.facebook || 'https://www.facebook.com/');
+    setInstagram(productor.instagram || 'https://www.instagram.com/');
+    setTwitter(productor.twitter || 'https://twitter.com/');
+    setYoutube(productor.youtube || 'https://www.youtube.com/');
 
     if (productor.location && productor.location.id) {
       setLocationId(productor.location.id);
