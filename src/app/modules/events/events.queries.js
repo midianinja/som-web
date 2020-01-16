@@ -1,13 +1,15 @@
 import gql from 'graphql-tag';
 
 export const getAllEventsQuery = gql`
-  query allEvents(
+  query searchEvents(
     $event: EventInput
     $paginator: PaginatorInput
+    $advancedQuery: JSON
   ) {
-    allEvents(
+    searchEvents(
       event: $event
       paginator: $paginator
+      advancedQuery: $advancedQuery
     ) {
       id
       name

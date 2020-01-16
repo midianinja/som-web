@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
@@ -40,9 +40,13 @@ const EventTitle = styled.p`
 `;
 
 const EventPage = ({ match, history }) => {
+  const { state, dispatch } = useContext(Store);
   const [loading, setLoading] = useState({ ...initialLoading });
   const [events, setEvents] = useState([]);
   const [dialog, setDialog] = useState(null);
+  console.log('dispatch:', dispatch);
+  console.log('state:', state);
+  console.log('events:', events);
   useEffect(() => {
     fetchEventsData(
       setEvents, loading, setLoading, setDialog, history,
@@ -52,7 +56,9 @@ const EventPage = ({ match, history }) => {
     <Store.Consumer>
       {({ state, dispatch }) => (
         <Container>
-          <Title>{`EVENTOS ${events.length}`}</Title>
+          <Header
+            logged={!!state.user}
+          />
           {
             events.map(evt => (
               <EventContainer onClick={() => (history.push(`/event/${evt.id}`))}>

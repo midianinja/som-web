@@ -41,8 +41,28 @@ export const fetchEventsData = async (setEvent, loading, setLoading, setDialog, 
   try {
     eventData = await apollo.query({
       query: getAllEventsQuery,
-      variables: {},
+      variables: {
+        paginator: {},
+        event: {},
+        advancedQuery: {},
+      },
     });
+    console.log('eventData:', eventData);
+    if (!eventData.data.searchEvents.length) {
+      console.log('.data:');
+      setDialog({
+        title: 'Evento não encontrado',
+        icon: '/icons/guita-error.svg',
+        description: 'Logo teremos mais eventos, fique ligado para se inscrever.',
+        disagreeText: 'Ir para home',
+        disagreeAction: () => history.push('/'),
+      });
+      return;
+    }
+  
+    console.log('eventData.data.allEvents:', eventData.data.searchEvents);
+    setEvent(eventData.data.searchEvents);
+    setLoading({ ...loading, event: loadingStatus.LOADDED });
   } catch (err) {
     // tratar esse erro
     setLoading({ ...loading, event: loadingStatus.ERROR });
@@ -50,19 +70,6 @@ export const fetchEventsData = async (setEvent, loading, setLoading, setDialog, 
     throw err;
   }
 
-  if (!eventData.data.allEvents) {
-    setDialog({
-      title: 'Evento não encontrado',
-      icon: '/icons/guita-error.svg',
-      description: 'Logo teremos mais eventos, fique ligado para se inscrever.',
-      disagreeText: 'Ir para home',
-      disagreeAction: () => history.push('/'),
-    });
-    return;
-  }
-
-  setEvent(eventData.data.allEvents || { ...initialEvent });
-  setLoading({ ...loading, event: loadingStatus.LOADDED });
 };
 
 export const associatedEvents = async (id, setAssociatedEvents) => {
