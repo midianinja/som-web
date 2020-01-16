@@ -124,6 +124,7 @@ const EventPage = ({ match, history }) => {
     has_local_transportation: event.has_local_transportation,
     has_accommodation: event.has_accommodation,
     has_food: event.has_food,
+    has_money_paid: event.has_money_paid,
   };
 
   const closingDateInstance = moment(new Date(unixTime(event.subscribe_closing_date)));
