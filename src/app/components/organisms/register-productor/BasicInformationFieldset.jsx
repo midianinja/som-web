@@ -49,26 +49,10 @@ const avatarInputGroupStyle = `
   }
 `;
 
-const Row = styled.div`
-  width: 100%;
-`;
-
-const inputGroup50CustomStyle = `
-  @media (min-width: 768px) {
-  display: inline-block;
-  width: calc(50% - 7px);
-
-  & + & {
-    margin-left: 14px;
-  }
-  }
-`;
-
 function BasicInformationFieldset(props) {
   const {
     handleNameChange,
     handleAboutChange,
-    handleCNPJChange,
     handleCPFChange,
     deleteTag,
     handleAvatarChange,
@@ -103,34 +87,18 @@ function BasicInformationFieldset(props) {
               onChange={handleNameChange}
             />
           </InputGroup>
-          <Row>
-            <InputGroup
-              label={values.cpf ? 'CPF' : ''}
-              error={productorStepErrors.cpf}
-              customStyle={inputGroup50CustomStyle}
-            >
-              <Input
-                id="cpf"
-                placeholder="CPF"
-                type="tel"
-                value={VMasker.toPattern(values.cpf, '999.999.999-99')}
-                onChange={handleCPFChange}
-              />
-            </InputGroup>
-            <InputGroup
-              label={values.cnpj ? 'CNPJ' : ''}
-              error={productorStepErrors.cnpj}
-              customStyle={inputGroup50CustomStyle}
-            >
-              <Input
-                id="cnpj"
-                placeholder="CNPJ"
-                value={VMasker.toPattern(values.cnpj, '9/9999-99')}
-                type="tel"
-                onChange={handleCNPJChange}
-              />
-            </InputGroup>
-          </Row>
+          <InputGroup
+            label={values.cpf ? 'CPF' : ''}
+            error={productorStepErrors.cpf}
+          >
+            <Input
+              id="cpf"
+              placeholder="CPF"
+              type="tel"
+              value={VMasker.toPattern(values.cpf, '999.999.999-99')}
+              onChange={handleCPFChange}
+            />
+          </InputGroup>
           <InputGroup
             label={values.musicalStyles.length ? 'Estilo de música' : ''}
             error={productorStepErrors.musicalStyles}
@@ -190,14 +158,9 @@ BasicInformationFieldset.propTypes = {
   handleMusicalStyleChange: PropTypes.func.isRequired,
   handleMusicalStyleSelect: PropTypes.func.isRequired,
   handleNameChange: PropTypes.func.isRequired,
-  handleCNPJChange: PropTypes.func.isRequired,
   handleCPFChange: PropTypes.func.isRequired,
   values: PropTypes.shape(valuesShape).isRequired,
   productorStepErrors: PropTypes.shape(errorsShape).isRequired,
-};
-
-BasicInformationFieldset.defaultProps = {
-  handleBlurChange: () => '',
 };
 
 export default BasicInformationFieldset;
