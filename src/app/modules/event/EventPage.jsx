@@ -117,7 +117,8 @@ const EventPage = ({ match, history }) => {
     city: event.location.city,
     state: event.location.state,
     district: event.location.district,
-    address: `${event.location.address}, nº ${event.location.number}`,
+    address: `${event.location.address} ${event.location.number}`,
+    complement: event.location.complement,
   };
 
   const eventConditions = {

@@ -26,13 +26,16 @@ const Adress = styled.span`
   line-height: 1.5em;
 `;
 
-const EventPlace = ({ address, district, city, state }) => (
+const EventPlace = ({
+  address, district, city, state,
+  complement,
+}) => (
   <Container>
     <IconWrapper>
-      <Icon src='/icons/place_mark.svg' />
+      <Icon src="/icons/place_mark.svg" />
     </IconWrapper>
     <Adress>
-      {`${address ? `${address} - ` : ''} ${district},
+      {`${address ? `${address} ${complement ? `(${complement})` : ''} / ` : ''} ${district},
       ${city}, ${state}`}
     </Adress>
   </Container>
