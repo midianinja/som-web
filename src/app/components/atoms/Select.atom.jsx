@@ -65,7 +65,7 @@ const Options = styled.ul`
 `;
 
 const Label = styled.label`
-  width: 100%;
+  width: 100%; 
   height: 38px;
   display: flex;
   align-items: center;

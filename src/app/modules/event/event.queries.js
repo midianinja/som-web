@@ -18,6 +18,7 @@ export const getOneEventQuery = gql`
         district
         city
         state
+        complement
       }
       subscribers {
         id

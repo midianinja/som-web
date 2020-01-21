@@ -117,13 +117,15 @@ const EventPage = ({ match, history }) => {
     city: event.location.city,
     state: event.location.state,
     district: event.location.district,
-    address: `${event.location.address}, nº ${event.location.number}`,
+    address: `${event.location.address} ${event.location.number}`,
+    complement: event.location.complement,
   };
 
   const eventConditions = {
     has_local_transportation: event.has_local_transportation,
     has_accommodation: event.has_accommodation,
     has_food: event.has_food,
+    has_money_paid: event.has_money_paid,
   };
 
   const closingDateInstance = moment(new Date(unixTime(event.subscribe_closing_date)));
