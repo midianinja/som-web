@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const subscribe = gql`
-  mutation subscribe($id: ID!, $artistID: ID!) {
+  mutation subscribe($id: String!, $artistID: String!) {
     subscribeEvent(id: $id, artistID: $artistID) {
       id
       name
@@ -9,6 +9,7 @@ export const subscribe = gql`
       event_date
       has_food
       has_money_paid
+      subscribe_closing_date
       has_accommodation
       has_city_transportation
       has_local_transportation
@@ -53,7 +54,7 @@ export const subscribe = gql`
 `;
 
 export const unsubscribe = gql`
-  mutation unsubscribe($id: ID!, $artistID: ID!) {
+  mutation unsubscribe($id: String!, $artistID: String!) {
     unsubscribeEvent(id: $id, artistID: $artistID) {
       id
       name
@@ -61,6 +62,7 @@ export const unsubscribe = gql`
       event_date
       has_food
       has_money_paid
+      subscribe_closing_date
       has_accommodation
       has_city_transportation
       has_local_transportation
