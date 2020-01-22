@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Avatar from '../../atoms/Avatar.atom';
-import { white, secondaryBlack, purple } from '../../../settings/colors';
+import { white, secondaryBlack } from '../../../settings/colors';
 
 const Wrapper = styled.section`
   padding-left: 15px;
@@ -108,78 +108,44 @@ const ArtistName = styled.h4`
   max-height: 25px;
 `;
 
-const ApprovedTag = styled.label`
-  display: ${(props) => {
-    const { show } = props;
-    return show ? 'block' : 'none';
-  }}
-  position: absolute;
-  top: 0px;
-  width: 100%;
-  background-color: ${purple};
-  color: ${white};
-  font-size: 0.625em;
-  padding: 7px 5px;
-  font-weight: 200;
-  letter-spacing: 2px;
-  z-index: 2;
-`;
+function renderEvents(events, eventClick) {
+  const sortedEvents = events.sort((a, b) => a.event_date > b.event_date);
 
-function renderArtists(artists, artistClick, approveds) {
-  const sortedArtists = artists.sort((artist) => {
-    const { id } = artist;
-    return approveds.findIndex(approved => approved.id === id) !== -1 ? -1 : 1;
-  });
-
-  return sortedArtists.map((artist) => {
-    const src = artist && artist.avatar_image ? artist.avatar_image.mimified : '';
+  return sortedEvents.map((event) => {
+    const src = event.cover;
     return (
-      <Card key={artist.id} id={artist.id} onClick={() => artistClick(artist.id)}>
-        <ApprovedTag
-          show={approveds.findIndex(({ id }) => artist.id === id) !== -1}
-        >
-          APROVADO
-        </ApprovedTag>
+      <Card key={event.id} id={event.id} onClick={() => eventClick(event.id)}>
         <Avatar src={src} customStyle={avatarCustomStyle} />
         <ArtistNameWrapper>
-          <ArtistName>{artist.name}</ArtistName>
+          <ArtistName>{event.name}</ArtistName>
         </ArtistNameWrapper>
       </Card>
     );
   });
 }
 
-function SubscribedArtists({ artists, artistClick, approveds }) {
+function ApprovedEvents({ events, eventClick }) {
   return (
     <Wrapper>
-      <Title>Artistas Inscritos</Title>
-      <ListWrapper>{renderArtists(artists, artistClick, approveds)}</ListWrapper>
+      <Title>Participou dos eventos</Title>
+      <ListWrapper>{renderEvents(events, eventClick)}</ListWrapper>
     </Wrapper>
   );
 }
-
-const imageShape = {
-  mimified: PropTypes.string,
-};
-
-const artistShape = {
-  avatar_image: PropTypes.shape(imageShape),
+const eventsShape = {
+  id: PropTypes.string,
+  cover: PropTypes.string,
   name: PropTypes.string,
+  event_date: PropTypes.string,
 };
 
-const approvedsShape = {
-  _id: PropTypes.string.isRequired,
+ApprovedEvents.propTypes = {
+  events: PropTypes.arrayOf(PropTypes.shape(eventsShape)),
+  eventClick: PropTypes.func.isRequired,
 };
 
-SubscribedArtists.propTypes = {
-  artists: PropTypes.arrayOf(PropTypes.shape(artistShape)),
-  artistClick: PropTypes.func.isRequired,
-  approveds: PropTypes.arrayOf(PropTypes.shape(approvedsShape)),
+ApprovedEvents.defaultProps = {
+  events: [],
 };
 
-SubscribedArtists.defaultProps = {
-  artists: [],
-  approveds: [],
-};
-
-export default SubscribedArtists;
+export default ApprovedEvents;

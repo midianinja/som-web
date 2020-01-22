@@ -11,9 +11,11 @@ import Header from '../../components/organisms/Header';
 import InstagramMedia from '../../components/molecules/InstagramMedias';
 import Store from '../../store/Store';
 import {
-  fetchArtistData, fetchArtistInstaImages, follow, unfollow,
+  fetchArtistData, fetchArtistInstaImages,
+  fetchRelatedArtsts, follow, unfollow,
 } from './ArtistController';
 import DialogModal from '../../components/modals/Dialog.modal';
+import ApprovedEvents from '../../components/templates/artist/ApprovedEvents';
 
 const ArtistWrapper = styled.div`
   width: 100%;
@@ -67,11 +69,11 @@ const ColumnWrapper = styled.div`
   }
 `;
 
-function ArtistPage({ match }) {
+function ArtistPage({ match, history }) {
   const { state, dispatch } = useContext(Store);
   const [artistLoading, setArtistLoading] = useState(false);
-  // const [instagramPhotoLoading, setInstagramPhotoLoading] = useState(false);
   const [artist, setArtist] = useState({});
+  const [relatedArtsts, setRelatedArtsts] = useState([]);
   const [instagramPhotos, setInstagramPhotos] = useState(false);
   const [follows, setFollows] = useState([]);
   const [alertModal, setAlertModal] = useState({
@@ -88,15 +90,20 @@ function ArtistPage({ match }) {
 
   const { id } = match.params;
   useEffect(() => {
-    const fetchArtist = async () => {
-      await fetchArtistData(id, setArtist, setArtistLoading, setSongs, setAlertModal);
-    };
-    fetchArtist();
-  }, []);
+    if (id !== artist.id) {
+      const fetchArtist = async () => {
+        await fetchArtistData(id, setArtist, setArtistLoading, setSongs, setAlertModal);
+      };
+      fetchArtist();
+    }
+  }, [match.params]);
 
   useEffect(() => {
     if (artist.instagram) {
       fetchArtistInstaImages(artist.instagram, setInstagramPhotos);
+    }
+    if (!relatedArtsts.length) {
+      fetchRelatedArtsts(artist, setRelatedArtsts);
     }
 
     if (artist.follows) {
@@ -149,6 +156,7 @@ function ArtistPage({ match }) {
       </CoverWrapper>
       <Content>
         <ArtistBasicInfo
+          isUserArtist={state.user && state.user.artist && state.user.artist.id === id}
           avatar={artist.avatar_image ? artist.avatar_image.mimified : null}
           about={artist.about}
           name={artist.name}
@@ -164,6 +172,7 @@ function ArtistPage({ match }) {
               : false
           }
           followToggle={handleFollow}
+          editAction={() => history.push('/register-artist')}
         />
         <ColumnWrapper>
           {
@@ -192,7 +201,11 @@ function ArtistPage({ match }) {
               null
             )
           } */}
-          <MoreArtist artists={[]} />
+          <ApprovedEvents
+            eventClick={evtId => history.push(`/event/${evtId}`)}
+            events={artist.approved_events}
+          />
+          <MoreArtist history={history} artists={relatedArtsts} />
         </ColumnWrapper>
       </Content>
     </ArtistWrapper>
@@ -203,11 +216,16 @@ const paramsShape = {
   id: PropTypes.string,
 };
 
+const historyShape = {
+  push: PropTypes.func.isRequired,
+};
+
 const matchShape = {
   params: PropTypes.shape(paramsShape).isRequired,
 };
 
 ArtistPage.propTypes = {
+  history: PropTypes.shape(historyShape).isRequired,
   match: PropTypes.shape(matchShape).isRequired,
 };
 

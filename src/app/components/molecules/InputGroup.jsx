@@ -12,11 +12,11 @@ const InptGroupContainer = styled.div`
 `;
 
 const Label = styled.label`
+  display: inline-block;
   font-size: 0.8em;
   color: ${white}
   margin-bottom: 10px;
   margin-left: 5px;
-  ${props => props.customStyle}
 `;
 
 const ErrorText = styled.span`
@@ -26,9 +26,7 @@ const ErrorText = styled.span`
   margin-bottom: 10px;
   margin-left: 5px;
   font-weight: 300;   
-  color: ${secondaryRed};
-  
-  ${props => props.customStyle}
+  color: ${secondaryRed};  
 `;
 
 const InfoText = styled.span`
@@ -42,7 +40,6 @@ const InfoText = styled.span`
 const InputWrapper = styled.div`
   width: 100%;
   margin-bottom: 10px;
-  ${props => props.customStyle}
 `;
 
 

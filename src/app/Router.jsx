@@ -5,6 +5,7 @@ import { createBrowserHistory } from 'history';
 import Welcome from './modules/welcome/Welcome';
 import HandleArtist from './modules/handle-artist';
 import EventPage from './modules/event/EventPage';
+import RegisterProdctor from './modules/register-productor/RegisterProductor';
 import Events from './modules/events/EventsPage';
 import ArtistPage from './modules/artist/ArtistPage';
 import ValidationEmailToken from './modules/validation-email-token/ValidationEmailToken';
@@ -19,6 +20,7 @@ const AppRouter = ({ children }) => (
     <Main>
       <Switch>
         <Route exact path="/" component={() => <Home />} />
+        <Route path="/reset-password" component={() => <Home />} />
         <Route path="/welcome" component={() => <Welcome />} />
         <Route path="/events" component={() => <Events />} />
         <Route path="/event/:id" component={() => <EventPage />} />
@@ -27,6 +29,7 @@ const AppRouter = ({ children }) => (
         <Private>
           <Switch>
             <Route path="/register-artist" component={() => <HandleArtist />} />
+            <Route path="/register-productor" component={() => <RegisterProdctor />} />
           </Switch>
         </Private>
       </Switch>

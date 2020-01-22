@@ -1,3 +1,4 @@
+import gql from 'graphql-tag';
 import apollo from '../../apollo';
 import queries from './artists.query';
 import mutations from './artists.mutations';
@@ -9,6 +10,40 @@ const fetchSongs = artist => apollo.query({
   query: allSongsQuery,
   variables: { song: { artist } },
 });
+
+export const fetchRelatedArtsts = async (artist, setArtsts) => {
+  if (!artist.id) return;
+  const artsts = await apollo.query({
+    query: gql`
+    query searchArtists(
+      $artist: JSON
+      $paginator: PaginatorInput
+      ) {
+        searchArtists(
+          artist: $artist
+          paginator: $paginator
+        ) {
+          id
+          name
+          avatar_image {
+            mimified
+            thumbnail
+          }
+        }
+      }
+    `,
+    variables: {
+      artist: {
+        musical_styles: { $in: artist.musical_styles.map(m => m.id) },
+        _id: { $ne: [artist.id] },
+      },
+      paginator: {
+        limit: 10,
+      },
+    },
+  });
+  setArtsts(artsts.data.searchArtists);
+};
 
 export const fetchArtistData = async (
   id, setArtist, setArtistLoading, setSongs, setAlertModal,

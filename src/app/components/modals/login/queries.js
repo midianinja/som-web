@@ -35,6 +35,37 @@ export const oneUserQuery = gql`
         instagram
         youtube
       }
+      productor {
+        id
+        name
+        photo
+        musical_styles {
+          id
+          name
+        }
+        location {
+          id
+          state
+          city
+          district
+          country
+          zipcode
+          address
+        }
+        description
+        status
+        cpf
+        cnpj
+        main_phone
+        secondary_phone
+        whatsapp
+        telegram
+        contact_email
+        facebook
+        twitter
+        instagram
+        youtube
+      }
     }
   }
 `;

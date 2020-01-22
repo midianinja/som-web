@@ -26,9 +26,14 @@ const Title = styled.h2`
 `;
 
 const inputGroupStyle = `
-@media (min-width: 1024px) {
-  width: 90%;
-}
+  @media (min-width: 768px) {
+    display: inline-block;
+    width: calc(50% - 7px);
+    
+    & + & {
+      margin-left: 14px;
+    }
+  }
 `;
 
 function SocialsFielset(props) {
@@ -37,11 +42,8 @@ function SocialsFielset(props) {
     handleTwitterChange,
     handleInstagramChange,
     handleYoutubeChange,
-    handleSpotifyChange,
     values,
-    setStepErrors,
     stepErrors,
-    handleBlurChange,
   } = props;
 
   return (
@@ -60,7 +62,6 @@ function SocialsFielset(props) {
             value={values.facebook}
             type="url"
             onChange={handleFacebookChange}
-            onBlur={e => handleBlurChange(e, 'facebookUrl', setStepErrors, stepErrors)}
           />
         </InputGroup>
         <InputGroup
@@ -75,7 +76,6 @@ function SocialsFielset(props) {
             value={values.instagram}
             type="url"
             onChange={handleInstagramChange}
-            onBlur={e => handleBlurChange(e, 'instagramUrl', setStepErrors, stepErrors)}
           />
         </InputGroup>
       </InputsWrapper>
@@ -92,7 +92,6 @@ function SocialsFielset(props) {
             value={values.twitter}
             type="url"
             onChange={handleTwitterChange}
-            onBlur={e => handleBlurChange(e, 'twitterUrl', setStepErrors, stepErrors)}
           />
         </InputGroup>
         <InputGroup
@@ -107,22 +106,6 @@ function SocialsFielset(props) {
             value={values.youtube}
             type="url"
             onChange={handleYoutubeChange}
-            onBlur={e => handleBlurChange(e, 'youtubeUrl', setStepErrors, stepErrors)}
-          />
-        </InputGroup>
-        <InputGroup
-          customStyle={inputGroupStyle}
-          label={values.spotify ? 'Spotify link' : ''}
-          info="O link deve conter https://"
-          error={stepErrors.spotify}
-        >
-          <Input
-            id="spotify"
-            placeholder="Spotify"
-            value={values.spotify}
-            type="url"
-            onChange={handleSpotifyChange}
-            onBlur={e => handleBlurChange(e, 'spotifyUrl', setStepErrors, stepErrors)}
           />
         </InputGroup>
       </InputsWrapper>
@@ -142,9 +125,6 @@ SocialsFielset.propTypes = {
   handleInstagramChange: PropTypes.func.isRequired,
   handleTwitterChange: PropTypes.func.isRequired,
   handleYoutubeChange: PropTypes.func.isRequired,
-  handleBlurChange: PropTypes.func.isRequired,
-  handleSpotifyChange: PropTypes.func.isRequired,
-  setStepErrors: PropTypes.func.isRequired,
   stepErrors: PropTypes.shape(valuesShape).isRequired,
   values: PropTypes.shape(valuesShape).isRequired,
 };

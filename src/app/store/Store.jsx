@@ -15,6 +15,7 @@ const initialState = {
     login: false,
     register: false,
     navigation: false,
+    forgetPassword: false,
   },
 };
 
@@ -32,6 +33,8 @@ const reducer = (state, action) => {
       return { ...state, modals: { ...initialState.modals, login: true } };
     case 'SHOW_REGISTER_MODAL':
       return { ...state, modals: { ...initialState.modals, register: true } };
+    case 'SHOW_FORGET_PASSWORD_MODAL':
+      return { ...state, modals: { ...initialState.modals, forgetPassword: true } };
     case 'SET_AUTH':
       return { ...state, auth: { ...(state.auth || {}), ...action.auth } };
     case 'SET_USER':
