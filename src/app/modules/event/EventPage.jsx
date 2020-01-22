@@ -117,7 +117,8 @@ const EventPage = ({ match, history }) => {
     city: event.location.city,
     state: event.location.state,
     district: event.location.district,
-    address: `${event.location.address}, nº ${event.location.number}`,
+    address: `${event.location.address} ${event.location.number}`,
+    complement: event.location.complement,
   };
 
   const eventConditions = {
@@ -126,6 +127,8 @@ const EventPage = ({ match, history }) => {
     has_food: event.has_food,
     has_money_paid: event.has_money_paid,
   };
+
+  console.log('event subscribe_closing_date', event.subscribe_closing_date);
 
   const closingDateInstance = moment(new Date(unixTime(event.subscribe_closing_date)));
   const todayInstance = moment();
