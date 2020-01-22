@@ -91,7 +91,7 @@ export const subscribeAction = async (
       },
       disagreeAction: () => {
         allowBodyScroll();
-        setDialog(null);
+        setDialog({});
       },
     });
     return;
