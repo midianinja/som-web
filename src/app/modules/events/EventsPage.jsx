@@ -8,6 +8,7 @@ import EventInfo from '../../components/molecules/EventInfo';
 import EventConditions from '../../components/molecules/EventConditions';
 import ProductorCard from '../../components/molecules/ProductorCard';
 import Header from '../../components/organisms/Header';
+import EventCard from './organisms/eventCard.organism';
 import SubscribedArtists from '../../components/templates/event/SubscribedArtists';
 import Dialog from '../../components/modals/Dialog.modal';
 import Store from '../../store/Store';
@@ -21,7 +22,21 @@ const Container = styled.div`
   background-color: ${black};
   width: 100%;
   text-align: center;
+  margin-top: 50px;
   padding: 10px 0;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+`;
+const EventsContainer = styled.section`
+  background-color: ${black};
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+  padding: 10px 0;
+  max-width: 768px;
 `;
 const Title = styled.h2`
   color: #FFF;
@@ -53,24 +68,19 @@ const EventPage = ({ match, history }) => {
     );
   }, []);
   return (
-    <Store.Consumer>
-      {({ state, dispatch }) => (
-        <Container>
-          <Header
-            logged={!!state.user}
-          />
-          {
-            events.map(evt => (
-              <EventContainer onClick={() => (history.push(`/event/${evt.id}`))}>
-                <EventTitle>
-                  {evt.name}
-                </EventTitle>
-              </EventContainer>
-            ))
-          }
-        </Container>
-      )}
-    </Store.Consumer>
+    <Container>
+      <Header
+        logged={!!state.user}
+      />
+      <EventsContainer>
+        
+        {
+          events.map(evt => (
+            <EventCard event={evt} />
+          ))
+        }
+      </EventsContainer>
+    </Container>
   );
 };
 

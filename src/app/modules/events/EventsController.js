@@ -47,11 +47,9 @@ export const fetchEventsData = async (setEvent, loading, setLoading, setDialog, 
         advancedQuery: {},
       },
     });
-    console.log('eventData:', eventData);
     if (!eventData.data.searchEvents.length) {
-      console.log('.data:');
       setDialog({
-        title: 'Evento não encontrado',
+        title: 'Nenhum evento encontrado',
         icon: '/icons/guita-error.svg',
         description: 'Logo teremos mais eventos, fique ligado para se inscrever.',
         disagreeText: 'Ir para home',
@@ -59,7 +57,13 @@ export const fetchEventsData = async (setEvent, loading, setLoading, setDialog, 
       });
       return;
     }
-  
+
+    setEvent(eventData.data.searchEvents);
+    setLoading({
+      ...loading,
+      event: loadingStatus.LOADDED,
+    });
+
     console.log('eventData.data.allEvents:', eventData.data.searchEvents);
     setEvent(eventData.data.searchEvents);
     setLoading({ ...loading, event: loadingStatus.LOADDED });
