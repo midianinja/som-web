@@ -173,7 +173,7 @@ const Home = ({ history }) => {
       <Apresentation
         onClick={() => {
           if (state.auth) {
-            history.push('/event/5d3a31e9dd3e02dd26be4fd2');
+            history.push('/event/5e20ab89d06d378c52c00314');
           } else {
             showRegister(dispatch);
           }

@@ -104,6 +104,7 @@ const EventInfo = ({
         city={place.city}
         state={place.state}
         district={place.district}
+        complement={place.complement}
       />
       <SubSpace />
       <EventBands subscribed={subscribers} />
@@ -155,6 +156,7 @@ const placeShape = {
   address: PropTypes.string,
   city: PropTypes.string,
   state: PropTypes.string,
+  complement: PropTypes.string,
 };
 
 EventInfo.propTypes = {

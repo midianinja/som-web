@@ -16,9 +16,10 @@ const Container = styled.div`
 
 const EventConditions = ({ conditions }) => (
   <Container>
-    <EventCondition title='Transporte' condition='directions-car' checked={conditions.has_local_transportation} />
-    <EventCondition title='Acomodações' condition='hotel' checked={conditions.has_accommodation} />
-    <EventCondition title='Alimentacção' condition='local-dining' checked={conditions.has_food} />
+    <EventCondition title="Transporte" condition="directions-car" checked={conditions.has_local_transportation} />
+    <EventCondition title="Acomodações" condition="hotel" checked={conditions.has_accommodation} />
+    <EventCondition title="Alimentacção" condition="local-dining" checked={conditions.has_food} />
+    <EventCondition title="% da Bilheteria" condition="money" checked={conditions.has_money_paid} />
   </Container>
 );
 

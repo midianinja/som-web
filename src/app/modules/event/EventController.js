@@ -98,23 +98,26 @@ export const subscribeAction = async (
   }
 
 
+  let resp;
   try {
-    const resp = await subscribeEvent(event.id, user.artist.id);
-
-    setDialog({
-      title: 'Pronto!',
-      icon: '/icons/yeah.svg',
-      description: `Você está inscrito no festival ${event.name}. Fique ligado no SOM para receber novas informações.`,
-      disagreeText: 'Ver mais eventos',
-      disagreeAction: () => {
-        allowBodyScroll();
-        setDialog({});
-      },
-    });
-    setEvent(resp.data.subscribeEvent);
+    resp = await subscribeEvent(event.id, user.artist.id);
   } catch (err) {
+    console.log([err]);
     throw err;
   }
+
+  setDialog({
+    title: 'Pronto!',
+    icon: '/icons/yeah.svg',
+    description: `Você está inscrito no festival ${event.name}. Fique ligado no SOM para receber novas informações.`,
+    disagreeText: 'Ver mais eventos',
+    disagreeAction: () => {
+      allowBodyScroll();
+      setDialog({});
+    },
+  });
+
+  setEvent(resp.data.subscribeEvent);
 };
 
 export const unsubscribeAction = async (user, event, setEvent) => {
