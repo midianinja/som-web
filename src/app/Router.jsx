@@ -5,6 +5,7 @@ import { createBrowserHistory } from 'history';
 import Welcome from './modules/welcome/Welcome';
 import HandleArtist from './modules/handle-artist';
 import EventPage from './modules/event/EventPage';
+import RegisterEvent from './modules/register-event/RegisterEvent';
 import RegisterProdctor from './modules/register-productor/RegisterProductor';
 import Events from './modules/events/EventsPage';
 import ArtistPage from './modules/artist/ArtistPage';
@@ -30,6 +31,7 @@ const AppRouter = ({ children }) => (
           <Switch>
             <Route path="/register-artist" component={() => <HandleArtist />} />
             <Route path="/register-productor" component={() => <RegisterProdctor />} />
+            <Route path="/register-event" component={() => <RegisterEvent />} />
           </Switch>
         </Private>
       </Switch>

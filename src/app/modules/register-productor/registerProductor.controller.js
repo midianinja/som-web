@@ -113,6 +113,7 @@ export const mapMusicalStyles = (styles) => {
     'magenta', 'yellow',
   ];
 
+  if (!styles) return [];
   return styles.map(({ id, name }) => ({
     id,
     text: name,

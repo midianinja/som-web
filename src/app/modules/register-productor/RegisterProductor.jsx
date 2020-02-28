@@ -179,13 +179,13 @@ const RegisterProductor = () => {
   const [youtube, setYoutube] = useState('https://www.youtube.com/');
 
   const mapContextToState = (productor) => {
-    setId(productor.id);
-    setName(productor.name);
-    setAbout(productor.description);
-    setAvatar({ url: productor.photo });
-    setCNPJ(productor.cnpj);
-    setCPF(productor.cpf);
-    setMusicalStyles(mapMusicalStyles(productor.musical_styles));
+    setId(productor.id || '');
+    setName(productor.name || '');
+    setAbout(productor.description || '');
+    setAvatar({ url: productor.photo || '' });
+    setCNPJ(productor.cnpj || '');
+    setCPF(productor.cpf || '');
+    setMusicalStyles(mapMusicalStyles(productor.musical_styles || []));
     setMainPhone(productor.main_phone || '');
     setSecondaryPhone(productor.secondary_phone || '');
     setWhatsapp(productor.whatsapp || '');
@@ -236,6 +236,8 @@ const RegisterProductor = () => {
       </LoadingWrapper>
     );
   }
+
+  console.log(state.user.productor);
 
   return (
     <Form onSubmit={e => e.preventDefault()}>

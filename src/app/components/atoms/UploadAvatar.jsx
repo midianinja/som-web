@@ -12,6 +12,8 @@ const PreLoaderImage = styled.img`
   transition-property: opacity;
   transition-duration: 1s;
   transition-delay: 0.5s;
+
+  ${props => props.customStyle}
 `;
 
 const Uploader = styled.label`
@@ -23,6 +25,8 @@ const Uploader = styled.label`
   align-items: center;
   border-radius: 50%;
   align-self: center;
+
+  ${props => props.customStyle}
 `;
 
 const Icon = styled.img`
@@ -57,6 +61,7 @@ function load(src, callback) {
  */
 function UploadAvatar({
   src, alt, title, handleChange,
+  customStyle, id,
 }) {
   const [loaddedSrc, setLoaddedSrc] = useState(null);
 
@@ -65,29 +70,44 @@ function UploadAvatar({
   });
 
   const emptyImage = <Icon src="/icons/add_a_photo.png" />;
-  const image = <PreLoaderImage src={loaddedSrc} alt={alt} title={title} />;
+  const image = (
+    <PreLoaderImage
+      src={loaddedSrc}
+      alt={alt}
+      title={title}
+      customStyle={customStyle}
+    />
+  );
 
   return (
     <Fragment>
-      <Uploader onChange={handleChange} htmlFor="uploader-avatar-artist-form-input">
+      <Uploader
+        customStyle={customStyle}
+        onChange={handleChange}
+        htmlFor={id}
+      >
         {src.url ? image : emptyImage}
       </Uploader>
-      <Input onChange={handleChange} type="file" id="uploader-avatar-artist-form-input" />
+      <Input id={id} onChange={handleChange} type="file" />
     </Fragment>
   );
 }
 
 UploadAvatar.propTypes = {
+  id: PropTypes.string,
   alt: PropTypes.string,
   title: PropTypes.string,
   src: PropTypes.string,
+  customStyle: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
 };
 
 UploadAvatar.defaultProps = {
+  id: 'uploader-avatar-artist-form-input',
   alt: '',
   title: '',
   src: '',
+  customStyle: '',
 };
 
 export default UploadAvatar;

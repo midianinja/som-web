@@ -23,7 +23,7 @@ const SelectWrapper = styled.div`
     if (focus) {
       return `
         outline: none;
-        border-radius: 19px;
+        border-radius: 19px 19px 0px 0px;
       `;
     }
     return '';
@@ -51,7 +51,13 @@ const Option = styled.li`
 `;
 
 const Options = styled.ul`
+  position: absolute;
+  background-color: #1a1a1a;
+  top: 37px;
+  left: 0;
+  width: 100%;
   overflow: hidden;
+  border-radius: 0px 0px 19px 19px;
   max-height: ${(props) => {
     const { focus } = props;
     return !focus ? '0px' : '192px';
@@ -65,6 +71,7 @@ const Options = styled.ul`
     const { focus } = props;
     return focus ? 'padding: 15px;' : '';
   }};
+  z-index: 2;
 `;
 
 const Label = styled.label`

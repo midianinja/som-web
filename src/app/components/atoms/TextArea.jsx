@@ -9,7 +9,7 @@ const TextArea = styled.textarea`
   border-radius: 19px;
   padding: 15px;
   resize: none;
-  font-size: 1em;
+  font-size: 0.875em;
   font-family: inherit;
   font-weight: 200;
 
@@ -17,7 +17,7 @@ const TextArea = styled.textarea`
     outiline: none;
     box-shadow: none;
     padding: 15px;
-    font-size: 1em;
+    font-size: 1rem;
   }
 `;
 
