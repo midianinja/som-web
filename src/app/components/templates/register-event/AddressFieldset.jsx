@@ -25,7 +25,7 @@ const Wrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 25px;
-    align-items: top;
+    align-items: end;
   }
 `;
 

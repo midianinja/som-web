@@ -151,12 +151,13 @@ export const handleCreateEvent = async (
     throw err;
   }
 
-  const newEvents = [...user.events];
-  newEvents.push(promise.data.createEvent);
-  dispatch({
-    action: 'SET_USER',
-    user: { ...user, events: newEvents },
-  });
+  console.log(promise);
+  // const newEvents = [...user.events];
+  // newEvents.push(promise.data.createEvent);
+  // dispatch({
+  //   action: 'SET_USER',
+  //   user: { ...user, events: newEvents },
+  // });
 
   setLoading(false);
 };
