@@ -13,6 +13,7 @@ import Store from '../../store/Store';
 import {
   fetchArtistData, fetchArtistInstaImages,
   fetchRelatedArtsts, follow, unfollow,
+  editSongAction, deleteSongAction,
 } from './ArtistController';
 import DialogModal from '../../components/modals/Dialog.modal';
 import ApprovedEvents from '../../components/templates/artist/ApprovedEvents';
@@ -87,8 +88,9 @@ function ArtistPage({ match, history }) {
     isOpen: false,
   });
   const [songs, setSongs] = useState([]);
-
   const { id } = match.params;
+
+  const isUserArtist = (state.user && state.user.artist && state.user.artist.id === id);
   useEffect(() => {
     if (id !== artist.id) {
       const fetchArtist = async () => {
@@ -156,7 +158,7 @@ function ArtistPage({ match, history }) {
       </CoverWrapper>
       <Content>
         <ArtistBasicInfo
-          isUserArtist={state.user && state.user.artist && state.user.artist.id === id}
+          isUserArtist={isUserArtist}
           avatar={artist.avatar_image ? artist.avatar_image.mimified : null}
           about={artist.about}
           name={artist.name}
@@ -176,7 +178,22 @@ function ArtistPage({ match, history }) {
         />
         <ColumnWrapper>
           {
-            songs.length ? <AudioPlayer tracks={songs} /> : null
+            songs.length ? (
+              <AudioPlayer
+                editAction={data => editSongAction({
+                  ...data,
+                  artist: state.user.artist,
+                  setSongs,
+                })}
+                deleteAction={data => deleteSongAction({
+                  ...data,
+                  artist: state.user.artist,
+                  setSongs,
+                })}
+                isUserArtist={isUserArtist}
+                tracks={songs}
+              />
+            ) : null
           }
           <InstagramMedia
             images={instagramPhotos}

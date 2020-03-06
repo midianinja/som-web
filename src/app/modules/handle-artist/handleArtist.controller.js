@@ -298,7 +298,6 @@ export const nextAction = async ({
 
   try {
     let artistToApi = mapArtistToApi(state);
-    console.log('state:', state);
     let preRegister = state.artist.value;
     if (!preRegister) preRegister = await createArtist(artistToApi, store.state.user.id);
 
