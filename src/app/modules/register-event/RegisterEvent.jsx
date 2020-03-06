@@ -247,7 +247,7 @@ const RegisterEvent = ({ history }) => {
       <StepEventFormFooter
         saveAction={() => handleCreateEvent(
           values, state.user.id, setLoading, setErrors,
-          setLocationId, dispatch, state.user,
+          setLocationId, dispatch, state.user, history,
         )}
         actionLabel="Criar evento"
         loading={loading}

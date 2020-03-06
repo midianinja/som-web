@@ -79,7 +79,7 @@ const mapEventToApi = (event, productor, location) => ({
 
 export const handleCreateEvent = async (
   values, userId, setLoading, setErrors,
-  setLocationId, dispatch, user,
+  setLocationId, dispatch, user, history,
 ) => {
   setLoading(true);
   const validate = validation(values);
@@ -102,9 +102,13 @@ export const handleCreateEvent = async (
         id: userId,
       });
     } catch (err) {
-      // try
+      console.log(err);
+      setLoading(false);
+      throw err;
     }
 
+    setLoading(false);
+    console.log(newAvatarImage.data.data.urls);
     event.avatar = newAvatarImage.data.data.urls.mimified;
   }
 
@@ -116,9 +120,12 @@ export const handleCreateEvent = async (
         id: userId,
       });
     } catch (err) {
-      // try
+      console.log(err);
+      setLoading(false);
+      throw err;
     }
 
+    console.log(newCoverImage.data.data.urls);
     event.cover = newCoverImage.data.data.urls.mimified;
   }
 
@@ -138,6 +145,8 @@ export const handleCreateEvent = async (
     locationResult = await createLocation(location);
   } catch (err) {
     // to be try
+    setLoading(false);
+    throw err;
   }
 
   let promise;
@@ -159,5 +168,6 @@ export const handleCreateEvent = async (
   //   user: { ...user, events: newEvents },
   // });
 
+  history.push(`/event/${promise.data.createevent.id}`);
   setLoading(false);
 };
