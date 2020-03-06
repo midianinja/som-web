@@ -57,8 +57,8 @@ export const fetchCountries = async ({
 
 const mapEventToApi = (event, productor, location) => ({
   name: event.title,
-  cover: event.cover.url,
-  photo: event.avatar.url,
+  cover: event.cover,
+  photo: event.avatar,
   oportunities: parseInt(event.openingsNumber, 10),
   event_date: new Date(moment(event.eventDate, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss')),
   subscribe_closing_date: new Date(moment(event.closingSubscribeDate, 'DD/MM/YYYY')
@@ -102,14 +102,11 @@ export const handleCreateEvent = async (
         id: userId,
       });
     } catch (err) {
-      console.log(err);
       setLoading(false);
       throw err;
     }
 
-    setLoading(false);
-    console.log(newAvatarImage.data.data.urls);
-    event.avatar = newAvatarImage.data.data.urls.mimified;
+    event.avatar = newAvatarImage.data.data.urls;
   }
 
   if (event.cover && event.cover.file) {
@@ -120,13 +117,11 @@ export const handleCreateEvent = async (
         id: userId,
       });
     } catch (err) {
-      console.log(err);
       setLoading(false);
       throw err;
     }
 
-    console.log(newCoverImage.data.data.urls);
-    event.cover = newCoverImage.data.data.urls.mimified;
+    event.cover = newCoverImage.data.data.urls;
   }
 
   let locationResult;
@@ -168,6 +163,6 @@ export const handleCreateEvent = async (
   //   user: { ...user, events: newEvents },
   // });
 
-  history.push(`/event/${promise.data.createevent.id}`);
+  history.push(`/event/${promise.data.createEvent.id}`);
   setLoading(false);
 };
