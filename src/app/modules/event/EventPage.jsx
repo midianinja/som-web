@@ -157,8 +157,8 @@ const EventPage = ({ match, history }) => {
             logged={!!state.user}
           />
           <CoverWrapper>
-            <Cover cover={event.cover}>
-              <EventImage src={event.cover} alt="Cover do Evento" />
+            <Cover cover={event.cover.mimified}>
+              <EventImage src={event.cover.mimified} alt="Cover do Evento" />
               <HeaderWrapper />
             </Cover>
           </CoverWrapper>
