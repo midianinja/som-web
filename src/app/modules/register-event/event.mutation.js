@@ -6,8 +6,16 @@ export const createEventMutation = gql`
       id
       name
       about
-      cover
-      photo
+      cover {
+        original
+        thumbnail
+        mimified
+      }
+      photo {
+        original
+        thumbnail
+        mimified
+      }
       site
       oportunities
       event_date

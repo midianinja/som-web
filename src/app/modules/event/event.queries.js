@@ -32,8 +32,14 @@ export const getOneEventQuery = gql`
         id
       }
       subscribe_closing_date
-      cover
-      photo
+      cover {
+        thumbnail
+        mimified
+      }
+      photo {
+        thumbnail
+        mimified
+      }
       productor {
         id
         photo
