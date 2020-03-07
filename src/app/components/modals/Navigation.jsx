@@ -10,11 +10,11 @@ import { allowBodyScroll } from '../../utilities/scroll';
 
 const getLinks = artist => [
   {
-    href: '/event/5e20ab89d06d378c52c00314',
+    href: '/events',
     label: 'Início',
   },
   {
-    href: artist ? `/artist/${artist.id}` : '/register-artist',
+    href: artist && artist.id ? `/artist/${artist.id}` : '/register-artist',
     label: 'Meu perfil',
   },
   // {

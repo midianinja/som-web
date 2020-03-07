@@ -16,51 +16,15 @@ const Header = styled.div`
   max-height: 400px;
 `;
 
-// const IndexContainer = styled.div`
-//   display: flex;
-//   width: 100%;
-//   justify-content: center;
-//   align-items: center;
-//   color: ${white30};
-//   margin-top: 45px;
-// `;
-
-// const BigBall = styled.div`
-//   width: 12px;
-//   height: 12px;
-//   background-color: ${white};
-//   margin: 0 5px;
-//   border-radius: 50%;
-//   ${props => props.customStyle}
-// `;
-
-// const MidBall = styled.div`
-//   width: 6px;
-//   height: 6px;
-//   background-color: ${white};
-//   margin: 0 5px;
-//   border-radius: 50%;
-//   ${props => props.customStyle}
-// `;
-
-// const SmallBall = styled.div`
-//   width: 4px;
-//   height: 4px;
-//   background-color: ${white};
-//   margin: 0 5px;
-//   border-radius: 50%;
-//   ${props => props.customStyle}
-// `;
-
 const Title = styled.h1`
   font-size: 1.25em;
   line-height: 1.1818181818em;
-  margin-top: 52px;
+  margin-top: 40px;
   font-weight: 400;
   letter-spacing: 0.16px;
 
   @media (min-width: 768px) {
-    margin-top: 72px;
+    margin-top: 35px;
   }
 
   ${props => props.customStyle}
@@ -98,14 +62,8 @@ const Text = styled.h3`
   line-height: 1.5384615385em;
   font-weight: 300;
   transition-duration: 0.6s;
-  will-change: height;
+  will-change: transform;
 `;
-
-// const renderBall = ({ items, index, small }) => items.map((e, i) => {
-//   if (index === i) return <BigBall small={small} />;
-//   if (index + 1 === i || index - 1 === i) return <MidBall small={small} />;
-//   return <SmallBall small={small} />;
-// });
 
 const StepFormHeader = (props) => {
   const [small, setSmall] = useState(0);
