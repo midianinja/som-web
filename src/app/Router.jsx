@@ -11,6 +11,7 @@ import Events from './modules/events/EventsPage';
 import ArtistPage from './modules/artist/ArtistPage';
 import ValidationEmailToken from './modules/validation-email-token/ValidationEmailToken';
 import Home from './modules/home/Home';
+import Terms from './modules/terms/Terms';
 import Private from './Private';
 import Main from './main/Main';
 
@@ -21,6 +22,7 @@ const AppRouter = ({ children }) => (
     <Main>
       <Switch>
         <Route exact path="/" component={() => <Home />} />
+        <Route path="/terms" component={() => <Terms />} />
         <Route path="/reset-password" component={() => <Home />} />
         <Route path="/welcome" component={() => <Welcome />} />
         <Route path="/events" component={() => <Events />} />
