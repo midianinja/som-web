@@ -43,6 +43,7 @@ export const fetchEventData = async (id, setEvent, loading, setLoading, setDialo
       query: getOneEventQuery,
       variables: { id },
     });
+    console.log('eventData:', eventData);
   } catch (err) {
     // tratar esse erro
     setLoading({ ...loading, event: loadingStatus.ERROR });
