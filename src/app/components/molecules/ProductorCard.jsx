@@ -78,15 +78,22 @@ const ProductorCard = ({ productor }) => (
     </ImageWrapper>
     <ProfileWrapper>
       <ProductorName>{productor.name}</ProductorName>
-      <ProductorCity>{`${productor.location.city}, ${productor.location.state}`}</ProductorCity>
+      {
+        productor.location
+          ? <ProductorCity>{`${productor.location.city}, ${productor.location.state}`}</ProductorCity>
+          : null
+      }
       <ProductorText>{productor.description}</ProductorText>
-
-      {/* <FollowersAndFollowing nFollowers={productor.followers.length} nFollowing={productor.following.length} /> */}
-      {/* <ButtonsWrapper> */}
-      {/* <PrimaryButton color='green'>seguir</PrimaryButton> */}
-      {/* <LinkButton customStyle="margin-left: 10px" color="black">ver mais eventos</LinkButton> */}
-      {/* </ButtonsWrapper> */}
-  
+      {/*
+        <FollowersAndFollowing
+          nFollowers={productor.followers.length}
+          nFollowing={productor.following.length}
+        />
+        <ButtonsWrapper>
+        <PrimaryButton color='green'>seguir</PrimaryButton>
+        <LinkButton customStyle="margin-left: 10px" color="black">ver mais eventos</LinkButton>
+        </ButtonsWrapper>
+      */}
     </ProfileWrapper>
   </Container>
 );
