@@ -41,8 +41,12 @@ const Wrapper = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 20px;
+  height: 15px;
   cursor: pointer;
+
+  @media (min-width: 1024px) {
+    height: 20px;
+  }
 `;
 
 const BurgerButton = styled.div`

@@ -165,7 +165,7 @@ function Navigation({ history }) {
             allowBodyScroll();
             dispatch({ type: 'CLOSE_MODAL' });
             window.open(
-              'https://s3-sa-east-1.amazonaws.com/festivalninja.org/img/termos-de-use-e-politicas-de-privacidade-som.pdf',
+              '/terms',
               '_blank',
             );
           }}
