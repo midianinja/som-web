@@ -54,11 +54,11 @@ function getHoverColor(key) {
 }
 
 const PrimaryButton = styled.button`
-  height: ${(props) => getSize(props.size)};
+  height: ${props => getSize(props.size)};
   padding-left: 30px;
   padding-right: 30px;
-  border-radius: ${(props) => getSize(props.size)};
-  background-color: ${(props) => getColor(props.color)};
+  border-radius: ${props => getSize(props.size)};
+  background-color: ${props => getColor(props.color)};
   color: ${(props) => {
     const { color } = props;
     return color === 'white' ? purple : white;
@@ -68,7 +68,7 @@ const PrimaryButton = styled.button`
   font-size: 0.8571428571em;
 
   :active {
-    background-color: ${(props) => getHoverColor(props.color)};
+    background-color: ${props => getHoverColor(props.color)};
   }
 
   :focus {
@@ -91,7 +91,7 @@ const PrimaryButton = styled.button`
     cursor: not-allowed;
   }
 
-  ${(props) => props.customStyle}
+  ${props => props.customStyle}
 `;
 
 PrimaryButton.propTypes = {
