@@ -23,7 +23,6 @@ const Container = styled.div`
   text-align: center;
   margin-top: 50px;
   padding: 10px;
-  min-height: 100vh;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -268,7 +267,12 @@ const EventPage = ({ match, history }) => {
       <EventsContainer>
         {
           events.map(evt => (
-            <EventCard customStyle={'margin-bottom: 90px;'} user={state.user} event={evt} />
+            <EventCard
+              customStyle="margin-bottom: 90px;"
+              user={state.user}
+              event={evt}
+              onClick={() => history.push(`/event/${evt.id}`)}
+            />
           ))
         }
       </EventsContainer>
