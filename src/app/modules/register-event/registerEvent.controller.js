@@ -144,18 +144,15 @@ export const handleCreateEvent = async (
     throw err;
   }
 
-  let promise;
-
   setLocationId(locationResult.data.createLocation.id);
   const data = mapEventToApi(event, user.productor.id, locationResult.data.createLocation.id);
   try {
-    promise = await createEvent(data);
+    await createEvent(data);
   } catch (err) {
     setLoading(false);
     throw err;
   }
 
-  console.log(promise);
   // const newEvents = [...user.events];
   // newEvents.push(promise.data.createEvent);
   // dispatch({
@@ -163,6 +160,6 @@ export const handleCreateEvent = async (
   //   user: { ...user, events: newEvents },
   // });
 
-  history.push(`/event/${promise.data.createEvent.id}`);
+  history.push('/my-events');
   setLoading(false);
 };

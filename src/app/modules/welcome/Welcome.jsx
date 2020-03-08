@@ -68,7 +68,7 @@ function Welcome(props) {
         <PrimaryButton
           onClick={() => {
             allowBodyScroll();
-            history.push('/event/5e20ab89d06d378c52c00314');
+            history.push('/events');
           }}
           color="orange"
         >
