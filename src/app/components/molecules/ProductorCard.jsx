@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { black, white, white30 } from '../../settings/colors';
-import FollowersAndFollowing from '../atoms/FollowersAndFollowing';
-import PrimaryButton from '../atoms/PrimaryButton';
 import Avatar from '../atoms/Avatar.atom';
-import LinkButton from '../atoms/LinkButton';
 
 const Container = styled.div`
   display: flex;
@@ -56,13 +53,6 @@ const ProductorText = styled.p`
   font-size: 0.8571428571em;
   font-weight: 300;
   line-height: 1.5em;
-`;
-
-const ButtonsWrapper = styled.div`
-  width: 100%;
-  heigth: 30px;
-  display: flex;
-  margin-top: 10px;
 `;
 
 const avatarStyle = `
