@@ -1,11 +1,13 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Avatar from '../../atoms/Avatar.atom';
 import Socials from '../../organisms/Socials';
 import PrimaryButton from '../../atoms/PrimaryButton';
 import LinkButton from '../../atoms/LinkButton';
-import { white, white30, purple } from '../../../settings/colors';
+import {
+  white, white30, purple, green,
+} from '../../../settings/colors';
 
 const Wrapper = styled.section`
   display: inline-block;
@@ -98,12 +100,18 @@ const About = styled.p`
   padding-right: 40px;
   text-align: left;
   font-size: 0.8571428571em;
+  transition-duration: 0.2s;
 `;
 
 const ActionWrapper = styled.div`
   padding-left: 40px;
   padding-right: 40px;
   text-align: left;
+`;
+
+const LerMoreBio = styled.span`
+  color: ${green};
+  cursor: pointer;
 `;
 
 function renderSubiscribeActions(isFollowing, followToggle) {
@@ -141,6 +149,8 @@ function ArtistBasicInfo(props) {
     isUserArtist, editAction,
   } = props;
 
+  const [lerMoreBio, setLerMoreBio] = useState(false);
+
   return (
     <Wrapper id="infos">
       <Avatar customStyle={avatarCustomStyled} src={avatar} alt={name} />
@@ -157,7 +167,16 @@ function ArtistBasicInfo(props) {
           </FollowText>
         </ConnectionsWrapper>
       </TitleAndFollowWrapper>
-      <About>{about}</About>
+      <About>
+        {!lerMoreBio ? about.slice(0, 180) : about}
+        {!lerMoreBio && about.length > 180 ? '...' : ''}
+        &nbsp;
+        <LerMoreBio
+          onClick={() => setLerMoreBio(!lerMoreBio)}
+        >
+          {!lerMoreBio ? 'Ler mais' : 'Ler menos'}
+        </LerMoreBio>
+      </About>
       <ActionWrapper>
         {
           !isUserArtist

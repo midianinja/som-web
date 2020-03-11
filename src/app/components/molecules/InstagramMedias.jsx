@@ -6,18 +6,18 @@ import LinkButton from '../atoms/LinkButton';
 import ProgresiveImage from '../atoms/ProgressiveImage.atom';
 
 const imgStyle = `
-  width: calc(33.33vw - 26.6666666667px);
-  height: calc(33.33vw - 26.6666666667px);
+  width: calc(33.33vw - 21.6666666667px);
+  height: calc(33.33vw - 21.6666666667px);
   
   @media (min-width: 1024px) {
-    width: calc(195px - 26.6666666667px);
-    height: calc(195px - 26.6666666667px);
+    width: calc(195px - 21.6666666667px);
+    height: calc(195px - 21.6666666667px);
   }
 `;
 
 const Container = styled.div`
   margin-top: 30px;
-  padding: 10px 40px;
+  padding: 10px 15px;
 `;
 
 const Row = styled.div`

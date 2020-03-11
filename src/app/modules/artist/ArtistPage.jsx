@@ -218,11 +218,23 @@ function ArtistPage({ match, history }) {
               null
             )
           } */}
-          <ApprovedEvents
-            eventClick={evtId => history.push(`/event/${evtId}`)}
-            events={artist.approved_events}
-          />
-          <MoreArtist history={history} artists={relatedArtsts} />
+          {
+            artist.approved_events.length
+              ? (
+                <ApprovedEvents
+                  eventClick={evtId => history.push(`/event/${evtId}`)}
+                  events={artist.approved_events}
+                />
+              )
+              : null
+          }
+          {
+            relatedArtsts.length
+              ? (
+                <MoreArtist history={history} artists={relatedArtsts} />
+              )
+              : null
+          }
         </ColumnWrapper>
       </Content>
     </ArtistWrapper>
