@@ -30,7 +30,7 @@ const Title = styled.h2`
 function GeneralInformationFieldset({
   values, handleTitleChange, handleEventDateChange, handleEndEventDateChange, 
   handleClosingSubscribeDateChange, handleDescriptionChange, handleOpeningsNumberChange,
-  eventErrors,
+  eventErrors, descriptionMaxLength,
 }) {
   return (
     <Fieldset>
@@ -108,6 +108,7 @@ function GeneralInformationFieldset({
           placeholder="Descrição do evento"
           value={values.description}
           onChange={handleDescriptionChange}
+          maxLength={descriptionMaxLength}
         />
       </InputGroup>
     </Fieldset>
@@ -120,6 +121,7 @@ const valuesShape = {
   closingSubscribeDate: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   openingsNumber: PropTypes.string.isRequired,
+  descriptionMaxLength: PropTypes.number,
 };
 
 const errorsShape = {};
