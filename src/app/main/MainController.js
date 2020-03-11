@@ -45,8 +45,6 @@ export const fetchLoggedUser = async (ida, dispatch, history) => {
     throw err;
   }
 
-  console.log('response', response);
-
   dispatch({
     type: 'SET_USER',
     user: response.data.oneUser,

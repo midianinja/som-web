@@ -15,7 +15,6 @@ export function phoneMask(input) {
 export function isPhone(input) {
   const inputWithoutChars = input.replace(/\W/g, '');
   const inputPhoneFormatted = `+55${inputWithoutChars}`;
-  console.log(inputPhoneFormatted);
   const regexPhone = /^\+[0-9]{9,}$/;
   return regexPhone.test(inputPhoneFormatted);
 }

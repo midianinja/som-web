@@ -148,7 +148,6 @@ export const fetchArtistData = async (
   let songsPromise;
   try {
     songsPromise = await fetchSongs(promise.data.oneArtist.id);
-    console.log('songsPromise:', songsPromise);
   } catch (err) {
     setArtistLoading(false);
     throw err;
