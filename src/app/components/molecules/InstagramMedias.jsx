@@ -6,8 +6,8 @@ import LinkButton from '../atoms/LinkButton';
 import ProgresiveImage from '../atoms/ProgressiveImage.atom';
 
 const imgStyle = `
-  width: calc(33.33vw - 21.6666666667px);
-  height: calc(33.33vw - 21.6666666667px);
+  width: 33.33vw;
+  height: 33.33vw;
   
   @media (min-width: 1024px) {
     width: calc(195px - 21.6666666667px);
