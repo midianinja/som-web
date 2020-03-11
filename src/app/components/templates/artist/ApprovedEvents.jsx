@@ -5,6 +5,7 @@ import Avatar from '../../atoms/Avatar.atom';
 import { white, secondaryBlack } from '../../../settings/colors';
 
 const Wrapper = styled.section`
+  text-align: left;
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 30px;
