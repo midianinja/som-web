@@ -109,13 +109,13 @@ const ChagingAccount = styled.h4`
     ${(props) => {
     if (props.type === 'artist') {
       return `
-        color: ${purple};
+        color: ${magenta};    
       `;
     }
 
     if (props.type === 'productor') {
       return `
-        color: ${magenta};
+        color: ${purple};
       `;
     }
 
@@ -235,7 +235,7 @@ const DropdownHeader = ({
           {getLoginType()}
         </LoginStatus>
         <ChagingAccount
-          type={connectionType}
+          type="productor"
           hide={connectionType === 'productor'}
           onClick={() => onAccountChange('productor')}
         >
@@ -243,7 +243,7 @@ const DropdownHeader = ({
           <span>produtor</span>
         </ChagingAccount>
         <ChagingAccount
-          type={connectionType}
+          type="artist"
           hide={connectionType === 'artist'}
           onClick={() => onAccountChange('artist')}
         >
