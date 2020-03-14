@@ -83,6 +83,7 @@ function BasicInformationFieldset(props) {
     setArtistStepErrors,
     artistStepErrors,
     values,
+    descriptionMaxLength,
   } = props;
 
   return (
@@ -188,6 +189,7 @@ function BasicInformationFieldset(props) {
           onBlur={e => handleBlurChange(e, 'description', setArtistStepErrors, artistStepErrors)}
           value={values.about}
           onChange={handleAboutChange}
+          maxLength={descriptionMaxLength}
         />
       </InputGroup>
     </Fieldset>
@@ -251,6 +253,7 @@ BasicInformationFieldset.propTypes = {
   handleCityChange: PropTypes.func.isRequired,
   handleCountrySelect: PropTypes.func.isRequired,
   handleIntegrantsChange: PropTypes.func.isRequired,
+  descriptionMaxLength: PropTypes.string.isRequired,
   handleMusicalStyleSelect: PropTypes.func.isRequired,
   handleNameChange: PropTypes.func.isRequired,
   handleStateSelect: PropTypes.func.isRequired,

@@ -113,7 +113,6 @@ export const fetchEventsData = async ({
         },
       },
     });
-    console.log('eventData:', eventData);
     if (!eventData.data.searchEvents.length) {
       setDialog({
         title: 'Nenhum evento encontrado',
@@ -167,8 +166,7 @@ export const subscribeAction = async (
   }
 
   try {
-    const resp = await subscribeEvent(event.id, user.artist.id);
-    console.log('resp:', resp);
+    await subscribeEvent(event.id, user.artist.id);
   } catch (err) {
     throw err;
   }

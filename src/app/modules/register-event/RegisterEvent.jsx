@@ -119,12 +119,13 @@ const renderGeneralInformationFieldset = ({
   return (
     <GeneralInformationFieldset
       values={values}
+      descriptionMaxLength={2000}
       eventStepErrors={{}}
       handleTitleChange={({ target }) => setTitle(target.value)}
       handleEventDateChange={({ target }) => setEventDate(target.value)}
       handleEndEventDateChange={({ target }) => setEndEventDate(target.value)}
       handleClosingSubscribeDateChange={({ target }) => setClosingDate(target.value)}
-      handleDescriptionChange={({ target }) => setDescription(target.value)}
+      handleDescriptionChange={({ target }) => (target.value.length < 2000 ? setDescription(target.value) : null)}
       handleOpeningsNumberChange={handleOpeningsNumberChange}
       eventErrors={errors}
     />

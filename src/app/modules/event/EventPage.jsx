@@ -130,8 +130,6 @@ const EventPage = ({ match, history }) => {
     has_money_paid: event.has_money_paid,
   };
 
-  console.log('event subscribe_closing_date', event.subscribe_closing_date);
-
   const closingDateInstance = moment(new Date(unixTime(event.subscribe_closing_date)));
   const todayInstance = moment();
 

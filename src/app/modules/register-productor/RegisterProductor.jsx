@@ -54,12 +54,13 @@ const renderBasicInfos = ({
   setMusicalStyles, setAvatar, setCPF, setCNPJ,
 }) => (
   <BasicInformationFieldset
+    descriptionMaxLength={2000}
     deleteTag={id => deleteTag({
       id,
       tags: musicalStyles,
       setTag: setMusicalStyles,
     })}
-    handleAboutChange={({ target }) => setAbout(target.value)}
+    handleAboutChange={({ target }) => (target.value.length < 2000 ? setAbout(target.value) : null)}
     handleAvatarChange={({ target }) => setAvatar({
       url: URL.createObjectURL(target.files[0]),
       urls: null,
@@ -236,8 +237,6 @@ const RegisterProductor = () => {
       </LoadingWrapper>
     );
   }
-
-  console.log(state.user.productor);
 
   return (
     <Form onSubmit={e => e.preventDefault()}>

@@ -48,6 +48,7 @@ const renderArtistInfos = ({
 }) => (
   <BasicInformationFieldset
     artistStepErrors={state.artistStepErrors.value}
+    descriptionMaxLength={2000}
     setArtistStepErrors={state.artistStepErrors.update}
     values={values}
     deleteTag={deleteTagAction}
@@ -63,7 +64,7 @@ const renderArtistInfos = ({
     state={state.state.value}
     handleCountrySelect={data => handleCountrySelect({ data, state })}
     handleStateSelect={data => handleStateSelect({ data, state })}
-    handleAboutChange={({ target }) => state.about.update(target.value)}
+    handleAboutChange={({ target }) => (target.value.length < 2000 ? state.about.update(target.value) : null)}
     handleCityChange={({ target }) => state.city.update(target.value)}
     handleBlurChange={handleBlurChange}
     handleIntegrantsChange={({ target }) => state.integrants.update(target.value)}
