@@ -31,3 +31,4 @@ export const red = '#EB5858';
 export const secondaryRed = '#FF7D7D';
 export const transparent = 'rgba(0, 0, 0, 0)';
 export const theBestColor = '#F1F1F1';
+export const alertColor = '#FF4B4B';

@@ -39,10 +39,12 @@ const ProductorCardWrapper = styled.div`
 const CoverWrapper = styled.div`
   width: 100%;
   z-index: 0;
-  top: 0;
+  margin-top: 51px;
 
   @media (min-width: 1024px) {
+    top: 51px;
     position: fixed;
+    margin-top: 0px;
   }
 `;
 

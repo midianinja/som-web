@@ -45,12 +45,23 @@ export const fetchLoggedUser = async (ida, dispatch, history) => {
     throw err;
   }
 
-  console.log('response', response);
-
   dispatch({
     type: 'SET_USER',
     user: response.data.oneUser,
   });
+
+  let typeConnection = 'public';
+  if (response.data.oneUser.productor) {
+    typeConnection = 'productor';
+  } else if (response.data.oneUser.artist) {
+    typeConnection = 'artist';
+  }
+
+  dispatch({
+    type: 'SET_LOGIN_TYPE',
+    data: typeConnection,
+  });
+
   if (history.location.pathname === '/') {
     history.push('/welcome');
   }

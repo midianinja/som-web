@@ -34,10 +34,12 @@ const CoverWrapper = styled.div`
   position: absolute;
   width: 100%;
   z-index: 0;
-  top: 0;
+  margin-top: 51px;
 
   @media (min-width: 1024px) {
     position: fixed;
+    top: 53px;
+    margin-top: 0px;
   }
 `;
 

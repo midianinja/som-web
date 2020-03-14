@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 const Store = React.createContext();
 
 const initialState = {
+  connectionType: 'public',
   auth: null,
   user: null,
   modalLogin: false,
@@ -45,6 +46,8 @@ const reducer = (state, action) => {
       return { ...state, modals: { ...initialState.modals } };
     case 'SET_MODAL_LOGIN':
       return { ...state, modalLogin: action.status };
+    case 'SET_LOGIN_TYPE':
+      return { ...state, connectionType: action.data };
     default:
       return state;
   }

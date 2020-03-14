@@ -5,23 +5,49 @@ import styled, { keyframes } from 'styled-components';
 import Store from '../../store/Store';
 import {
   black50, black, white, purple,
+  magenta, orange,
 } from '../../settings/colors';
 import { allowBodyScroll } from '../../utilities/scroll';
 
-const getLinks = artist => [
-  {
-    href: '/events',
-    label: 'Início',
-  },
-  {
-    href: artist && artist.id ? `/artist/${artist.id}` : '/register-artist',
-    label: 'Meu perfil',
-  },
-  // {
-  //   href: '/settings',
-  //   label: 'Configurações',
-  // },
-];
+const getLinks = (user, connectionType) => {
+  const links = [
+    {
+      href: '/events',
+      label: 'Início',
+    },
+    {
+      href: user && user.artist && user.artist.id ? `/artist/${user.artist.id}` : '/register-artist',
+      label: 'Meu perfil',
+      hide: !user || connectionType !== 'artist',
+    },
+    {
+      href: user && user.productor && user.productor.id ? `/productor/${user.productor.id}` : '/register-productor',
+      label: 'Meu perfil',
+      hide: !user || connectionType !== 'productor',
+    },
+    {
+      href: '/events',
+      label: 'Eventos',
+    },
+    {
+      href: '/artists',
+      label: 'Artistas',
+    },
+    {
+      href: '/productors',
+      label: 'Produtores',
+    },
+  ];
+
+  if (connectionType === 'productor') {
+    links.push({
+      href: '/my-events',
+      label: 'Meus eventos',
+    });
+  }
+
+  return links;
+};
 
 const openModalKeyframes = keyframes`
     from {
@@ -81,7 +107,7 @@ const Nav = styled.nav`
 
 const Link = styled.a`
   width: 100%;
-  font-size: 1.875em;
+  font-size: 1.5em;
   line-height: 1em;
   font-weight: 300;
   text-decoration: none;
@@ -89,9 +115,35 @@ const Link = styled.a`
   margin-bottom: 20px;
   color: ${black};
 
-  &:hover {
-    color: ${purple}; 
-  }
+  ${(props) => {
+    if (props.type === 'artist') {
+      return `
+        &:hover {
+          color: ${magenta}; 
+        }
+      `;
+    }
+
+    if (props.type === 'productor') {
+      return `
+        &:hover {
+          color: ${purple}; 
+        }
+      `;
+    }
+
+    return `
+      &:hover {
+        color: ${orange}; 
+      }
+    `;
+  }}
+
+  ${(props) => {
+    if (props.hide) return 'display: none;';
+    return '';
+  }}
+  
 `;
 
 const Logout = styled.a`
@@ -105,9 +157,29 @@ const Logout = styled.a`
   color: ${black};
   cursor: pointer;
 
-  &:hover {
-    color: ${purple}; 
-  }
+  ${(props) => {
+    if (props.type === 'artist') {
+      return `
+        &:hover {
+          color: ${magenta}; 
+        }
+      `;
+    }
+
+    if (props.type === 'productor') {
+      return `
+        &:hover {
+          color: ${purple}; 
+        }
+      `;
+    }
+
+    return `
+      &:hover {
+        color: ${orange}; 
+      }
+    `;
+  }}
 `;
 
 const Terms = styled.a`
@@ -121,9 +193,29 @@ const Terms = styled.a`
   color: ${black};
   cursor: pointer;
 
-  &:hover {
-    color: ${purple}; 
-  }
+  ${(props) => {
+    if (props.type === 'artist') {
+      return `
+        &:hover {
+          color: ${magenta}; 
+        }
+      `;
+    }
+
+    if (props.type === 'productor') {
+      return `
+        &:hover {
+          color: ${purple}; 
+        }
+      `;
+    }
+
+    return `
+      &:hover {
+        color: ${orange}; 
+      }
+    `;
+  }}
 `;
 
 const ExitButton = styled.img`
@@ -138,9 +230,19 @@ const ExitButton = styled.img`
   }
 `;
 
-function renderLinks(artist = {}) {
-  return getLinks(artist).map(({ href, label }) => (
-    <Link href={href}>{label}</Link>
+function renderLinks(user, connectionType, history) {
+  return getLinks(user, connectionType).map(({ href, label, hide }) => (
+    <Link
+      type={connectionType}
+      href={href}
+      onClick={(e) => {
+        e.preventDefault();
+        history.push(href);
+      }}
+      hide={hide}
+    >
+      {label}
+    </Link>
   ));
 }
 
@@ -151,7 +253,7 @@ const closeAction = (dispatch) => {
 
 function Navigation({ history }) {
   const { state, dispatch } = useContext(Store);
-  if (!state.user) return null;
+
   return (
     <Wrapper isOpen={state.modals.navigation} onClick={() => closeAction(dispatch)}>
       <Nav>
@@ -159,8 +261,9 @@ function Navigation({ history }) {
           src="/icons/close.svg"
           onClick={() => closeAction(dispatch)}
         />
-        {renderLinks(state.user.artist)}
+        {renderLinks(state.user, state.connectionType, history)}
         <Terms
+          type={state.connectionType}
           onClick={() => {
             allowBodyScroll();
             dispatch({ type: 'CLOSE_MODAL' });
@@ -172,26 +275,38 @@ function Navigation({ history }) {
         >
           Termos de uso
         </Terms>
-        <Logout
-          onClick={() => {
-            window.localStorage.setItem('som@ida', '');
-            window.localStorage.setItem('som@token', '');
+        {
+          state.user ? (
+            <Logout
+              type={state.connectionType}
+              onClick={() => {
+                window.localStorage.setItem('som@ida', '');
+                window.localStorage.setItem('som@token', '');
 
-            dispatch({
-              type: 'SET_USER',
-              user: null,
-            });
-            dispatch({
-              type: 'RESET_AUTH',
-            });
+                dispatch({
+                  type: 'SET_USER',
+                  user: null,
+                });
 
-            allowBodyScroll();
-            dispatch({ type: 'CLOSE_MODAL' });
-            history.push('/');
-          }}
-        >
-          Sair
-        </Logout>
+                dispatch({
+                  type: 'RESET_AUTH',
+                });
+
+                dispatch({
+                  type: 'SET_LOGIN_TYPE',
+                  data: 'public',
+                });
+
+                allowBodyScroll();
+                dispatch({ type: 'CLOSE_MODAL' });
+
+                history.push('/');
+              }}
+            >
+              Sair
+            </Logout>
+          ) : null
+        }
       </Nav>
     </Wrapper>
   );

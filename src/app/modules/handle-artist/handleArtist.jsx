@@ -17,6 +17,7 @@ import {
 import UploadSongs from '../../components/templates/register-artist/UploadSongs';
 
 const Form = styled.form`
+  padding-top: 52px;
   width: 100%;
   background-color: ${black};
   min-height: 100vh;

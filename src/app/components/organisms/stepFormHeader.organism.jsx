@@ -10,6 +10,7 @@ const Header = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
+  top: 50px;
   padding: 15px;
   background-color: ${({ color }) => color};
   z-index: 10;

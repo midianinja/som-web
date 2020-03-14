@@ -21,7 +21,7 @@ const Container = styled.div`
   background-color: ${black};
   width: 100%;
   text-align: center;
-  margin-top: 50px;
+  margin-top: 78px;
   padding: 10px;
   justify-content: center;
   align-items: center;
@@ -46,6 +46,7 @@ const Form = styled.div`
 const LocationContainer = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 30px;
 `;
 
 const LocationLabel = styled.label`
@@ -143,8 +144,8 @@ const MONTH_MODEL = [
   { name: 'Dezembro', id: '11' },
 ];
 
-const EventPage = ({ match, history }) => {
-  const { state, dispatch } = useContext(Store);
+const EventPage = ({ history }) => {
+  const { state } = useContext(Store);
   const [loading, setLoading] = useState({ ...initialLoading });
   const [events, setEvents] = useState([]);
   const [dialog, setDialog] = useState({});
@@ -183,7 +184,7 @@ const EventPage = ({ match, history }) => {
           <LocationLabel>Eventos em</LocationLabel>
           <LocationValue>São paulo</LocationValue>
         </LocationContainer>
-        <InputGroup customStyle={searchStyle}>
+        {/* <InputGroup customStyle={searchStyle}>
           <InputIconWrapper>
             <SearchIcon
               src="/icons/search.svg"
@@ -197,7 +198,7 @@ const EventPage = ({ match, history }) => {
               onChange={() => console.log('onChange')}
             />
           </InputIconWrapper>
-        </InputGroup>
+        </InputGroup> */}
       </GlobalForm>
       <Form>
         <InputGroup
