@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { green } from '../../../settings/colors';
+import { getGradient } from '../../../settings/gradients';
 import TagList from '../../../components/molecules/TagList';
 import EventDate from '../../../components/atoms/EventDate';
 import EventPlace from '../../../components/atoms/EventPlace';
@@ -40,18 +41,21 @@ const ButtonWrapper = styled.div`
 `;
 
 const Image = styled.div`
-  ${props => `
-    background-image: url('${props.image}');
-    height: 140px;
-    width: 140px;
-    background-repeat: no-repeat
-    background-size: auto 100%;
-    cursor: pointer;
-    @media (max-width: 768px) {
-      width: 100%;
-      max-height: 300px;
-    }
-  `}
+  height: 140px;
+  width: 140px;
+  background-repeat: no-repeat
+  background-size: auto 100%;
+  cursor: pointer;
+  background: ${getGradient()};
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-height: 300px;
+  }
+
+  ${props => (
+    props.image ? ` background-image: url('${props.image}');` : ''
+  )}
 `;
 const Title = styled.label`
   color: ${green};
