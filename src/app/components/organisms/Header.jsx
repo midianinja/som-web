@@ -177,7 +177,7 @@ const inputCustomStyle = `
     margin-left: 20px;
   }
 
-  @media (min-height: 768px) {
+  @media (min-width: 768px) {
     display: inline-block;
   }
 `;
