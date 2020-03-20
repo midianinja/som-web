@@ -94,7 +94,7 @@ const isSubscribed = (event, user) => {
 
 function EventCard({
   event, customStyle, user, onClick,
-  subscribeAction, unsubscribeAction,
+  subscribeAction, unsubscribeAction, loggedAs,
 }) {
   const [hover, setHover] = useState(false);
   const musicalStyles = event.music_styles ? event.music_styles
@@ -147,7 +147,7 @@ function EventCard({
               ) : null
           }
           {
-            !isSubscribed(event, user) && !(+event.subscribe_closing_date < new Date().getTime())
+            !isSubscribed(event, user) && !(+event.subscribe_closing_date < new Date().getTime()) && loggedAs !== 'productor'
               ? (
                 <PrimaryButton
                   customStyle={buttonStyl}
@@ -158,7 +158,7 @@ function EventCard({
               ) : null
           }
           {
-            isSubscribed(event, user) && !(+event.subscribe_closing_date < new Date().getTime())
+            isSubscribed(event, user) && !(+event.subscribe_closing_date < new Date().getTime()) && loggedAs !== 'productor'
               ? (
                 <SlimButton
                   onFocus={() => null}
@@ -183,6 +183,7 @@ const userShape = {};
 
 EventCard.propTypes = {
   customStyle: PropTypes.string.isRequired,
+  loggedAs: PropTypes.string.isRequired,
   subscribeAction: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   unsubscribeAction: PropTypes.func.isRequired,

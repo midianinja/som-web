@@ -185,7 +185,8 @@ const inputCustomStyle = `
 function Header({ customStyle, history }) {
   const { state, dispatch } = useContext(Store);
   const [dropdown, setDropdown] = useState(false);
-
+  const completed = state.user && state.user.productor
+    && state.user.productor.status !== 'INCOMPLETE';
   useEffect(() => {
     setDropdown(false);
   }, [state.auth]);
@@ -232,12 +233,12 @@ function Header({ customStyle, history }) {
             <Line dark={state.connectionType === 'public'} />
             <Line dark={state.connectionType === 'public'} />
           </BurgerButton>
-          <Input
+          {/* <Input
             placeholder="O que você procura?"
             value=""
             customStyle={inputCustomStyle}
             onChange={() => null}
-          />
+          /> */}
         </Group>
         <RightGroup hide={!state.auth}>
           <ProfileWrapper onClick={() => setDropdown(!dropdown)}>
@@ -247,6 +248,7 @@ function Header({ customStyle, history }) {
           <DropdownHeader
             hide={!dropdown}
             name={getName()}
+            completed={completed}
             avatar={getAvatarIcon()}
             closeAction={() => setDropdown(false)}
             connectionType={state.connectionType}
@@ -288,6 +290,10 @@ function Header({ customStyle, history }) {
               }
             }}
             toProductor={() => {
+              if (state.user.productor && state.user.productor.status === 'INCOMPLETE') {
+                history.push('/register-productor');
+                return;
+              }
               if (state.user.productor) {
                 history.push(`/productor/${state.user.productor.id}`);
               }

@@ -29,22 +29,22 @@ const getLinks = (user, connectionType) => {
       href: '/events',
       label: 'Eventos',
     },
-    {
-      href: '/artists',
-      label: 'Artistas',
-    },
+    // {
+    //   href: '/artists',
+    //   label: 'Artistas',
+    // },
     {
       href: '/productors',
       label: 'Produtores',
     },
   ];
 
-  if (connectionType === 'productor') {
-    links.push({
-      href: '/my-events',
-      label: 'Meus eventos',
-    });
-  }
+  // if (connectionType === 'productor') {
+  //   links.push({
+  //     href: '/my-events',
+  //     label: 'Meus eventos',
+  //   });
+  // }
 
   return links;
 };
