@@ -19,13 +19,13 @@ const Wrapper = styled.section`
     position: sticky;
     top: 150px;
     align-self: flex-start;
+    text-align: left;
   }
 `;
 
 const Title = styled.h1`
   margin-bottom: 10px;
   margin-top: 20px;
-  padding-left: 40px;
   padding-right: 40px;
   font-size: 2.1428571429em;
   font-weight: 400;
@@ -96,7 +96,6 @@ const About = styled.p`
   margin-top: 45px;
   line-height: 2em;
   font-weight: 300;
-  padding-left: 40px;
   padding-right: 40px;
   text-align: left;
   font-size: 0.8571428571em;
@@ -104,7 +103,6 @@ const About = styled.p`
 `;
 
 const ActionWrapper = styled.div`
-  padding-left: 40px;
   padding-right: 40px;
   text-align: left;
 `;
@@ -168,14 +166,19 @@ function ArtistBasicInfo(props) {
         </ConnectionsWrapper>
       </TitleAndFollowWrapper>
       <About>
-        {!lerMoreBio ? about.slice(0, 180) : about}
-        {!lerMoreBio && about.length > 180 ? '...' : ''}
+        {!lerMoreBio ? about.slice(0, 200) : about}
+        {!lerMoreBio && about.length > 200 ? '...' : ''}
         &nbsp;
-        <LerMoreBio
-          onClick={() => setLerMoreBio(!lerMoreBio)}
-        >
-          {!lerMoreBio ? 'Ler mais' : 'Ler menos'}
-        </LerMoreBio>
+        {
+          about.length > 200
+            ? (
+              <LerMoreBio
+                onClick={() => setLerMoreBio(!lerMoreBio)}
+              >
+                {!lerMoreBio ? 'Ler mais' : 'Ler menos'}
+              </LerMoreBio>
+            ) : null
+        }
       </About>
       <ActionWrapper>
         {

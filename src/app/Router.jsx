@@ -9,6 +9,7 @@ import RegisterEvent from './modules/register-event/RegisterEvent';
 import RegisterProdctor from './modules/register-productor/RegisterProductor';
 import Events from './modules/events/EventsPage';
 import ArtistPage from './modules/artist/ArtistPage';
+import ProcutorPage from './modules/productor/ProductorPage';
 import ValidationEmailToken from './modules/validation-email-token/ValidationEmailToken';
 import Home from './modules/home/Home';
 import Terms from './modules/terms/Terms';
@@ -29,6 +30,7 @@ const AppRouter = ({ children }) => (
         <Route path="/events" component={() => <Events />} />
         <Route path="/event/:id" component={() => <EventPage />} />
         <Route path="/artist/:id" component={() => <ArtistPage />} />
+        <Route path="/productor/:id" component={() => <ProcutorPage />} />
         <Route path="/ativacao/:ida" component={() => <ValidationEmailToken />} />
         <Private>
           <Switch>

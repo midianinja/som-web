@@ -18,7 +18,9 @@ const List = styled.div`
  */
 function getItems(data, handleClose) {
   return data.map(
-    ({ color, text, id }) => <Tag text={text} id={id} color={color} handleClose={handleClose} />
+    ({ color, text, id }) => (
+      <Tag text={text} id={id} color={color} handleClose={handleClose} />
+    ),
   );
 }
 
