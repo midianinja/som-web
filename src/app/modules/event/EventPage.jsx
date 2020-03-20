@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
@@ -89,6 +89,7 @@ const EventPage = ({ match, history }) => {
   const [loading, setLoading] = useState({ ...initialLoading });
   const [event, setEvent] = useState(null);
   const [dialog, setDialog] = useState({});
+  const { state: myState } = useContext(Store);
 
   useEffect(() => {
     fetchEventData(
@@ -171,6 +172,7 @@ const EventPage = ({ match, history }) => {
               isClosingSubscribe={isClosingSubscribe}
               diffDays={closingDiffDays}
               diffHours={closingDiffHours}
+              loggedAs={myState.connectionType}
               subscribers={event.subscribers.length}
               subscribeAction={() => subscribeAction(
                 state.auth, state.user, event, dispatch, setDialog,

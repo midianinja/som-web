@@ -252,7 +252,7 @@ const DropdownHeader = ({
         </ChagingAccount>
       </Wrapper>
       <Wrapper>
-        <Navigation>
+        {/* <Navigation>
           <Link href="/" onClick={e => e.preventDefault()}>
             Configurações da conta
           </Link>
@@ -260,7 +260,7 @@ const DropdownHeader = ({
             <Alert />
             Notificações
           </Link>
-        </Navigation>
+        </Navigation> */}
       </Wrapper>
       <Wrapper>
         <ExitLink

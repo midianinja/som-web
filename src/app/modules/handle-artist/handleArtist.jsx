@@ -64,7 +64,9 @@ const renderArtistInfos = ({
     state={state.state.value}
     handleCountrySelect={data => handleCountrySelect({ data, state })}
     handleStateSelect={data => handleStateSelect({ data, state })}
-    handleAboutChange={({ target }) => (target.value.length < 2000 ? state.about.update(target.value) : null)}
+    handleAboutChange={({ target }) => (
+      target.value.length < 2000 ? state.about.update(target.value) : null
+    )}
     handleCityChange={({ target }) => state.city.update(target.value)}
     handleBlurChange={handleBlurChange}
     handleIntegrantsChange={({ target }) => state.integrants.update(target.value)}
@@ -221,6 +223,13 @@ const RegisterArtist = ({ history }) => {
       avatar: {},
       musicalStyles: [],
     };
+  if (
+    store.state.user
+    && store.state.user.artist
+    && store.state.connectionType === 'productor'
+  ) {
+    history.push('/register-productor');
+  }
 
   useEffect(() => {
     if (!state.musicalStylesOptions.value.length) {

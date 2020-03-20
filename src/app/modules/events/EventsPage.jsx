@@ -11,10 +11,10 @@ import {
   handleMusicalStyleSelect, removeTagAction,
 } from './EventsController';
 import InputGroup from '../../components/molecules/InputGroup';
-import Input from '../../components/atoms/Input';
+// import Input from '../../components/atoms/Input';
 import TagList from '../../components/molecules/TagList';
 import ListInput from '../../components/molecules/ListInput.molecule';
-import { white10, black, white } from '../../settings/colors';
+import { /* white10, */ black/* , white */ } from '../../settings/colors';
 import Store from '../../store/Store';
 
 const Container = styled.div`
@@ -59,19 +59,19 @@ const LocationValue = styled.label`
   font-size: 1.1em;
 `;
 
-const InputIconWrapper = styled.div`
-  display: flex;
-  height: 38px;
-  color: ${white};
-  background-color: ${white10};
-  border-radius: 38px;
-  padding-left: 15px;
-  padding-right: 15px;
-`;
+// const InputIconWrapper = styled.div`
+//   display: flex;
+//   height: 38px;
+//   color: ${white};
+//   background-color: ${white10};
+//   border-radius: 38px;
+//   padding-left: 15px;
+//   padding-right: 15px;
+// `;
 
-const SearchIcon = styled.img`
-  width: 20px
-`;
+// const SearchIcon = styled.img`
+//   width: 20px
+// `;
 
 const EventsContainer = styled.section`
   background-color: ${black};
@@ -82,22 +82,22 @@ const EventsContainer = styled.section`
   max-width: 1024px;
 `;
 
-const searchStyle = `
-  width: 200px;
-  text-align: left;
-  margin-bottom: 0;
-  @media (max-width: 768px) {
-    width: auto;
-  }
-`;
+// const searchStyle = `
+//   width: 200px;
+//   text-align: left;
+//   margin-bottom: 0;
+//   @media (max-width: 768px) {
+//     width: auto;
+//   }
+// `;
 
-const searchInputStyle = `
-  background-color: transparent;
+// const searchInputStyle = `
+//   background-color: transparent;
 
-  @media (max-width: 768px) {
-    display: none
-  }
-`;
+//   @media (max-width: 768px) {
+//     display: none
+//   }
+// `;
 
 const filterGroupsStyle = `
   margin-right: 10px;
@@ -269,6 +269,7 @@ const EventPage = ({ history }) => {
         {
           events.map(evt => (
             <EventCard
+              loggedAs={state.connectionType}
               customStyle="margin-bottom: 90px;"
               user={state.user}
               event={evt}
@@ -295,16 +296,16 @@ const EventPage = ({ history }) => {
   );
 };
 
-const routerParamsShape = {
-  id: PropTypes.string,
-};
+// const routerParamsShape = {
+//   id: PropTypes.string,
+// };
 
 const routerHistoryShape = {
   push: PropTypes.function,
 };
 
 EventPage.propTypes = {
-  match: PropTypes.shape(routerParamsShape).isRequired,
+  // match: PropTypes.shape(routerParamsShape).isRequired,
   history: PropTypes.shape(routerHistoryShape).isRequired,
 };
 

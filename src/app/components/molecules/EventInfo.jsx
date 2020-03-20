@@ -73,7 +73,7 @@ const unixTime = unixtime => new Date(+unixtime).toISOString().slice(0, 19);
 
 const EventInfo = ({
   name, date, place, subscribers, subscribeAction, subscribed,
-  unsubscribeAction, isClosingSubscribe, diffDays, diffHours,
+  unsubscribeAction, isClosingSubscribe, diffDays, diffHours, loggedAs,
 }) => {
   const newDate = new Date(unixTime(date));
   const dateInstance = moment(newDate);
@@ -129,7 +129,7 @@ const EventInfo = ({
             : null
         }
         {
-          subscribed && !isClosingSubscribe
+          subscribed && !isClosingSubscribe && loggedAs !== 'productor'
             ? (
               <SlimButton
                 onFocus={() => null}
@@ -162,6 +162,7 @@ const placeShape = {
 EventInfo.propTypes = {
   name: PropTypes.string,
   date: PropTypes.string,
+  loggedAs: PropTypes.string,
   subscribers: PropTypes.number,
   diffDays: PropTypes.number,
   diffHours: PropTypes.number,
@@ -174,9 +175,11 @@ EventInfo.propTypes = {
 
 EventInfo.defaultProps = {
   name: '',
+  loggedAs: '',
   date: '',
   subscribers: 0,
   diffDays: 0,
+  diffHours: 0,
   subscribed: false,
   isClosingSubscribe: false,
   place: {},

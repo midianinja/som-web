@@ -143,8 +143,15 @@ const renderSocialsFieldset = ({
   );
 };
 
-const RegisterProductor = () => {
+const RegisterProductor = ({ history }) => {
   const { state, dispatch } = useContext(Store);
+  if (
+    state.user
+    && state.user.productor
+    && state.connectionType === 'artist'
+  ) {
+    history.push('/register-artist');
+  }
   const [about, setAbout] = useState('');
   const [locationId, setLocationId] = useState('');
   const [avatar, setAvatar] = useState({ url: '' });
