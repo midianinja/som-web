@@ -223,13 +223,16 @@ const RegisterArtist = ({ history }) => {
       avatar: {},
       musicalStyles: [],
     };
-  if (
-    store.state.user
-    && store.state.user.artist
-    && store.state.connectionType === 'productor'
-  ) {
+
+  if (store.state.connectionType === 'productor') {
     history.push('/register-productor');
   }
+
+  useEffect(() => {
+    if (store.state.connectionType === 'productor') {
+      history.push('/register-productor');
+    }
+  }, [state.connectionType]);
 
   useEffect(() => {
     if (!state.musicalStylesOptions.value.length) {

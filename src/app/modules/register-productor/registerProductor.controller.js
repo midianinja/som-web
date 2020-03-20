@@ -168,12 +168,19 @@ export const fetchMusicalStyleOptions = (setMusicalStylesOptions) => {
   }).then(resp => setMusicalStylesOptions(resp.data.allMusicalStyleOptions));
 };
 
-export const nextCallback = ({ visibles, setVisibles }) => {
+export const nextCallback = ({
+  visibles, setVisibles, history, id,
+}) => {
   const next = Object.entries(visibles).find(item => !item[1]);
   const newVisibles = { ...visibles };
 
-  if (next) newVisibles[next[0]] = true;
-  setVisibles(newVisibles);
+  if (next) {
+    newVisibles[next[0]] = true;
+    setVisibles(newVisibles);
+  } else {
+    history.push(`/productor/${id}`);
+    setVisibles(newVisibles);
+  }
 };
 
 const mapProductorToApi = (values, userId, locationId) => ({
@@ -234,7 +241,6 @@ export const handleCreateProductor = async (
     productor.avatar = newImage.data.data.urls.mimified;
   }
 
-  console.log(productor);
   let promise;
   const data = mapProductorToApi(productor, userId);
   try {
@@ -256,7 +262,7 @@ export const handleCreateProductor = async (
 export const handleEditProductor = async (
   values, productorId, userId, setLoading,
   visibles, setVisibles, setLocationId,
-  dispatch, user,
+  dispatch, user, history,
 ) => {
   setLoading(true);
   const productor = { ...values };
@@ -309,6 +315,8 @@ export const handleEditProductor = async (
     action: 'SET_USER',
     user: { ...user, productor: promise.data.updateProductor },
   });
-  nextCallback({ visibles, setVisibles });
+  nextCallback({
+    visibles, setVisibles, history, id: productorId,
+  });
   setLoading(false);
 };

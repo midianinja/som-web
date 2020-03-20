@@ -145,13 +145,6 @@ const renderSocialsFieldset = ({
 
 const RegisterProductor = ({ history }) => {
   const { state, dispatch } = useContext(Store);
-  if (
-    state.user
-    && state.user.productor
-    && state.connectionType === 'artist'
-  ) {
-    history.push('/register-artist');
-  }
   const [about, setAbout] = useState('');
   const [locationId, setLocationId] = useState('');
   const [avatar, setAvatar] = useState({ url: '' });
@@ -209,6 +202,17 @@ const RegisterProductor = ({ history }) => {
       setCity(productor.location.city);
     }
   };
+
+  if (state.connectionType === 'artist') {
+    history.push('/register-artist');
+  }
+
+  useEffect(() => {
+    if (state.connectionType === 'artist') {
+      history.push('/register-artist');
+    }
+  }, [state.connectionType]);
+
 
   useEffect(() => {
     if (state.user && state.user.productor) {
@@ -288,7 +292,7 @@ const RegisterProductor = ({ history }) => {
             handleEditProductor(
               values, id, state.user.id, setLoading,
               visibles, setVisibles, setLocationId, dispatch,
-              state.user,
+              state.user, history,
             );
           }
         }}

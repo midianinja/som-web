@@ -124,7 +124,7 @@ const EventInfo = ({
             ) : null
         }
         {
-          !subscribed && !isClosingSubscribe
+          !subscribed && !isClosingSubscribe && loggedAs !== 'productor'
             ? <PrimaryButton onClick={subscribeAction}>Inscrever-se</PrimaryButton>
             : null
         }
