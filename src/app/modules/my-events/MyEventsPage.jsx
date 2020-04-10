@@ -62,6 +62,8 @@ const EventsContainer = styled.section`
   margin-top: 50px;
   padding: 10px 0;
   max-width: 1024px;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const searchStyle = `
@@ -131,7 +133,15 @@ const MyEventsPage = ({ history }) => {
       <EventsContainer>
         {
           events.map(evt => (
-            <EventCard customStyle="margin-bottom: 90px;" user={state.user} event={evt} />
+            <EventCard
+              customStyle={`
+                margin: 0 5px 90px;
+                max-width: 220px;
+              `}
+              user={state.user}
+              event={evt}
+              onClick={() => history.push('/events-curatorship')}
+            />
           ))
         }
       </EventsContainer>

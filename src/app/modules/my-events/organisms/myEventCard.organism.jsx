@@ -9,14 +9,10 @@ import EventPlace from '../../../components/atoms/EventPlace';
 const Wrapper = styled.div`
   display: inline-block;
   ${props => props.customStyle}
-  @media (max-width: 768px) {
-    width: 100%;
-  }
 `;
 const Container = styled.div`
   display: flex;
   text-align: start;
-  width: 250px;
   flex-direction: column;
   height: 300px;
   justify-content: space-between;
@@ -117,7 +113,7 @@ const FakeButton = styled.label`
 `;
 
 function EventCard({
-  event, customStyle,
+  event, customStyle, onClick,
 }) {
   const [cardHover, setCardHover] = useState(false);
   const musicalStyles = event.music_styles ? event.music_styles
@@ -126,6 +122,7 @@ function EventCard({
   return (
     <Wrapper
       customStyle={customStyle}
+      onClick={onClick}
       onMouseEnter={() => setCardHover(!cardHover)}
       onMouseLeave={() => setCardHover(!cardHover)}
     >
@@ -181,6 +178,7 @@ const eventShape = {};
 EventCard.propTypes = {
   customStyle: PropTypes.string.isRequired,
   event: PropTypes.objectOf(PropTypes.shape(eventShape)).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default EventCard;

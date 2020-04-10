@@ -86,6 +86,8 @@ export const Triangle = styled.span`
 
 const Wrapper = styled.div`
   width: 100%;
+  ${props => props.customStyle}
+
 `;
 
 const Header = styled.div`
@@ -118,6 +120,7 @@ const List = styled.ul`
   padding-left: 30px;
   padding-right: 30px;
   margin-top: 30px;
+  ${props => props.customStyle}
 `;
 
 const Track = styled.li.attrs({ className: 'track' })`
@@ -265,6 +268,7 @@ function renderTracks(tracks, handleClick, deleteAction, editAction, isUserArtis
 }
 
 const handlePlayPause = (setPlay, play) => {
+  if (!AUDIO_ELEMENT) return;
   if (play) {
     AUDIO_ELEMENT.pause();
     setPlay(false);
@@ -276,13 +280,14 @@ const handlePlayPause = (setPlay, play) => {
 
 function AudioPlayer({
   tracks, isUserArtist, deleteAction, editAction,
+  customStyle, customListStyle, color, color15, color50,
+  playPress,
 }) {
   const [play, setPlay] = useState(false);
   const [songs, setSongs] = useState([]);
   const [selectSong, setSelectSong] = useState(null);
   const [audioStatus, setAudioStatus] = useState('stopped');
   const [currentTime, setCurrentTime] = useState(0);
-  console.log('audioStatus:', audioStatus);
 
   const loadingSong = (cb) => {
     setAudioStatus('loading');
@@ -307,7 +312,7 @@ function AudioPlayer({
       AUDIO_ELEMENT.play();
     };
 
-    if (isAudio) {
+    if (isAudio && AUDIO_ELEMENT) {
       setPlay(false);
       AUDIO_ELEMENT.pause();
     }
@@ -316,8 +321,16 @@ function AudioPlayer({
   }, [selectSong]);
 
   useEffect(() => {
+    if (playPress && AUDIO_ELEMENT) {
+      setPlay(false);
+      AUDIO_ELEMENT.pause();
+    }
+  }, [playPress]);
+
+  useEffect(() => {
     const mapSongs = async () => {
       const songsDataPromise = track => new Promise((resolve) => {
+        AUDIO_ELEMENT = null;
         const audioFakeElement = new Audio();
         audioFakeElement.onloadedmetadata = (data) => {
           const metadata = {
@@ -341,6 +354,7 @@ function AudioPlayer({
 
       setSongs(newSongs);
       setSelectSong(newSongs[0]);
+      if (AUDIO_ELEMENT) handlePlayPause(setPlay, true);
     };
 
     mapSongs();
@@ -356,10 +370,11 @@ function AudioPlayer({
     ...(selectSong || {}),
   };
   return (
-    <Wrapper>
+    <Wrapper customStyle={customStyle}>
       <Header>
         <TrackHeaderWrapper>
           <PlayPauseButton
+            color={color}
             ket={play}
             shouldPlay={play}
             onClick={() => handlePlayPause(setPlay, play)}
@@ -370,6 +385,9 @@ function AudioPlayer({
           </Info>
         </TrackHeaderWrapper>
         <AudioSlider
+          color15={color15}
+          color50={color50}
+          color={color}
           id="audio-slider"
           value={currentRangeValue}
           defaultValue="0"
@@ -387,7 +405,11 @@ function AudioPlayer({
           max="1000"
         />
       </Header>
-      <List>{renderTracks(songs, setSelectSong, deleteAction, editAction, isUserArtist)}</List>
+      <List customStyle={customListStyle}>
+        {
+          renderTracks(songs, setSelectSong, deleteAction, editAction, isUserArtist)
+        }
+      </List>
     </Wrapper>
   );
 }
@@ -403,11 +425,23 @@ AudioPlayer.propTypes = {
   editAction: PropTypes.func.isRequired,
   tracks: PropTypes.arrayOf(PropTypes.shape(trackShape)),
   isUserArtist: PropTypes.bool,
+  customStyle: PropTypes.string,
+  customListStyle: PropTypes.string,
+  color: PropTypes.string,
+  color15: PropTypes.string,
+  color50: PropTypes.string,
+  playPress: PropTypes.string,
 };
 
 AudioPlayer.defaultProps = {
   isUserArtist: false,
   tracks: [],
+  customStyle: '',
+  customListStyle: '',
+  color: '',
+  color15: '',
+  color50: '',
+  playPress: '',
 };
 
 export default AudioPlayer;

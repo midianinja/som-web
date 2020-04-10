@@ -30,6 +30,11 @@ export const getOneEventQuery = gql`
       }
       approved_artists {
         id
+        avatar_image {
+          mimified
+          thumbnail
+        }
+        name
       }
       subscribe_closing_date
       cover {

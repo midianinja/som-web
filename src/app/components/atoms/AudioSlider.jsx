@@ -17,7 +17,7 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
     width: 8px;
     bottom: -3px;
     border-radius: 50%;
-    background: ${orange};
+    background: ${props => (props.color || orange)};
     cursor: pointer;
     z-index: 1;
   }
@@ -55,13 +55,13 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
     height: 8px;
     border-radius: 50%;
     width: 8px;
-    background: ${orange};
+    background: ${props => (props.color || orange)};
     cursor: pointer;
     margin-left: -4px
     margin-top: -7px;
-    box-shadow: 0px 0px 0px 6px ${orange15};
+    box-shadow: 0px 0px 0px 6px ${props => (props.color15 || orange15)};
     position: relative;
-    border: solid 4px ${orange50};
+    border: solid 4px ${props => (props.color50 || orange50)};
     -moz-background-clip: content;
     -webkit-background-clip: content;
     background-clip: content-box;
@@ -74,7 +74,7 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
     width: 10px;
     margin-left: -2;
     border-radius: 50%;
-    background: ${orange};
+    background: ${props => (props.color || orange)};
     cursor: pointer;
     z-index: 2;
   }
@@ -85,12 +85,12 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
     height: 10px;
     border-radius: 50%;
     width: 10px;
-    background: ${orange};
+    background: ${props => (props.color || orange)};
     cursor: pointer;
     margin-top: -8px;
-    box-shadow: 0px 0px 0px 4px ${orange15};
+    box-shadow: 0px 0px 0px 4px ${props => (props.color15 || orange15)};
     position: relative;
-    border: solid 4px ${orange50};
+    border: solid 4px ${props => (props.color50 || orange50)};
     -moz-background-clip: content;
     -webkit-background-clip: content;
     background-clip: content-box;
@@ -104,21 +104,21 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
     cursor: pointer;
     background: ${white};
     background: 
-      linear-gradient(90deg, ${orange} ${props => props.value / 10}%, ${white} ${props => props.value / 10}%);
+      linear-gradient(90deg, ${props => (props.color || orange)} ${props => props.value / 10}%, ${white} ${props => props.value / 10}%);
   }
 
   :focus::-webkit-slider-runnable-track,
   :active::-webkit-slider-runnable-track {
     background: ${white};
     background: 
-      linear-gradient(90deg, ${orange} ${props => props.value / 10}%, ${white} ${props => props.value / 10}%);
+      linear-gradient(90deg, ${props => (props.color || orange)} ${props => props.value / 10}%, ${white} ${props => props.value / 10}%);
   }
 
   ::-moz-range-track {
     width: 100%;
     height: 2px;
     cursor: pointer;
-    background: ${orange};
+    background: ${props => (props.color || orange)};
   }
 
   ::-ms-track {
@@ -131,11 +131,11 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
   }
 
   ::-webkit-progress-value {
-    background-color: ${orange}; 
+    background-color: ${props => (props.color || orange)}; 
   }
 
   ::-moz-range-progress {
-    background-color: ${orange}; 
+    background-color: ${props => (props.color || orange)}; 
   }
 
   ::-moz-range-track {  
@@ -143,7 +143,7 @@ const AudioSlider = styled.input.attrs({ type: 'range' })`
   }
 
   ::-ms-fill-lower {
-    background-color: ${orange}; 
+    background-color: ${props => (props.color || orange)}; 
   }
 
   ::-ms-fill-upper {  

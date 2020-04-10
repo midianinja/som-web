@@ -201,7 +201,7 @@ export const unfollow = async (artist, user, setFollows, follows) => {
       variables: { artist, user },
     });
   } catch (err) {
-    console.log([err]);
+    console.error([err]);
     throw err;
   }
 };

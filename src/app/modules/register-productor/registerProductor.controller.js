@@ -246,7 +246,7 @@ export const handleCreateProductor = async (
   try {
     promise = await createProductor(data);
   } catch (err) {
-    console.log([err]);
+    console.error([err]);
     setLoading(false);
     throw err;
   }
@@ -306,7 +306,7 @@ export const handleEditProductor = async (
   try {
     promise = await updateProductor(productorId, data);
   } catch (err) {
-    console.log([err]);
+    console.error([err]);
     setLoading(false);
     throw err;
   }

@@ -88,8 +88,12 @@ export const unsubscribe = gql`
       approved_artists {
         id
       }
-      cover
-      photo
+      cover {
+        mimified
+      }
+      photo {
+        mimified
+      }
       productor {
         id
         photo
