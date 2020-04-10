@@ -20,5 +20,6 @@ module.exports = {
     ],
     "rules": {
         "object-property-newline": "off",
+        "no-console": ["error", { "allow": ["error"] }]
     }
 };
