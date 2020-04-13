@@ -7,10 +7,8 @@ export const verifyAuth = async (token) => {
       `${process.env.AUTH_API_URI}/validate-token`,
       { token },
       {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-        },
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
       },
     );
   } catch (err) {
