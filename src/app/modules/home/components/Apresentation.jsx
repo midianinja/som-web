@@ -82,7 +82,7 @@ const Home = ({ onClick }) => (
     <Wrapper>
       <Content>
         <Logo src="/images/colorful-logo.svg" alt="Som, Sistema Operacional da Música" />
-        <Title>Sistema Operacional da Música</Title>
+        <Title>Sistema Operacional da Músicaa</Title>
         <Description>
           A plataforma para aceleração de oportunidades da música brasileira
         </Description>
