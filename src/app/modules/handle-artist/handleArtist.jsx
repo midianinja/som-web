@@ -140,7 +140,7 @@ const getState = (store) => {
   const [musicalStylesOptions, setMusicalStylesOptions] = useState([]);
   const [musicalStylePredict, setMusicalStylePredict] = useState('');
   const [musicalStyle, setMusicalStyle] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState({ show: false });
   const [about, setAbout] = useState(myArtist.about);
   const [phone, setPhone] = useState(myArtist.phone);
   const [city, setCity] = useState(myArtist.city);
@@ -304,7 +304,8 @@ const RegisterArtist = ({ history }) => {
       </FilesBackGround>
       <StepFormFooter
         nextAction={() => nextAction({ store, state, history })}
-        loading={state.loading.value}
+        loading={state.loading.value.show}
+        loadingText={state.loading.value.text}
         customStyle={state.visibles.value.files && state.artist.value.id ? `background-color: ${white};` : ''}
         skipAction={() => skipAction(state)}
       />

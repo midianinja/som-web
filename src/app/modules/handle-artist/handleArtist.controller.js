@@ -282,7 +282,7 @@ const mapArtistToApi = state => ({
 export const nextAction = async ({
   state, history, store,
 }) => {
-  state.loading.update(true);
+  state.loading.update({show: true, text: 'Validando informações' });
   // VALIDATION
   const artistToValidate = mapToValidate(state);
   const artistValidation = validateArtistForm(artistToValidate);
@@ -292,7 +292,7 @@ export const nextAction = async ({
       errors[e.attribute] = 'Valor inválido ou campo obrigatório';
     });
     state.artistStepErrors.update(errors);
-    state.loading.update(false);
+    state.loading.update({ show: false });
     return;
   }
 
@@ -300,9 +300,11 @@ export const nextAction = async ({
     let artistToApi = mapArtistToApi(state);
     let preRegister = state.artist.value;
     if (!preRegister) preRegister = await createArtist(artistToApi, store.state.user.id);
-
+    
     if (!state.avatar.value.urls && state.avatar.value && state.avatar.value.file) {
+      state.loading.update({show: true, text: 'Tratando imagens' });
       const base64 = await getBase64(state.avatar.value.file);
+      state.loading.update({show: true, text: 'Subindo imagens' });
       const newImage = await uploadImageToStorage({
         file: base64,
         id: preRegister.id,
@@ -315,6 +317,7 @@ export const nextAction = async ({
     }
 
     if (state.songs.value.length) {
+      state.loading.update({ show: true, text: 'Verificando musicas' });
       const songsToUpload = state.songs.value.filter(s => !(s.id));
       const promises = songsToUpload.map(song => new Promise((res, rej) => {
         createSong(song, preRegister.id)
@@ -324,6 +327,7 @@ export const nextAction = async ({
       const uploadedSongs = await Promise.all(promises);
       artistToApi.songs = uploadedSongs.concat(state.songs.value).map(s => s.id).filter(n => n);
     }
+    state.loading.update({ show: true, text: 'Atualizando artista' });
     const updatedArtist = await updateArtist(artistToApi, preRegister.id);
     if (
       state.visibles.value.artist
@@ -345,9 +349,9 @@ export const nextAction = async ({
       social: state.visibles.value.contact,
       files: state.visibles.value.social,
     });
-    state.loading.update(false);
+    state.loading.update({ show: false });
   } catch (err) {
-    state.loading.update(false);
+    state.loading.update({ show: false });
     throw err;
   }
 };

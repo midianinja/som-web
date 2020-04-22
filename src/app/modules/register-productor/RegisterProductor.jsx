@@ -157,7 +157,7 @@ const RegisterProductor = ({ history }) => {
   const [facebook, setFacebook] = useState('https://www.facebook.com/');
   const [id, setId] = useState('');
   const [instagram, setInstagram] = useState('https://www.instagram.com/');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState({ show: false });
   const [mainPhone, setMainPhone] = useState('');
   const [musicalStyles, setMusicalStyles] = useState([]);
   const [musicalStylesOptions, setMusicalStylesOptions] = useState([]);
@@ -296,7 +296,8 @@ const RegisterProductor = ({ history }) => {
             );
           }
         }}
-        loading={loading}
+        loading={loading.show}
+        loadingText={loading.text}
         skipAction={() => nextCallback({ visibles, setVisibles })}
       />
     </Form>

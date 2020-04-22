@@ -16,7 +16,6 @@ export async function authorize(username, password) {
     `${process.env.AUTH_API_URI}/login`,
     { username, password },
     {
-      'Access-Control-Allow-Origin': '*',
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',

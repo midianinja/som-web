@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { gray } from '../../settings/colors';
+import { gray, white } from '../../settings/colors';
 import PrimaryButton from '../atoms/PrimaryButton';
 import Loading from '../atoms/Loading.atom';
 
@@ -35,8 +35,13 @@ const LoadingWrapper = styled.div`
   text-align: center;
 `;
 
+const LoadingText = styled.div`
+  color: ${white};
+`;
+
 const StepFormFooter = ({
-  nextAction, skipAction, customStyle, loading,
+  nextAction, skipAction, customStyle,
+  loading, loadingText,
 }) => (
   <Wrapper customStyle={customStyle}>
     {
@@ -57,6 +62,7 @@ const StepFormFooter = ({
       ) : (
         <LoadingWrapper>
           <Loading />
+          {loadingText ? <LoadingText>{loadingText}</LoadingText> : null}
         </LoadingWrapper>
       )
     }
@@ -68,10 +74,12 @@ StepFormFooter.propTypes = {
   skipAction: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   customStyle: PropTypes.string,
+  loadingText: PropTypes.string,
 };
 
 StepFormFooter.defaultProps = {
   customStyle: '',
+  loadingText: '',
 };
 
 export default StepFormFooter;

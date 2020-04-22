@@ -264,13 +264,14 @@ export const handleEditProductor = async (
   visibles, setVisibles, setLocationId,
   dispatch, user, history,
 ) => {
-  setLoading(true);
   const productor = { ...values };
   let newImage = null;
 
   if (productor.avatar && productor.avatar.file) {
     try {
+      setLoading({ show: true, text: 'Tratando imagen' });
       const base64 = await getBase64(productor.avatar.file);
+      setLoading({ show: true, text: 'Subundo imagem' });
       newImage = await uploadImageToStorage({
         file: base64,
         id: userId,
@@ -284,6 +285,7 @@ export const handleEditProductor = async (
 
   let locationId = null;
   if (productor.city || productor.country.short_name) {
+    setLoading({ show: true, text: 'Salvando localização' });
     let locationResult;
     try {
       locationResult = await saveLocation(
@@ -304,10 +306,11 @@ export const handleEditProductor = async (
   let promise;
   const data = mapProductorToApi(productor, userId, locationId);
   try {
+    setLoading({ show: true, text: 'Atualizando Produtor' });
     promise = await updateProductor(productorId, data);
   } catch (err) {
     console.error([err]);
-    setLoading(false);
+    setLoading({ show: false });
     throw err;
   }
 
@@ -318,5 +321,5 @@ export const handleEditProductor = async (
   nextCallback({
     visibles, setVisibles, history, id: productorId,
   });
-  setLoading(false);
+  setLoading({ show: false });
 };

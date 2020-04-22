@@ -138,8 +138,8 @@ export const fetchEventsData = async ({
 };
 
 export const subscribeAction = async (
-  auth, user, event, dispatch, setDialog, setEvent,
-  history,
+  auth, user, event, dispatch, setDialog, setEvents,
+  history, events,
 ) => {
   if (!auth) {
     dispatch({ type: 'SHOW_LOGIN_MODAL' });
@@ -166,45 +166,45 @@ export const subscribeAction = async (
   }
 
   try {
-    await subscribeEvent(event.id, user.artist.id);
+    const updatedEvent = await subscribeEvent(event.id, user.artist.id);
+
+
+    setDialog({
+      title: 'Pronto!',
+      icon: '/icons/yeah.svg',
+      description: `Você está inscrito no festival ${event.name}. Fique ligado no SOM para receber novas informações.`,
+      disagreeText: 'Voltar para a home',
+      disagreeAction: () => {
+        allowBodyScroll();
+        setDialog({
+          title: '',
+        });
+      },
+    });
+
+    const updatedEvents = events.map((evt) => {
+      if (evt.id === event.id) return updatedEvent.data.subscribeEvent;
+      return evt;
+    });
+    setEvents(updatedEvents);
   } catch (err) {
     throw err;
   }
-
-  setDialog({
-    title: 'Pronto!',
-    icon: '/icons/yeah.svg',
-    description: `Você está inscrito no festival ${event.name}. Fique ligado no SOM para receber novas informações.`,
-    disagreeText: 'Voltar para a home',
-    disagreeAction: () => {
-      allowBodyScroll();
-      history.push('/');
-    },
-  });
-
-  const subs = [...event.subscribers];
-  subs.push(user.artists[0].id);
-  const newEvent = { ...event };
-  newEvent.subscribers = subs;
-  setEvent(newEvent);
 };
 
-export const unsubscribeAction = async (user, event, setEvent) => {
+export const unsubscribeAction = async (user, event, setEvents, events) => {
+  console.log('user:', user)
   try {
-    await unsubscribeEvent(event.id, user.artist.id);
+    const updatedEvent = await unsubscribeEvent(event.id, user.artist.id);
+    console.log('updatedEvent:', updatedEvent);
+    const updatedEvents = events.map((evt) => {
+      if (evt.id === event.id) return updatedEvent.data.unsubscribeEvent;
+      return evt;
+    });
+    setEvents(updatedEvents);
   } catch (err) {
     throw err;
   }
-
-  const index = event.subscribers
-    .findIndex(sub => sub === user.artist.id);
-
-  const subs = [...event.subscribers];
-  subs.splice(index, 1);
-
-  const newEvent = { ...event };
-  newEvent.subscribers = subs;
-  setEvent(newEvent);
 };
 
 export const fetchMusicalStyleOptions = (setMusicalStylesOptions) => {

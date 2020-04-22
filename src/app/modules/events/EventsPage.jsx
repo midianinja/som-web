@@ -8,7 +8,7 @@ import Dialog from '../../components/modals/Dialog.modal';
 import {
   fetchEventsData, initialLoading,
   fetchLocations, fetchMusicalStyleOptions,
-  handleMusicalStyleSelect, removeTagAction,
+  handleMusicalStyleSelect, removeTagAction, subscribeAction, unsubscribeAction,
 } from './EventsController';
 import InputGroup from '../../components/molecules/InputGroup';
 // import Input from '../../components/atoms/Input';
@@ -145,7 +145,7 @@ const MONTH_MODEL = [
 ];
 
 const EventPage = ({ history }) => {
-  const { state } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const [loading, setLoading] = useState({ ...initialLoading });
   const [events, setEvents] = useState([]);
   const [dialog, setDialog] = useState({});
@@ -180,10 +180,10 @@ const EventPage = ({ history }) => {
         logged={!!state.user}
       />
       <GlobalForm>
-        <LocationContainer>
+        {/* <LocationContainer>
           <LocationLabel>Eventos em</LocationLabel>
           <LocationValue>São paulo</LocationValue>
-        </LocationContainer>
+        </LocationContainer> */}
         {/* <InputGroup customStyle={searchStyle}>
           <InputIconWrapper>
             <SearchIcon
@@ -270,6 +270,14 @@ const EventPage = ({ history }) => {
           events.map(evt => (
             <EventCard
               loggedAs={state.connectionType}
+              unsubscribeAction={() => unsubscribeAction(
+                state.user, evt, setEvents, events,
+              )}
+              subscribeAction={() => subscribeAction(
+                state.auth, state.user,
+                evt, dispatch, setDialog,
+                setEvents, history, events,
+              )}
               customStyle="margin-bottom: 90px;"
               user={state.user}
               event={evt}
