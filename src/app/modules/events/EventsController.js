@@ -193,10 +193,8 @@ export const subscribeAction = async (
 };
 
 export const unsubscribeAction = async (user, event, setEvents, events) => {
-  console.log('user:', user)
   try {
     const updatedEvent = await unsubscribeEvent(event.id, user.artist.id);
-    console.log('updatedEvent:', updatedEvent);
     const updatedEvents = events.map((evt) => {
       if (evt.id === event.id) return updatedEvent.data.unsubscribeEvent;
       return evt;

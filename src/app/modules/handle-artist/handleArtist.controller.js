@@ -282,7 +282,7 @@ const mapArtistToApi = state => ({
 export const nextAction = async ({
   state, history, store,
 }) => {
-  state.loading.update({show: true, text: 'Validando informações' });
+  state.loading.update({ show: true, text: 'Validando informações' });
   // VALIDATION
   const artistToValidate = mapToValidate(state);
   const artistValidation = validateArtistForm(artistToValidate);
@@ -300,11 +300,11 @@ export const nextAction = async ({
     let artistToApi = mapArtistToApi(state);
     let preRegister = state.artist.value;
     if (!preRegister) preRegister = await createArtist(artistToApi, store.state.user.id);
-    
+
     if (!state.avatar.value.urls && state.avatar.value && state.avatar.value.file) {
-      state.loading.update({show: true, text: 'Tratando imagens' });
+      state.loading.update({ show: true, text: 'Tratando imagens' });
       const base64 = await getBase64(state.avatar.value.file);
-      state.loading.update({show: true, text: 'Subindo imagens' });
+      state.loading.update({ show: true, text: 'Subindo imagens' });
       const newImage = await uploadImageToStorage({
         file: base64,
         id: preRegister.id,
