@@ -174,10 +174,14 @@ export const nextCallback = ({
   visibles, setVisibles, history, id,
 }) => {
   const next = Object.entries(visibles).find(item => !item[1]);
+  console.log('next:', next)
   const newVisibles = { ...visibles };
+  console.log('newVisibles:', newVisibles)
 
   if (next) {
+    console.log('next[0]:', next[0]);
     newVisibles[next[0]] = true;
+    console.log('newVisibles:', newVisibles);
     setVisibles(newVisibles);
   } else {
     history.push(`/productor/${id}`);
