@@ -230,6 +230,12 @@ const RegisterProductor = ({ history }) => {
         setCountries, setStates, setState, setCity,
         productor, setCountry,
       });
+    } else {
+      fetchLocations({
+        setCountries, setStates, setState, setCity,
+        productor: {},
+        setCountry,
+      });
     }
   }, [state]);
 
