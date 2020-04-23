@@ -216,18 +216,22 @@ const renderUploadSongs = ({ state }) => {
 const RegisterArtist = ({ history }) => {
   const store = useContext(Store);
   const state = getState(store);
-  const oldArtist = (!!store.state.user && !!store.state.user.artist)
-    ? mapArtistToState(store.state.user.artist, state) : {
-      country: {},
-      state: {},
-      avatar: {},
-      musicalStyles: [],
-    };
+  let oldArtist = {
+    country: {},
+    state: {},
+    avatar: {},
+    musicalStyles: [],
+  };
 
   if (store.state.connectionType === 'productor') {
     history.push('/register-productor');
   }
 
+  useEffect(() => {
+    if (!!store.state.user && !!store.state.user.artist) {
+      oldArtist = mapArtistToState(store.state.user.artist, state);
+    }
+  }, [store.state.user]);
   useEffect(() => {
     if (store.state.connectionType === 'productor') {
       history.push('/register-productor');
@@ -314,3 +318,6 @@ const RegisterArtist = ({ history }) => {
 };
 
 export default withRouter(RegisterArtist);
+
+
+// 003204500981027

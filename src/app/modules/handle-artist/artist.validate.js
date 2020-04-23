@@ -5,12 +5,12 @@ export default ({
 }) => {
   const errors = [];
 
-  if (!avatar.url || !avatar.url.length) errors.push({ attribute: 'avatar' });
-  if (!musicalStyles.length) errors.push({ attribute: 'musicalStyles' });
+  if (!avatar.url) errors.push({ attribute: 'avatar' });
+  if (!musicalStyles || !musicalStyles.length) errors.push({ attribute: 'musicalStyles' });
   if (!city) errors.push({ attribute: 'city' });
   if (!state) errors.push({ attribute: 'state' });
   if (!country) errors.push({ attribute: 'country' });
-  if (!about.length) errors.push({ attribute: 'about' });
+  if (!about || !about.length) errors.push({ attribute: 'about' });
   if (!parseInt(integrants, 10) || parseInt(integrants, 10) < 1) errors.push({ attribute: 'integrants' });
   if (!name) errors.push({ attribute: 'name' });
 

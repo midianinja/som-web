@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Avatar from '../../atoms/Avatar.atom';
 import Socials from '../../organisms/Socials';
 import PrimaryButton from '../../atoms/PrimaryButton';
-import LinkButton from '../../atoms/LinkButton';
+// import LinkButton from '../../atoms/LinkButton';
 import {
   white, white30, purple, green,
 } from '../../../settings/colors';
@@ -186,7 +186,7 @@ function ArtistBasicInfo(props) {
             ? renderSubiscribeActions(isFollowing, followToggle)
             : renderEditAction(editAction)
         }
-        <LinkButton color="white">Ler release</LinkButton>
+        {/* <LinkButton color="white">Ler release</LinkButton> */}
       </ActionWrapper>
       <Socials
         facebook={facebook}

@@ -10,6 +10,7 @@ import {
   validatePhoneString, validateInstagramUrl, validateCommonString,
   validateYoutubeUrl, validateFacebookUrl, validateTwitterUrl,
 } from '../../utilities/rgxValidator.utils';
+import { getUser } from '../../main/MainRepository';
 
 const colors = [
   'purple',
@@ -286,6 +287,7 @@ export const nextAction = async ({
   // VALIDATION
   const artistToValidate = mapToValidate(state);
   const artistValidation = validateArtistForm(artistToValidate);
+  console.log('artistValidation:', artistValidation);
   if (artistValidation.error) {
     const errors = {};
     artistValidation.errors.forEach((e) => {
@@ -350,6 +352,11 @@ export const nextAction = async ({
       files: state.visibles.value.social,
     });
     state.loading.update({ show: false });
+    const userResult = await getUser(store.state.auth.ida);
+    store.dispatch({
+      type: 'SET_USER',
+      user: userResult.data.oneUser,
+    });
   } catch (err) {
     state.loading.update({ show: false });
     throw err;
@@ -381,15 +388,15 @@ export const handleACMusicalStyle = ({ value, state }) => {
 export const steps = [
   {
     title: 'Crie sua página de artista',
-    description: 'Salvamos seus dados automaticamente. Se quiser, termine seu cadastro depois.',
+    description: 'Os dados são salvos sempre que você clica em continuar. Se quiser, termine seu cadastro depois.',
   },
   {
     title: 'Crie sua página de artista',
-    description: 'Salvamos seus dados automaticamente. Se quiser, termine seu cadastro depois.',
+    description: 'Os dados são salvos sempre que você clica em continuar. Se quiser, termine seu cadastro depois.',
   },
   {
     title: 'Crie sua página de artista',
-    description: 'Salvamos seus dados automaticamente. Se quiser, termine seu cadastro depois.',
+    description: 'Os dados são salvos sempre que você clica em continuar. Se quiser, termine seu cadastro depois.',
   },
 ];
 
