@@ -74,6 +74,7 @@ export const fetchLocations = async ({
     });
   }
 
+  console.log('myCountries:', myCountries);
   setCountries(myCountries);
 };
 
@@ -223,31 +224,33 @@ export const handleCreateProductor = async (
   values, userId, setLoading, visibles,
   setVisibles, setLocationId, dispatch, user,
 ) => {
-  setLoading(true);
   const productor = { ...values };
   let newImage = null;
+  
+  // if (productor.avatar && productor.avatar.file) {
+  //   try {
+  //     setLoading({ show: true, text: 'Tratando imagen' });
+  //     const base64 = await getBase64(productor.avatar.file);
+  //     setLoading({ show: true, text: 'Subundo imagem' });
+  //     newImage = await uploadImageToStorage({
+  //       file: base64,
+  //       id: userId,
+  //     });
+  //   } catch (err) {
+  //     // try
+  //   }
 
-  if (productor.avatar && productor.avatar.file) {
-    try {
-      const base64 = await getBase64(productor.avatar.file);
-      newImage = await uploadImageToStorage({
-        file: base64,
-        id: userId,
-      });
-    } catch (err) {
-      // try
-    }
-
-    productor.avatar = newImage.data.data.urls.mimified;
-  }
+  //   productor.avatar = newImage.data.data.urls.mimified;
+  // }
 
   let promise;
   const data = mapProductorToApi(productor, userId);
   try {
+    setLoading({ show: true, text: 'Atualizando Produtor' });
     promise = await createProductor(data);
   } catch (err) {
     console.error([err]);
-    setLoading(false);
+    setLoading({ show: false });
     throw err;
   }
 
@@ -256,7 +259,7 @@ export const handleCreateProductor = async (
     user: { ...user, productor: promise.data.createProductor },
   });
   nextCallback({ visibles, setVisibles });
-  setLoading(false);
+  setLoading({ show: false });
 };
 
 export const handleEditProductor = async (
@@ -267,21 +270,21 @@ export const handleEditProductor = async (
   const productor = { ...values };
   let newImage = null;
 
-  if (productor.avatar && productor.avatar.file) {
-    try {
-      setLoading({ show: true, text: 'Tratando imagen' });
-      const base64 = await getBase64(productor.avatar.file);
-      setLoading({ show: true, text: 'Subundo imagem' });
-      newImage = await uploadImageToStorage({
-        file: base64,
-        id: userId,
-      });
-    } catch (err) {
-      // to be try
-    }
+  // if (productor.avatar && productor.avatar.file) {
+  //   try {
+  //     setLoading({ show: true, text: 'Tratando imagen' });
+  //     const base64 = await getBase64(productor.avatar.file);
+  //     setLoading({ show: true, text: 'Subundo imagem' });
+  //     newImage = await uploadImageToStorage({
+  //       file: base64,
+  //       id: userId,
+  //     });
+  //   } catch (err) {
+  //     // to be try
+  //   }
 
-    productor.avatar = { url: newImage.data.data.urls.mimified };
-  }
+  //   productor.avatar = { url: newImage.data.data.urls.mimified };
+  // }
 
   let locationId = null;
   if (productor.city || productor.country.short_name) {

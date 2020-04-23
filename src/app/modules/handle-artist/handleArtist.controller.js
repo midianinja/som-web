@@ -91,6 +91,7 @@ export const deleteTag = ({ id, musicalStyles }) => {
 
 export const handleStateSelect = async ({ data, state }) => {
   state.state.update(data);
+  state.artistStepErrors.update({ ...state.artistStepErrors.value, state: '' });
 };
 
 export const handleCountrySelect = async ({ data, state, myState }) => {
