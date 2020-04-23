@@ -339,6 +339,7 @@ export const nextAction = async ({
     ) {
       history.push(`/artist/${preRegister.id}`);
     }
+
     state.artist.update(updatedArtist);
     state.songs.update(updatedArtist.songs || []);
     state.avatar.update({
@@ -352,12 +353,15 @@ export const nextAction = async ({
       files: state.visibles.value.social,
     });
     state.loading.update({ show: false });
+    console.log('store.state.auth.ida:', store.state.auth.ida);
     const userResult = await getUser(store.state.auth.ida);
+    console.log('userResult:', userResult);
     store.dispatch({
       type: 'SET_USER',
       user: userResult.data.oneUser,
     });
   } catch (err) {
+    console.log('err:', [err])
     state.loading.update({ show: false });
     throw err;
   }
