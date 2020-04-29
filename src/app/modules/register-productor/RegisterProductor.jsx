@@ -256,7 +256,7 @@ const RegisterProductor = ({ history }) => {
   }
 
   return (
-    <Form onSubmit={e => e.preventDefault()}>
+    <Form autocomplete="no" onSubmit={e => e.preventDefault()}>
       <StepFormHeader color={purple} items={steps} index={step} />
       <FormWrapper>
         {
@@ -304,7 +304,7 @@ const RegisterProductor = ({ history }) => {
         }}
         loading={loading.show}
         loadingText={loading.text}
-        skipAction={() => nextCallback({ visibles, setVisibles })}
+        skipAction={() => nextCallback({ history, visibles, setVisibles })}
       />
     </Form>
   );

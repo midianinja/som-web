@@ -174,14 +174,10 @@ export const nextCallback = ({
   visibles, setVisibles, history, id,
 }) => {
   const next = Object.entries(visibles).find(item => !item[1]);
-  console.log('next:', next)
   const newVisibles = { ...visibles };
-  console.log('newVisibles:', newVisibles)
 
   if (next) {
-    console.log('next[0]:', next[0]);
     newVisibles[next[0]] = true;
-    console.log('newVisibles:', newVisibles);
     setVisibles(newVisibles);
   } else {
     history.push(`/productor/${id}`);
@@ -236,7 +232,7 @@ export const handleCreateProductor = async (
     try {
       setLoading({ show: true, text: 'Tratando imagen' });
       const base64 = await getBase64(productor.avatar.file);
-      setLoading({ show: true, text: 'Subundo imagem' });
+      setLoading({ show: true, text: 'Subindo imagem' });
       newImage = await uploadImageToStorage({
         file: base64,
         id: userId,
@@ -279,7 +275,7 @@ export const handleEditProductor = async (
     try {
       setLoading({ show: true, text: 'Tratando imagen' });
       const base64 = await getBase64(productor.avatar.file);
-      setLoading({ show: true, text: 'Subundo imagem' });
+      setLoading({ show: true, text: 'Subindo imagem' });
       newImage = await uploadImageToStorage({
         file: base64,
         id: userId,
