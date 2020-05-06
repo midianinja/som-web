@@ -23,7 +23,6 @@ export const handleCountrySelect = async ({
       },
     },
   });
-  console.log('countries:', countries)
   const states = countries.data.allStates.map(c => ({
     label: c.name,
     short_name: c.short_name,
@@ -75,7 +74,6 @@ export const fetchLocations = async ({
     });
   }
 
-  console.log('myCountries:', myCountries);
   setCountries(myCountries);
 };
 
@@ -227,7 +225,7 @@ export const handleCreateProductor = async (
 ) => {
   const productor = { ...values };
   let newImage = null;
-  
+
   if (productor.avatar && productor.avatar.file) {
     try {
       setLoading({ show: true, text: 'Tratando imagen' });
