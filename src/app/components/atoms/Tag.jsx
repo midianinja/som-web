@@ -24,7 +24,7 @@ const TagWrapper = styled.label`
   display: inline-block;
   padding: 2px 5px;
   padding-right: 12px;
-  background-color: ${(props) => getColor(props.color)};
+  background-color: ${props => getColor(props.color)};
   color: ${white};
   text-transform: lowercase;
   border-radius: 8px;
