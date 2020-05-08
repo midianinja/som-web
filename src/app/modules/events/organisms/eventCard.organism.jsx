@@ -165,7 +165,7 @@ function EventCard({
                   onBlur={() => null}
                   onMouseOver={() => setHover(true)}
                   onMouseOut={() => setHover(false)}
-                  onClick={() => unsubscribeAction}
+                  onClick={unsubscribeAction}
                   customStyle={customButtomStyl}
                 >
                   { !hover ? 'Inscrito' : 'Desinscrever'}

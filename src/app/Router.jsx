@@ -16,6 +16,7 @@ import Terms from './modules/terms/Terms';
 import Private from './Private';
 import Main from './main/Main';
 import MyEventsPage from './modules/my-events/MyEventsPage';
+import EventCuratorship from './modules/event-curatorship/EventCuratorship';
 
 const history = createBrowserHistory();
 history.listen(() => {});
@@ -35,6 +36,7 @@ const AppRouter = ({ children }) => (
         <Private>
           <Switch>
             <Route path="/register-artist" component={() => <HandleArtist />} />
+            <Route path="/events-curatorship" component={() => <EventCuratorship />} />
             <Route path="/register-productor" component={() => <RegisterProdctor />} />
             <Route path="/register-event" component={() => <RegisterEvent />} />
             <Route path="/my-events" component={() => <MyEventsPage />} />

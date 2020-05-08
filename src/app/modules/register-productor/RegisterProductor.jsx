@@ -157,7 +157,7 @@ const RegisterProductor = ({ history }) => {
   const [facebook, setFacebook] = useState('https://www.facebook.com/');
   const [id, setId] = useState('');
   const [instagram, setInstagram] = useState('https://www.instagram.com/');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState({ show: false });
   const [mainPhone, setMainPhone] = useState('');
   const [musicalStyles, setMusicalStyles] = useState([]);
   const [musicalStylesOptions, setMusicalStylesOptions] = useState([]);
@@ -230,6 +230,12 @@ const RegisterProductor = ({ history }) => {
         setCountries, setStates, setState, setCity,
         productor, setCountry,
       });
+    } else {
+      fetchLocations({
+        setCountries, setStates, setState, setCity,
+        productor: {},
+        setCountry,
+      });
     }
   }, [state]);
 
@@ -250,7 +256,7 @@ const RegisterProductor = ({ history }) => {
   }
 
   return (
-    <Form onSubmit={e => e.preventDefault()}>
+    <Form autocomplete="no" onSubmit={e => e.preventDefault()}>
       <StepFormHeader color={purple} items={steps} index={step} />
       <FormWrapper>
         {
@@ -296,8 +302,9 @@ const RegisterProductor = ({ history }) => {
             );
           }
         }}
-        loading={loading}
-        skipAction={() => nextCallback({ visibles, setVisibles })}
+        loading={loading.show}
+        loadingText={loading.text}
+        skipAction={() => nextCallback({ history, visibles, setVisibles })}
       />
     </Form>
   );

@@ -41,7 +41,7 @@ export const fetchLoggedUser = async (ida, dispatch, history) => {
   try {
     response = await getUser(ida);
   } catch (err) {
-    console.log('err: ', { err });
+    console.error('err: ', { err });
     throw err;
   }
 
@@ -56,6 +56,8 @@ export const fetchLoggedUser = async (ida, dispatch, history) => {
   } else if (response.data.oneUser.artist) {
     typeConnection = 'artist';
   }
+
+  typeConnection = window.localStorage.getItem('som@type');
 
   dispatch({
     type: 'SET_LOGIN_TYPE',

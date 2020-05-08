@@ -142,7 +142,10 @@ const EventPage = ({ match, history }) => {
     let subscribed = false;
 
     if (u && u.artist) {
-      if (e.subscribers.find(({ id }) => u.artist.id === id)) {
+      if (
+        e.subscribers.find(({ id }) => u.artist.id === id)
+        || e.approved_artists.find(({ id }) => u.artist.id === id)
+      ) {
         subscribed = true;
       }
     }

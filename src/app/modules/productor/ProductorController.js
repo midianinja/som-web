@@ -41,7 +41,7 @@ export const fetchProductorInstaImages = async (instaUri, setInstaPics) => {
   const instaname = instaUri.split('/').reverse()[0];
 
   try {
-    promise = await fetch(`${process.env.STORAGE_API_URI}/insta/photos/${instaname}`);
+    promise = await fetch(`${process.env.INSTAGRAM_API_URI}/photos/${instaname}`);
   } catch (e) {
     throw e;
   }

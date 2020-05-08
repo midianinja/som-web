@@ -15,10 +15,7 @@ const Cover = styled.div`
     width: 100%;
     height: 100%;
     background: ${getGradient()};
-    ${(props) => {
-      const { cover } = props;
-      return cover ? `background-image: url('${cover}');` : '';
-    }}
+    ${({ cover }) => (cover ? `background-image: url('${cover}');` : '')}
     background-position: center;
     background-size: cover;
     top: 0;
@@ -36,6 +33,7 @@ const Cover = styled.div`
     left: 0;
     z-index: -1;
   }
+  ${props => props.customStyle}
 `;
 
 export default Cover;

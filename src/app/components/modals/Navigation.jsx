@@ -29,14 +29,20 @@ const getLinks = (user, connectionType) => {
       href: '/events',
       label: 'Eventos',
     },
-    // {
-    //   href: '/artists',
-    //   label: 'Artistas',
-    // },
     {
-      href: '/productors',
-      label: 'Produtores',
+      href: '/my-events',
+      label: 'Meus Eventos',
+      hide: !user || connectionType !== 'productor',
     },
+    {
+      href: '/events-curatorship',
+      label: 'Avaliar inscrições',
+      hide: !user || connectionType !== 'productor',
+    },
+    // {
+    //   href: '/productors',
+    //   label: 'Produtores',
+    // },
   ];
 
   // if (connectionType === 'productor') {
@@ -282,7 +288,6 @@ function Navigation({ history }) {
               onClick={() => {
                 window.localStorage.setItem('som@ida', '');
                 window.localStorage.setItem('som@token', '');
-
                 dispatch({
                   type: 'SET_USER',
                   user: null,

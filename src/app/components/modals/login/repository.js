@@ -12,7 +12,16 @@ export async function getUser(ida) {
 }
 
 export async function authorize(username, password) {
-  return axios.post(`${process.env.AUTH_API_URI}/login`, { username, password });
+  return axios.post(
+    `${process.env.AUTH_API_URI}/login`,
+    { username, password },
+    {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+    },
+  );
 }
 
 export async function getIDA(ida) {

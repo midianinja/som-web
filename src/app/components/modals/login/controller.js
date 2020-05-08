@@ -21,6 +21,7 @@ export async function login(
         };
         const errorAction = obj[error];
         if (!errorAction) dataError.username = 'Erro inesperado.';
+        else errorAction();
       } else {
         dataError.username = 'Erro inesperado.';
         dataError.password = 'Erro inesperado.';

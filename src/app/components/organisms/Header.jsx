@@ -260,7 +260,7 @@ function Header({ customStyle, history }) {
               if (type === 'productor' && !state.user.productor) {
                 history.push('/register-productor');
               }
-
+              window.localStorage.setItem('som@type', type);
               dispatch({ type: 'SET_LOGIN_TYPE', data: type });
               setDropdown(false);
             }}

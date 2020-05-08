@@ -67,7 +67,7 @@ export const fetchEventsData = async ({
     });
   } catch (err) {
     // tratar esse erro
-    console.log([err]);
+    console.error([err]);
     setLoading({ ...loading, event: loadingStatus.ERROR });
     throw err;
   }

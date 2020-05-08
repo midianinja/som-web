@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "babel-node index.js",
-    "dev": "eslint src --fix && nodemon index.js --exec babel-node",
+    "dev": "nodemon index.js --exec babel-node",
     "build": "webpack --progress",
     "build:production": "NODE_ENV=production webpack",
     "lint": "eslint src",
