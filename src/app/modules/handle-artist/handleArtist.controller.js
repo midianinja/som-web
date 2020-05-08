@@ -288,7 +288,6 @@ export const nextAction = async ({
   // VALIDATION
   const artistToValidate = mapToValidate(state);
   const artistValidation = validateArtistForm(artistToValidate);
-  console.log('artistValidation:', artistValidation);
   if (artistValidation.error) {
     const errors = {};
     artistValidation.errors.forEach((e) => {
@@ -354,15 +353,13 @@ export const nextAction = async ({
       files: state.visibles.value.social,
     });
     state.loading.update({ show: false });
-    console.log('store.state.auth.ida:', store.state.auth.ida);
     const userResult = await getUser(store.state.auth.ida);
-    console.log('userResult:', userResult);
     store.dispatch({
       type: 'SET_USER',
       user: userResult.data.oneUser,
     });
   } catch (err) {
-    console.log('err:', [err])
+    console.error('err:', [err]);
     state.loading.update({ show: false });
     throw err;
   }

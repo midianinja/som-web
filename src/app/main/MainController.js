@@ -13,9 +13,8 @@ export const verify = async (dispatch, setIDA) => {
   let verified;
   try {
     verified = await verifyAuth(token);
-    console.log('verified:', verified);
   } catch (err) {
-    console.log('err:', [err])
+    console.error('err:', [err]);
     dispatch({ type: 'STOP_VERIFY_LOADING' });
     throw err;
   }

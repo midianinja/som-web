@@ -253,7 +253,7 @@ const resetRateAction = ({
 
 function ArtistCurationshipModal({
   artist, closeModal, resetSubscriptionAction,
-  reproveAction, approveAction,
+  reproveAction, approveAction, history,
 }) {
   const [songs, setSongs] = useState([]);
   const [playPress, setPlayPress] = useState('');
@@ -287,7 +287,7 @@ function ArtistCurationshipModal({
                   <ArtistDescription>
                     {artist.about}
                   </ArtistDescription>
-                  <ProfileLink>Ver perfil completo</ProfileLink>
+                  <ProfileLink onClick={() => history.push(`/artist/${artist.id}`)}>Ver perfil completo</ProfileLink>
                 </ArtistInfos>
               </ArtistWrapper>
             </HeaderWrapper>
@@ -316,9 +316,9 @@ function ArtistCurationshipModal({
   );
 }
 
-// const historyShape = {
-//   push: PropTypes.func,
-// };
+const historyShape = {
+  push: PropTypes.func,
+};
 
 const artistShape = {
   cover: PropTypes.object,
@@ -326,26 +326,19 @@ const artistShape = {
   approved: PropTypes.string,
 };
 
-// const routerParamsShape = {
-//   pathname: PropTypes.string,
-//   search: PropTypes.string,
-// };
-
 curatorAction.propTypes = {
-  // history: PropTypes.shape(historyShape).isRequired,
   artist: PropTypes.shape(artistShape).isRequired,
   reproveAction: PropTypes.func.isRequired,
   approveAction: PropTypes.func.isRequired,
 };
 
 resetRateAction.propTypes = {
-  // history: PropTypes.shape(historyShape).isRequired,
   artist: PropTypes.shape(artistShape).isRequired,
   resetSubscriptionAction: PropTypes.func.isRequired,
 };
 
 ArtistCurationshipModal.propTypes = {
-  // history: PropTypes.shape(historyShape).isRequired,
+  history: PropTypes.shape(historyShape).isRequired,
   artist: PropTypes.shape(artistShape).isRequired,
   closeModal: PropTypes.func.isRequired,
   reproveAction: PropTypes.func.isRequired,
