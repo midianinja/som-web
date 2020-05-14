@@ -20,7 +20,7 @@ import ApprovedEvents from '../../components/templates/artist/ApprovedEvents';
 
 const ArtistWrapper = styled.div`
   width: 100%;
-  min-height: 150vh;
+  min-height: 100vh;
   background-color: ${black};
   color: white;
   text-align: center;
