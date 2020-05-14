@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import { black } from '../../settings/colors';
+import { black, tertiaryBlack } from '../../settings/colors';
 import ProductorBasicInfo from '../../components/templates/productor/ProductorBasicInfo';
 import Cover from '../../components/atoms/Cover';
 import Header from '../../components/organisms/Header';
@@ -10,10 +10,12 @@ import InstagramMedia from '../../components/molecules/InstagramMedias';
 // import Store from '../../store/Store';
 import { fetchProductorData, fetchProductorInstaImages } from './ProductorController';
 import DialogModal from '../../components/modals/Dialog.modal';
+import Eventcard from '../event/components/event-card/EventCard';
+import PrimaryButton from '../../components/atoms/PrimaryButton';
 
 const ProductorWrapper = styled.div`
   width: 100%;
-  min-height: 150vh;
+  min-height: 100vh;
   background-color: ${black};
   color: white;
   text-align: center;
@@ -58,6 +60,7 @@ const Content = styled.div`
 const ColumnWrapper = styled.div`
   display: inline-block;
   width: 100%;
+  margin-top: 130px;
   vertical-align: top;
 
   @media (min-width: 1024px) {
@@ -77,10 +80,50 @@ const EventsTitle = styled.h2`
 const NotEvents = styled.span`
   font-weight: 200;
 `;
+const EventsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const renderEvents = (events, more, setMore) => {
+  let sortedEvents = events.sort((a, b) => (
+    new Date(+a.event_date) > new Date(+b.event_date) ? 1 : -1));
+
+  if (!more) sortedEvents = sortedEvents.slice(0, 2);
+
+  return (
+    <EventsContainer>
+      {
+        sortedEvents.map(event => (
+          <Eventcard
+            key={event.id}
+            customStyle="margin: 20px 0;"
+            event={event}
+          />
+        ))
+      }
+      {
+        events.length > 2 ? (
+          <PrimaryButton
+            customStyle={`
+              background-color: ${tertiaryBlack};
+              width: 200px;
+            `}
+            onClick={() => setMore(!more)}
+          >
+            {more ? 'Carregar menos eventos' : 'Carregar mais eventos'}
+          </PrimaryButton>
+        ) : null
+      }
+    </EventsContainer>
+  );
+};
 
 function ProductorPage({ match }) {
   // const { state } = useContext(Store);
   const [productorLoading, setProductorLoading] = useState(false);
+  const [more, setMore] = useState(false);
   const [productor, setProductor] = useState(null);
   const [instagramPhotos, setInstagramPhotos] = useState(false);
   const [alertModal, setAlertModal] = useState({
@@ -145,7 +188,11 @@ function ProductorPage({ match }) {
         />
         <ColumnWrapper>
           <EventsTitle>Eventos</EventsTitle>
-          <NotEvents>Nenhum evento cadastrado</NotEvents>
+          {
+            productor.events.length ? (
+              renderEvents(productor.events, more, setMore)
+            ) : <NotEvents>Nenhum evento cadastrado</NotEvents>
+          }
           {
             instagramPhotos.length ? (
               <InstagramMedia
