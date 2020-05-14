@@ -66,9 +66,17 @@ const ArtistInfos = styled.div`
 `;
 
 const ArtistName = styled.h2`
-  font-size: 2.2em;
+  font-size: 1.5em;
+  max-height: 50px;
+  overflow: hidden;
+  text-align: left;
   line-height: 2.2em;
   color: ${white};
+  white-space: normal;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 `;
 
 const Label = styled.p`
@@ -112,6 +120,12 @@ const ArtistDescription = styled.p`
   overflow: hidden;
   text-align: left;
   font-weight: 100;
+  width: 100%;
+  white-space: normal;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const ProfileLink = styled.a`
@@ -137,7 +151,7 @@ const HeaderWrapper = styled.div`
 const Container = styled.div`
   width: 100%;
   max-width: 500px;
-  text-align center;
+  text-align: center;
   border-radius: 20px;
   max-height: 600px;
   overflow-x: hidden;
@@ -155,7 +169,7 @@ const Container = styled.div`
 
 const WhiteZone = styled.div`
   width: 100%;
-  text-align center;
+  text-align: center;
   background-color: ${white};
   align-self: flex-end;
   display: flex;
