@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Avatar from '../../atoms/Avatar.atom';
@@ -117,11 +118,11 @@ const LerMoreBio = styled.span`
 
 function ProductorBasicInfo(props) {
   const {
-    name, avatar, musicalStyles, location,
+    name, avatar, musicalStyles, address,
     about, facebook, instagram, twitter,
-    email,
+    email, isMyProductor, history,
   } = props;
-
+  
   const [lerMoreBio, setLerMoreBio] = useState(false);
   const colors = [
     'purple', 'green', 'orange',
@@ -134,13 +135,13 @@ function ProductorBasicInfo(props) {
         <ProductorReference>Produtor</ProductorReference>
         <Title>{name}</Title>
         {
-          location ? (
+          address ? (
             <LocationWrapper>
               <LocationText>
-                {`${location.city}, ${location.state}`}
+                {`${address.city}, ${address.state}`}
               </LocationText>
               <LocationCountryText>
-                {location.country}
+                {address.country}
               </LocationCountryText>
             </LocationWrapper>
           ) : null
@@ -171,10 +172,11 @@ function ProductorBasicInfo(props) {
       />
       <PrimaryButton
         onClick={() => {
-          window.open(`mailto:${email}`, '_blank');
+          if (!isMyProductor) return window.open(`mailto:${email}`, '_blank');
+          return history.push('/register-productor');
         }}
       >
-        Enviar e-mail
+        {isMyProductor ? 'Editar Perfil' : 'Enviar e-mail'}
       </PrimaryButton>
       <Socials
         facebook={facebook}
@@ -196,9 +198,15 @@ const locationShape = {
   country: PropTypes.string,
 };
 
+const historyShape = {
+  push: PropTypes.func.isRequired,
+};
+
 ProductorBasicInfo.propTypes = {
+  history: PropTypes.shape(historyShape).isRequired,
+  isMyProductor: PropTypes.bool.isRequired,
   musicalStyles: PropTypes.arrayOf(PropTypes.shape(musicalShape)).isRequired,
-  location: PropTypes.shape(locationShape),
+  address: PropTypes.shape(locationShape),
   email: PropTypes.string.isRequired,
   about: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
@@ -209,7 +217,7 @@ ProductorBasicInfo.propTypes = {
 };
 
 ProductorBasicInfo.defaultProps = {
-  location: null,
+  address: null,
 };
 
-export default ProductorBasicInfo;
+export default withRouter(ProductorBasicInfo);

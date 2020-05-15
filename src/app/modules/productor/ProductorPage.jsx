@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ import { fetchProductorData, fetchProductorInstaImages } from './ProductorContro
 import DialogModal from '../../components/modals/Dialog.modal';
 import Eventcard from '../event/components/event-card/EventCard';
 import PrimaryButton from '../../components/atoms/PrimaryButton';
+import Store from '../../store/Store';
 
 const ProductorWrapper = styled.div`
   width: 100%;
@@ -120,8 +121,9 @@ const renderEvents = (events, more, setMore) => {
   );
 };
 
-function ProductorPage({ match }) {
+function ProductorPage({ match, history }) {
   // const { state } = useContext(Store);
+  const { state } = useContext(Store);
   const [productorLoading, setProductorLoading] = useState(false);
   const [more, setMore] = useState(false);
   const [productor, setProductor] = useState(null);
@@ -166,6 +168,10 @@ function ProductorPage({ match }) {
     );
   }
 
+  const isMyProductor = state.user && state.user.productor.id === productor.id;
+  console.log('productor:', productor)
+  console.log('isMyProductor:', isMyProductor);
+
   return (
     <ProductorWrapper>
       <Header />
@@ -183,8 +189,10 @@ function ProductorPage({ match }) {
           twitter={productor.twitter}
           instagram={productor.instagram}
           musicalStyles={productor.musical_styles}
-          location={productor.location}
+          address={productor.location}
           email={productor.contact_email}
+          isMyProductor={isMyProductor}
+          history={history}
         />
         <ColumnWrapper>
           <EventsTitle>Eventos</EventsTitle>
@@ -215,16 +223,16 @@ const paramsShape = {
   id: PropTypes.string,
 };
 
-// const historyShape = {
-//   push: PropTypes.func.isRequired,
-// };
+const historyShape = {
+  push: PropTypes.func.isRequired,
+};
 
 const matchShape = {
   params: PropTypes.shape(paramsShape).isRequired,
 };
 
 ProductorPage.propTypes = {
-  // history: PropTypes.shape(historyShape).isRequired,
+  history: PropTypes.shape(historyShape).isRequired,
   match: PropTypes.shape(matchShape).isRequired,
 };
 

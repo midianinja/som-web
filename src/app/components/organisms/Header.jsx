@@ -114,7 +114,7 @@ const RightGroup = styled.div`
 `;
 
 const Avatar = styled.img`
-  width: 32px;
+  width: auto;
   height: 32px;
   border-radius: 50%;
   background: ${getGradient()};
