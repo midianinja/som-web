@@ -1,33 +1,19 @@
-import { allowBodyScroll } from '../../../utilities/scroll';
 import { subscribeMutation } from './subscribeButton.mutations';
 import apollo from '../../../apollo';
 
 export const subscribeAction = async ({
-  user, event, dispatch, setDialog,
-  history, onSuccess, onError,
+  user, event, dispatch, setLoading,
+  onSuccess, onError,
 }) => {
   try {
+    setLoading(true);
     if (!user) {
       dispatch({ type: 'SHOW_LOGIN_MODAL' });
       return;
     }
 
     if (!user.artist) {
-      setDialog({
-        title: 'Cadastro incompleto',
-        icon: '/icons/guita-error.svg',
-        description: 'Para se escrever em eventos, você precisa preencher os dados obrigatórios.',
-        agreeText: 'Cadastrar',
-        disagreeText: 'Voltar',
-        confirmAction: () => {
-          allowBodyScroll();
-          history.push('/register-artist');
-        },
-        disagreeAction: () => {
-          allowBodyScroll();
-          setDialog({});
-        },
-      });
+      setLoading(false);
       return;
     }
 
@@ -45,18 +31,10 @@ export const subscribeAction = async ({
       throw err;
     }
 
-    setDialog({
-      title: 'Pronto!',
-      icon: '/icons/yeah.svg',
-      description: `Você está inscrito no festival ${event.name}. Fique ligado no SOM para receber novas informações.`,
-      disagreeText: 'Ver mais eventos',
-      disagreeAction: () => {
-        allowBodyScroll();
-        setDialog({});
-      },
-    });
+    setLoading(false);
     onSuccess({ subscribed_at_event: resp.data.subscribeEvent });
   } catch (err) {
+    setLoading(false);
     onError({ error: err });
   }
 };

@@ -4,11 +4,11 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import Store from '../../../store/Store';
 import PrimaryButton from '../../atoms/PrimaryButton';
+import Loading from '../../atoms/Loading.atom';
 import {
   buttonCustomStyle, subscribedButtonStyle, unsubscribedButtonStyle,
 } from './subscribeButton.style';
 import { subscribeAction } from './subscribe.controller';
-import DialogModal from '../../modals/Dialog.modal';
 
 const unixTime = unixtime => new Date(+unixtime).toISOString().slice(0, 19);
 
@@ -18,7 +18,7 @@ function SubscribeButton({
 }) {
   const { state, dispatch } = useContext(Store);
   const [isArtist, setIsArtist] = useState(false);
-  const [dialog, setDialog] = useState({});
+  const [loading, setLoading] = useState(false);
   const [isClosingSubscribe, setIsClosingSubscribe] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -45,6 +45,7 @@ function SubscribeButton({
   }, [state.user, event, state.connectionType]);
 
   if (state.connectionType !== 'artist') return null;
+  if (loading) return (<Loading />);
   if (isClosingSubscribe) {
     return (
       <PrimaryButton
@@ -67,7 +68,7 @@ function SubscribeButton({
             onError,
             event,
             dispatch,
-            setDialog,
+            setLoading,
             onSuccess,
             history,
           });
@@ -78,19 +79,6 @@ function SubscribeButton({
       >
         {isSubscribed ? 'Inscrito' : 'Inscrever-se'}
       </PrimaryButton>
-      {dialog.title ? (
-        <DialogModal
-          closeAction={() => setDialog({})}
-          isOpen
-          title={dialog.title}
-          icon={dialog.icon}
-          description={dialog.description}
-          agreeText={dialog.agreeText}
-          disagreeText={dialog.disagreeText}
-          confirmAction={dialog.confirmAction}
-          disagreeAction={dialog.disagreeAction}
-        />
-      ) : null}
     </>
   );
 }

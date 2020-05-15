@@ -87,7 +87,7 @@ const EventsContainer = styled.div`
   flex-direction: column;
 `;
 
-const renderEvents = (events, more, setMore) => {
+const renderEvents = (events, more, setMore, onSuccess) => {
   let sortedEvents = events.sort((a, b) => (
     new Date(+a.event_date) > new Date(+b.event_date) ? 1 : -1));
 
@@ -101,6 +101,7 @@ const renderEvents = (events, more, setMore) => {
             key={event.id}
             customStyle="margin: 40px 0;"
             event={event}
+            onSubscribe={onSuccess}
           />
         ))
       }
@@ -125,6 +126,7 @@ function ProductorPage({ match, history }) {
   // const { state } = useContext(Store);
   const { state } = useContext(Store);
   const [productorLoading, setProductorLoading] = useState(false);
+  const [update, setUpdate] = useState(false);
   const [more, setMore] = useState(false);
   const [productor, setProductor] = useState(null);
   const [instagramPhotos, setInstagramPhotos] = useState(false);
@@ -145,6 +147,9 @@ function ProductorPage({ match, history }) {
       fetchProductorData(id, setProductor, setProductorLoading, setAlertModal);
     }
   }, []);
+  useEffect(() => {
+    if (productor) fetchProductorData(productor.id, setProductor, () => '', setAlertModal);
+  }, [update]);
 
   useEffect(() => {
     if (productor && productor.instagram) {
@@ -196,7 +201,12 @@ function ProductorPage({ match, history }) {
           <EventsTitle>Eventos</EventsTitle>
           {
             productor.events.length ? (
-              renderEvents(productor.events, more, setMore)
+              renderEvents(
+                productor.events,
+                more,
+                setMore,
+                () => setUpdate(!update),
+              )
             ) : <NotEvents>Nenhum evento cadastrado</NotEvents>
           }
           {
