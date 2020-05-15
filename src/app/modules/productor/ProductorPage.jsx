@@ -169,8 +169,6 @@ function ProductorPage({ match, history }) {
   }
 
   const isMyProductor = state.user && state.user.productor.id === productor.id;
-  console.log('productor:', productor)
-  console.log('isMyProductor:', isMyProductor);
 
   return (
     <ProductorWrapper>

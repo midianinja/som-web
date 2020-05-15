@@ -52,7 +52,7 @@ const InputIconWrapper = styled.div`
 `;
 
 const SearchIcon = styled.img`
-  width: 20px
+  width: 20px;
 `;
 
 const EventsContainer = styled.section`
@@ -82,7 +82,7 @@ const AddButton = styled.a`
   display: flex;
   padding: 15px 25px;
   font-size: .8em;
-  color: ${white}
+  color: ${white};
   background-color: ${tertiaryBlack};
   align-items: center;
   border-radius: 40px;
