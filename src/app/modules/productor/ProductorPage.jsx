@@ -72,7 +72,7 @@ const ColumnWrapper = styled.div`
 
 const EventsTitle = styled.h2`
   text-align: left;
-  font-size: 2.375rem;
+  font-size: 1.3rem;
   font-weight: 400;
   margin-top: 40px;
   margin-bottom: 20px;
@@ -99,7 +99,7 @@ const renderEvents = (events, more, setMore) => {
         sortedEvents.map(event => (
           <Eventcard
             key={event.id}
-            customStyle="margin: 20px 0;"
+            customStyle="margin: 40px 0;"
             event={event}
           />
         ))

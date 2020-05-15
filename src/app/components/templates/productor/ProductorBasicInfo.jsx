@@ -122,7 +122,7 @@ function ProductorBasicInfo(props) {
     about, facebook, instagram, twitter,
     email, isMyProductor, history,
   } = props;
-  
+
   const [lerMoreBio, setLerMoreBio] = useState(false);
   const colors = [
     'purple', 'green', 'orange',

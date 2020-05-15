@@ -2,18 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import EventDate from '../../../../components/atoms/EventDate';
-import PrimaryButton from '../../../../components/atoms/PrimaryButton';
 import {
-  Container,
-  EventInfoWrapper, Link,
-  ButtonWrapper, buttonCustomStyle,
-  ClosingDateTimer, ClockIcon, coverStyle,
+  Container, EventInfoWrapper, Link,
+  ButtonWrapper, ClosingDateTimer,
+  ClockIcon, coverStyle,
 } from './eventCard.style';
 import Cover from '../../../../components/atoms/Cover';
+import SubscribeButton from '../../../../components/organisms/subscribe-button/SubscribeButton';
 
 const unixTime = unixtime => new Date(+unixtime).toISOString().slice(0, 19);
 
-const Eventcard = ({ event, customStyle }) => {
+const Eventcard = ({ event, customStyle, onSubscribe }) => {
   const closingDateInstance = moment(new Date(unixTime(event.subscribe_closing_date)));
   const todayInstance = moment();
 
@@ -23,7 +22,6 @@ const Eventcard = ({ event, customStyle }) => {
   const isClosingSubscribe = diffDays <= 0 && diffHours <= 0;
   const newDate = new Date(unixTime(event.event_date));
   const dateInstance = moment(newDate);
-  // const [hover, setHover] = useState(false);
   const dayLabel = diffDays === 1 ? 'dia' : 'dias';
   const hourLabel = diffHours === 1 ? 'hora' : 'horas';
 
@@ -35,7 +33,7 @@ const Eventcard = ({ event, customStyle }) => {
       <Cover
         customStyle={coverStyle}
         cover={event.cover.mimified}
-        >
+      >
         <EventInfoWrapper>
           <EventDate
             day={dateInstance.date()}
@@ -44,22 +42,18 @@ const Eventcard = ({ event, customStyle }) => {
           />
           <Link href={`/event/${event.id}`}>{event.name}</Link>
           <ButtonWrapper>
+            <SubscribeButton
+              event={event}
+              onError={() => ''}
+              onSuccess={onSubscribe}
+            />
             {
-              isClosingSubscribe ? (
-                <PrimaryButton disabled size="small" customStyle={buttonCustomStyle}>
-                  Inscrições encerradas
-                </PrimaryButton>
-              ) : (
-                <>
-                  <PrimaryButton size="small" customStyle={buttonCustomStyle}>
-                    Inscrever-se
-                  </PrimaryButton>
-                  <ClosingDateTimer>
-                    <ClockIcon src="/icons/clock.svg" alt="icone de um relógio" />
-                    {label}
-                  </ClosingDateTimer>
-                </>
-              )
+              !isClosingSubscribe ? (
+                <ClosingDateTimer>
+                  <ClockIcon src="/icons/clock.svg" alt="icone de um relógio" />
+                  {label}
+                </ClosingDateTimer>
+              ) : null
             }
           </ButtonWrapper>
         </EventInfoWrapper>
@@ -77,10 +71,11 @@ const eventShape = {
 Eventcard.propTypes = {
   event: PropTypes.shape(eventShape).isRequired,
   customStyle: PropTypes.string,
-}
+  onSubscribe: PropTypes.func.isRequired,
+};
 
 Eventcard.defaultProps = {
   customStyle: '',
-}
+};
 
 export default Eventcard;

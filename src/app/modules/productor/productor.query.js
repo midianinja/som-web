@@ -16,6 +16,15 @@ export const oneProductorQuery = gql`
         event_date
         name
         subscribe_closing_date
+        subscribers {
+          id
+        }
+        approved_artists {
+          id
+        }
+        reproved_artists {
+          id
+        }
         cover {
           mimified
           thumbnail
