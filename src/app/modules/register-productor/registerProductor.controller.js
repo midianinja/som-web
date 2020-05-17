@@ -221,7 +221,7 @@ const saveLocation = (id, values) => {
 
 export const handleCreateProductor = async (
   values, userId, setLoading, visibles, setId,
-  setVisibles, setLocationId, dispatch, user,
+  setVisibles, setLocationId, dispatch, user, history,
 ) => {
   const productor = { ...values };
   let newImage = null;
@@ -258,7 +258,7 @@ export const handleCreateProductor = async (
     action: 'SET_USER',
     user: { ...user, productor: promise.data.createProductor },
   });
-  nextCallback({ visibles, setVisibles });
+  nextCallback({ visibles, setVisibles, history, });
   setLoading({ show: false });
 };
 

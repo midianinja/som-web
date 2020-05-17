@@ -291,7 +291,7 @@ const RegisterProductor = ({ history }) => {
         nextAction={() => {
           if (!id) {
             handleCreateProductor(
-              values, state.user.id, setLoading, visibles,
+              values, state.user.id, setLoading, visibles, history,
               setVisibles, setLocationId, dispatch, state.user,
             );
           } else {
