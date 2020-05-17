@@ -220,7 +220,7 @@ const saveLocation = (id, values) => {
 };
 
 export const handleCreateProductor = async (
-  values, userId, setLoading, visibles,
+  values, userId, setLoading, visibles, setId,
   setVisibles, setLocationId, dispatch, user,
 ) => {
   const productor = { ...values };
@@ -252,7 +252,8 @@ export const handleCreateProductor = async (
     setLoading({ show: false });
     throw err;
   }
-
+  console.log('promise.data.updateProductor.id:', promise.data.createProductor.id);
+  setId(promise.data.createProductor.id);
   dispatch({
     action: 'SET_USER',
     user: { ...user, productor: promise.data.createProductor },
@@ -264,7 +265,7 @@ export const handleCreateProductor = async (
 export const handleEditProductor = async (
   values, productorId, userId, setLoading,
   visibles, setVisibles, setLocationId,
-  dispatch, user, history,
+  dispatch, user, history, 
 ) => {
   const productor = { ...values };
   let newImage = null;
