@@ -290,10 +290,10 @@ const RegisterProductor = ({ history }) => {
       <StepFormFooter
         nextAction={() => {
           if (!id) {
-            handleCreateProductor(
-              values, state.user.id, setLoading, visibles, history,
-              setVisibles, setLocationId, dispatch, state.user, setId,
-            );
+            handleCreateProductor({
+              values, userId: state.user.id, setLoading, visibles, history,
+              setVisibles, setLocationId, dispatch, user: state.user, setId,
+            });
           } else {
             handleEditProductor(
               values, id, state.user.id, setLoading,

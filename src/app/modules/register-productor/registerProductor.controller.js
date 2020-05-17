@@ -219,10 +219,10 @@ const saveLocation = (id, values) => {
   return createLocation(location);
 };
 
-export const handleCreateProductor = async (
+export const handleCreateProductor = async ({
   values, userId, setLoading, visibles, setId,
   setVisibles, setLocationId, dispatch, user, history,
-) => {
+}) => {
   const productor = { ...values };
   let newImage = null;
 
