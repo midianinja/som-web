@@ -236,6 +236,7 @@ export const handleCreateProductor = async (
         id: userId,
       });
     } catch (err) {
+      console.error('err:', [err]);
       // try
     }
 
@@ -252,13 +253,12 @@ export const handleCreateProductor = async (
     setLoading({ show: false });
     throw err;
   }
-  console.log('promise.data.updateProductor.id:', promise.data.createProductor.id);
   setId(promise.data.createProductor.id);
   dispatch({
     action: 'SET_USER',
     user: { ...user, productor: promise.data.createProductor },
   });
-  nextCallback({ visibles, setVisibles, history, });
+  nextCallback({ visibles, setVisibles, history });
   setLoading({ show: false });
 };
 
