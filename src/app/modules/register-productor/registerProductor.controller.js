@@ -178,8 +178,8 @@ export const nextCallback = ({
     newVisibles[next[0]] = true;
     setVisibles(newVisibles);
   } else {
-    history.push(`/productor/${id}`);
     setVisibles(newVisibles);
+    history.push(`/productor/${id}`);
   }
 };
 
@@ -221,7 +221,7 @@ const saveLocation = (id, values) => {
 
 export const handleCreateProductor = async ({
   values, userId, setLoading, visibles, setId,
-  setVisibles, setLocationId, dispatch, user, history,
+  setVisibles, dispatch, user, history,
 }) => {
   const productor = { ...values };
   let newImage = null;
@@ -257,15 +257,15 @@ export const handleCreateProductor = async ({
   dispatch({
     action: 'SET_USER',
     user: { ...user, productor: promise.data.createProductor },
+    nextCallback({ visibles, setVisibles, history });
   });
-  nextCallback({ visibles, setVisibles, history });
   setLoading({ show: false });
 };
 
 export const handleEditProductor = async (
   values, productorId, userId, setLoading,
   visibles, setVisibles, setLocationId,
-  dispatch, user, history, 
+  dispatch, user, history,
 ) => {
   const productor = { ...values };
   let newImage = null;
@@ -321,8 +321,8 @@ export const handleEditProductor = async (
     action: 'SET_USER',
     user: { ...user, productor: promise.data.updateProductor },
   });
+  setLoading({ show: false });
   nextCallback({
     visibles, setVisibles, history, id: productorId,
   });
-  setLoading({ show: false });
 };

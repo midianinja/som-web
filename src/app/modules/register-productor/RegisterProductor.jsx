@@ -220,7 +220,7 @@ const RegisterProductor = ({ history }) => {
     }
 
     fetchMusicalStyleOptions(setMusicalStylesOptions);
-  }, []);
+  }, [state.user]);
 
   useEffect(() => {
     if (state.user && state.user.productor) {
