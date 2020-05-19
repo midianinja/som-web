@@ -152,7 +152,8 @@ function ListInput(props) {
           customStyle="background-color: transparent;"
           placeholder={selected.label || placeholder}
           onBlur={e => e.preventDefault()}
-          value={value}
+          value={value || ''}
+          autoComplete="new-password"
           onChange={e => handleChange(e, setValue, options, setList)}
         />
       </Label>

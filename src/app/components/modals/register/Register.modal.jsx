@@ -213,7 +213,7 @@ function Register({ history }) {
           />
         </ExitWrapper>
         <Form
-          autoComplete="off"
+          autocomplete="new-password"
           onSubmit={(e) => {
             e.preventDefault();
             const { submit, next } = field;

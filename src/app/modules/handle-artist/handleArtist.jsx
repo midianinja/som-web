@@ -289,7 +289,7 @@ const RegisterArtist = ({ history }) => {
   });
 
   return (
-    <Form onSubmit={e => e.preventDefault()}>
+    <Form autocomplete={false} onSubmit={e => e.preventDefault()}>
       <StepFormHeader items={steps} index={state.step.value} />
       <FormWrapper>
         {renderArtistInfos({

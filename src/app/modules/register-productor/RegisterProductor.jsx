@@ -256,7 +256,7 @@ const RegisterProductor = ({ history }) => {
   }
 
   return (
-    <Form autocomplete="no" onSubmit={e => e.preventDefault()}>
+    <Form autocomplete={false} onSubmit={e => e.preventDefault()}>
       <StepFormHeader color={purple} items={steps} index={step} />
       <FormWrapper>
         {

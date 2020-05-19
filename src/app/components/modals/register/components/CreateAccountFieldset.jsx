@@ -47,11 +47,13 @@ function CreateAccountFieldset(
         error={parentError.username}
       >
         <Input
-          id='username'
-          type='text'
-          placeholder=''
+          id="username"
+          type="text"
+          placeholder=""
           value={username}
+          name={`username ${Math.random()}`}
           onChange={setUsername}
+          autoComplete="off"
         />
       </InputGroup>
       <InputGroup
@@ -64,6 +66,7 @@ function CreateAccountFieldset(
         <PasswordInput
           id="password"
           placeholder=""
+          autoComplete="off"
           value={password}
           onChange={setPassword}
           point={getPasswordPoint(password)}
