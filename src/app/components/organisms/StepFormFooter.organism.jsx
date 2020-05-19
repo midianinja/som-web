@@ -41,7 +41,7 @@ const LoadingText = styled.div`
 
 const StepFormFooter = ({
   nextAction, skipAction, customStyle,
-  loading, loadingText,
+  loading, loadingText, noShowSkip,
 }) => (
   <Wrapper customStyle={customStyle}>
     {
@@ -50,14 +50,18 @@ const StepFormFooter = ({
           <PrimaryButton onClick={nextAction} customStyle="padding: 20px 0; height: auto; letter-spacing: 3px;">
             CONTINUAR
           </PrimaryButton>
-          <PrimaryButton
-            onClick={skipAction}
-            color="transparent"
-            customStyle={`padding: 20px 0; height: auto; color: ${gray}`}
-          >
-            Pular etapa
-            <Icon src="/icons/right_arrow.svg" />
-          </PrimaryButton>
+          {
+            !noShowSkip ? (
+              <PrimaryButton
+                onClick={skipAction}
+                color="transparent"
+                customStyle={`padding: 20px 0; height: auto; color: ${gray}`}
+              >
+                Pular etapa
+                <Icon src="/icons/right_arrow.svg" />
+              </PrimaryButton>
+            ) : null
+          }
         </Footer>
       ) : (
         <LoadingWrapper>
@@ -75,11 +79,13 @@ StepFormFooter.propTypes = {
   loading: PropTypes.bool.isRequired,
   customStyle: PropTypes.string,
   loadingText: PropTypes.string,
+  noShowSkip: PropTypes.bool,
 };
 
 StepFormFooter.defaultProps = {
   customStyle: '',
   loadingText: '',
+  noShowSkip: false,
 };
 
 export default StepFormFooter;

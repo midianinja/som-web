@@ -311,7 +311,8 @@ const RegisterArtist = ({ history }) => {
         loading={state.loading.value.show}
         loadingText={state.loading.value.text}
         customStyle={state.visibles.value.files && state.artist.value.id ? `background-color: ${white};` : ''}
-        skipAction={() => skipAction(state)}
+        noShowSkip={state.visibles.value.files}
+        skipAction={() => skipAction(state.visibles.update, state.visibles.value)}
       />
     </Form>
   );
