@@ -255,8 +255,8 @@ export const handleCreateProductor = async ({
   }
   setId(promise.data.createProductor.id);
   dispatch({
-    action: 'SET_USER',
-    user: { ...user, productor: promise.data.createProductor },
+    type: 'SET_USER',
+    user: { ...JSON.parse(JSON.stringify(user)), productor: promise.data.createProductor },
   });
   nextCallback({ visibles, setVisibles, history });
   setLoading({ show: false });
@@ -318,7 +318,7 @@ export const handleEditProductor = async (
   }
 
   dispatch({
-    action: 'SET_USER',
+    type: 'SET_USER',
     user: { ...user, productor: promise.data.updateProductor },
   });
   setLoading({ show: false });
