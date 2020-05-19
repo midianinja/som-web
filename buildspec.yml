@@ -14,12 +14,12 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - echo salve $REPOSITORY_URI
-      - docker build --build-arg NODE_ENV=$NODE_ENV --build-arg GRAPH_API_URI=$GRAPH_API_URI --build-arg AUTH_API_URI=$AUTH_API_URI --build-arg STORAGE_API_URI=$STORAGE_API_URI --build-arg INSTAGRAM_API_URI=$INSTAGRAM_API_URI --build-arg PORT=$PORT -t som-web-prod:$NODE_ENV .
-      - docker tag som-web-prod:$NODE_ENV $REPOSITORY_URI:$NODE_ENV
+      - sudo docker build --build-arg NODE_ENV=$NODE_ENV --build-arg GRAPH_API_URI=$GRAPH_API_URI --build-arg AUTH_API_URI=$AUTH_API_URI --build-arg STORAGE_API_URI=$STORAGE_API_URI --build-arg INSTAGRAM_API_URI=$INSTAGRAM_API_URI --build-arg PORT=$PORT -t som-web-prod:$NODE_ENV .
+      - sudo docker tag som-web-prod:$NODE_ENV $REPOSITORY_URI:$NODE_ENV
   post_build:
     commands:
       - echo Build completed on `date`
-      - docker push $REPOSITORY_URI:$NODE_ENV
+      - sudo docker push $REPOSITORY_URI:$NODE_ENV
       - echo Changing the Dockerrun file to the correct for this environment
       - sed -i 's/DUMMY_ENV/'$NODE_ENV'/g' Dockerrun.aws.json
 artifacts:
