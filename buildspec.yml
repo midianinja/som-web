@@ -8,7 +8,7 @@ phases:
     commands:
       - echo Logging in to Amazon ECR
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - REPOSITORY_URI=032383812007.dkr.ecr.us-west-2.amazonaws.com/som-web
+      - REPOSITORY_URI=$REPOSITORY_URI
   build:
     commands:
       - echo Build started on `date`
