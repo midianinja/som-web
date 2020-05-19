@@ -257,8 +257,8 @@ export const handleCreateProductor = async ({
   dispatch({
     action: 'SET_USER',
     user: { ...user, productor: promise.data.createProductor },
-    nextCallback({ visibles, setVisibles, history });
   });
+  nextCallback({ visibles, setVisibles, history });
   setLoading({ show: false });
 };
 
