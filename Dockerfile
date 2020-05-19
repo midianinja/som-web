@@ -16,9 +16,7 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app/
 
 RUN cp -a /tmp/node_modules /usr/src/app/
-RUN NODE_ENV=production webpack
 
-ENV NODE_ENV=production
 ENV PORT=8080
 
 CMD ["npm", "start"]
