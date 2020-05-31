@@ -166,22 +166,6 @@ const LoginIcon = styled.img`
   height: 30px;
 `;
 
-const inputCustomStyle = `
-  display: none;
-  background-color: ${black};
-  margin-left: 20px;
-  height: 36px;
-  max-width: 312px;
-  
-  &:focus {
-    margin-left: 20px;
-  }
-
-  @media (min-width: 768px) {
-    display: inline-block;
-  }
-`;
-
 function Header({ customStyle, history }) {
   const { state, dispatch } = useContext(Store);
   const [dropdown, setDropdown] = useState(false);

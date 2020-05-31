@@ -58,6 +58,8 @@ const Content = styled.div`
   display: inline-block;
   position: relative;
   max-width: 1024px;
+  padding-left: 15px;
+  padding-right: 15px;
   margin-top: -60px;
   z-index: 2;
 
@@ -72,7 +74,7 @@ const ColumnWrapper = styled.div`
   width: 100%;
   vertical-align: top;
   @media (min-width: 1024px) {
-    max-width: calc(100% - 454px);
+    max-width: calc(100% - 484px);
     margin-left: 484px;
   }
 `;

@@ -45,7 +45,6 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  max-width: 320px;
   margin-top: 45px;
 `;
 
@@ -58,6 +57,8 @@ const Logo = styled.img`
 const Title = styled.h1`
   font-size: 2.875em;
   font-weight: 400;
+  width: 100%;
+  max-width: 520px;
   line-height: 1.2127659574em;
   color: ${white};
   margin-bottom: 20px;
@@ -65,6 +66,7 @@ const Title = styled.h1`
 
 const Description = styled.h2`
   font-size: 1em;
+  max-width: 520px;
   font-weight: 300;
   line-height: 1.625em;
   color: ${white};
@@ -73,6 +75,7 @@ const Description = styled.h2`
 
 const buttonStyle = `
   width: 100%;
+  max-width: 320px;
   height: 38px;
   font-weight: 400;
 `;

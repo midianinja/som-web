@@ -48,7 +48,7 @@ function GeneralInformationFieldset({
       </InputGroup>
       <Row2Column>
         <InputGroup
-          label={values.eventDate ? 'Data de evento' : ''}
+          label={values.eventDate ? 'Data do evento' : ''}
           error={eventErrors.eventDate}
           info="Exemplo: 20/04/2020"
         >
@@ -61,14 +61,14 @@ function GeneralInformationFieldset({
           />
         </InputGroup>
         <InputGroup
-          label={values.endEventDate ? 'Data de término' : ''}
+          label={values.endEventDate ? 'Término' : ''}
           error={eventErrors.endEventDate}
           info="Exemplo: 20/04/2020"
         >
           <Input
             id="endEventDate"
             type="tel"
-            placeholder="Data de término"
+            placeholder="Término"
             value={VMasker.toPattern(values.endEventDate, '99/99/9999')}
             onChange={handleEndEventDateChange}
           />
@@ -121,7 +121,7 @@ const valuesShape = {
   closingSubscribeDate: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   openingsNumber: PropTypes.string.isRequired,
-  descriptionMaxLength: PropTypes.number,
+  descriptionMaxLength: PropTypes.number.isRequired,
 };
 
 const errorsShape = {};
@@ -138,6 +138,7 @@ GeneralInformationFieldset.propTypes = {
   handleClosingSubscribeDateChange: PropTypes.func.isRequired,
   handleDescriptionChange: PropTypes.func.isRequired,
   handleOpeningsNumberChange: PropTypes.func.isRequired,
+  descriptionMaxLength: PropTypes.number.isRequired,
 };
 
 export default GeneralInformationFieldset;

@@ -58,8 +58,7 @@ export const fetchLoggedUser = async (ida, dispatch, history) => {
     typeConnection = 'artist';
   }
 
-  typeConnection = window.localStorage.getItem('som@type');
-
+  typeConnection = window.localStorage.getItem('som@type') || 'public';
   dispatch({
     type: 'SET_LOGIN_TYPE',
     data: typeConnection,
