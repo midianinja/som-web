@@ -173,7 +173,8 @@ function ProductorPage({ match, history }) {
     );
   }
 
-  const isMyProductor = state.user && state.user.productor.id === productor.id;
+  const isMyProductor = state.user
+    && state.user.productor && state.user.productor.id === productor.id;
 
   return (
     <ProductorWrapper>

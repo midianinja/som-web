@@ -54,12 +54,19 @@ const PasswordInputWrapper = styled.div`
 function PasswordInput(props) {
   const [visibility, setvisibility] = useState(false);
   const {
-    onChange, placeholder, value, width, point,
+    onChange, placeholder, value, width, point, id, autoComplete,
   } = props;
   const src = visibility ? '/icons/visibility_outlined.svg' : '/icons/visibility_off_outlined.svg';
   return (
     <PasswordInputWrapper width={width} point={point}>
-      <Input onChange={onChange} placeholder={placeholder} value={value} type={visibility ? 'text' : 'password'} />
+      <Input
+        onChange={onChange}
+        placeholder={placeholder}
+        value={value}
+        type={visibility ? 'text' : 'password'}
+        name={`${id} ${Math.random()}`}
+        autoComplete={autoComplete}
+      />
       <Icon src={src} alt="" onClick={() => setvisibility(!visibility)} />
     </PasswordInputWrapper>
   );
@@ -71,10 +78,13 @@ PasswordInput.propTypes = {
   value: PropTypes.string.isRequired,
   width: PropTypes.string,
   point: PropTypes.number,
+  id: PropTypes.string,
+  autoComplete: PropTypes.string,
 };
 
 PasswordInput.defaultProps = {
-  placeholder: '',
+  autoComplete: 'new-password',
+  id: '',
   width: 'auto',
   point: 10,
 };
