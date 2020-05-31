@@ -51,6 +51,7 @@ const Avatar = styled.img`
   background: ${getGradient()};
   cursor: pointer;
   margin-top: 24px;
+  object-fit: cover;
 
   @media (min-width: 1024px) {
     margin-top: 34px;

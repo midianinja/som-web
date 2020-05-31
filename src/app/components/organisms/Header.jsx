@@ -114,12 +114,13 @@ const RightGroup = styled.div`
 `;
 
 const Avatar = styled.img`
-  width: auto;
+  width: 32px;
   height: 32px;
   border-radius: 50%;
   background: ${getGradient()};
   cursor: pointer;
   user-select: none;
+  object-fit: cover;
 `;
 
 const Name = styled.h4`
