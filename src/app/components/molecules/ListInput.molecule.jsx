@@ -53,7 +53,6 @@ const Option = styled.li`
 const Options = styled.ul`
   position: absolute;
   background-color: #1a1a1a;
-  top: 37px;
   left: 0;
   width: 100%;
   overflow: hidden;
@@ -144,10 +143,11 @@ function ListInput(props) {
     setFocus(false);
   };
   return (
-    <SelectWrapper focus={focus} tabIndex={tabIndex}>
+    <SelectWrapper focus={focus && list.length} tabIndex={tabIndex}>
       <Label>
         <Input
           id={id}
+          autoComplete="off"
           onFocus={() => setFocus(true)}
           customStyle="background-color: transparent;"
           placeholder={selected.label || placeholder}
@@ -156,7 +156,7 @@ function ListInput(props) {
           onChange={e => handleChange(e, setValue, options, setList)}
         />
       </Label>
-      <Options focus={focus}>{renderOptions(list, select)}</Options>
+      <Options focus={focus && list.length}>{renderOptions(list, select)}</Options>
     </SelectWrapper>
   );
 }
