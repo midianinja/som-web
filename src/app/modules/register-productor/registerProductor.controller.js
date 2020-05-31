@@ -288,7 +288,7 @@ export const handleEditProductor = async (
 
   let locationId = null;
   if (productor.city || productor.country.short_name) {
-    setLoading({ show: true, text: 'Salvando localização' });
+    setLoading({ show: true, text: 'Salvando informações' });
     let locationResult;
     try {
       locationResult = await saveLocation(

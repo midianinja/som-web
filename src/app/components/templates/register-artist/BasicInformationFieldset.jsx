@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import VMask from 'vanilla-masker';
 import styled from 'styled-components';
 import Input from '../../atoms/Input';
 import TextArea from '../../atoms/TextArea';
@@ -111,13 +112,14 @@ function BasicInformationFieldset(props) {
               onChange={handleNameChange}
             />
           </InputGroup>
-          <InputGroup label={values.integrants ? 'Numero de Integrantes' : ''} error={artistStepErrors.integrants}>
+          <InputGroup label={values.integrants ? 'Número de Integrantes' : ''} error={artistStepErrors.integrants}>
             <Input
               id="integrants"
               type="tel"
-              placeholder="Integrantes"
+              placeholder="Número de integrantes"
+              autoComplete="off"
               onBlur={e => handleBlurChange(e, 'number', setArtistStepErrors, artistStepErrors)}
-              value={values.integrants}
+              value={VMask.toPattern(values.integrants || '', '999')}
               onChange={handleIntegrantsChange}
             />
           </InputGroup>
