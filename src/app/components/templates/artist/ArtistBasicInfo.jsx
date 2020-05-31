@@ -100,6 +100,7 @@ const About = styled.p`
   text-align: left;
   font-size: 0.8571428571em;
   transition-duration: 0.2s;
+  word-break: break-all;
 `;
 
 const ActionWrapper = styled.div`
