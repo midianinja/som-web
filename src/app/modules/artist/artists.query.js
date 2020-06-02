@@ -6,6 +6,11 @@ const oneArtistQuery = gql`
       id
       name
       about
+      user {
+        following_artists {
+          id
+        }
+      }
       approved_events {
         id
         name

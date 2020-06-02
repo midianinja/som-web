@@ -169,7 +169,7 @@ function ArtistPage({ match, history }) {
           spotify={artist.spotify_artist_link}
           instagram={artist.instagram}
           followers={follows.length}
-          following={0}
+          following={artist.user.following_artists.length}
           isFollowing={
             state.user && artist.follows
               ? follows.indexOf(state.user.id) !== -1

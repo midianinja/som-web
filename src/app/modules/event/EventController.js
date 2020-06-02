@@ -113,6 +113,7 @@ export const subscribeAction = async (
     disagreeText: 'Ver mais eventos',
     disagreeAction: () => {
       allowBodyScroll();
+      history.push('/events');
       setDialog({});
     },
   });

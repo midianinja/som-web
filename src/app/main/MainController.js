@@ -41,6 +41,7 @@ export const fetchLoggedUser = async (ida, dispatch, history) => {
 
   try {
     response = await getUser(ida);
+    console.log('response:', response);
   } catch (err) {
     console.error('err: ', { err });
     throw err;

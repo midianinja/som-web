@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { black, white, white30 } from '../../settings/colors';
 import Avatar from '../atoms/Avatar.atom';
+import { withRouter } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ const Container = styled.div`
   background: ${white};
   border: 1px solid ${white30};
   text-align: left;
+  cursor: pointer;
 `;
 
 const ImageWrapper = styled.div`
@@ -60,8 +62,8 @@ const avatarStyle = `
   height: 55px;
 `;
 
-const ProductorCard = ({ productor }) => (
-  <Container>
+const ProductorCard = ({ productor, history }) => (
+  <Container onClick={() => history.push(`/productor/${productor.id}`)}>
     <ImageWrapper>
       <Avatar customStyle={avatarStyle} src={productor.photo} />
       <ProductorTitle>Produtor</ProductorTitle>
@@ -102,8 +104,13 @@ const productorShape = {
   following: PropTypes.array,
 };
 
-ProductorCard.propTypes = {
-  productor: PropTypes.shape(productorShape).isRequired,
+const historyShape = {
+  push: PropTypes.func,
 };
 
-export default ProductorCard;
+ProductorCard.propTypes = {
+  productor: PropTypes.shape(productorShape).isRequired,
+  history: PropTypes.shape(historyShape).isRequired,
+};
+
+export default withRouter(ProductorCard);
