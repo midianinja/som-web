@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 import { black, white, white30 } from '../../settings/colors';
 import Avatar from '../atoms/Avatar.atom';
-import { withRouter } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;

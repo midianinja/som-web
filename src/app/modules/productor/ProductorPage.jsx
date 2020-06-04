@@ -129,7 +129,7 @@ function ProductorPage({ match, history }) {
   const [update, setUpdate] = useState(false);
   const [more, setMore] = useState(false);
   const [productor, setProductor] = useState(null);
-  const [instagramPhotos, setInstagramPhotos] = useState(false);
+  const [instagramPhotos, setInstagramPhotos] = useState([]);
   const [alertModal, setAlertModal] = useState({
     title: '',
     icon: '',
