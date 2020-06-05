@@ -54,12 +54,13 @@ const renderBasicInfos = ({
   setMusicalStyles, setAvatar, setCPF, setCNPJ,
 }) => (
   <BasicInformationFieldset
+    descriptionMaxLength={2000}
     deleteTag={id => deleteTag({
       id,
       tags: musicalStyles,
       setTag: setMusicalStyles,
     })}
-    handleAboutChange={({ target }) => setAbout(target.value)}
+    handleAboutChange={({ target }) => (target.value.length < 2000 ? setAbout(target.value) : null)}
     handleAvatarChange={({ target }) => setAvatar({
       url: URL.createObjectURL(target.files[0]),
       urls: null,
@@ -142,7 +143,7 @@ const renderSocialsFieldset = ({
   );
 };
 
-const RegisterProductor = () => {
+const RegisterProductor = ({ history }) => {
   const { state, dispatch } = useContext(Store);
   const [about, setAbout] = useState('');
   const [locationId, setLocationId] = useState('');
@@ -156,7 +157,7 @@ const RegisterProductor = () => {
   const [facebook, setFacebook] = useState('https://www.facebook.com/');
   const [id, setId] = useState('');
   const [instagram, setInstagram] = useState('https://www.instagram.com/');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState({ show: false });
   const [mainPhone, setMainPhone] = useState('');
   const [musicalStyles, setMusicalStyles] = useState([]);
   const [musicalStylesOptions, setMusicalStylesOptions] = useState([]);
@@ -179,13 +180,13 @@ const RegisterProductor = () => {
   const [youtube, setYoutube] = useState('https://www.youtube.com/');
 
   const mapContextToState = (productor) => {
-    setId(productor.id);
-    setName(productor.name);
-    setAbout(productor.description);
-    setAvatar({ url: productor.photo });
-    setCNPJ(productor.cnpj);
-    setCPF(productor.cpf);
-    setMusicalStyles(mapMusicalStyles(productor.musical_styles));
+    setId(productor.id || '');
+    setName(productor.name || '');
+    setAbout(productor.description || '');
+    setAvatar({ url: productor.photo || '' });
+    setCNPJ(productor.cnpj || '');
+    setCPF(productor.cpf || '');
+    setMusicalStyles(mapMusicalStyles(productor.musical_styles || []));
     setMainPhone(productor.main_phone || '');
     setSecondaryPhone(productor.secondary_phone || '');
     setWhatsapp(productor.whatsapp || '');
@@ -202,6 +203,17 @@ const RegisterProductor = () => {
     }
   };
 
+  if (state.connectionType === 'artist') {
+    history.push('/register-artist');
+  }
+
+  useEffect(() => {
+    if (state.connectionType === 'artist') {
+      history.push('/register-artist');
+    }
+  }, [state.connectionType]);
+
+
   useEffect(() => {
     if (state.user && state.user.productor) {
       mapContextToState(state.user.productor);
@@ -217,6 +229,12 @@ const RegisterProductor = () => {
       fetchLocations({
         setCountries, setStates, setState, setCity,
         productor, setCountry,
+      });
+    } else {
+      fetchLocations({
+        setCountries, setStates, setState, setCity,
+        productor: {},
+        setCountry,
       });
     }
   }, [state]);
@@ -238,7 +256,7 @@ const RegisterProductor = () => {
   }
 
   return (
-    <Form onSubmit={e => e.preventDefault()}>
+    <Form autocomplete={false} onSubmit={e => e.preventDefault()}>
       <StepFormHeader color={purple} items={steps} index={step} />
       <FormWrapper>
         {
@@ -272,20 +290,21 @@ const RegisterProductor = () => {
       <StepFormFooter
         nextAction={() => {
           if (!id) {
-            handleCreateProductor(
-              values, state.user.id, setLoading, visibles,
-              setVisibles, setLocationId, dispatch, state.user,
-            );
+            handleCreateProductor({
+              values, userId: state.user.id, setLoading, visibles, history,
+              setVisibles, setLocationId, dispatch, user: state.user, setId,
+            });
           } else {
             handleEditProductor(
               values, id, state.user.id, setLoading,
               visibles, setVisibles, setLocationId, dispatch,
-              state.user,
+              state.user, history,
             );
           }
         }}
-        loading={loading}
-        skipAction={() => nextCallback({ visibles, setVisibles })}
+        loading={loading.show}
+        loadingText={loading.text}
+        skipAction={() => nextCallback({ history, visibles, setVisibles })}
       />
     </Form>
   );

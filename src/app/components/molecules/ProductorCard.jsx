@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 import { black, white, white30 } from '../../settings/colors';
-import FollowersAndFollowing from '../atoms/FollowersAndFollowing';
-import PrimaryButton from '../atoms/PrimaryButton';
 import Avatar from '../atoms/Avatar.atom';
-import LinkButton from '../atoms/LinkButton';
 
 const Container = styled.div`
   display: flex;
@@ -16,6 +14,7 @@ const Container = styled.div`
   background: ${white};
   border: 1px solid ${white30};
   text-align: left;
+  cursor: pointer;
 `;
 
 const ImageWrapper = styled.div`
@@ -58,35 +57,35 @@ const ProductorText = styled.p`
   line-height: 1.5em;
 `;
 
-const ButtonsWrapper = styled.div`
-  width: 100%;
-  heigth: 30px;
-  display: flex;
-  margin-top: 10px;
-`;
-
 const avatarStyle = `
   width: 55px;
   height: 55px;
 `;
 
-const ProductorCard = ({ productor }) => (
-  <Container>
+const ProductorCard = ({ productor, history }) => (
+  <Container onClick={() => history.push(`/productor/${productor.id}`)}>
     <ImageWrapper>
       <Avatar customStyle={avatarStyle} src={productor.photo} />
       <ProductorTitle>Produtor</ProductorTitle>
     </ImageWrapper>
     <ProfileWrapper>
       <ProductorName>{productor.name}</ProductorName>
-      <ProductorCity>{`${productor.location.city}, ${productor.location.state}`}</ProductorCity>
+      {
+        productor.location
+          ? <ProductorCity>{`${productor.location.city}, ${productor.location.state}`}</ProductorCity>
+          : null
+      }
       <ProductorText>{productor.description}</ProductorText>
-
-      {/* <FollowersAndFollowing nFollowers={productor.followers.length} nFollowing={productor.following.length} /> */}
-      {/* <ButtonsWrapper> */}
-      {/* <PrimaryButton color='green'>seguir</PrimaryButton> */}
-      {/* <LinkButton customStyle="margin-left: 10px" color="black">ver mais eventos</LinkButton> */}
-      {/* </ButtonsWrapper> */}
-  
+      {/*
+        <FollowersAndFollowing
+          nFollowers={productor.followers.length}
+          nFollowing={productor.following.length}
+        />
+        <ButtonsWrapper>
+        <PrimaryButton color='green'>seguir</PrimaryButton>
+        <LinkButton customStyle="margin-left: 10px" color="black">ver mais eventos</LinkButton>
+        </ButtonsWrapper>
+      */}
     </ProfileWrapper>
   </Container>
 );
@@ -105,8 +104,13 @@ const productorShape = {
   following: PropTypes.array,
 };
 
-ProductorCard.propTypes = {
-  productor: PropTypes.shape(productorShape).isRequired,
+const historyShape = {
+  push: PropTypes.func,
 };
 
-export default ProductorCard;
+ProductorCard.propTypes = {
+  productor: PropTypes.shape(productorShape).isRequired,
+  history: PropTypes.shape(historyShape).isRequired,
+};
+
+export default withRouter(ProductorCard);

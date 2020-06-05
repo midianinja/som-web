@@ -13,13 +13,14 @@ import Store from '../../store/Store';
 import {
   fetchArtistData, fetchArtistInstaImages,
   fetchRelatedArtsts, follow, unfollow,
+  editSongAction, deleteSongAction,
 } from './ArtistController';
 import DialogModal from '../../components/modals/Dialog.modal';
 import ApprovedEvents from '../../components/templates/artist/ApprovedEvents';
 
 const ArtistWrapper = styled.div`
   width: 100%;
-  min-height: 150vh;
+  min-height: 100vh;
   background-color: ${black};
   color: white;
   text-align: center;
@@ -33,10 +34,12 @@ const CoverWrapper = styled.div`
   position: absolute;
   width: 100%;
   z-index: 0;
-  top: 0;
+  margin-top: 51px;
 
   @media (min-width: 1024px) {
     position: fixed;
+    top: 53px;
+    margin-top: 0px;
   }
 `;
 
@@ -87,8 +90,9 @@ function ArtistPage({ match, history }) {
     isOpen: false,
   });
   const [songs, setSongs] = useState([]);
-
   const { id } = match.params;
+
+  const isUserArtist = (state.user && state.user.artist && state.user.artist.id === id);
   useEffect(() => {
     if (id !== artist.id) {
       const fetchArtist = async () => {
@@ -156,7 +160,7 @@ function ArtistPage({ match, history }) {
       </CoverWrapper>
       <Content>
         <ArtistBasicInfo
-          isUserArtist={state.user && state.user.artist && state.user.artist.id === id}
+          isUserArtist={isUserArtist}
           avatar={artist.avatar_image ? artist.avatar_image.mimified : null}
           about={artist.about}
           name={artist.name}
@@ -165,7 +169,7 @@ function ArtistPage({ match, history }) {
           spotify={artist.spotify_artist_link}
           instagram={artist.instagram}
           followers={follows.length}
-          following={0}
+          following={artist.user.following_artists.length}
           isFollowing={
             state.user && artist.follows
               ? follows.indexOf(state.user.id) !== -1
@@ -176,7 +180,22 @@ function ArtistPage({ match, history }) {
         />
         <ColumnWrapper>
           {
-            songs.length ? <AudioPlayer tracks={songs} /> : null
+            songs.length ? (
+              <AudioPlayer
+                editAction={data => editSongAction({
+                  ...data,
+                  artist: state.user.artist,
+                  setSongs,
+                })}
+                deleteAction={data => deleteSongAction({
+                  ...data,
+                  artist: state.user.artist,
+                  setSongs,
+                })}
+                isUserArtist={isUserArtist}
+                tracks={songs}
+              />
+            ) : null
           }
           <InstagramMedia
             images={instagramPhotos}
@@ -201,11 +220,23 @@ function ArtistPage({ match, history }) {
               null
             )
           } */}
-          <ApprovedEvents
-            eventClick={evtId => history.push(`/event/${evtId}`)}
-            events={artist.approved_events}
-          />
-          <MoreArtist history={history} artists={relatedArtsts} />
+          {
+            artist.approved_events.length
+              ? (
+                <ApprovedEvents
+                  eventClick={evtId => history.push(`/event/${evtId}`)}
+                  events={artist.approved_events}
+                />
+              )
+              : null
+          }
+          {
+            relatedArtsts.length
+              ? (
+                <MoreArtist history={history} artists={relatedArtsts} />
+              )
+              : null
+          }
         </ColumnWrapper>
       </Content>
     </ArtistWrapper>

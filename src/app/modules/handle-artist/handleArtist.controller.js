@@ -10,6 +10,7 @@ import {
   validatePhoneString, validateInstagramUrl, validateCommonString,
   validateYoutubeUrl, validateFacebookUrl, validateTwitterUrl,
 } from '../../utilities/rgxValidator.utils';
+import { getUser } from '../../main/MainRepository';
 
 const colors = [
   'purple',
@@ -90,6 +91,7 @@ export const deleteTag = ({ id, musicalStyles }) => {
 
 export const handleStateSelect = async ({ data, state }) => {
   state.state.update(data);
+  state.artistStepErrors.update({ ...state.artistStepErrors.value, state: '' });
 };
 
 export const handleCountrySelect = async ({ data, state, myState }) => {
@@ -282,7 +284,7 @@ const mapArtistToApi = state => ({
 export const nextAction = async ({
   state, history, store,
 }) => {
-  state.loading.update(true);
+  state.loading.update({ show: true, text: 'Validando informações' });
   // VALIDATION
   const artistToValidate = mapToValidate(state);
   const artistValidation = validateArtistForm(artistToValidate);
@@ -292,7 +294,7 @@ export const nextAction = async ({
       errors[e.attribute] = 'Valor inválido ou campo obrigatório';
     });
     state.artistStepErrors.update(errors);
-    state.loading.update(false);
+    state.loading.update({ show: false });
     return;
   }
 
@@ -302,7 +304,9 @@ export const nextAction = async ({
     if (!preRegister) preRegister = await createArtist(artistToApi, store.state.user.id);
 
     if (!state.avatar.value.urls && state.avatar.value && state.avatar.value.file) {
+      state.loading.update({ show: true, text: 'Tratando imagens' });
       const base64 = await getBase64(state.avatar.value.file);
+      state.loading.update({ show: true, text: 'Subindo imagens' });
       const newImage = await uploadImageToStorage({
         file: base64,
         id: preRegister.id,
@@ -315,6 +319,7 @@ export const nextAction = async ({
     }
 
     if (state.songs.value.length) {
+      state.loading.update({ show: true, text: 'Verificando musicas' });
       const songsToUpload = state.songs.value.filter(s => !(s.id));
       const promises = songsToUpload.map(song => new Promise((res, rej) => {
         createSong(song, preRegister.id)
@@ -324,6 +329,7 @@ export const nextAction = async ({
       const uploadedSongs = await Promise.all(promises);
       artistToApi.songs = uploadedSongs.concat(state.songs.value).map(s => s.id).filter(n => n);
     }
+    state.loading.update({ show: true, text: 'Atualizando artista' });
     const updatedArtist = await updateArtist(artistToApi, preRegister.id);
     if (
       state.visibles.value.artist
@@ -333,6 +339,7 @@ export const nextAction = async ({
     ) {
       history.push(`/artist/${preRegister.id}`);
     }
+
     state.artist.update(updatedArtist);
     state.songs.update(updatedArtist.songs || []);
     state.avatar.update({
@@ -345,9 +352,15 @@ export const nextAction = async ({
       social: state.visibles.value.contact,
       files: state.visibles.value.social,
     });
-    state.loading.update(false);
+    state.loading.update({ show: false });
+    const userResult = await getUser(store.state.auth.ida);
+    store.dispatch({
+      type: 'SET_USER',
+      user: userResult.data.oneUser,
+    });
   } catch (err) {
-    state.loading.update(false);
+    console.error('err:', [err]);
+    state.loading.update({ show: false });
     throw err;
   }
 };
@@ -377,15 +390,15 @@ export const handleACMusicalStyle = ({ value, state }) => {
 export const steps = [
   {
     title: 'Crie sua página de artista',
-    description: 'Salvamos seus dados automaticamente. Se quiser, termine seu cadastro depois.',
+    description: 'Os dados são salvos sempre que você clica em continuar. Se quiser, termine seu cadastro depois.',
   },
   {
     title: 'Crie sua página de artista',
-    description: 'Salvamos seus dados automaticamente. Se quiser, termine seu cadastro depois.',
+    description: 'Os dados são salvos sempre que você clica em continuar. Se quiser, termine seu cadastro depois.',
   },
   {
     title: 'Crie sua página de artista',
-    description: 'Salvamos seus dados automaticamente. Se quiser, termine seu cadastro depois.',
+    description: 'Os dados são salvos sempre que você clica em continuar. Se quiser, termine seu cadastro depois.',
   },
 ];
 

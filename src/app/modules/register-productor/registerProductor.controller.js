@@ -113,6 +113,7 @@ export const mapMusicalStyles = (styles) => {
     'magenta', 'yellow',
   ];
 
+  if (!styles) return [];
   return styles.map(({ id, name }) => ({
     id,
     text: name,
@@ -167,12 +168,19 @@ export const fetchMusicalStyleOptions = (setMusicalStylesOptions) => {
   }).then(resp => setMusicalStylesOptions(resp.data.allMusicalStyleOptions));
 };
 
-export const nextCallback = ({ visibles, setVisibles }) => {
+export const nextCallback = ({
+  visibles, setVisibles, history, id,
+}) => {
   const next = Object.entries(visibles).find(item => !item[1]);
   const newVisibles = { ...visibles };
 
-  if (next) newVisibles[next[0]] = true;
-  setVisibles(newVisibles);
+  if (next) {
+    newVisibles[next[0]] = true;
+    setVisibles(newVisibles);
+  } else {
+    setVisibles(newVisibles);
+    history.push(`/productor/${id}`);
+  }
 };
 
 const mapProductorToApi = (values, userId, locationId) => ({
@@ -211,59 +219,62 @@ const saveLocation = (id, values) => {
   return createLocation(location);
 };
 
-export const handleCreateProductor = async (
-  values, userId, setLoading, visibles,
-  setVisibles, setLocationId, dispatch, user,
-) => {
-  setLoading(true);
+export const handleCreateProductor = async ({
+  values, userId, setLoading, visibles, setId,
+  setVisibles, dispatch, user, history,
+}) => {
   const productor = { ...values };
   let newImage = null;
 
   if (productor.avatar && productor.avatar.file) {
     try {
+      setLoading({ show: true, text: 'Tratando imagen' });
       const base64 = await getBase64(productor.avatar.file);
+      setLoading({ show: true, text: 'Subindo imagem' });
       newImage = await uploadImageToStorage({
         file: base64,
         id: userId,
       });
     } catch (err) {
+      console.error('err:', [err]);
       // try
     }
 
     productor.avatar = newImage.data.data.urls.mimified;
   }
 
-  console.log(productor);
   let promise;
   const data = mapProductorToApi(productor, userId);
   try {
+    setLoading({ show: true, text: 'Atualizando Produtor' });
     promise = await createProductor(data);
   } catch (err) {
-    console.log([err]);
-    setLoading(false);
+    console.error([err]);
+    setLoading({ show: false });
     throw err;
   }
-
+  setId(promise.data.createProductor.id);
   dispatch({
-    action: 'SET_USER',
-    user: { ...user, productor: promise.data.createProductor },
+    type: 'SET_USER',
+    user: { ...JSON.parse(JSON.stringify(user)), productor: promise.data.createProductor },
   });
-  nextCallback({ visibles, setVisibles });
-  setLoading(false);
+  nextCallback({ visibles, setVisibles, history });
+  setLoading({ show: false });
 };
 
 export const handleEditProductor = async (
   values, productorId, userId, setLoading,
   visibles, setVisibles, setLocationId,
-  dispatch, user,
+  dispatch, user, history,
 ) => {
-  setLoading(true);
   const productor = { ...values };
   let newImage = null;
 
   if (productor.avatar && productor.avatar.file) {
     try {
+      setLoading({ show: true, text: 'Tratando imagen' });
       const base64 = await getBase64(productor.avatar.file);
+      setLoading({ show: true, text: 'Subindo imagem' });
       newImage = await uploadImageToStorage({
         file: base64,
         id: userId,
@@ -277,6 +288,7 @@ export const handleEditProductor = async (
 
   let locationId = null;
   if (productor.city || productor.country.short_name) {
+    setLoading({ show: true, text: 'Salvando informações' });
     let locationResult;
     try {
       locationResult = await saveLocation(
@@ -297,17 +309,20 @@ export const handleEditProductor = async (
   let promise;
   const data = mapProductorToApi(productor, userId, locationId);
   try {
+    setLoading({ show: true, text: 'Atualizando Produtor' });
     promise = await updateProductor(productorId, data);
   } catch (err) {
-    console.log([err]);
-    setLoading(false);
+    console.error([err]);
+    setLoading({ show: false });
     throw err;
   }
 
   dispatch({
-    action: 'SET_USER',
+    type: 'SET_USER',
     user: { ...user, productor: promise.data.updateProductor },
   });
-  nextCallback({ visibles, setVisibles });
-  setLoading(false);
+  setLoading({ show: false });
+  nextCallback({
+    visibles, setVisibles, history, id: productorId,
+  });
 };

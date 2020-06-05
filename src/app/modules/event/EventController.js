@@ -46,7 +46,7 @@ export const fetchEventData = async (id, setEvent, loading, setLoading, setDialo
   } catch (err) {
     // tratar esse erro
     setLoading({ ...loading, event: loadingStatus.ERROR });
-    console.log([err]);
+    console.error([err]);
     throw err;
   }
 
@@ -102,7 +102,7 @@ export const subscribeAction = async (
   try {
     resp = await subscribeEvent(event.id, user.artist.id);
   } catch (err) {
-    console.log([err]);
+    console.error([err]);
     throw err;
   }
 
@@ -113,6 +113,7 @@ export const subscribeAction = async (
     disagreeText: 'Ver mais eventos',
     disagreeAction: () => {
       allowBodyScroll();
+      history.push('/events');
       setDialog({});
     },
   });

@@ -1,5 +1,6 @@
 import apollo from '../../apollo';
-import { getAllEventsQuery } from './events.queries';
+import { getAllEventsQuery, allCountriesQuery } from './events.queries';
+import { allMusicalStyleOptionsQuery } from '../../queries/musicalGenres.query';
 import { subscribeEvent, unsubscribeEvent } from './EventsRepository';
 import { allowBodyScroll } from '../../utilities/scroll';
 
@@ -34,44 +35,111 @@ export const initialEvent = {
   },
 };
 
-export const fetchEventsData = async (setEvent, loading, setLoading, setDialog, history) => {
+export const removeTagAction = ({
+  data, YEARS_MODEL, MONTH_MODEL,
+  musicalStylesOptions, musicStyles,
+  years, months, setMusicStyles,
+  setYears, setMonths,
+}) => {
+  const month = MONTH_MODEL.find(m => m.id === data);
+  const year = YEARS_MODEL.find(m => m.id === data);
+  const style = musicalStylesOptions.find(m => m.id === data);
+
+  if (month) {
+    const myMonths = months.filter(m => m.id !== month.id);
+    setMonths(myMonths);
+  }
+
+  if (year) {
+    const myYears = years.filter(m => m.id !== year.id);
+    setYears(myYears);
+  }
+
+  if (style) {
+    const myStyles = musicStyles.filter(m => m.id !== style.id);
+    setMusicStyles(myStyles);
+  }
+};
+
+export const handleMusicalStyleSelect = ({
+  data, musicalStylesOptions, musicStyles, setMusicStyles,
+}) => {
+  const colors = [
+    'purple',
+    'green',
+    'orange',
+    'magenta',
+    'yellow',
+  ];
+  const style = musicalStylesOptions.find(o => (o.id === data.id));
+  const newMusicalStyles = musicStyles.filter(o => (o.id !== data.id)).concat([{
+    id: style.id,
+    text: style.name,
+    color: colors[Math.floor(Math.random() * 5)],
+  }]);
+
+  let cont = 0;
+
+  const stylesWithColor = newMusicalStyles.map((s) => {
+    const stl = ({
+      ...s,
+      color: colors[cont],
+    });
+    if (cont >= 4) cont = -1;
+    cont += 1;
+    return stl;
+  });
+
+  setMusicStyles(stylesWithColor);
+};
+
+export const fetchEventsData = async ({
+  setEvents, loading, setLoading,
+  setDialog, musicStyles,
+  years, months,
+}) => {
   setLoading({ ...loading, event: loadingStatus.LOADING });
   let eventData;
 
   try {
     eventData = await apollo.query({
       query: getAllEventsQuery,
-      variables: {},
+      variables: {
+        musical_styles: musicStyles.map(s => s.id),
+        years: years.map(y => +y.id),
+        months: months.map(m => ((+m.id) + 1)),
+        paginator: {
+          limit: 20,
+        },
+      },
+    });
+    if (!eventData.data.searchEvents.length) {
+      setDialog({
+        title: 'Nenhum evento encontrado',
+        icon: '/icons/guita-error.svg',
+        description: 'Logo teremos mais eventos, fique ligado para se inscrever.',
+        disagreeText: 'Fechar',
+        disagreeAction: () => setDialog({}),
+      });
+      return;
+    }
+
+    setEvents(eventData.data.searchEvents);
+    setLoading({
+      ...loading,
+      event: loadingStatus.LOADDED,
     });
   } catch (err) {
     // tratar esse erro
     setLoading({ ...loading, event: loadingStatus.ERROR });
-    console.log([err]);
+    console.error([err]);
     throw err;
   }
-
-  if (!eventData.data.allEvents) {
-    setDialog({
-      title: 'Evento não encontrado',
-      icon: '/icons/guita-error.svg',
-      description: 'Logo teremos mais eventos, fique ligado para se inscrever.',
-      disagreeText: 'Ir para home',
-      disagreeAction: () => history.push('/'),
-    });
-    return;
-  }
-
-  setEvent(eventData.data.allEvents || { ...initialEvent });
-  setLoading({ ...loading, event: loadingStatus.LOADDED });
-};
-
-export const associatedEvents = async (id, setAssociatedEvents) => {
-  setAssociatedEvents([]);
 };
 
 export const subscribeAction = async (
-  auth, user, event, dispatch, setDialog, setEvent,
-  history,
+  auth, user, event, dispatch, setDialog, setEvents,
+  history, events,
 ) => {
   if (!auth) {
     dispatch({ type: 'SHOW_LOGIN_MODAL' });
@@ -98,44 +166,61 @@ export const subscribeAction = async (
   }
 
   try {
-    const resp = await subscribeEvent(event.id, user.artist.id);
-    console.log('resp:', resp);
+    const updatedEvent = await subscribeEvent(event.id, user.artist.id);
+
+
+    setDialog({
+      title: 'Pronto!',
+      icon: '/icons/yeah.svg',
+      description: `Você está inscrito no festival ${event.name}. Fique ligado no SOM para receber novas informações.`,
+      disagreeText: 'Voltar para a home',
+      disagreeAction: () => {
+        allowBodyScroll();
+        setDialog({
+          title: '',
+        });
+      },
+    });
+
+    const updatedEvents = events.map((evt) => {
+      if (evt.id === event.id) return updatedEvent.data.subscribeEvent;
+      return evt;
+    });
+    setEvents(updatedEvents);
   } catch (err) {
     throw err;
   }
-
-  setDialog({
-    title: 'Pronto!',
-    icon: '/icons/yeah.svg',
-    description: `Você está inscrito no festival ${event.name}. Fique ligado no SOM para receber novas informações.`,
-    disagreeText: 'Voltar para a home',
-    disagreeAction: () => {
-      allowBodyScroll();
-      history.push('/');
-    },
-  });
-
-  const subs = [...event.subscribers];
-  subs.push(user.artists[0].id);
-  const newEvent = { ...event };
-  newEvent.subscribers = subs;
-  setEvent(newEvent);
 };
 
-export const unsubscribeAction = async (user, event, setEvent) => {
+export const unsubscribeAction = async (user, event, setEvents, events) => {
   try {
-    await unsubscribeEvent(event.id, user.artist.id);
+    const updatedEvent = await unsubscribeEvent(event.id, user.artist.id);
+    const updatedEvents = events.map((evt) => {
+      if (evt.id === event.id) return updatedEvent.data.unsubscribeEvent;
+      return evt;
+    });
+    setEvents(updatedEvents);
   } catch (err) {
     throw err;
   }
+};
 
-  const index = event.subscribers
-    .findIndex(sub => sub === user.artist.id);
+export const fetchMusicalStyleOptions = (setMusicalStylesOptions) => {
+  apollo.query({
+    query: allMusicalStyleOptionsQuery,
+    variables: {},
+  }).then(resp => setMusicalStylesOptions(resp.data.allMusicalStyleOptions));
+};
 
-  const subs = [...event.subscribers];
-  subs.splice(index, 1);
 
-  const newEvent = { ...event };
-  newEvent.subscribers = subs;
-  setEvent(newEvent);
+export const fetchLocations = async ({ setCountries }) => {
+  const countries = await apollo.query({
+    query: allCountriesQuery,
+    variables: {},
+  });
+  const myCountrires = countries.data.allCountries.map(c => ({
+    label: c.name,
+    id: c.id,
+  }));
+  setCountries(myCountrires);
 };

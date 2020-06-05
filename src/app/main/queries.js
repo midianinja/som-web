@@ -6,6 +6,9 @@ export const oneUserQuery = gql`
       id
       ida
       type
+      following_artists {
+        id
+      }
       artist {
         id
         members_number

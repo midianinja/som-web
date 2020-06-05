@@ -27,7 +27,7 @@ const Title = styled.h2`
 
 const inputGroupStyle = `
   @media (min-width: 1024px) {
-    width: 90%;
+    width: 49%;
   }
 `;
 

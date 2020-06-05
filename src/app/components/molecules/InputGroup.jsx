@@ -8,6 +8,7 @@ const InptGroupContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  vertical-align: top;
   ${props => props.customStyle}
 `;
 
@@ -20,8 +21,6 @@ const Label = styled.label`
 `;
 
 const ErrorText = styled.span`
-  position: absolute;
-  bottom: -20px;
   font-size: 0.8em;
   margin-bottom: 10px;
   margin-left: 5px;

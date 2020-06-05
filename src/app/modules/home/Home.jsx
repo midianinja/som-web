@@ -48,12 +48,14 @@ const loginButtonStyle = `
   float: right;
 `;
 
-// const PurpleWrapper = styled.div`
-//   width: 100%;
-//   padding-top: 30px;
-//   padding-bottom: 30px;
-//   background-color: ${purple};
-// `;
+const PurpleWrapper = styled.div`
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: ${purple};
+  display: flex;
+  justify-content: center;
+`;
 
 const FiguresContainer = styled.div`
   width: 100%;
@@ -190,10 +192,17 @@ const Home = ({ history }) => {
           <Instructions />
         </FiguresContent>
       </FiguresContainer>
-      {/* <PurpleWrapper>
-        <About />
-        <WhoIsSom />
-      </PurpleWrapper> */}
+      <PurpleWrapper>
+        <iframe
+          title="Midia"
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/jr_exEootV8"
+          frameBorder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowFullscreen
+        />
+      </PurpleWrapper>
       <OpenSource />
       <Newsletter />
       <TermsWrapper>

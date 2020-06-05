@@ -11,6 +11,75 @@ const fetchSongs = artist => apollo.query({
   variables: { song: { artist } },
 });
 
+export const deleteSongAction = async ({ id, artist, setSongs }) => {
+  try {
+    await apollo.mutate({
+      mutation: gql`
+        mutation deleteSong(
+          $song_id: ID!
+        ) {
+          deleteSong(
+            song_id: $song_id
+          ) {
+            id
+            url
+            title
+            image {
+              mimified
+            }
+          }
+        }
+      `,
+      variables: {
+        song_id: id,
+      },
+    });
+    const songsPromise = await fetchSongs(artist.id);
+    setSongs(songsPromise.data.allSongs);
+    return null;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const editSongAction = async ({
+  id, name, artist, setSongs,
+}) => {
+  try {
+    await apollo.mutate({
+      mutation: gql`
+        mutation updateSong(
+          $song_id: ID!
+          $song: SongInput!
+        ) {
+          updateSong(
+            song_id: $song_id
+            song: $song
+          ) {
+            id
+            url
+            title
+            image {
+              mimified
+            }
+          }
+        }
+      `,
+      variables: {
+        song: {
+          title: name,
+        },
+        song_id: id,
+      },
+    });
+    const songsPromise = await fetchSongs(artist.id);
+    setSongs(songsPromise.data.allSongs);
+    return null;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const fetchRelatedArtsts = async (artist, setArtsts) => {
   if (!artist.id) return;
   const artsts = await apollo.query({
@@ -96,7 +165,7 @@ export const fetchArtistInstaImages = async (instaUri, setInstaPics/* , setInsta
   const instaname = instaUri.split('/').reverse()[0];
 
   try {
-    promise = await fetch(`${process.env.STORAGE_API_URI}/insta/photos/${instaname}`);
+    promise = await fetch(`${process.env.INSTAGRAM_API_URI}/photos/${instaname}`);
   } catch (e) {
     throw e;
   }
@@ -132,7 +201,7 @@ export const unfollow = async (artist, user, setFollows, follows) => {
       variables: { artist, user },
     });
   } catch (err) {
-    console.log([err]);
+    console.error([err]);
     throw err;
   }
 };

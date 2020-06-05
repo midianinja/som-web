@@ -39,7 +39,7 @@ module.exports = {
       path.resolve(__dirname, 'src/app/index.jsx'),
     ],
   },
-  mode: env === 'production' ? 'production' : 'development',
+  mode: env !== 'local' ? 'production' : 'development',
   output: {
     path: path.resolve(__dirname, 'public/build'),
     filename: '[name].bundle.js',

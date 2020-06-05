@@ -65,7 +65,6 @@ function FormResetPassword(newPassword, setNewPassword, resetPasswordToken, setC
       ...newPassword,
       [id]: { value, error: errorMessage, errorColor },
     });
-    // console.log(newPassword);
     // setNewPassword({ ...newPassword });
   }
 

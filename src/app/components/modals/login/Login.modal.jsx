@@ -175,6 +175,8 @@ function Login({ history }) {
             <Input
               id="username"
               type="text"
+              name={Math.random()}
+              autocomplete="new-password"
               placeholder=""
               value={username}
               onChange={e => setUsername(e.target.value)}
@@ -189,6 +191,7 @@ function Login({ history }) {
             <Input
               id="password"
               type="password"
+              autocomplete="new-password"
               placeholder=""
               value={password}
               onChange={e => setPassword(e.target.value)}

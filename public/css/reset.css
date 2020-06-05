@@ -31,7 +31,7 @@ body {
 	background-color: #000000;
 }
 
-body.-scroll-blocked {
+body.scroll-blocked {
 	overflow: hidden;
 }
 

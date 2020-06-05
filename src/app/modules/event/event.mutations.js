@@ -31,8 +31,12 @@ export const subscribe = gql`
       approved_artists {
         id
       }
-      cover
-      photo
+      cover {
+        mimified
+      }
+      photo {
+        mimified
+      }
       productor {
         id
         photo
@@ -84,8 +88,12 @@ export const unsubscribe = gql`
       approved_artists {
         id
       }
-      cover
-      photo
+      cover {
+        mimified
+      }
+      photo {
+        mimified
+      }
       productor {
         id
         photo

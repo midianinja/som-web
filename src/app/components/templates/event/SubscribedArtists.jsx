@@ -125,13 +125,8 @@ const ApprovedTag = styled.label`
   z-index: 2;
 `;
 
-function renderArtists(artists, artistClick, approveds) {
-  const sortedArtists = artists.sort((artist) => {
-    const { id } = artist;
-    return approveds.findIndex(approved => approved.id === id) !== -1 ? -1 : 1;
-  });
-
-  return sortedArtists.map((artist) => {
+const renderArtists = (artists, artistClick, approveds) => [...approveds, ...artists]
+  .map((artist) => {
     const src = artist && artist.avatar_image ? artist.avatar_image.mimified : '';
     return (
       <Card key={artist.id} id={artist.id} onClick={() => artistClick(artist.id)}>
@@ -147,16 +142,14 @@ function renderArtists(artists, artistClick, approveds) {
       </Card>
     );
   });
-}
 
-function SubscribedArtists({ artists, artistClick, approveds }) {
-  return (
-    <Wrapper>
-      <Title>Artistas Inscritos</Title>
-      <ListWrapper>{renderArtists(artists, artistClick, approveds)}</ListWrapper>
-    </Wrapper>
-  );
-}
+
+const SubscribedArtists = ({ artists, artistClick, approveds }) => (
+  <Wrapper>
+    <Title>Artistas Inscritos</Title>
+    <ListWrapper>{renderArtists(artists, artistClick, approveds)}</ListWrapper>
+  </Wrapper>
+);
 
 const imageShape = {
   mimified: PropTypes.string,

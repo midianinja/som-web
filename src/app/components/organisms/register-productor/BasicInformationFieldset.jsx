@@ -60,6 +60,7 @@ function BasicInformationFieldset(props) {
     handleMusicalStyleSelect,
     productorStepErrors,
     values,
+    descriptionMaxLength,
   } = props;
 
   return (
@@ -124,6 +125,7 @@ function BasicInformationFieldset(props) {
           placeholder="Conte sobre você :)"
           value={values.about}
           onChange={handleAboutChange}
+          maxLength={descriptionMaxLength}
         />
       </InputGroup>
     </Fieldset>
@@ -155,6 +157,7 @@ BasicInformationFieldset.propTypes = {
   handleAboutChange: PropTypes.func.isRequired,
   handleAvatarChange: PropTypes.func.isRequired,
   deleteTag: PropTypes.func.isRequired,
+  descriptionMaxLength: PropTypes.number.isRequired,
   handleMusicalStyleChange: PropTypes.func.isRequired,
   handleMusicalStyleSelect: PropTypes.func.isRequired,
   handleNameChange: PropTypes.func.isRequired,

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import VMask from 'vanilla-masker';
 import styled from 'styled-components';
 import Input from '../../atoms/Input';
 import TextArea from '../../atoms/TextArea';
@@ -83,6 +84,7 @@ function BasicInformationFieldset(props) {
     setArtistStepErrors,
     artistStepErrors,
     values,
+    descriptionMaxLength,
   } = props;
 
   return (
@@ -110,13 +112,14 @@ function BasicInformationFieldset(props) {
               onChange={handleNameChange}
             />
           </InputGroup>
-          <InputGroup label={values.integrants ? 'Numero de Integrantes' : ''} error={artistStepErrors.integrants}>
+          <InputGroup label={values.integrants ? 'Número de Integrantes' : ''} error={artistStepErrors.integrants}>
             <Input
               id="integrants"
               type="tel"
-              placeholder="Integrantes"
+              placeholder="Número de integrantes"
+              autoComplete="off"
               onBlur={e => handleBlurChange(e, 'number', setArtistStepErrors, artistStepErrors)}
-              value={values.integrants}
+              value={VMask.toPattern(values.integrants || '', '999')}
               onChange={handleIntegrantsChange}
             />
           </InputGroup>
@@ -188,6 +191,7 @@ function BasicInformationFieldset(props) {
           onBlur={e => handleBlurChange(e, 'description', setArtistStepErrors, artistStepErrors)}
           value={values.about}
           onChange={handleAboutChange}
+          maxLength={descriptionMaxLength}
         />
       </InputGroup>
     </Fieldset>
@@ -251,6 +255,7 @@ BasicInformationFieldset.propTypes = {
   handleCityChange: PropTypes.func.isRequired,
   handleCountrySelect: PropTypes.func.isRequired,
   handleIntegrantsChange: PropTypes.func.isRequired,
+  descriptionMaxLength: PropTypes.string.isRequired,
   handleMusicalStyleSelect: PropTypes.func.isRequired,
   handleNameChange: PropTypes.func.isRequired,
   handleStateSelect: PropTypes.func.isRequired,

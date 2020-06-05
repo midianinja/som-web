@@ -23,7 +23,7 @@ const SelectWrapper = styled.div`
     if (focus) {
       return `
         outline: none;
-        border-radius: 19px;
+        border-radius: 19px 19px 0px 0px;
       `;
     }
     return '';
@@ -51,7 +51,12 @@ const Option = styled.li`
 `;
 
 const Options = styled.ul`
+  position: absolute;
+  background-color: #1a1a1a;
+  left: 0;
+  width: 100%;
   overflow: hidden;
+  border-radius: 0px 0px 19px 19px;
   max-height: ${(props) => {
     const { focus } = props;
     return !focus ? '0px' : '192px';
@@ -65,6 +70,7 @@ const Options = styled.ul`
     const { focus } = props;
     return focus ? 'padding: 15px;' : '';
   }};
+  z-index: 2;
 `;
 
 const Label = styled.label`
@@ -137,19 +143,21 @@ function ListInput(props) {
     setFocus(false);
   };
   return (
-    <SelectWrapper focus={focus} tabIndex={tabIndex}>
+    <SelectWrapper focus={focus && list.length} tabIndex={tabIndex}>
       <Label>
         <Input
           id={id}
+          autoComplete="off"
           onFocus={() => setFocus(true)}
           customStyle="background-color: transparent;"
           placeholder={selected.label || placeholder}
           onBlur={e => e.preventDefault()}
-          value={value}
+          value={value || ''}
+          autoComplete="new-password"
           onChange={e => handleChange(e, setValue, options, setList)}
         />
       </Label>
-      <Options focus={focus}>{renderOptions(list, select)}</Options>
+      <Options focus={focus && list.length}>{renderOptions(list, select)}</Options>
     </SelectWrapper>
   );
 }

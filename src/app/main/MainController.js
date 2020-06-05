@@ -14,6 +14,7 @@ export const verify = async (dispatch, setIDA) => {
   try {
     verified = await verifyAuth(token);
   } catch (err) {
+    console.error('err:', [err]);
     dispatch({ type: 'STOP_VERIFY_LOADING' });
     throw err;
   }
@@ -40,8 +41,9 @@ export const fetchLoggedUser = async (ida, dispatch, history) => {
 
   try {
     response = await getUser(ida);
+    console.log('response:', response);
   } catch (err) {
-    console.log('err: ', { err });
+    console.error('err: ', { err });
     throw err;
   }
 
@@ -49,6 +51,20 @@ export const fetchLoggedUser = async (ida, dispatch, history) => {
     type: 'SET_USER',
     user: response.data.oneUser,
   });
+
+  let typeConnection = 'public';
+  if (response.data.oneUser.productor) {
+    typeConnection = 'productor';
+  } else if (response.data.oneUser.artist) {
+    typeConnection = 'artist';
+  }
+
+  typeConnection = window.localStorage.getItem('som@type') || 'public';
+  dispatch({
+    type: 'SET_LOGIN_TYPE',
+    data: typeConnection,
+  });
+
   if (history.location.pathname === '/') {
     history.push('/welcome');
   }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
@@ -39,10 +39,12 @@ const ProductorCardWrapper = styled.div`
 const CoverWrapper = styled.div`
   width: 100%;
   z-index: 0;
-  top: 0;
+  margin-top: 51px;
 
   @media (min-width: 1024px) {
+    top: 51px;
     position: fixed;
+    margin-top: 0px;
   }
 `;
 
@@ -56,6 +58,8 @@ const Content = styled.div`
   display: inline-block;
   position: relative;
   max-width: 1024px;
+  padding-left: 15px;
+  padding-right: 15px;
   margin-top: -60px;
   z-index: 2;
 
@@ -70,7 +74,7 @@ const ColumnWrapper = styled.div`
   width: 100%;
   vertical-align: top;
   @media (min-width: 1024px) {
-    max-width: calc(100% - 454px);
+    max-width: calc(100% - 484px);
     margin-left: 484px;
   }
 `;
@@ -87,6 +91,7 @@ const EventPage = ({ match, history }) => {
   const [loading, setLoading] = useState({ ...initialLoading });
   const [event, setEvent] = useState(null);
   const [dialog, setDialog] = useState({});
+  const { state: myState } = useContext(Store);
 
   useEffect(() => {
     fetchEventData(
@@ -128,8 +133,6 @@ const EventPage = ({ match, history }) => {
     has_money_paid: event.has_money_paid,
   };
 
-  console.log('event subscribe_closing_date', event.subscribe_closing_date);
-
   const closingDateInstance = moment(new Date(unixTime(event.subscribe_closing_date)));
   const todayInstance = moment();
 
@@ -141,7 +144,10 @@ const EventPage = ({ match, history }) => {
     let subscribed = false;
 
     if (u && u.artist) {
-      if (e.subscribers.find(({ id }) => u.artist.id === id)) {
+      if (
+        e.subscribers.find(({ id }) => u.artist.id === id)
+        || e.approved_artists.find(({ id }) => u.artist.id === id)
+      ) {
         subscribed = true;
       }
     }
@@ -157,8 +163,8 @@ const EventPage = ({ match, history }) => {
             logged={!!state.user}
           />
           <CoverWrapper>
-            <Cover cover={event.cover}>
-              <EventImage src={event.cover} alt="Cover do Evento" />
+            <Cover cover={event.cover.mimified}>
+              <EventImage src={event.cover.mimified} alt="Cover do Evento" />
               <HeaderWrapper />
             </Cover>
           </CoverWrapper>
@@ -171,6 +177,7 @@ const EventPage = ({ match, history }) => {
               isClosingSubscribe={isClosingSubscribe}
               diffDays={closingDiffDays}
               diffHours={closingDiffHours}
+              loggedAs={myState.connectionType}
               subscribers={event.subscribers.length}
               subscribeAction={() => subscribeAction(
                 state.auth, state.user, event, dispatch, setDialog,

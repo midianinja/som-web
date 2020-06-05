@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { white, purple, black50 } from '../../settings/colors';
+import {
+  white, purple, black50, black,
+} from '../../settings/colors';
 import PrimaryButton from '../atoms/PrimaryButton';
 
 const ModalWrapper = styled.div`
@@ -28,6 +30,7 @@ const Modal = styled.div`
   overflow: hidden;
   background-color: ${white};
   text-align: left;
+  color: ${black};
 `;
 
 const IconWrapper = styled.div`
@@ -65,6 +68,7 @@ const Actions = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  cursor: pointer;
 `;
 
 const BackButton = styled.a`
@@ -79,7 +83,7 @@ const CloseIcon = styled.img`
   margin-top: 20px;
   margin-right: 20px;
   float: right;
-  cursor pointer;
+  cursor: pointer;
 `;
 
 const DialogModal = ({

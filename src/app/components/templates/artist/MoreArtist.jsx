@@ -5,6 +5,7 @@ import Avatar from '../../atoms/Avatar.atom';
 import { black, white } from '../../../settings/colors';
 
 const Wrapper = styled.section`
+  text-align: left;
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 30px;
@@ -15,8 +16,6 @@ const Wrapper = styled.section`
   @media (min-width: 1024px) {
     background-color: transparent;
     color: ${white};
-    padding-right: 45px;
-    padding-left: 45px;
   }
 `;
 
@@ -50,6 +49,7 @@ const ListWrapper = styled.div`
 const Title = styled.h3`
   font-weight: 400;
   line-height: 1em;
+  font-size: 1em;
   text-align: left;
   margin-bottom: 20px;
 `;

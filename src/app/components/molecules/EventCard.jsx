@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { green } from '../../settings/colors';
+import { getGradient } from '../../settings/gradients';
 import EventDate from '../atoms/EventDate';
 import EventPlace from '../atoms/EventPlace';
 
@@ -13,8 +14,10 @@ const Container = styled.div`
 `;
 
 const EventImage = styled.img`
+  display: inline-block;
   width: 100px;
   height: 100px;
+  background: ${getGradient()};
 `;
 
 const EventInfoWrapper = styled.div`

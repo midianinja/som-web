@@ -5,6 +5,7 @@ import Avatar from '../../atoms/Avatar.atom';
 import { white, secondaryBlack } from '../../../settings/colors';
 
 const Wrapper = styled.section`
+  text-align: left;
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 30px;
@@ -112,7 +113,7 @@ function renderEvents(events, eventClick) {
   const sortedEvents = events.sort((a, b) => a.event_date > b.event_date);
 
   return sortedEvents.map((event) => {
-    const src = event.cover;
+    const src = event.photo.mimified;
     return (
       <Card key={event.id} id={event.id} onClick={() => eventClick(event.id)}>
         <Avatar src={src} customStyle={avatarCustomStyle} />

@@ -19,7 +19,7 @@ const EventConditions = ({ conditions }) => (
     <EventCondition title="Transporte" condition="directions-car" checked={conditions.has_local_transportation} />
     <EventCondition title="Acomodações" condition="hotel" checked={conditions.has_accommodation} />
     <EventCondition title="Alimentacção" condition="local-dining" checked={conditions.has_food} />
-    <EventCondition title="% da Bilheteria" condition="money" checked={conditions.has_money_paid} />
+    <EventCondition title="Cachê" condition="money" checked={conditions.has_money_paid} />
   </Container>
 );
 

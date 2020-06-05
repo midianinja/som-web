@@ -22,7 +22,7 @@ app.get('*', (req, res) => {
 
 app.listen(process.env.PORT || 8080, (err) => {
   if (err) {
-    console.log(err);
+    console.error(err);
   } else {
     console.log(`Server Running - Listening to port ${process.env.PORT}`);
   }

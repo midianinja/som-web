@@ -24,7 +24,7 @@ const TagWrapper = styled.label`
   display: inline-block;
   padding: 2px 5px;
   padding-right: 12px;
-  background-color: ${(props) => getColor(props.color)};
+  background-color: ${props => getColor(props.color)};
   color: ${white};
   text-transform: lowercase;
   border-radius: 8px;
@@ -33,9 +33,8 @@ const TagWrapper = styled.label`
   font-size: 0.8571428571em;
   margin-right: 10px;
   margin-bottom: 10px;
-  cursor: pointer;
-
-  ${(props) => props.customStyle}
+  ${props => (props.handleClose ? 'cursor: pointer;' : 'padding-left: 12px;')}
+  ${props => props.customStyle}
 `;
 
 const CloseIcon = styled.img`
@@ -50,15 +49,23 @@ const CloseIcon = styled.img`
  * @returns contains Tag Component
  */
 function Tag(props) {
-  const { color, id, handleClose, text, customStyle } = props;
+  const {
+    color, id, handleClose,
+    text, customStyle,
+  } = props;
   return (
-    <TagWrapper customStyle={customStyle} color={color}>
-      <CloseIcon
-        color={color}
-        src='/icons/cancel_outlined.svg'
-        alt='botão de cancelar'
-        onClick={() => handleClose(id)}
-      />
+    <TagWrapper handleClose={!!handleClose} customStyle={customStyle} color={color}>
+      {
+        handleClose
+          ? (
+            <CloseIcon
+              color={color}
+              src="/icons/cancel_outlined.svg"
+              alt="botão de cancelar"
+              onClick={() => handleClose(id)}
+            />
+          ) : null
+      }
       {text}
     </TagWrapper>
   );

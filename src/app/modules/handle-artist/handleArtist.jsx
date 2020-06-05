@@ -17,6 +17,7 @@ import {
 import UploadSongs from '../../components/templates/register-artist/UploadSongs';
 
 const Form = styled.form`
+  padding-top: 52px;
   width: 100%;
   background-color: ${black};
   min-height: 100vh;
@@ -47,6 +48,7 @@ const renderArtistInfos = ({
 }) => (
   <BasicInformationFieldset
     artistStepErrors={state.artistStepErrors.value}
+    descriptionMaxLength={2000}
     setArtistStepErrors={state.artistStepErrors.update}
     values={values}
     deleteTag={deleteTagAction}
@@ -62,7 +64,9 @@ const renderArtistInfos = ({
     state={state.state.value}
     handleCountrySelect={data => handleCountrySelect({ data, state })}
     handleStateSelect={data => handleStateSelect({ data, state })}
-    handleAboutChange={({ target }) => state.about.update(target.value)}
+    handleAboutChange={({ target }) => (
+      target.value.length < 2000 ? state.about.update(target.value) : null
+    )}
     handleCityChange={({ target }) => state.city.update(target.value)}
     handleBlurChange={handleBlurChange}
     handleIntegrantsChange={({ target }) => state.integrants.update(target.value)}
@@ -136,7 +140,7 @@ const getState = (store) => {
   const [musicalStylesOptions, setMusicalStylesOptions] = useState([]);
   const [musicalStylePredict, setMusicalStylePredict] = useState('');
   const [musicalStyle, setMusicalStyle] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState({ show: false });
   const [about, setAbout] = useState(myArtist.about);
   const [phone, setPhone] = useState(myArtist.phone);
   const [city, setCity] = useState(myArtist.city);
@@ -212,13 +216,27 @@ const renderUploadSongs = ({ state }) => {
 const RegisterArtist = ({ history }) => {
   const store = useContext(Store);
   const state = getState(store);
-  const oldArtist = (!!store.state.user && !!store.state.user.artist)
-    ? mapArtistToState(store.state.user.artist, state) : {
-      country: {},
-      state: {},
-      avatar: {},
-      musicalStyles: [],
-    };
+  let oldArtist = {
+    country: {},
+    state: {},
+    avatar: {},
+    musicalStyles: [],
+  };
+
+  if (store.state.connectionType === 'productor') {
+    history.push('/register-productor');
+  }
+
+  useEffect(() => {
+    if (!!store.state.user && !!store.state.user.artist) {
+      oldArtist = mapArtistToState(store.state.user.artist, state);
+    }
+  }, [store.state.user]);
+  useEffect(() => {
+    if (store.state.connectionType === 'productor') {
+      history.push('/register-productor');
+    }
+  }, [state.connectionType]);
 
   useEffect(() => {
     if (!state.musicalStylesOptions.value.length) {
@@ -271,7 +289,7 @@ const RegisterArtist = ({ history }) => {
   });
 
   return (
-    <Form onSubmit={e => e.preventDefault()}>
+    <Form onSubmit={e => e.preventDefault()} autoComplete="new-password">
       <StepFormHeader items={steps} index={state.step.value} />
       <FormWrapper>
         {renderArtistInfos({
@@ -290,12 +308,17 @@ const RegisterArtist = ({ history }) => {
       </FilesBackGround>
       <StepFormFooter
         nextAction={() => nextAction({ store, state, history })}
-        loading={state.loading.value}
+        loading={state.loading.value.show}
+        loadingText={state.loading.value.text}
         customStyle={state.visibles.value.files && state.artist.value.id ? `background-color: ${white};` : ''}
-        skipAction={() => skipAction(state)}
+        noShowSkip={state.visibles.value.files}
+        skipAction={() => skipAction(state.visibles.update, state.visibles.value)}
       />
     </Form>
   );
 };
 
 export default withRouter(RegisterArtist);
+
+
+// 003204500981027

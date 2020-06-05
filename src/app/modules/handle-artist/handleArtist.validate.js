@@ -11,35 +11,36 @@ export const validateArtistForm = ({
   country, state, city, musicalStyles,
   musicalStylePredict, musicalStyle,
   phone, email, facebook, instagram,
-  twitter, youtube,
+  twitter, youtube, visibles,
 }) => {
-  const errors = [];
+  let errors = [];
   const sectionErrors = {};
+
   const vArtist = validateArtist({
     avatar, name, integrants, about,
     country, state, city, musicalStyles,
     musicalStylePredict, musicalStyle,
   });
-  if (vArtist.error) {
+  if (visibles.artist && vArtist.error) {
     sectionErrors.artist = true;
-    errors.concat(vArtist.errors);
+    errors = errors.concat(vArtist.errors);
   }
 
   const vContact = validateContact({
     phone, email,
   });
-  if (vContact.error) {
+  if (visibles.contact && vContact.error) {
     sectionErrors.contact = true;
-    errors.concat(vContact.errors);
+    errors = errors.concat(vContact.errors);
   }
 
   const vSocial = validateSocialMedia({
     facebook, instagram,
     twitter, youtube,
   });
-  if (vSocial.error) {
+  if (visibles.social && vSocial.error) {
     sectionErrors.social = true;
-    errors.concat(vSocial.errors);
+    errors = errors.concat(vSocial.errors);
   }
 
   if (errors.length) return ({ sectionErrors, error: true, errors });

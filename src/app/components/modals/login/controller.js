@@ -21,6 +21,7 @@ export async function login(
         };
         const errorAction = obj[error];
         if (!errorAction) dataError.username = 'Erro inesperado.';
+        else errorAction();
       } else {
         dataError.username = 'Erro inesperado.';
         dataError.password = 'Erro inesperado.';
@@ -56,11 +57,23 @@ export async function login(
       user: userResult.data.oneUser,
     });
 
+    let typeConnection = 'public';
+    if (userResult.data.oneUser.productor) {
+      typeConnection = 'productor';
+    } else if (userResult.data.oneUser.artist) {
+      typeConnection = 'artist';
+    }
+
+    dispatch({
+      type: 'SET_LOGIN_TYPE',
+      data: typeConnection,
+    });
+
     window.localStorage.setItem('som@ida', data.ida);
     window.localStorage.setItem('som@token', data.token);
 
     if (!state.modalLogin) {
-      history.push('/welcome');
+      history.push('/events');
       allowBodyScroll();
       closeModal();
     } else {
