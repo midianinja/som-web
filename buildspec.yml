@@ -17,7 +17,7 @@ phases:
       - echo $NODE_ENV
       - echo $AUTH_API_URI
       - echo $GRAPH_API_URI
-      - docker build --build-arg NODE_ENV=$NODE_ENV --build-arg GRAPH_API_URI=$GRAPH_API_URI --build-arg AUTH_API_URI=$AUTH_API_URI --build-arg STORAGE_API_URI=$STORAGE_API_URI --build-arg INSTAGRAM_API_URI=$INSTAGRAM_API_URI --build-arg PORT=$PORT -t som-web-prod:$NODE_ENV .
+      - docker build --build-arg NODE_ENV=$NODE_ENV --build-arg GRAPH_API_URI=$GRAPH_API_URI --build-arg AUTH_API_URI=$AUTH_API_URI --build-arg STORAGE_API_URI=$STORAGE_API_URI --build-arg INSTAGRAM_API_URI=$INSTAGRAM_API_URI --build-arg PORT=$PORT -t som-web:$NODE_ENV .
       - docker tag som-web:$NODE_ENV $REPOSITORY_URI:$NODE_ENV
   post_build:
     commands:
