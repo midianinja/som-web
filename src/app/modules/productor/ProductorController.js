@@ -37,15 +37,19 @@ export const fetchProductorData = async (
 };
 
 export const fetchProductorInstaImages = async (instaUri, setInstaPics) => {
-  let promise;
-  const instaname = instaUri.split('/').reverse()[0];
-
   try {
-    promise = await fetch(`${process.env.INSTAGRAM_API_URI}/photos/${instaname}`);
-  } catch (e) {
-    throw e;
-  }
+    let promise;
+    const instaname = instaUri.split('/').reverse()[0];
 
-  const { data } = await promise.json();
-  setInstaPics(data);
+    try {
+      promise = await fetch(`${process.env.INSTAGRAM_API_URI}/photos/${instaname}`);
+    } catch (e) {
+      throw e;
+    }
+
+    const { data } = await promise.json();
+    setInstaPics(data);
+  } catch (err) {
+    console.log('err: ', err);
+  }
 };
