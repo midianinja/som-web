@@ -13,7 +13,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - echo salve $REPOSITORY_URI
+      - echo $REPOSITORY_URI
       - echo $NODE_ENV
       - echo $AUTH_API_URI
       - echo $GRAPH_API_URI
