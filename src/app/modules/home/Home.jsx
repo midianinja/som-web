@@ -193,11 +193,11 @@ const Home = ({ history }) => {
         </FiguresContent>
       </FiguresContainer>
       <PurpleWrapper>
-        <iframe
+        <object
           title="Midia"
           width="560"
           height="315"
-          src="https://www.youtube.com/watch?v=bTUoq_zt2uM"
+          DATA="https://www.youtube.com/watch?v=bTUoq_zt2uM"
           frameBorder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           allowFullscreen
