@@ -365,7 +365,7 @@ function AudioPlayer({
 
   const song = {
     title: 'Nenhuma seleção.',
-    album: 'Sem albúm.',
+    album: '',
     url: '',
     ...(selectSong || {}),
   };
