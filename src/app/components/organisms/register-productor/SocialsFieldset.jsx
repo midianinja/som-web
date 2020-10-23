@@ -116,7 +116,7 @@ function SocialsFielset(props) {
 const valuesShape = {
   facebook: PropTypes.string.isRequired,
   instagram: PropTypes.string.isRequired,
-  twiiter: PropTypes.string.isRequired,
+  twitter: PropTypes.string.isRequired,
   youtube: PropTypes.string.isRequired,
 };
 
