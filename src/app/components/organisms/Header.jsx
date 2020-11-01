@@ -163,6 +163,11 @@ const ProfileWrapper = styled.div`
   cursor: pointer;
 `;
 
+const Logo = styled.img`
+  max-width: 20%;
+  margin-left: 5px;
+`;
+
 const LoginIcon = styled.img`
   width: 30px;
   height: 30px;
@@ -219,12 +224,7 @@ function Header({ customStyle, history }) {
             <Line dark={state.connectionType === 'public'} />
             <Line dark={state.connectionType === 'public'} />
           </BurgerButton>
-          {/* <Input
-            placeholder="O que você procura?"
-            value=""
-            customStyle={inputCustomStyle}
-            onChange={() => null}
-          /> */}
+          <Logo src="/images/logo-black.svg" alt="Som, Sistema Operacional da Música" />
         </Group>
         <RightGroup hide={!state.auth}>
           <ProfileWrapper onClick={() => setDropdown(!dropdown)}>
