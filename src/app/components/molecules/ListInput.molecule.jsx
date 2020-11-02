@@ -144,7 +144,6 @@ function ListInput(props) {
   };
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, false);
-    console.log(wrapperRef)
     return () => {
       document.removeEventListener("click", handleClickOutside, false);
     };
