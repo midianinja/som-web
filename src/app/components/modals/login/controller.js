@@ -30,7 +30,7 @@ export async function login(
       throw err;
     }
 
-    const { data } = promise.data;
+    const { data } = promise;
     let userIDAPromise;
     try {
       userIDAPromise = await getIDA(data.ida);
