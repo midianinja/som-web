@@ -32,7 +32,7 @@
     "babel-jest": "^24.7.1",
     "babel-loader": "^8.0.5",
     "babel-polyfill": "^6.26.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "components": "^0.1.0",
     "compression-webpack-plugin": "^2.0.0",
     "dotenv": "^8.0.0",
