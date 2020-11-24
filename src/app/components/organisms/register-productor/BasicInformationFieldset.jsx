@@ -101,11 +101,11 @@ function BasicInformationFieldset(props) {
             />
           </InputGroup>
           <InputGroup
-            label={values.musicalStyles.length ? 'Estilo de música' : ''}
+            label={values.musicalStyles.length ? 'Área de Atuação' : ''}
             error={productorStepErrors.musicalStyles}
           >
             <AutocompleteInput
-              placeholder={values.musicalStyles.length ? '' : 'Estilo de música'}
+              placeholder={values.musicalStyles.length ? '' : 'Área de Atuação'}
               predict={values.musicalStylePredict}
               value={values.musicalStyle}
               handleChange={handleMusicalStyleChange}

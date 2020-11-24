@@ -34,7 +34,7 @@ export const Link = styled.a`
   color: ${white};
   font-weight: bold;
   font-size: 2em;
-  line-height: 2em;
+  line-height: 1.2em;
 `;
 
 export const ClosingDateTimer = styled.div`
