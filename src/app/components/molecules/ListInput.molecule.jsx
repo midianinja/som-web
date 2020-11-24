@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
@@ -28,7 +28,6 @@ const SelectWrapper = styled.div`
     }
     return '';
   }}
-  
 `;
 
 const Image = styled.img``;
@@ -134,6 +133,7 @@ function ListInput(props) {
   const [focus, setFocus] = useState(false);
   const [value, setValue] = useState('');
   const [list, setList] = useState(options);
+  const wrapperRef = useRef(null);
   useEffect(() => {
     setList(options);
   }, [options]);
@@ -142,8 +142,20 @@ function ListInput(props) {
     onSelect(data);
     setFocus(false);
   };
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, false);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, false);
+    };
+  }, []);
+
+  const handleClickOutside = event => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      setFocus(false);
+    }
+  };
   return (
-    <SelectWrapper focus={focus && list.length} tabIndex={tabIndex}>
+    <SelectWrapper focus={focus && list.length} tabIndex={tabIndex} ref={wrapperRef}>
       <Label>
         <Input
           id={id}
